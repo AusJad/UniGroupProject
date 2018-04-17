@@ -243,7 +243,7 @@ namespace luabind
 					rhs.m_called = true;
 				}
 
-				~proxy_function_void_caller()
+				~proxy_function_void_caller()  noexcept(false)
 				{
 					if (m_called) return;
 
@@ -257,6 +257,7 @@ namespace luabind
 					{
 						assert(lua_gettop(L) == top - m_params + 1);
 #ifndef LUABIND_NO_EXCEPTIONS
+
 						throw error(L);
 #else
 						error_callback_fun e = get_error_callback();
