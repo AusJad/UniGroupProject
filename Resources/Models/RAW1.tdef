@@ -1,0 +1,4 @@
+s 45 4 45
+m ./Resources/Textures/sky2.tga TGA ./Resources/Textures/rocks.tga TGA ./Resources/Textures/rocks.tga TGA ./Resources/Textures/rocks2.tga TGA
+f ./Resources/Models/hmsmall.raw
+t ./Resources/Textures/detailMap.tga TGA

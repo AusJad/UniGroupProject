@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{111E66AC-6894-4446-93BC-AC6309C21CDB}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>ICT397GameProject</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(ProjectDir)include;$(ProjectDir)ThirdParty/include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)ThirdParty/lib;$(LibraryPath)</LibraryPath>
+    <SourcePath>$(ProjectDir)src;$(SourcePath)</SourcePath>
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <CodeAnalysisRuleSet>C:\Program Files (x86)\Microsoft Visual Studio 14.0\Team Tools\Static Analysis Tools\Rule Sets\NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(ProjectDir)include;$(ProjectDir)ThirdParty/include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)ThirdParty/lib;$(LibraryPath)</LibraryPath>
+    <SourcePath>$(ProjectDir)src;$(SourcePath)</SourcePath>
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <CodeAnalysisRuleSet>C:\Program Files (x86)\Microsoft Visual Studio 14.0\Team Tools\Static Analysis Tools\Rule Sets\NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <EnablePREfast>false</EnablePREfast>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>luad.lib;luabindd.lib;glfw3dll.lib;glew32.lib;opengl32.lib;glu32.lib;bass.lib;assimp-vc140-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <EnablePREfast>false</EnablePREfast>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>lua.lib;luabind.lib;glfw3.lib;bass.lib;glew32.lib;opengl32.lib;glu32.lib;assimp-vc140-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\AssetManager.h" />
+    <ClInclude Include="include\AudioEngine.h" />
+    <ClInclude Include="include\BMPLoader.h" />
+    <ClInclude Include="include\Bullet.h" />
+    <ClInclude Include="include\camera.h" />
+    <ClInclude Include="include\CollisionEngine.h" />
+    <ClInclude Include="include\CtoLUABinder.h" />
+    <ClInclude Include="include\Engine.h" />
+    <ClInclude Include="include\GameObject.h" />
+    <ClInclude Include="include\GameObjectFactory.h" />
+    <ClInclude Include="include\GameObjectHandler.h" />
+    <ClInclude Include="include\Identifiers.h" />
+    <ClInclude Include="include\ImageCreationHandler.h" />
+    <ClInclude Include="include\ImageLoader.h" />
+    <ClInclude Include="include\ImageLoaderFactory.h" />
+    <ClInclude Include="include\ImportModel.h" />
+    <ClInclude Include="include\Controls.h" />
+    <ClInclude Include="include\LUAScriptManager.h" />
+    <ClInclude Include="include\mat4.h" />
+    <ClInclude Include="include\Maths.h" />
+    <ClInclude Include="include\MenuObject.h" />
+    <ClInclude Include="include\Message.h" />
+    <ClInclude Include="include\MessageTypes.h" />
+    <ClInclude Include="include\MessagingBus.h" />
+    <ClInclude Include="include\Model.h" />
+    <ClInclude Include="include\ModelFactory.h" />
+    <ClInclude Include="include\ModelManger.h" />
+    <ClInclude Include="include\NPC.h" />
+    <ClInclude Include="include\Player.h" />
+    <ClInclude Include="include\QuadTree.h" />
+    <ClInclude Include="include\RawTerrain.h" />
+    <ClInclude Include="include\RenderModuleStubb.h" />
+    <ClInclude Include="include\ResourceList.h" />
+    <ClInclude Include="include\Scene.h" />
+    <ClInclude Include="include\SceneManager.h" />
+    <ClInclude Include="include\Scenery.h" />
+    <ClInclude Include="include\SimpleString.h" />
+    <ClInclude Include="include\Singleton.h" />
+    <ClInclude Include="include\Singletons.h" />
+    <ClInclude Include="include\StaticEntity.h" />
+    <ClInclude Include="include\terrain.h" />
+    <ClInclude Include="include\TerrainObject.h" />
+    <ClInclude Include="include\TexturedSquare.h" />
+    <ClInclude Include="include\TextureManager.h" />
+    <ClInclude Include="include\TGALoader.h" />
+    <ClInclude Include="include\vec2.h" />
+    <ClInclude Include="include\vec3.h" />
+    <ClInclude Include="include\vec4.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ICT397GameProject.cpp" />
+    <ClCompile Include="src\AssetManager.cpp" />
+    <ClCompile Include="src\AudioEngine.cpp" />
+    <ClCompile Include="src\BMPLoader.cpp" />
+    <ClCompile Include="src\Bullet.cpp" />
+    <ClCompile Include="src\camera.cpp" />
+    <ClCompile Include="src\CollisionEngine.cpp" />
+    <ClCompile Include="src\CtoLUABinder.cpp" />
+    <ClCompile Include="src\Engine.cpp" />
+    <ClCompile Include="src\GameObject.cpp" />
+    <ClCompile Include="src\GameObjectFactory.cpp" />
+    <ClCompile Include="src\GameObjectHandler.cpp" />
+    <ClCompile Include="src\Identifiers.cpp" />
+    <ClCompile Include="src\ImageCreationHandler.cpp" />
+    <ClCompile Include="src\ImageLoaderFactory.cpp" />
+    <ClCompile Include="src\ImportModel.cpp" />
+    <ClCompile Include="src\Controls.cpp" />
+    <ClCompile Include="src\LUAScriptManager.cpp" />
+    <ClCompile Include="src\mat4.cpp" />
+    <ClCompile Include="src\Maths.cpp" />
+    <ClCompile Include="src\MenuObject.cpp" />
+    <ClCompile Include="src\Message.cpp" />
+    <ClCompile Include="src\MessagingBus.cpp" />
+    <ClCompile Include="src\ModelFactory.cpp" />
+    <ClCompile Include="src\ModelManger.cpp" />
+    <ClCompile Include="src\NPC.cpp" />
+    <ClCompile Include="src\Player.cpp" />
+    <ClCompile Include="src\RawTerrain.cpp" />
+    <ClCompile Include="src\RenderModuleStubb.cpp" />
+    <ClCompile Include="src\ResourceList.cpp" />
+    <ClCompile Include="src\Scene.cpp" />
+    <ClCompile Include="src\SceneManager.cpp" />
+    <ClCompile Include="src\Scenery.cpp" />
+    <ClCompile Include="src\SimpleString.cpp" />
+    <ClCompile Include="src\StaticEntity.cpp" />
+    <ClCompile Include="src\Terrain.cpp" />
+    <ClCompile Include="src\TerrainObject.cpp" />
+    <ClCompile Include="src\TexturedSquare.cpp" />
+    <ClCompile Include="src\TextureManager.cpp" />
+    <ClCompile Include="src\TGALoader.cpp" />
+    <ClCompile Include="src\vec2.cpp" />
+    <ClCompile Include="src\vec3.cpp" />
+    <ClCompile Include="src\vec4.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Scripts\controls.lua" />
+    <None Include="Resources\Scripts\startup.lua" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
