@@ -19,8 +19,8 @@ class mat4
 {
 public:
 	mat4();
-
 	mat4(const mat4 & m);
+	mat4(const glm::mat4 & m);
 
 	/**
 	* @brief Get function for glm::mat4 type variable.

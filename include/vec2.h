@@ -19,6 +19,7 @@ public:
 	vec2();
 	vec2(float a, float b);
 	vec2(const vec2 & v);
+	vec2(const glm::vec2 & v);
 
 	/**
 	* @brief Get function for glm::vec2 type variable.
@@ -56,17 +57,6 @@ public:
 	* @return float& - Data in requested location.
 	*/
 	float& operator[] (int x);
-
-	/**
-	* @brief Overload function for * operator with another vec2 variable.
-	*
-	* @param v2(vec2) - Vector being multiplied into current vec2.
-	* @param tmpglm(glm::vec2) - Temporary glm vec2.
-	* @param tmp(vec2) - Temporary vec2.
-	*
-	* @return vec2 - Calculation.
-	*/
-	vec2 operator* (vec2 v2);
 
 	/**
 	* @brief Return first value (x).

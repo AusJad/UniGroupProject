@@ -11,6 +11,11 @@ mat4::mat4(const mat4 & m)
 	matrix = m.getMat();
 }
 
+mat4::mat4(const glm::mat4 & m)
+{
+	matrix = m;
+}
+
 glm::mat4 mat4::getMat() const
 {
 	return matrix;
@@ -23,13 +28,7 @@ void mat4::setMat(glm::mat4 mat)
 
 vec4 mat4::operator* (const vec4 & v)
 {
-	glm::vec4 tmpglm;
-	tmpglm = matrix * v.getVec();
-
-	vec4 tmp;
-	tmp.setVec(tmpglm);
-
-	return tmp;
+	return vec4(matrix * v.getVec());
 }
 
 void mat4::operator = (const mat4 & m)
@@ -87,30 +86,22 @@ mat4 mat4::operator -= (const mat4 & m)
 
 mat4 mat4::operator + (const mat4 & m)
 {
-	mat4 tmp;
-	tmp.setMat(matrix + m.getMat());
-	return tmp;
+	return mat4(matrix + m.getMat());
 }
 
 mat4 mat4::operator - (const mat4 & m)
 {
-	mat4 tmp;
-	tmp.setMat(matrix - m.getMat());
-	return tmp;
+	return mat4(matrix - m.getMat());
 }
 
 mat4 mat4::operator * (const mat4 & m)
 {
-	mat4 tmp;
-	tmp.setMat(matrix * m.getMat());
-	return tmp;
+	return mat4(matrix * m.getMat());
 }
 
 mat4 mat4::operator / (const mat4 & m)
 {
-	mat4 tmp;
-	tmp.setMat(matrix / m.getMat());
-	return tmp;
+	return mat4(matrix / m.getMat());
 }
 
 mat4 mat4::operator += (const float f)
@@ -139,28 +130,20 @@ mat4 mat4::operator -= (const float f)
 
 mat4 mat4::operator + (const float f)
 {
-	mat4 tmp;
-	tmp.setMat(matrix + f);
-	return tmp;
+	return mat4(matrix + f);
 }
 
 mat4 mat4::operator - (const float f)
 {
-	mat4 tmp;
-	tmp.setMat(matrix - f);
-	return tmp;
+	return mat4(matrix - f);
 }
 
 mat4 mat4::operator * (const float f)
 {
-	mat4 tmp;
-	tmp.setMat(matrix * f);
-	return tmp;
+	return mat4(matrix * f);
 }
 
 mat4 mat4::operator / (const float f)
 {
-	mat4 tmp;
-	tmp.setMat(matrix / f);
-	return tmp;
+	return mat4(matrix / f);
 }
