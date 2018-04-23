@@ -115,6 +115,7 @@
     <ClInclude Include="include\mat4.h" />
     <ClInclude Include="include\Maths.h" />
     <ClInclude Include="include\MenuObject.h" />
+    <ClInclude Include="include\Mesh.h" />
     <ClInclude Include="include\Message.h" />
     <ClInclude Include="include\MessageTypes.h" />
     <ClInclude Include="include\MessagingBus.h" />
@@ -165,6 +166,7 @@
     <ClCompile Include="src\mat4.cpp" />
     <ClCompile Include="src\Maths.cpp" />
     <ClCompile Include="src\MenuObject.cpp" />
+    <ClCompile Include="src\Mesh.cpp" />
     <ClCompile Include="src\Message.cpp" />
     <ClCompile Include="src\MessagingBus.cpp" />
     <ClCompile Include="src\ModelFactory.cpp" />

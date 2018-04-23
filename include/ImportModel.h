@@ -1,13 +1,13 @@
 #pragma once
-#include <Assimp/scene.h>
+
 #include <Assimp/Importer.hpp>
 #include <Assimp/postprocess.h>
+#include <Assimp/scene.h>
 #include "RenderModuleStubb.h"
 #include "Singleton.h"
 #include "Model.h"
-//#include "vec2.h"
 #include "TextureManager.h"
-#include "Maths.h"
+#include "Mesh.h"
 
 /**
 * @class ImportModel
@@ -68,6 +68,14 @@ private:
 	void setMinsAndMaxs();
 
 	/**
+	* @brief Set the center of the point.
+	*
+	* @param point - The position.
+	*/
+	void centerOnPoint(vec3 &point);
+
+
+	/**
 	* @brief Create a random string.
 	*
 	* @param len - The length of the string.
@@ -76,52 +84,14 @@ private:
 	*/
 	std::string RandomString(unsigned len);
 
-	/// Vector for the verticies.
-	std::vector<vec3> Vertices;
-	/// Vector for the texture coords.
-	std::vector<vec2> texCoords;
-	/// Vector for the normals.
-	std::vector<vec3> Normals;
-	/// Vector for the indexies
-	std::vector<unsigned> vertIndex;
+
+	///Vector storing meshes for a model.
+	std::vector<Mesh> modelDetails;
+
 	/// The texture data.
 	std::string texture;
+
 	/// The model data.
 	const aiScene *model;
-
-	/**
-	* @brief Set the vertices.
-	*
-	* @param mesh - The Mesh.
-	*/
-	void setVertices(aiMesh *mesh);
-
-	/**
-	* @brief Set the texture coords.
-	*
-	* @param mesh - The Mesh.
-	*/
-	void setTexCoords(aiMesh *mesh);
-
-	/**
-	* @brief Set the normals.
-	*
-	* @param mesh - The Mesh.
-	*/
-	void setNormals(aiMesh *mesh);
-
-	/**
-	* @brief Set the indexies.
-	*
-	* @param mesh - The Mesh.
-	*/
-	void setIndexes(aiMesh *mesh);
-
-	/**
-	* @brief Set the center of the point.
-	*
-	* @param point - The position.
-	*/
-	void centerOnPoint(vec3 &point);
 };
 

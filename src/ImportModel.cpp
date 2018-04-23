@@ -12,13 +12,8 @@ ImportModel::ImportModel(const ImportModel & tocpy)
 	maxz = tocpy.maxz;
 	miny = tocpy.miny;
 	maxy = tocpy.maxy;
-
-	Vertices = tocpy.Vertices;
-	texCoords = tocpy.texCoords;
-	Normals = tocpy.Normals;
-	vertIndex = tocpy.vertIndex;
-	texture = tocpy.texture;
 	
+	modelDetails = tocpy.modelDetails;
 	model = tocpy.model;
 	id = tocpy.id;
 }
@@ -55,12 +50,16 @@ bool ImportModel::loadModel(std::string filename)
 		}
 	}
 
+	Mesh tempMesh;
 	for (unsigned i = 0; i < model->mNumMeshes; i++)
 	{
-		setVertices(model->mMeshes[i]);
-		setTexCoords(model->mMeshes[i]);
-		setNormals(model->mMeshes[i]);
-		setIndexes(model->mMeshes[i]);
+		tempMesh.setVertices(model->mMeshes[i]);
+		tempMesh.setTexCoords(model->mMeshes[i]);
+		tempMesh.setNormals(model->mMeshes[i]);
+		tempMesh.setIndexes(model->mMeshes[i]);
+
+		modelDetails.push_back(tempMesh);
+
 	}
 
 	setMinsAndMaxs();
@@ -70,39 +69,42 @@ bool ImportModel::loadModel(std::string filename)
 
 void ImportModel::setMinsAndMaxs()
 {
-	minx = Vertices.at(0).x();
-	minz = Vertices.at(0).z();
-	maxx = Vertices.at(0).x();
-	maxz = Vertices.at(0).z();
-	maxy = Vertices.at(0).y();
-	miny = Vertices.at(0).y();
-
-	for (unsigned i = 0; i < Vertices.size(); i++)
+	for (unsigned j = 0; j < modelDetails.size(); j++)
 	{
-		if (minx > Vertices.at(i).x())
-		{
-			minx = Vertices.at(i).x();
-		}
-		if (miny > Vertices.at(i).y())
-		{
-			miny = Vertices.at(i).y();
-		}
-		if (minz > Vertices.at(i).z())
-		{
-			minz = Vertices.at(i).z();
-		}
-		if (maxx < Vertices.at(i).x())
-		{
-			maxx = Vertices.at(i).x();
-		}
+		minx = modelDetails[j].Vertices.at(0).x();
+		minz = modelDetails[j].Vertices.at(0).z();
+		maxx = modelDetails[j].Vertices.at(0).x();
+		maxz = modelDetails[j].Vertices.at(0).z();
+		maxy = modelDetails[j].Vertices.at(0).y();
+		miny = modelDetails[j].Vertices.at(0).y();
 
-		if (maxy < Vertices.at(i).y())
+		for (unsigned i = 0; i < modelDetails[j].Vertices.size(); i++)
 		{
-			maxy = Vertices.at(i).y();
-		}
-		if (maxz < Vertices.at(i).z())
-		{
-			maxz = Vertices.at(i).z();
+			if (minx > modelDetails[j].Vertices.at(i).x())
+			{
+				minx = modelDetails[j].Vertices.at(i).x();
+			}
+			if (miny > modelDetails[j].Vertices.at(i).y())
+			{
+				miny = modelDetails[j].Vertices.at(i).y();
+			}
+			if (minz > modelDetails[j].Vertices.at(i).z())
+			{
+				minz = modelDetails[j].Vertices.at(i).z();
+			}
+			if (maxx < modelDetails[j].Vertices.at(i).x())
+			{
+				maxx = modelDetails[j].Vertices.at(i).x();
+			}
+
+			if (maxy < modelDetails[j].Vertices.at(i).y())
+			{
+				maxy = modelDetails[j].Vertices.at(i).y();
+			}
+			if (maxz < modelDetails[j].Vertices.at(i).z())
+			{
+				maxz = modelDetails[j].Vertices.at(i).z();
+			}
 		}
 
 
@@ -116,86 +118,43 @@ ImportModel* ImportModel::create() const
 }
 
 std::vector<vec3>& ImportModel::getVerticies() {
-	return Vertices;
+	return modelDetails[0].Vertices; //currently just returns the vertices of the first mesh, probably need to change this somehow.
 }
 
-void ImportModel::setVertices(aiMesh *mesh)
-{
-	if (mesh->HasPositions())
-	{
-		for (unsigned i = 0; i < mesh->mNumVertices; i++)
-		{
-			Vertices.push_back(vec3(mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z));
-		}
-	}
-}
-
-void ImportModel::setIndexes(aiMesh *mesh)
-{
-	int indexStart = 0;
-	if (mesh->HasFaces())
-	{
-		for (unsigned i = 0; i < mesh->mNumFaces; i++)
-		{
-
-			vertIndex.push_back(mesh->mFaces[i].mIndices[0]);
-			vertIndex.push_back(mesh->mFaces[i].mIndices[1]);
-			vertIndex.push_back(mesh->mFaces[i].mIndices[2]);
-
-		}
-	}
-}
-
-void ImportModel::setNormals(aiMesh *mesh)
-{
-	if (mesh->HasNormals())
-	{
-		for (unsigned i = 0; i < mesh->mNumVertices; i++)
-		{
-			Normals.push_back(vec3(mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z));
-		}
-	}
-}
-
-
-void ImportModel::setTexCoords(aiMesh *mesh)
-{
-	if (mesh->HasTextureCoords(0))
-	{
-		for (unsigned i = 0; i < mesh->mNumVertices; i++)
-		{
-			texCoords.push_back(vec2(mesh->mTextureCoords[0][i].x, mesh->mTextureCoords[0][i].y));
-		}
-	}
-}
 
 void ImportModel::centerOnPoint(vec3 & point)
 {
-	setMinsAndMaxs();
-	float centerx = (maxx + minx) / 2;
-	float centerz = (maxz + minz) / 2;
-	float centery = (maxy + miny) / 2;
-
-	float difx = centerx - point.x();
-	float difz = centerz - point.z();
-	float dify = centery - point.y();
-
-	for (unsigned i = 0; i < Vertices.size(); i++)
+	for (unsigned j = 0; j < modelDetails.size(); j++)
 	{
-		Vertices.at(i).sx(Vertices.at(i).x() - difx);
-		Vertices.at(i).sy(Vertices.at(i).y() - dify);
-		Vertices.at(i).sz(Vertices.at(i).z() - difz);
-	}
+		setMinsAndMaxs();
+		float centerx = (maxx + minx) / 2;
+		float centerz = (maxz + minz) / 2;
+		float centery = (maxy + miny) / 2;
 
-	setMinsAndMaxs();
+		float difx = centerx - point.x();
+		float difz = centerz - point.z();
+		float dify = centery - point.y();
+
+		for (unsigned i = 0; i < modelDetails[j].Vertices.size(); i++)
+		{
+			modelDetails[j].Vertices.at(i).sx(modelDetails[j].Vertices.at(i).x() - difx);
+			modelDetails[j].Vertices.at(i).sy(modelDetails[j].Vertices.at(i).y() - dify);
+			modelDetails[j].Vertices.at(i).sz(modelDetails[j].Vertices.at(i).z() - difz);
+		}
+
+		setMinsAndMaxs();
+	}
 }
 
 void ImportModel::setScale(vec3 & toset) {
-	for (unsigned i = 0; i < Vertices.size(); i++)
+	for (unsigned j = 0; j < modelDetails.size(); j++)
 	{
-		Vertices.at(i).sx(Vertices.at(i).x() * toset.x());
-		Vertices.at(i).sy(Vertices.at(i).y() * toset.y());
-		Vertices.at(i).sz(Vertices.at(i).z() * toset.z());
+		for (unsigned i = 0; i <  modelDetails[j].Vertices.size(); i++)
+		{
+			modelDetails[j].Vertices.at(i).sx(modelDetails[j].Vertices.at(i).x() * toset.x());
+			modelDetails[j].Vertices.at(i).sy(modelDetails[j].Vertices.at(i).y() * toset.y());
+			modelDetails[j].Vertices.at(i).sz(modelDetails[j].Vertices.at(i).z() * toset.z());
+		}
 	}
 
 	setMinsAndMaxs();
@@ -208,11 +167,17 @@ void ImportModel::update()
 void ImportModel::render(const vec3 & transmat)
 {
 	vec3 trans(-1 * ((maxx + minx) / 2 - transmat.x()), -1 * ((maxy + miny) / 2 - transmat.y()), -1 * ((maxz + minz) / 2 - transmat.z()));
-
-	if (texture.empty() == false) Singleton<TextureManager>::getInstance()->useTexture(texture, Singleton<RenderModuleStubb>::getInstance());
-	if(Normals.empty())Singleton<RenderModuleStubb>::getInstance()->renderArrayTri(vertIndex,Vertices, texCoords, trans);
-	else Singleton<RenderModuleStubb>::getInstance()->renderArrayTri(vertIndex, Vertices, Normals, texCoords, trans);
-	Singleton<TextureManager>::getInstance()->disableTexture(Singleton<RenderModuleStubb>::getInstance());
+	
+	for (unsigned i = 0; i < modelDetails.size(); i++)
+	{
+		if (!texture.empty())
+			Singleton<TextureManager>::getInstance()->useTexture(texture, Singleton<RenderModuleStubb>::getInstance());
+		if (modelDetails[i].Normals.empty())
+			Singleton<RenderModuleStubb>::getInstance()->renderArrayTri(modelDetails[i].vertIndex, modelDetails[i].Vertices, modelDetails[i].texCoords, trans);
+		else
+			Singleton<RenderModuleStubb>::getInstance()->renderArrayTri(modelDetails[i].vertIndex, modelDetails[i].Vertices, modelDetails[i].Normals, modelDetails[i].texCoords, trans);
+		Singleton<TextureManager>::getInstance()->disableTexture(Singleton<RenderModuleStubb>::getInstance());
+	}
 }
 
 std::string ImportModel::RandomString(unsigned len) {
