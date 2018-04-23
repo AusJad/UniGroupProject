@@ -22,6 +22,11 @@ vec3::vec3(const vec3 & v)
 	vector = v.getVec();
 }
 
+vec3::vec3(const glm::vec3 & v)
+{
+	vector = v;
+}
+
 glm::vec3 vec3::getVec() const
 {
 	return vector;
@@ -80,11 +85,7 @@ void vec3::subtract(vec3 vec)
 
 vec3 vec3::normalize()
 {
-	glm::vec3 tmpglm = vector; // So vector isnt effected.
-	glm::normalize(tmpglm);
-	vec3 tmp;
-	tmp.setVec(tmpglm);
-	return tmp;
+	return vec3(glm::normalize(vector));
 }
 
 void vec3::normailse()
@@ -104,10 +105,7 @@ float vec3::angle(const vec3 & v)
 
 vec3 vec3::cross(const vec3 & v)
 {
-	glm::vec3 tmpglm = glm::cross(vector, v.getVec());
-	vec3 tmp;
-	tmp.setVec(tmpglm);
-	return tmp;
+	return vec3(glm::cross(vector, v.getVec()));
 }
 
 bool vec3::almostEqual(const vec3 & v, float threshold)
@@ -146,30 +144,22 @@ vec3 vec3::operator += (const vec3 & v)
 
 vec3 vec3::operator + (const vec3 & v)
 {
-	vec3 tmp;
-	tmp.setVec(vector + v.getVec());
-	return tmp;
+	return vec3(vector + v.getVec());
 }
 
 vec3 vec3::operator - (const vec3 & v)
 {
-	vec3 tmp;
-	tmp.setVec(vector - v.getVec());
-	return tmp;
+	return vec3(vector - v.getVec());
 }
 
 vec3 vec3::operator * (const vec3 & v)
 {
-	vec3 tmp;
-	tmp.setVec(vector * v.getVec());
-	return tmp;
+	return vec3(vector * v.getVec());
 }
 
 vec3 vec3::operator / (const vec3 & v)
 {
-	vec3 tmp;
-	tmp.setVec(vector / v.getVec());
-	return tmp;
+	return vec3(vector / v.getVec());
 }
 
 vec3 vec3::operator += (const float f)
@@ -198,37 +188,27 @@ vec3 vec3::operator -= (const float f)
 
 vec3 vec3::operator + (const float f)
 {
-	vec3 tmp;
-	tmp.setVec(vector + f);
-	return tmp;
+	return vec3(vector + f);
 }
 
 vec3 vec3::operator - (const float f)
 {
-	vec3 tmp;
-	tmp.setVec(vector - f);
-	return tmp;
+	return vec3(vector - f);
 }
 
 vec3 vec3::operator * (const float f)
 {
-	vec3 tmp;
-	tmp.setVec(vector * f);
-	return tmp;
+	return vec3(vector * f);
 }
 
 vec3 vec3::operator / (const float f)
 {
-	vec3 tmp;
-	tmp.setVec(vector / f);
-	return tmp;
+	return vec3(vector / f);
 }
 
 vec3 vec3::operator- ()
 {
-	vec3 tmp;
-	tmp.setVec(-vector);
-	return tmp;
+	return vec3(-vector);
 }
 
 float& vec3::operator[] (int x)

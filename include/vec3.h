@@ -22,6 +22,7 @@ public:
 	vec3(float x, float y, float z);
 	vec3(const vec4 & v4);
 	vec3(const vec3 & v);
+	vec3(const glm::vec3 & v);
 
 	/**
 	* @brief Get function for glm::vec3 type variable.
