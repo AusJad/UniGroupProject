@@ -89,7 +89,7 @@ private:
 	std::vector<Mesh> modelDetails;
 
 	/// The texture data.
-	std::string texture;
+	std::vector<std::string> texture;
 
 	/// The model data.
 	const aiScene *model;

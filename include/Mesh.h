@@ -46,5 +46,7 @@ public:
 	std::vector<vec3> Normals;
 	/// Vector for the indexies
 	std::vector<unsigned> vertIndex;
+
+	std::string texture;
 };
 

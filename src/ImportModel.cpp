@@ -33,23 +33,25 @@ bool ImportModel::loadModel(std::string filename)
 	}
 
 	aiString path;
-
+	int totalTextures = 0;
 	if (model->HasMaterials()) {
-
 		for (unsigned i = 0; i < model->mNumMaterials; i++)
 		{
 			if (model->mMaterials[i]->GetTextureCount(aiTextureType_DIFFUSE) > 0) {
 				if (model->mMaterials[i]->GetTexture(aiTextureType_DIFFUSE, 0, &path) == AI_SUCCESS)
 				{
-					texture = RandomString(25);
-					if (Singleton<TextureManager>::getInstance()->loadNewTexture(path.data, "TGA", texture, Singleton<RenderModuleStubb>::getInstance()) == false) {
-						texture.clear();
+					texture.push_back(RandomString(25));
+					totalTextures++;
+					if (Singleton<TextureManager>::getInstance()->loadNewTexture(path.data, "TGA", texture[i], Singleton<RenderModuleStubb>::getInstance()) == false) {
+						texture[i].clear();
+						totalTextures--;
 					}
 				}
 			}
+			
 		}
 	}
-
+	
 	Mesh tempMesh;
 	for (unsigned i = 0; i < model->mNumMeshes; i++)
 	{
@@ -57,6 +59,10 @@ bool ImportModel::loadModel(std::string filename)
 		tempMesh.setTexCoords(model->mMeshes[i]);
 		tempMesh.setNormals(model->mMeshes[i]);
 		tempMesh.setIndexes(model->mMeshes[i]);
+		if (totalTextures > i)
+			tempMesh.texture = texture[i];
+		else
+			tempMesh.texture.clear();
 
 		modelDetails.push_back(tempMesh);
 
@@ -167,17 +173,17 @@ void ImportModel::update()
 void ImportModel::render(const vec3 & transmat)
 {
 	vec3 trans(-1 * ((maxx + minx) / 2 - transmat.x()), -1 * ((maxy + miny) / 2 - transmat.y()), -1 * ((maxz + minz) / 2 - transmat.z()));
-	
+
 	for (unsigned i = 0; i < modelDetails.size(); i++)
 	{
-		if (!texture.empty())
-			Singleton<TextureManager>::getInstance()->useTexture(texture, Singleton<RenderModuleStubb>::getInstance());
+		if (modelDetails[i].texture.empty() == false)
+			Singleton<TextureManager>::getInstance()->useTexture(modelDetails[i].texture, Singleton<RenderModuleStubb>::getInstance());
 		if (modelDetails[i].Normals.empty())
 			Singleton<RenderModuleStubb>::getInstance()->renderArrayTri(modelDetails[i].vertIndex, modelDetails[i].Vertices, modelDetails[i].texCoords, trans);
 		else
 			Singleton<RenderModuleStubb>::getInstance()->renderArrayTri(modelDetails[i].vertIndex, modelDetails[i].Vertices, modelDetails[i].Normals, modelDetails[i].texCoords, trans);
-		Singleton<TextureManager>::getInstance()->disableTexture(Singleton<RenderModuleStubb>::getInstance());
 	}
+		Singleton<TextureManager>::getInstance()->disableTexture(Singleton<RenderModuleStubb>::getInstance());
 }
 
 std::string ImportModel::RandomString(unsigned len) {
