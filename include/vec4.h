@@ -19,6 +19,7 @@ public:
 	vec4();
 	vec4(float a, float b, float c, float d);
 	vec4(const vec4 & v);
+	vec4(const glm::vec4 & v);
 
 	/**
 	* @brief Get function for glm::vec4 type variable.

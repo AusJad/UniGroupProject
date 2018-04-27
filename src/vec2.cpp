@@ -16,6 +16,11 @@ vec2::vec2(const vec2 & v)
 	vector = v.getVec();
 }
 
+vec2::vec2(const glm::vec2 & v)
+{
+	vector = v;
+}
+
 glm::vec2 vec2::getVec() const
 {
 	return vector;
@@ -56,11 +61,7 @@ void vec2::add(vec2 vec)
 
 vec2 vec2::normalise()
 {
-	glm::vec2 tmpglm = vector; // So vector isnt effected.
-	glm::normalize(tmpglm);
-	vec2 tmp;
-	tmp.setVec(tmpglm);
-	return tmp;
+	return vec2(normalize(vector));
 }
 
 void vec2::normailse()
@@ -86,16 +87,6 @@ void vec2::operator = (const vec2 & v)
 float& vec2::operator[] (int x)
 {
 	return vector[x];
-}
-
-vec2 vec2::operator* (vec2 v2)
-{
-	glm::vec2 tmpglm;
-	tmpglm = vector * v2.getVec();
-
-	vec2 tmp;
-	tmp.setVec(tmpglm);
-	return tmp;
 }
 
 vec2 vec2::operator += (const vec2 & v)
@@ -124,30 +115,22 @@ vec2 vec2::operator -= (const vec2 & v)
 
 vec2 vec2::operator + (const vec2 & v)
 {
-	vec2 tmp;
-	tmp.setVec(vector + v.getVec());
-	return tmp;
+	return vec2(vector + v.getVec());
 }
 
 vec2 vec2::operator - (const vec2 & v)
 {
-	vec2 tmp;
-	tmp.setVec(vector - v.getVec());
-	return tmp;
+	return vec2(vector - v.getVec());
 }
 
 vec2 vec2::operator * (const vec2 & v)
 {
-	vec2 tmp;
-	tmp.setVec(vector * v.getVec());
-	return tmp;
+	return vec2(vector * v.getVec());
 }
 
 vec2 vec2::operator / (const vec2 & v)
 {
-	vec2 tmp;
-	tmp.setVec(vector / v.getVec());
-	return tmp;
+	return vec2(vector / v.getVec());
 }
 
 vec2 vec2::operator += (const float f)
@@ -176,28 +159,20 @@ vec2 vec2::operator -= (const float f)
 
 vec2 vec2::operator + (const float f)
 {
-	vec2 tmp;
-	tmp.setVec(vector + f);
-	return tmp;
+	return vec2(vector + f);
 }
 
 vec2 vec2::operator - (const float f)
 {
-	vec2 tmp;
-	tmp.setVec(vector - f);
-	return tmp;
+	return vec2(vector - f);
 }
 
 vec2 vec2::operator * (const float f)
 {
-	vec2 tmp;
-	tmp.setVec(vector * f);
-	return tmp;
+	return vec2(vector * f);
 }
 
 vec2 vec2::operator / (const float f)
 {
-	vec2 tmp;
-	tmp.setVec(vector / f);
-	return tmp;
+	return vec2(vector / f);
 }
