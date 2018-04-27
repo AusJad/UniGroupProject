@@ -6,6 +6,17 @@ mat4::mat4()
 
 }
 
+mat4::mat4(float x_0, float y_0, float z_0, float w_0,
+	float x_1, float y_1, float z_1, float w_1,
+	float x_2, float y_2, float z_2, float w_2,
+	float x_3, float y_3, float z_3, float w_3) {
+	
+	matrix = glm::mat4(x_0, y_0, z_0, w_0,
+						x_1, y_1, z_1, w_1,
+						x_2, y_2, z_2, w_2,
+						x_3, y_3, z_3, w_3);
+}
+
 mat4::mat4(const mat4 & m)
 {
 	matrix = m.getMat();
@@ -39,23 +50,47 @@ void mat4::operator = (const mat4 & m)
 
 float & mat4::operator[] (int index)
 {
-	int i;
+	int i = 1;
 
 	if (index <= 3)
 	{
-		i = 0;
+		i = 1;
 	}
 	else if (index <= 7)
 	{
-		i = 1;
+		i = 2;
 	}
 	else if (i <= 11)
 	{
-		i = 2;
+		i = 3;
 	}
 	else
 	{
+		i = 4;
+	}
+
+	return matrix[i][index / i];
+}
+
+float mat4::operator[] (int index) const
+{
+	int i = 1;
+
+	if (index <= 3)
+	{
+		i = 1;
+	}
+	else if (index <= 7)
+	{
+		i = 2;
+	}
+	else if (i <= 11)
+	{
 		i = 3;
+	}
+	else
+	{
+		i = 4;
 	}
 
 	return matrix[i][index / i];

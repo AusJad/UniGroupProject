@@ -49,6 +49,11 @@ void Message::setData(const vec3 & data) {
 	dtype = VDATA;
 }
 
+
+void Message::setsData(std::string data) {
+	mdata.sdata = data;
+}
+
 Data & Message::getData() {
 	return mdata;
 }
@@ -57,6 +62,6 @@ Identifiers & Message::getFrom() {
 	return from;
 }
 
-void Message::setFrom(Identifiers & nid) {
+void Message::setFrom(const Identifiers & nid) {
 	from = nid;
 }

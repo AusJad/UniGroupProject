@@ -201,17 +201,17 @@ void ImportModel::setScale(vec3 & toset) {
 	setMinsAndMaxs();
 }
 
-void ImportModel::update()
+void ImportModel::update(float time)
 {
 }
 
 void ImportModel::render(const vec3 & transmat)
 {
-	vec3 trans(-1 * ((maxx + minx) / 2 - transmat.x()), -1 * ((maxy + miny) / 2 - transmat.y()), -1 * ((maxz + minz) / 2 - transmat.z()));
+	lasttrans = vec3(-1 * ((maxx + minx) / 2 - transmat.x()), -1 * ((maxy + miny) / 2 - transmat.y()), -1 * ((maxz + minz) / 2 - transmat.z()));
 
 	if (texture.empty() == false) Singleton<TextureManager>::getInstance()->useTexture(texture, Singleton<RenderModuleStubb>::getInstance());
-	if(Normals.empty())Singleton<RenderModuleStubb>::getInstance()->renderArrayTri(vertIndex,Vertices, texCoords, trans);
-	else Singleton<RenderModuleStubb>::getInstance()->renderArrayTri(vertIndex, Vertices, Normals, texCoords, trans);
+	if(Normals.empty())Singleton<RenderModuleStubb>::getInstance()->renderArrayTri(vertIndex,Vertices, texCoords, lasttrans);
+	else Singleton<RenderModuleStubb>::getInstance()->renderArrayTri(vertIndex, Vertices, Normals, texCoords, lasttrans);
 	Singleton<TextureManager>::getInstance()->disableTexture(Singleton<RenderModuleStubb>::getInstance());
 }
 

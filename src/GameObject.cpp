@@ -3,7 +3,7 @@
 
 GameObject::GameObject() 
 {
-	state = 0;
+	state = -1;
 	model = NULL;
 }
 
@@ -11,7 +11,7 @@ GameObject::GameObject(Identifiers & id, vec3 pos, ResourceList & list) {
 	this->id = id;
 	this->pos = pos;
 	this->resources = list;
-	state = 0;
+	state = -1;
 	model = NULL;
 }
 
@@ -85,6 +85,26 @@ void GameObject::msgrcvr() {
 	}
 }
 
+bool GameObject::defaultMessageHandler(Message & message) {
+	Identifiers tmp = message.getFrom();
+	if (message.getInstruction() == TARGET_REQUEST) {
+		message.setData(target);
+		message.setFrom(id);
+		message.setInstruction(TARGET_RESPONSE);
+		Singleton<MessagingBus>::getInstance()->postMessage(message, tmp);
+		return true;
+	}
+	if (message.getInstruction() == POS_REQUEST) {
+		message.setData(pos);
+		message.setFrom(id);
+		message.setInstruction(POS_RESPONSE);
+		Singleton<MessagingBus>::getInstance()->postMessage(message, tmp);
+		return true;
+	}
+
+	return false;
+}
+
 bool GameObject::isVisible() {
 	return true;
 }
@@ -106,5 +126,15 @@ vec3 GameObject::getCenterOffset() {
 }
 
 bool GameObject::isCollidable() {
+	return true;
+}
+
+void GameObject::onCollide(vec3 & prevloc, const Identifiers & colgoid) {
+	pos = prevloc;
+
+	stop();
+}
+
+bool GameObject::hasGravity() {
 	return true;
 }

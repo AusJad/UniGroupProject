@@ -36,7 +36,7 @@ public:
 	*
 	* @return Model* - The model data.
 	*/
-	Model* useModel(std::string name);
+	Model* useModel(std::string name, std::string instancename);
 
 	/**
 	* @brief Get the model refrence.

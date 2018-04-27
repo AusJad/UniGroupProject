@@ -55,6 +55,22 @@ Model* ModelFactory::create(std::string path, std::string type) {
 			return NULL;
 		}
 	}
+	if (type == "MD2") {
+		tmp = new MD2Model;
+		if (tmp == NULL) {
+			return tmp;
+		}
+		if (tmp->loadModel(path))
+		{
+			tmp->setId(nextid++);
+			return tmp;
+		}
+		else
+		{
+			delete tmp;
+			return NULL;
+		}
+	}
 
 	return NULL;
 }

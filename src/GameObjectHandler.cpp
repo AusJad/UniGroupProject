@@ -42,11 +42,10 @@ bool GameObjectHandler::addObject(Identifiers id, vec3 pos, ResourceList & list)
 }
 
 void GameObjectHandler::msgrcvr() {
-	MessagingBus* tmp = Singleton<MessagingBus>::getInstance();
 	Message tmpmsg;
 	
-	while (tmp->hasMessage(id)) {
-		tmpmsg = tmp->getMessage(id);
+	while (MSGBS->hasMessage(id)) {
+		tmpmsg = MSGBS->getMessage(id);
 		if (tmpmsg.getInstruction() == ADD_TMP_OBJ) {
 			addTmpObj(Identifiers("BLT"), tmpmsg.getData().mvdata.at(0), tmpmsg.getData().mvdata.at(1), ResourceList("model", tmpmsg.getData().sdata));
 		}
@@ -61,10 +60,16 @@ void GameObjectHandler::update(float time) {
 }
 
 unsigned GameObjectHandler::getNumObjects() {
-	return gameobjects.size();
+	return gameobjects.size() + tmpobjects.size();
 }
 
-GameObject* & GameObjectHandler::getObject(unsigned index) {
+GameObject* GameObjectHandler::getObject(unsigned index) {
+	if (index >= gameobjects.size()) {
+		int ind = index - gameobjects.size();
+		
+		if(tmpobjects.at(ind)->isVisible()) return tmpobjects.at(ind);
+		else return NULL;
+	}
 	return gameobjects.at(index);
 }
 
@@ -124,7 +129,7 @@ bool GameObjectHandler::addTmpObj(Identifiers id, vec3 pos, vec3 target, Resourc
 			tmpobjects.at(i)->setTarget(target);
 			if(Singleton<ModelManger>::getInstance()->getModelRefrence(model.getResource("model")) != NULL)
 			if(Singleton<ModelManger>::getInstance()->getModelRefrence(model.getResource("model"))->getId() != tmpobjects.at(i)->getModel()->getId())
-				tmpobjects.at(i)->setModel(Singleton<ModelManger>::getInstance()->useModel(model.getResource("model")));
+				tmpobjects.at(i)->setModel(Singleton<ModelManger>::getInstance()->useModel(model.getResource("model"), "NAN"));
 		}
 	}
 
@@ -157,7 +162,7 @@ void  GameObjectHandler::refreshTree() {
 std::vector<GameObject*> GameObjectHandler::findSpatiallyGroupedGameObjects(GameObject* tofind) {
 	searchres.clear();
 	gameobjectQT.search(comparisonfunc, onFind, getposfunc, GameObjectWrapper(tofind));
-	return searchres;
+	return gameobjects;
 }
 
 pair GameObjectHandler::getposfunc(const GameObjectWrapper & element) {

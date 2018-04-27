@@ -36,5 +36,35 @@ public:
 	* @return vec3 - The offset.
 	*/
 	vec3 getCenterOffset();
+
+	const vec3 & getVelocity();
+
+	const float & getHealth();
+
+	void setVelocity(const vec3 & velocity);
+
+	void setHealth(float health);
+
+	void setSpeed(float speed);
+
+	float getSpeed();
+
+	void stop();
+
+	bool NPCDefaultMessageHandler(Message & message);
+	
+	const vec3 & getHeading();
+
+	void setHeading(const vec3 & heading);
+
+	void lookAt(vec3 target);
+
+private:
+	vec3 velocity;
+	vec3 heading;
+	float lookmat[16];
+	bool lookat ;
+	float health;
+	float speed;
 };
 

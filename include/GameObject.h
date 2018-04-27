@@ -139,6 +139,12 @@ public:
 	*/
 	virtual bool isCollidable();
 
+	bool defaultMessageHandler(Message & message);
+
+	virtual void onCollide(vec3 & prevloc, const Identifiers & colgoid);
+
+	virtual bool hasGravity();
+
 protected:
 	/// The state of the object.
 	int state;

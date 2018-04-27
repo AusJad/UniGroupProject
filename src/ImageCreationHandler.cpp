@@ -8,15 +8,17 @@ ImageCreationHandler::ImageCreationHandler()
 
 ImageCreationHandler::~ImageCreationHandler()
 {
-	if (currimage != NULL){
+	if (currimage != NULL) {
 		currimage->clear();
 		delete currimage;
 		currimage = NULL;
 	}
 }
 
-bool ImageCreationHandler::CreateImage(std::string path, std::string type){
+bool ImageCreationHandler::CreateImage(std::string path, std::string type) {
 	ImageLoaderFactory temp;
+
+	if (currimage != NULL) currimage->clear();
 
 	currimage = temp.getNewLoader(type);
 
@@ -24,7 +26,7 @@ bool ImageCreationHandler::CreateImage(std::string path, std::string type){
 
 	bool success = currimage->loadFile(path);
 
-	if (!success){
+	if (!success) {
 		currimage->clear();
 		delete currimage;
 		currimage = NULL;
@@ -34,17 +36,18 @@ bool ImageCreationHandler::CreateImage(std::string path, std::string type){
 	return true;
 }
 
-bool ImageCreationHandler::bindImage(const int & id, RenderModuleStubb* renderer){
+bool ImageCreationHandler::bindImage(const int & id, RenderModuleStubb* renderer) {
 	if (currimage == NULL) return false;
-	
+
 	renderer->storeTexture(id, currimage->getBits(), currimage->getWidth(), currimage->getHeight(), currimage->getData());
+
 	currimage->clear();
 	delete currimage;
 	currimage = NULL;
 	return true;
 }
 
-void ImageCreationHandler::unbindImage(const int & id, RenderModuleStubb* renderer){
+void ImageCreationHandler::unbindImage(const int & id, RenderModuleStubb* renderer) {
 	renderer->deleteTexture(id);
 }
 
@@ -59,7 +62,7 @@ bool ImageCreationHandler::CreateMultiTexture(std::vector<vec3> heightmap, std::
 	unsigned dataind = 0;
 
 	for (unsigned i = 0; i < textures.size() && good; i += 2) {
-		good = CreateImage(textures.at(i), textures.at(i+1));
+		good = CreateImage(textures.at(i), textures.at(i + 1));
 		if (good) {
 			data[dataind] = new unsigned char[currimage->getDataSize()];
 
@@ -84,19 +87,19 @@ bool ImageCreationHandler::CreateMultiTexture(std::vector<vec3> heightmap, std::
 		return false;
 	}
 
-	unsigned char* imagedata = new unsigned char[heightmap.size()*3];
+	unsigned char* imagedata = new unsigned char[heightmap.size() * 3];
 
 	float height;
 
 	float weight;
 
-	float range = 255 / (float) (textures.size() / 2);
+	float range = 255 / (float)(textures.size() / 2);
 
 	unsigned char rgb[3];
 
 	int ntexind = 0;
 
-	int dimensions = (int) sqrt(heightmap.size());
+	int dimensions = (int)sqrt(heightmap.size());
 
 	unsigned xind;
 	unsigned zind;
@@ -106,16 +109,16 @@ bool ImageCreationHandler::CreateMultiTexture(std::vector<vec3> heightmap, std::
 		rgb[0] = 0;
 		rgb[1] = 0;
 		rgb[2] = 0;
-		xind = (int) heightmap.at(i).x();
-		zind = (int) heightmap.at(i).z();
+		xind = (int)heightmap.at(i).x();
+		zind = (int)heightmap.at(i).z();
 
 		for (unsigned j = 0; j < textures.size() / 2; j++) {
-			weight = (range - abs(height - ((j+1)*range))) / range;
+			weight = (range - abs(height - ((j + 1)*range))) / range;
 
 			if (weight > 0) {
-				rgb[0] += (unsigned char) data[j][((xind + (zind * dimensions))*3)]*weight;
-				rgb[1] += (unsigned char) data[j][((xind + (zind * dimensions))*3) + 1]*weight;
-				rgb[2] += (unsigned char) data[j][((xind + (zind * dimensions))*3) + 2]*weight;
+				rgb[0] += (unsigned char)data[j][((xind + (zind * dimensions)) * 3)] * weight;
+				rgb[1] += (unsigned char)data[j][((xind + (zind * dimensions)) * 3) + 1] * weight;
+				rgb[2] += (unsigned char)data[j][((xind + (zind * dimensions)) * 3) + 2] * weight;
 			}
 		}
 		imagedata[((xind + (zind * dimensions)) * 3)] = rgb[0];
@@ -132,6 +135,20 @@ bool ImageCreationHandler::CreateMultiTexture(std::vector<vec3> heightmap, std::
 	delete[] data;
 
 	delete[] imagedata;
+
+	return true;
+}
+
+unsigned char* ImageCreationHandler::getActiveImageData() {
+	if (currimage == NULL) return NULL;
+
+	return currimage->getData();
+}
+
+bool ImageCreationHandler::bindSubImage(const int & id, unsigned subwidth, unsigned subheight, unsigned x, unsigned y) {
+	if (currimage == NULL) return NULL;
+
+	RNDR->genSubTex(id, currimage->getBits(), currimage->getWidth(), currimage->getHeight(), x, y, subwidth, subheight, currimage->getData());
 
 	return true;
 }

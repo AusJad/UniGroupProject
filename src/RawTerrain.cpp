@@ -12,7 +12,7 @@ RAWTerrain::~RAWTerrain()
 
 }
 
-void RAWTerrain::update() {
+void RAWTerrain::update(float time) {
 
 }
 

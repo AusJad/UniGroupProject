@@ -127,18 +127,11 @@ public:
 	void add(vec3 vec);
 
 	/**
-	* @brief Nomalize returning vec3.
-	*
-	* @return vec3 - The normalized vector
-	*/
-	vec3 normalize();
-
-	/**
 	* @brief Normalize returning void.
 	*
 	* @return NONE.
 	*/
-	void normailse();
+	const vec3 &  normailse();
 
 	/**
 	* @brief Use dot mulitplcation
@@ -329,6 +322,8 @@ public:
 	* @return NONE.
 	*/
 	void operator = (const vec3 & v);
+
+	float getLength();
 
 private:
 	glm::vec3 vector; /// GLM type vec3.

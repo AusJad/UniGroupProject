@@ -25,7 +25,7 @@ Camera::Camera(Identifiers & id, vec3 pos, ResourceList & list) : GameObject(id,
 	maxAngle = 80.0f;
 	maxNangle = -80.0f;
 	birdseye = false;
-	yoff = 10.0f;
+	yoff = 20.0f;
 }
 
 void Camera::update(float time) {
@@ -57,6 +57,10 @@ void Camera::update(float time) {
 
 		tmpm = tmp->getMessage(id);
 
+		if (defaultMessageHandler(tmpm)) {
+			//no action -- handled automatically.
+		}
+		else
 		if (tmpm.getInstruction() == "MVF") {
 			this->moveForward = true;
 		}

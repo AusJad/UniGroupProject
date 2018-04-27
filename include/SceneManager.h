@@ -2,6 +2,7 @@
 #include "Scene.h"
 #include "AudioEngine.h"
 #include "Controls.h"
+#include "Console.h"
 
 /**
 * @class SceneManager
@@ -110,6 +111,8 @@ public:
 	*/
 	bool attachControls(unsigned sceneno, ResourceList toset);
 
+	void attachConsoleBehaviour(std::string entrypoint);
+
 private:
 	/// The scene vector.
 	std::vector<Scene> scenes;
@@ -117,6 +120,8 @@ private:
 	unsigned currscene;
 	/// The identifier.
 	Identifiers id;
+
+	Console console;
 	
 	/**
 	* @brief Initalise the scene.

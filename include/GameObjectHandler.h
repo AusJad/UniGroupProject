@@ -103,7 +103,7 @@ public:
 	*
 	* @return GameObject * - The game object.
 	*/
-	GameObject* & getObject(unsigned index);
+	GameObject* getObject(unsigned index);
 
 	/**
 	* @brief Refresh the quadtree.

@@ -13,6 +13,7 @@ void CtoLUABinder::bindClasses(lua_State* lstate) {
 			.def("setSceneHeightMap", &SceneManager::setSceneHeightMap)
 			.def("attachControls", &SceneManager::attachControls)
 			.def("attachTerrain", &SceneManager::attachTerrain)
+			.def("attachConsoleBehaviour", &SceneManager::attachConsoleBehaviour)
 	];
 	luabind::module(lstate)[
 		luabind::class_<vec3>("vec3")
@@ -24,6 +25,10 @@ void CtoLUABinder::bindClasses(lua_State* lstate) {
 			.def("x", &vec3::x)
 			.def("y", &vec3::y)
 			.def("z", &vec3::z)
+			.def(luabind::self + vec3())
+			.def(luabind::self - vec3())
+			.def(luabind::self / vec3())
+			.def(luabind::self * vec3())
 	];
 	luabind::module(lstate)[
 		luabind::class_<LUAScriptManager >("LUAScriptManager")
@@ -41,6 +46,19 @@ void CtoLUABinder::bindClasses(lua_State* lstate) {
 			.def("getState", &NPC::getState)
 			.def("getID", &NPC::getID)
 			.def("getIdentifiers", &NPC::getIdentifiers)
+			.def("getHealth", &NPC::getHealth)
+			.def("setHealth", &NPC::setHealth)
+			.def("getVelocity", &NPC::getVelocity)
+			.def("setVelocity", &NPC::setVelocity)
+			.def("getTarget", &NPC::getTarget)
+			.def("setTarget", &NPC::setTarget)
+			.def("getSpeed", &NPC::getSpeed)
+			.def("setSpeed", &NPC::setSpeed)
+			.def("defaultMessageHandler", &NPC::defaultMessageHandler)
+			.def("NPCDefaultMessageHandler", &NPC::NPCDefaultMessageHandler)
+			.def("getHeading", &NPC::getHeading)
+			.def("setHeading", &NPC::setHeading)
+			.def("lookAt", &NPC::lookAt)
 	];
 	luabind::module(lstate)[
 		luabind::class_<StaticEntity>("StaticEntity")
@@ -54,7 +72,7 @@ void CtoLUABinder::bindClasses(lua_State* lstate) {
 			.def("getIdentifiers", &StaticEntity::getIdentifiers)
 	];
 	luabind::module(lstate)[
-		luabind::class_<MenuObject>("StaticEntity")
+		luabind::class_<MenuObject>("MenuObject")
 			.def(luabind::constructor<>())
 			.def(luabind::constructor<Identifiers &, vec3, ResourceList>())
 			.def("setPos", &MenuObject::setPos)
@@ -123,8 +141,16 @@ void CtoLUABinder::bindClasses(lua_State* lstate) {
 			.def(luabind::constructor<std::string>())
 			.def("getInstruction", &Message::getInstruction)
 			.def("setInstruction", &Message::setInstruction)
+			.def("setFrom", &Message::setFrom)
+			.def("getFrom", &Message::getFrom)
 			.def("setfData", &Message::setfData)
 			.def("setiData", &Message::setIData)
+			.def("setsData", &Message::setsData)
+			.def("getData", &Message::getData)
+	];
+	luabind::module(lstate)[
+		luabind::class_<Data>("data")
+			.def("getvData", &Data::getvData)
 	];
 	luabind::module(lstate)[
 		luabind::class_<ResourceList>("ResourceList")
@@ -158,5 +184,15 @@ void CtoLUABinder::bindClasses(lua_State* lstate) {
 			.def("equals", &SimpleString::equals)
 			.def("toDouble", &SimpleString::toDouble)
 			.def("getData", &SimpleString::getData)
+			.def("setData", &SimpleString::setData)
+	];
+	luabind::module(lstate, "AIMvmnt")[
+		luabind::def("Seek", &AIMovementBehaviours::Seek),
+		luabind::def("Flee", &AIMovementBehaviours::Flee), 
+		luabind::def("Arrive", &AIMovementBehaviours::Arrive),
+		luabind::def("Chase", &AIMovementBehaviours::Chase),
+		luabind::def("capSpeed", &AIMovementBehaviours::capSpeed), 
+		luabind::def("getDistance", &AIMovementBehaviours::getDistance),
+		luabind::def("faceTarget", &AIMovementBehaviours::faceTarget)
 	];
 }

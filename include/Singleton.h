@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cstddef>
+
 /**
 * @class Singleton
 * @brief Class for creating a singleton data type

@@ -55,6 +55,23 @@ void RenderModuleStubb::storeTexture(const int & texID, unsigned pixelsize, unsi
 	glBindTexture(GL_TEXTURE_2D, NULL);
 }
 
+void RenderModuleStubb::genSubTex(const int & texID, unsigned pixelsize, unsigned width, unsigned height, unsigned subx, unsigned suby, unsigned subwidth, unsigned subheight, const unsigned char* data) {
+	glGenTextures(1, (GLuint*)&texID);
+
+	glBindTexture(GL_TEXTURE_2D, texID);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+	glPixelStorei(GL_UNPACK_ROW_LENGTH, width);
+	unsigned char *subimg = (unsigned char*)(data + (subx + suby*width) * 3);
+
+	glTexImage2D(GL_TEXTURE_2D, 0, (pixelsize == 24) ? GL_RGB : GL_RGBA, subwidth, subheight, 0, (pixelsize == 24) ? GL_RGB : GL_RGBA, GL_UNSIGNED_BYTE, (const GLvoid*)subimg);
+
+	glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
+
+	glBindTexture(GL_TEXTURE_2D, NULL);
+}
+
 void  RenderModuleStubb::deleteTexture(const int & texID) {
 	glDeleteTextures(1, (GLuint*)&texID);
 }
@@ -131,9 +148,9 @@ void RenderModuleStubb::msgrcvr() {
 			wireframe = !wireframe;
 		}
 		else
-		if (tmpm.getInstruction() == KILL) {
-			running = false;
-		}
+			if (tmpm.getInstruction() == KILL) {
+				running = false;
+			}
 	}
 }
 
@@ -216,8 +233,10 @@ void RenderModuleStubb::init(int argc, char** argv) {
 		glfwTerminate();
 	}
 
+	glfwSetWindowSizeLimits(window, 1280, 720, 1280, 720);
+
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
-	::ShowWindow(::GetConsoleWindow(), SW_HIDE);
+	//::ShowWindow(::GetConsoleWindow(), SW_HIDE);
 	reshape(window, 1280, 720);
 	glClearColor(0.52f, 0.8f, 0.8f, 0.92f);
 	glClearDepth(1.0f);
@@ -294,6 +313,13 @@ void RenderModuleStubb::reshape(GLFWwindow* window, int width, int height) {
 void RenderModuleStubb::callLookAt(vec3 r1, vec3 r2, vec3 r3) {
 	campos = r1;
 	camlook = r2;
+}
+
+void RenderModuleStubb::callLookAtImmediate(vec3 r1, vec3 r2, vec3 r3) {
+	glPushMatrix();
+	gluLookAt(r1.x(), r1.y(), r1.z(),
+		r2.x(), r2.y(), r2.z(),
+		r3.x(), r3.y(), r3.z());
 }
 
 float RenderModuleStubb::getTimeElapsed() {
@@ -438,4 +464,17 @@ void RenderModuleStubb::setLightposition(int lightNo, float first, float second,
 
 HWND RenderModuleStubb::getWinWindow() {
 	return glfwGetWin32Window(window);
+}
+
+void RenderModuleStubb::pushMatrix(const float mat[16]) {
+	glPushMatrix();
+	glMultMatrixf(mat);
+}
+
+void RenderModuleStubb::popMatrix() {
+	glPopMatrix();
+}
+
+GeometeryStream & RenderModuleStubb::getGeoStream() {
+	return geoStream;
 }

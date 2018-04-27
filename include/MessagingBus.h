@@ -5,7 +5,10 @@
 #include "Message.h"
 #include "Identifiers.h"
 #include "MessageTypes.h"
+#include "Singleton.h"
 #include <iostream>
+
+#define MSGBS Singleton<MessagingBus>::getInstance()
 
 /**
 * @class MessagingBus

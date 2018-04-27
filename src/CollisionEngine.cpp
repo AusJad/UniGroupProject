@@ -37,10 +37,7 @@ void CollisionEngine::setHeightMap(std::vector<vec3> & toset) {
 	hasHMap = true;
 }
 
-
-//CollGO - vector of object pointers it is possible for the current entity to collide with
-//Taken from the quad tree
-void CollisionEngine::update(GameObject* & toupdate, std::vector<GameObject*> collGO, float time) {
+void CollisionEngine::update(GameObject* toupdate, std::vector<GameObject*> collGO, float time) {
 	if (toupdate->isCollidable() == false) {
 		vec3 tmpos = toupdate->getPos();
 		
@@ -70,8 +67,7 @@ void CollisionEngine::update(GameObject* & toupdate, std::vector<GameObject*> co
 			compb = genAABB(collGO.at(i));
 			if (updateb.xmax >= compb.xmin && updateb.xmin <= compb.xmax
 				&& updateb.zmax >= compb.zmin && updateb.zmin <= compb.zmax) {
-				toupdate->setPos(tmpos);
-				toupdate->stop();
+				toupdate->onCollide(tmpos, collGO.at(i)->getIdentifiers());
 			}
 		}
 	}
@@ -85,7 +81,7 @@ void CollisionEngine::update(GameObject* & toupdate, std::vector<GameObject*> co
 			toupdate->stop();
 		}
 
-		if (x < maxx && x > minx && z > minz && z < maxz && hasHMap) {
+		if (x < maxx && x > minx && z > minz && z < maxz && hasHMap && toupdate->hasGravity()) {
 			HMPos hmloc = findHMLocation(toupdate->getPos());
 
 			float y = interpolateY(toupdate->getPos(), hmloc);
@@ -102,9 +98,9 @@ AABB CollisionEngine::genAABB(GameObject* toupdate) {
 			toupdate->getPos().y() + 7.0f, toupdate->getPos().y() - 7.0f,
 			toupdate->getPos().z() + 7.0f, toupdate->getPos().z() - 7.0f);
 	else 
-		return AABB(toupdate->getModel()->getMaxX(), toupdate->getModel()->getMinX(),
-		toupdate->getModel()->getMaxY(), toupdate->getModel()->getMinY(),
-		toupdate->getModel()->getMaxZ(), toupdate->getModel()->getMinZ());
+		return AABB(toupdate->getModel()->getMaxTX(), toupdate->getModel()->getMinTX(),
+		toupdate->getModel()->getMaxTY(), toupdate->getModel()->getMinTY(),
+		toupdate->getModel()->getMaxTZ(), toupdate->getModel()->getMinTZ());
 }
 
 HMPos CollisionEngine::findHMLocation(const vec3 & pos) {

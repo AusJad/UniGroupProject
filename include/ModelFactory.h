@@ -4,7 +4,7 @@
 #include "RawTerrain.h"
 #include "ImportModel.h"
 #include "TexturedSquare.h"
-
+#include "MD2Model.h"
 
 /**
 * @class ModelFactory

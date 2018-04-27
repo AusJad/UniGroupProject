@@ -1,8 +1,7 @@
+require "./Resources/Scripts/controls";
+require "./Resources/Scripts/npcai";
+require "./Resources/Scripts/console";
 
-local function loadScripts(LSM)
-	--Load Scripts
-	LSM:doScriptFromFile("./Resources/Scripts/controls.lua");
-end
 
 local function loadResources(AMAN)
 	--Load height maps
@@ -15,6 +14,12 @@ local function loadResources(AMAN)
 	AMAN:addResource("./Resources/Audio/rb.wav", "WAV", "robotnoise");
 	AMAN:addSound("./Resources/Audio/gunshot.wav", "WAV", "gunshot", false);
 
+	--Load fonts
+	if(AMAN:addResource("./Resources/Fonts/DODGE.csv", "FNT", "DODGE")) then print("Successfully Loaded Resource DODGE.");
+	else print("Failed to Load Resource DODGE."); end
+	if(AMAN:addResource("./Resources/Fonts/COURIER_NEW.csv", "FNT", "COURIER_NEW")) then print("Successfully Loaded Resource COURIER_NEW.");
+	else print("Failed to Load Resource COURIER_NEW."); end
+
 	--Load models
 	AMAN:addResource("./Resources/Models/lvl1popup.tsqr", "TX", "popup");
 	AMAN:addResource("./Resources/Models/lvl2popup.tsqr", "TX", "popup2");
@@ -22,19 +27,23 @@ local function loadResources(AMAN)
 	AMAN:addModel("./Resources/Models/Rock.obj", "IM", "rock", vec3(15,15,15));
 	AMAN:addModel("./Resources/Models/bullet.obj", "IM", "bullet", vec3(1,1,1));
 	AMAN:addModel("./Resources/Models/robotgreen.obj", "IM", "Robot", vec3(0.5,0.5,0.5));
-	AMAN:addModel("./Resources/Models/robotorange.obj", "IM", "Robot2", vec3(0.3,0.3,0.3));
+	AMAN:addModel("./Resources/Models/robotgreen.obj", "IM", "Robot2", vec3(0.3,0.3,0.3));
 	AMAN:addModel("./Resources/Models/corvet.obj", "IM", "ship", vec3(0.9,0.9,0.9));
+	if AMAN:addModel("./Resources/Models/tris.md2", "MD2", "doomguy", vec3(0.6,0.6,0.6)) == false then
+	print("Bad") end
 end
 
 function initGame(SM, LSM, AMAN, AE)
 
 	--Load resources
-	loadScripts(LSM);
 	loadResources(AMAN);
-	
+
 	--Seed random for deterministic object placement
 	math.randomseed(5);
-	
+
+	--Set Console Behaviour
+	SM:attachConsoleBehaviour("consoleEntryPoint");
+
 	--Initalise Level 1
 	SM:addScene();
 	SM:setCurrScene(0);
@@ -46,13 +55,14 @@ function initGame(SM, LSM, AMAN, AE)
 	--Adding game objects
 	for i = 11,1,-1 
 	do 
+		id = tostring(math.random())
 		SM:addObject(Identifiers("SE"), 0, vec3(math.random (-128*40, 128*40), 0, math.random(-128*40, 128*40)), ResourceList("model", "rock")); 
-		SM:addObject(Identifiers("NPC"), 0, vec3(math.random(-128*40, 128*40), 0, math.random(-128*40, 128*40)), ResourceList("model", "Robot"));
+		SM:addObject(Identifiers("NPC", id), 0, vec3(math.random(-128*40, 128*40), 0, math.random(-128*40, 128*40)), ResourceList("model", "doomguy", "updatefunc", "start", "msgrcvr", "msgrcvr"));
 	end
-	SM:addObject(Identifiers("CAM","Camera"), 0, vec3(0, 0, 0), ResourceList());
-	SM:addObject(Identifiers("PLYR", "Player"), 0, vec3(0, 0, 0), ResourceList("camera", "Camera", "projmodel", "bullet", "projsnd", "gunshot"));
+	SM:addObject(Identifiers("CAM","Camera"), 0, vec3(0, 0, 1000), ResourceList());
+	SM:addObject(Identifiers("PLYR", "Player"), 0, vec3(0, 0, 1000), ResourceList("camera", "Camera", "projmodel", "bullet", "projsnd", "gunshot"));
 	SM:addObject(Identifiers("MO","Guide"), 0, vec3(0, 0, 0), ResourceList("model", "popup"));
-	SM:addObject(Identifiers("NPC", "R1`"), 0, vec3(-80,0,0), ResourceList("model", "Robot"));
+	SM:addObject(Identifiers("NPC", "R1"), 0, vec3(-80,0,0), ResourceList("model", "Robot", "updatefunc", "start", "msgrcvr", "msgrcvr"));
 	SM:addObject(Identifiers("NPC", "R2"), 0, vec3(480,0,-1000), ResourceList("model", "Robot"));
 	SM:addObject(Identifiers("PROP", "ship"), 0, vec3(-1000,1500,2000), ResourceList("model", "ship"));
 	SM:addObject(Identifiers("PROP", "ship2"), 0, vec3(1000,2000,-2000), ResourceList("model", "ship"));
@@ -62,7 +72,7 @@ function initGame(SM, LSM, AMAN, AE)
 
 	--Setup sound
 	AE:setListenerSource(SM:GetGameObjectID("Camera"), vec3(0, 0, 0));
-	AE:playSoundatSource("bgmusic", SM:GetGameObjectID("Camera"), vec3(0, 0, 0));
+	--AE:playSoundatSource("bgmusic", SM:GetGameObjectID("Camera"), vec3(0, 0, 0));
 	AE:playSoundatSource("robotnoise", SM:GetGameObjectID("R1"), vec3(-80,0,0));
 	AE:playSoundatSource("robotnoise", SM:GetGameObjectID("R2"), vec3(480,0,-1000));
 	

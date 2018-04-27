@@ -4,6 +4,7 @@
 #include "Singleton.h"
 #include "AudioEngine.h"
 #include "ModelManger.h"
+#include "FontEngine.h"
 
 /**
 * @class AssetManager

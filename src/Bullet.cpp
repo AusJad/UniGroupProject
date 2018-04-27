@@ -4,7 +4,7 @@ Bullet::Bullet(Identifiers & id, vec3 pos, ResourceList & list) {
 	lifespan = 5.0f;
 	timealive = 0.0f;
 	inUse = true;
-	speed = 1000;
+	speed = 500;
 }
 
 Bullet::Bullet() {
@@ -39,12 +39,28 @@ void Bullet::render() {
 		GameObject::model->render(this->pos);
 	}
 	else {
-		RenderModuleStubb* tmp = Singleton<RenderModuleStubb>::getInstance();
-
-		tmp->DrawQuad(point(pos.x(), pos.y() + 1), point(pos.x() + 1, pos.y()), pos.z());
+		RNDR->DrawQuad(point(pos.x(), pos.y() + 1), point(pos.x() + 1, pos.y()), pos.z());
 	}
 }
 
 bool Bullet::isVisible() {
 	return inUse;
+}
+
+void Bullet::onCollide(vec3 & prevloc, const Identifiers & colgoid) {
+
+	if (this->timealive > 0.1) {
+		Message tmpm;
+
+		tmpm.setInstruction(DAMAGE);
+		tmpm.setIData(15000);
+
+		MSGBS->postMessage(tmpm, colgoid);
+
+		this->inUse = false;
+	}
+}
+
+bool Bullet::hasGravity() {
+	return false;
 }

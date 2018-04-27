@@ -30,7 +30,7 @@ void terrain::genLightmap() {
 
 	int dirZ = -1;
 
-	float softness = 0.2;
+	float softness = 0.2f;
 
 	float minBrightness = 0.3f;
 	float maxBrightness = 8.0f;
@@ -42,7 +42,7 @@ void terrain::genLightmap() {
 		for (unsigned x = 0; x < dimensions; x++) {
 			int x1 = x - dirX;
 			int z1 = z - dirZ;
-			if (x1<0 || x1 >= dimensions || z1 <0 || z1 >= dimensions) {
+			if (x1<0 || x1 >= (int) dimensions || z1 <0 || z1 >= (int)dimensions) {
 				shade = 1.0f;
 			}
 			else {

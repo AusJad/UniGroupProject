@@ -36,17 +36,9 @@ function keys(key, action, MB)
 		elseif(action:equals("release")) then
 			MB:postMessage(Message("SLU"), Identifiers("", "Camera"));
 		end 
-	elseif key:equals("B") then
-		if action:equals("press") then
-			MB:postMessage(Message("SVM"), Identifiers("", "Camera"));
-		end
 	elseif key:equals("m") or key:equals("M") then
 		if action:equals("press") then
 			MB:postMessage(Message("TG"), Identifiers("", "Guide"));
-		end
-	elseif key:equals("k") or key:equals("K") then
-		if action:equals("press") then
-			MB:postMessage(Message("WF"), Identifiers("", "RM"));
 		end
 	elseif key:equals("space") then
 		if action:equals("press") then
@@ -56,6 +48,17 @@ function keys(key, action, MB)
 		if action:equals("press") then
 			tmpm = Message("CS");
 			tmpm:setiData(2);
+			MB:postMessage(tmpm, Identifiers("", "SM"));
+		end
+	elseif key:equals("`") then
+		if action:equals("press") then
+			MB:postMessage(Message("SMF"), Identifiers("", "Camera"));
+			MB:postMessage(Message("SML"), Identifiers("", "Camera"));
+			MB:postMessage(Message("SMR"), Identifiers("", "Camera"));
+			MB:postMessage(Message("SMB"), Identifiers("", "Camera"));
+			MB:postMessage(Message("SLD"), Identifiers("", "Camera"));
+			MB:postMessage(Message("SLU"), Identifiers("", "Camera"));
+			tmpm = Message("TGL_C");
 			MB:postMessage(tmpm, Identifiers("", "SM"));
 		end
 	elseif key:equals("o") or key:equals("O") then

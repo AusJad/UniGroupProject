@@ -56,6 +56,10 @@ public:
 	* @return bool - If the multi-texture was created.
 	*/
 	bool CreateMultiTexture(std::vector<vec3> heightmap, std::vector<std::string> textures, std::string name, const int & id);
+
+	unsigned char* getActiveImageData();
+
+	bool bindSubImage(const int & id, unsigned subwidth, unsigned subheight, unsigned x, unsigned y);
 private:
 	/// Current image loader object.
 	ImageLoader* currimage;

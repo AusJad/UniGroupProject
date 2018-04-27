@@ -8,12 +8,12 @@
 #include "glfw/glfw3.h"
 #include "GLFW/glfw3native.h"
 #include <vector>
-//#include "vec3.h"
-//#include "vec2.h"
+#include "vec3.h"
+#include "vec2.h"
 #include "MessagingBus.h"
 #include "Singleton.h"
 #include "Identifiers.h"
-#include "Maths.h"
+#include "GeometeryStream.h"
 
 /**
 * @struct
@@ -23,9 +23,9 @@
 * @version 01
 * @date 02/04/2018
 */
-struct point{
+struct point {
 	float x, y;
-	point(float x, float y){ this->x = x; this->y = y; };
+	point(float x, float y) { this->x = x; this->y = y; };
 };
 
 struct light {
@@ -35,6 +35,9 @@ struct light {
 	float position[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
 	bool enabled = false;
 };
+
+#define GeoStream Singleton<RenderModuleStubb>::getInstance()->getGeoStream()
+#define RNDR Singleton<RenderModuleStubb>::getInstance()
 
 /**
 * @class RenderModuleStubb
@@ -53,7 +56,7 @@ public:
 	/**
 	* @brief Initalise the render function.
 	*
-	* @param argc 
+	* @param argc
 	* @param argv
 	*/
 	void init(int argc, char** argv);
@@ -180,6 +183,8 @@ public:
 	*/
 	void callLookAt(vec3 r1, vec3 r2, vec3 r3);
 
+	void callLookAtImmediate(vec3 r1, vec3 r2, vec3 r3);
+
 	/**
 	* @brief Disbale the multi-texture.
 	*/
@@ -241,6 +246,15 @@ public:
 	* @param bool - If the window should continue.
 	*/
 	bool shouldContinue();
+
+
+	void pushMatrix(const float mat[16]);
+
+	void popMatrix();
+
+	GeometeryStream & getGeoStream();
+
+	void genSubTex(const int & texID, unsigned pixelsize, unsigned width, unsigned height, unsigned subx, unsigned suby, unsigned subwidth, unsigned subheight, const unsigned char* data);
 
 private:
 	/// The window.
@@ -321,5 +335,7 @@ private:
 	* @brief Confirm lighting changes.
 	*/
 	void commitLights();
+
+	GeometeryStream geoStream;
 };
 

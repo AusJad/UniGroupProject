@@ -24,6 +24,14 @@ void Scenery::render() {
 
 void Scenery::update(float time) {
 	msgrcvr();
+
+	LUAScriptManager* tmp = Singleton<LUAScriptManager>::getInstance();
+
+	if (resources.hasResource("msgrcvr"))
+		tmp->callFunction<Scenery, MessagingBus>(resources.getResource("msgrcvr"), *this, *(Singleton<MessagingBus>::getInstance()));
+
+	if (resources.hasResource("updatefunc"))
+		tmp->callFunction<Scenery, MessagingBus>(resources.getResource("updatefunc"), *this, *(Singleton<MessagingBus>::getInstance()));
 }
 
 vec3 Scenery::getCenterOffset() {

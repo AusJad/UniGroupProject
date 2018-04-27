@@ -15,7 +15,9 @@ extern "C" {
 #define LUAERROR luabind::error& e
 #define LUAERRORMSG e
 
-#define DEBUGMODE false
+#define DEBUGMODE true
+
+#define LSM Singleton<LUAScriptManager>::getInstance()
 
 /**
 * @class LUAScriptManager

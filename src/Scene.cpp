@@ -27,7 +27,7 @@ void Scene::update(float time) {
 	objects.refreshTree();
 
 	for (unsigned i = 0; i < objects.getNumObjects(); i++) {
-		collision.update(objects.getObject(i), objects.findSpatiallyGroupedGameObjects(objects.getObject(i)), time);
+		if(objects.getObject(i) != NULL) collision.update(objects.getObject(i), objects.findSpatiallyGroupedGameObjects(objects.getObject(i)), time);
 	}
 
 	objects.update(time);

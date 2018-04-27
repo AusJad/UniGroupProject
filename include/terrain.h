@@ -34,7 +34,7 @@ class terrain : public Model
 		/**
 		* @brief Virtual update function.
 		*/
-		virtual void update() = 0;
+		virtual void update(float time) = 0;
 
 		/**
 		* @brief Virtual render function.

@@ -6,6 +6,8 @@
 #include "LUAScriptManager.h"
 #include "SimpleString.h"
 
+#define CONT Singleton<Controls>::getInstance()
+
 /**
 * @class Controls
 * @brief Class for handling user input
@@ -55,6 +57,8 @@ class Controls
 		* @return bool - If the controls were changed.
 		*/
 		static bool changeControlGroup(unsigned groupno, RenderModuleStubb* render, Controls* tochange);
+
+		static void switchContextConsole(bool active, RenderModuleStubb* render, Controls* tochange);
 
 	private:
 		/// Map of resource lists with a ID.
@@ -115,4 +119,7 @@ class Controls
 		* @param mods - ID for any special action to be taken.
 		*/
 		static void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
+
+		//Coded in C++ for enhanced speed
+		static void Controls::ConsoleCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 };

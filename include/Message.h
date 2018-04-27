@@ -29,6 +29,7 @@ public:
 	std::string sdata;
 	vec3 vdata;
 	std::vector<vec3> mvdata;
+	const vec3 & getvData() { return vdata; }
 };
 
 /**
@@ -71,7 +72,7 @@ public:
 	*
 	* @param nid - The new identifier.
 	*/
-	void setFrom(Identifiers & nid);
+	void setFrom(const Identifiers & nid);
 
 	/**
 	* @brief Set the float data.
@@ -123,6 +124,8 @@ public:
 	char getDType();
 
 	void setIData(int idata);
+
+	void setsData(std::string data);
 
 private:
 	/// The data type.

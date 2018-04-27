@@ -9,7 +9,7 @@
 #include "MessagingBus.h"
 #include "Identifiers.h"
 
-#define DEBUGMODE false
+#define DEBUGMODE true
 
 /**
 * @struct SoundSourceWrapper

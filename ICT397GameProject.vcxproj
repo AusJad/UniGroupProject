@@ -81,6 +81,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <EnablePREfast>false</EnablePREfast>
+      <BrowseInformation>true</BrowseInformation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -89,22 +90,31 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>lua.lib;luabind.lib;glfw3.lib;bass.lib;glew32.lib;opengl32.lib;glu32.lib;assimp-vc140-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\AIMovementBehaviours.h" />
     <ClInclude Include="include\AssetManager.h" />
     <ClInclude Include="include\AudioEngine.h" />
     <ClInclude Include="include\BMPLoader.h" />
     <ClInclude Include="include\Bullet.h" />
     <ClInclude Include="include\camera.h" />
     <ClInclude Include="include\CollisionEngine.h" />
+    <ClInclude Include="include\Console.h" />
     <ClInclude Include="include\CtoLUABinder.h" />
     <ClInclude Include="include\Engine.h" />
+    <ClInclude Include="include\Font.h" />
+    <ClInclude Include="include\FontEngine.h" />
+    <ClInclude Include="include\FontLoader.h" />
     <ClInclude Include="include\GameObject.h" />
     <ClInclude Include="include\GameObjectFactory.h" />
     <ClInclude Include="include\GameObjectHandler.h" />
+    <ClInclude Include="include\GeometeryStream.h" />
     <ClInclude Include="include\Identifiers.h" />
     <ClInclude Include="include\ImageCreationHandler.h" />
     <ClInclude Include="include\ImageLoader.h" />
@@ -114,6 +124,7 @@
     <ClInclude Include="include\LUAScriptManager.h" />
     <ClInclude Include="include\mat4.h" />
     <ClInclude Include="include\Maths.h" />
+    <ClInclude Include="include\MD2Model.h" />
     <ClInclude Include="include\MenuObject.h" />
     <ClInclude Include="include\Message.h" />
     <ClInclude Include="include\MessageTypes.h" />
@@ -145,17 +156,23 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ICT397GameProject.cpp" />
+    <ClCompile Include="src\AIMovementBehaviours.cpp" />
     <ClCompile Include="src\AssetManager.cpp" />
     <ClCompile Include="src\AudioEngine.cpp" />
     <ClCompile Include="src\BMPLoader.cpp" />
     <ClCompile Include="src\Bullet.cpp" />
     <ClCompile Include="src\camera.cpp" />
     <ClCompile Include="src\CollisionEngine.cpp" />
+    <ClCompile Include="src\Console.cpp" />
     <ClCompile Include="src\CtoLUABinder.cpp" />
     <ClCompile Include="src\Engine.cpp" />
+    <ClCompile Include="src\Font.cpp" />
+    <ClCompile Include="src\FontEngine.cpp" />
+    <ClCompile Include="src\FontLoader.cpp" />
     <ClCompile Include="src\GameObject.cpp" />
     <ClCompile Include="src\GameObjectFactory.cpp" />
     <ClCompile Include="src\GameObjectHandler.cpp" />
+    <ClCompile Include="src\GeometeryStream.cpp" />
     <ClCompile Include="src\Identifiers.cpp" />
     <ClCompile Include="src\ImageCreationHandler.cpp" />
     <ClCompile Include="src\ImageLoaderFactory.cpp" />
@@ -164,6 +181,7 @@
     <ClCompile Include="src\LUAScriptManager.cpp" />
     <ClCompile Include="src\mat4.cpp" />
     <ClCompile Include="src\Maths.cpp" />
+    <ClCompile Include="src\MD2Model.cpp" />
     <ClCompile Include="src\MenuObject.cpp" />
     <ClCompile Include="src\Message.cpp" />
     <ClCompile Include="src\MessagingBus.cpp" />
@@ -189,7 +207,12 @@
     <ClCompile Include="src\vec4.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Scripts\console.lua" />
+    <None Include="Resources\Scripts\consolehelperfunctions.lua" />
     <None Include="Resources\Scripts\controls.lua" />
+    <None Include="Resources\Scripts\helperfunctions.lua" />
+    <None Include="Resources\Scripts\npcai.lua" />
+    <None Include="Resources\Scripts\npcpatrolai.lua" />
     <None Include="Resources\Scripts\startup.lua" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

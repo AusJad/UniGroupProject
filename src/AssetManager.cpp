@@ -31,6 +31,10 @@ bool AssetManager::addResource(std::string path, std::string type, std::string n
 
 		return true;
 	}
+	else
+	if (type == "FNT") {
+		if (FNT_ENG->loadFont(path, name)) return true;
+	}
 
 	return false;
 }
@@ -48,6 +52,10 @@ bool AssetManager::useResource(std::string name) {
 	}
 	else
 	if (AE->playSound(name)) {
+		return true;
+	}
+	else 
+	if (FNT_ENG->setActiveFont(name)) {
 		return true;
 	}
 

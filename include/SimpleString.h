@@ -32,6 +32,10 @@ public:
 	*/
 	double toDouble();
 
+	int toInt();
+
+	void setData(std::string toset);
+
 	/**
 	* @brief Get the data from the string.
 	*

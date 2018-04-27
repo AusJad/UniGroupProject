@@ -12,6 +12,10 @@ SceneManager::~SceneManager()
 {
 }
 
+void SceneManager::attachConsoleBehaviour(std::string entrypoint) {
+	console.attachBehaviour(entrypoint);
+}
+
 bool SceneManager::attachTerrain(Identifiers & id, unsigned sceneno, vec3 pos, ResourceList & lists) {
 	if (scenes.size() <= sceneno) return false;
 	else return(scenes.at(sceneno).attachTerrain(id, pos, lists));
@@ -36,11 +40,18 @@ bool SceneManager::attachControls(unsigned sceneno, ResourceList toset) {
 }
 
 void SceneManager::update(float time) {
+	if(console.isActive()) console.update(time);
+
 	msgrcvr();
-	scenes.at(currscene).update(time);
+
+	Singleton<LUAScriptManager>::getInstance()->setGlobal<float>(time, "time");
+
+	if (!console.isActive()) scenes.at(currscene).update(time);
 }
 
 void SceneManager::render() {
+	if (console.isActive()) console.render();
+
 	scenes.at(currscene).render();
 }
 
@@ -75,8 +86,18 @@ void SceneManager::msgrcvr() {
 		if (tmpmsg.getInstruction() == "CS") {
 			setCurrScene(tmpmsg.getData().idata);
 		}
+		else
 		if (tmpmsg.getInstruction() == "CSR") {
 			setCurrScene(currscene + tmpmsg.getData().idata);
+		}
+		else
+		if (tmpmsg.getInstruction() == TGL_CONSOLE) {
+			console.toggle();
+			CONT->switchContextConsole(console.isActive(), RNDR, CONT);
+		}
+		else
+		if (tmpmsg.getInstruction() == PUSH_CHANGES) {
+			scenes.at(currscene).update(0);
 		}
 	}
 }

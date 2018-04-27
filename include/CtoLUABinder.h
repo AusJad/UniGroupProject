@@ -16,6 +16,7 @@
 #include "Player.h"
 #include "Maths.h"
 #include "Scenery.h"
+#include "AIMovementBehaviours.h"
 
 extern "C" {
 	#include "lua/lua.h"
@@ -24,6 +25,7 @@ extern "C" {
 }
 
 #include <luabind/luabind.hpp>
+#include <luabind/operator.hpp>
 
 /**
 * @class CtoLUABinder

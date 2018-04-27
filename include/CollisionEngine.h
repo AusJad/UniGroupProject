@@ -61,7 +61,7 @@ public:
 	* @param collGO - A vector of game objects for colliders
 	* @param time - System time.
 	*/
-	void update(GameObject* & toupdate, std::vector<GameObject*> collGO, float time);
+	void update(GameObject* toupdate, std::vector<GameObject*> collGO, float time);
 private:
 	/// The height map data.
 	std::map<float, std::map<float, float>> heightmap;

@@ -67,7 +67,7 @@ GameObject* GameObjectFactory::create(Identifiers & id, vec3 pos, ResourceList &
 bool GameObjectFactory::setModel(GameObject* & GO, std::string model) {
 	if (GO == NULL) return false;
 
-	Model* tmp = Singleton<ModelManger>::getInstance()->useModel(model);
+	Model* tmp = Singleton<ModelManger>::getInstance()->useModel(model, std::to_string(GO->getID()));
 
 	if (tmp == NULL) return false;
 

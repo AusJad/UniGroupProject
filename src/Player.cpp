@@ -15,12 +15,16 @@ bool Player::isCollidable() {
 }
 
 void Player::render() {
-	if (resources.hasResource("model") && model != NULL) GameObject::model->render(this->pos);
+	Singleton<RenderModuleStubb>::getInstance()->RenderFacingCamera();
+	if (resources.hasResource("model") && model != NULL) GameObject::model->render(vec3(0,0,0));
+	Singleton<RenderModuleStubb>::getInstance()->StopRenderFacingCamera();
 }
 
 void Player::update(float time) {
 	msgrcvr();
 	
+	if (resources.hasResource("model") && model != NULL) model->update(time);
+
 	MessagingBus* tmp = Singleton<MessagingBus>::getInstance();
 	Message tmpm;
 

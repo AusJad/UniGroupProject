@@ -6,6 +6,7 @@
 #include <cstdlib>
 //#include "mat4.h"
 #include "Maths.h"
+#include "Identifiers.h"
 
 /**
 * @class Model
@@ -38,7 +39,7 @@ class Model
 		/**
 		* @brief Virtual method to update the model.
 		*/
-		virtual void update() = 0;
+		virtual void update(float time) = 0;
 
 		/**
 		* @brief Virtual method to render the model.
@@ -73,60 +74,77 @@ class Model
 		*
 		* @return float - The min x value.
 		*/
-		float getMinX() { return minx; };
+		virtual float getMinX() { return minx; };
 
 		/**
 		* @brief Get the min z value.
 		*
 		* @return float - The min z value.
 		*/
-		 float getMinZ() { return minz; };
+		virtual float getMinZ() { return minz; };
 
 		 /**
 		 * @brief Get the min y value.
 		 *
 		 * @return float - The min y value.
 		 */
-		 float getMinY() { return miny; };
+		virtual float getMinY() { return miny; };
 
 		 /**
 		 * @brief Get the max x value.
 		 *
 		 * @return float - The max x value.
 		 */
-		 float getMaxX() { return maxx; };
+		virtual float getMaxX() { return maxx; };
 
 		 /**
 		 * @brief Get the max z value.
 		 *
 		 * @return float - The maz z value.
 		 */
-		 float getMaxZ() { return maxz; };
+		virtual float getMaxZ() { return maxz; };
 
 		 /**
 		 * @brief Get the max y value.
 		 *
 		 * @return float - The max y value.
 		 */
-		 float getMaxY() { return maxy; };
+		virtual float getMaxY() { return maxy; };
 		 
+		virtual float getMinTX() { return minx + lasttrans.x(); };
+
+		virtual float getMinTZ() { return minz + lasttrans.z(); };
+
+		virtual float getMinTY() { return miny + lasttrans.y(); };
+
+		virtual float getMaxTX() { return maxx + lasttrans.x(); };
+
+		virtual float getMaxTZ() { return maxz + lasttrans.z(); };
+
+		virtual float getMaxTY() { return maxy + lasttrans.y(); };
+
 		 /**
 		 * @brief Set the id of the model.
 		 * 
 		 * @param nid - The new id.
 		 */
-		void setId(unsigned nid) { id = nid; };
+		void setId(unsigned nid) {	id.setId(nid); };
 
 		/**
 		* @brief Get the id of the model.
 		* 
 		* @return unsigned - The id.
 		*/
-		unsigned getId() { return id; };
+		unsigned getId() { return id.getId(); };
+
+		void setName(std::string name) { id.setName(name); };
+
 	protected:
 		/// The min and max x and z values.
 		float minx, maxx, minz, maxz, miny, maxy;
 		/// The models id.
-		unsigned id;
+		Identifiers id;
+
+		vec3 lasttrans;
 };
 

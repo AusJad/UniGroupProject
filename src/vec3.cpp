@@ -78,18 +78,10 @@ void vec3::subtract(vec3 vec)
 	vector[2] = vector[2] - vec.getVec()[2];
 }
 
-vec3 vec3::normalize()
+const vec3 & vec3::normailse()
 {
-	glm::vec3 tmpglm = vector; // So vector isnt effected.
-	glm::normalize(tmpglm);
-	vec3 tmp;
-	tmp.setVec(tmpglm);
-	return tmp;
-}
-
-void vec3::normailse()
-{
-	glm::normalize(vector);
+	this->vector = glm::normalize(this->vector);
+	return *this;
 }
 
 float vec3::dot(const vec3 & v)
@@ -234,4 +226,8 @@ vec3 vec3::operator- ()
 float& vec3::operator[] (int x)
 {
 	return vector[x];
+}
+
+float vec3::getLength() {
+	return vector.length();
 }

@@ -41,6 +41,11 @@ public:
 	* @param target - The new target position vector of the bullet.
 	*/
 	void setTarget(const vec3 target);
+
+	void onCollide(vec3 & prevloc, const Identifiers & colgoid);
+
+	bool hasGravity();
+
 private:
 	/// Flag for if the bullet is in use.
 	bool inUse;

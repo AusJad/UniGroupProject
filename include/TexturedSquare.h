@@ -39,7 +39,7 @@ public:
 	/**
 	* @brief The update file.
 	*/
-	void update();
+	void update(float time);
 
 	/**
 	* @brief The render function.

@@ -29,7 +29,7 @@ class RAWTerrain : public terrain
 		/**
 		* @brief Virtual method to update the terrain.
 		*/
-		virtual void update();
+		virtual void update(float time);
 
 		/**
 		* @brief Virtual method to render the terrain.

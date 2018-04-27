@@ -19,6 +19,17 @@ void Controls::addInitalisedControlGroup(unsigned controlgroup, ResourceList & d
 	controls[controlgroup] = data;
 }
 
+void Controls::switchContextConsole(bool active, RenderModuleStubb* render, Controls* tochange) {
+	if (active) {
+		unbindControls(tochange->curgroup, render, tochange);
+		glfwSetKeyCallback(render->getWindow(), ConsoleCallback);
+	}
+	else {
+		glfwSetKeyCallback(render->getWindow(), NULL);
+		bindControls(tochange->curgroup, render, tochange);
+	}
+}
+
 bool Controls::bindControls(unsigned group, ResourceList & toset) {
 	if (controls.count(group) == 0) return false;
 
@@ -58,6 +69,9 @@ void Controls::keyCallback(GLFWwindow* window, int key, int scancode, int action
 
 	if (key == 32) keys = "space";
 	if (key == 257) keys = "enter";
+	if (key == 259) keys = "backspace";
+	if (key == 265) keys = "up";
+	if (key == 264) keys == "down";
 
 	if (action == GLFW_REPEAT) {
 		actions = "repeat";
@@ -95,17 +109,6 @@ void Controls::mouseCallback(GLFWwindow* window, double x, double y) {
 	prevy = (float)h / 2;
 
 	glfwSetCursorPos(window, (double)w / 2, (double)h / 2);
-
-	/*
-	if (x > w * .55 || x < w * .45) {
-		glfwSetCursorPos(window, (double) w/2, y);
-		prevx = (double)w / 2;
-	}
-	if (y > h *.55 || y < h * .45) {
-		glfwSetCursorPos(window, x, (double)h / 2);
-		prevy = (double)h / 2;
-	}*/
-		
 }
 
 void Controls::mouseButtonCallback(GLFWwindow* window, int button, int action, int mods) {
@@ -131,4 +134,36 @@ void Controls::mouseButtonCallback(GLFWwindow* window, int button, int action, i
 	MessagingBus* tmpmb = Singleton<MessagingBus>::getInstance();
 
 	tmpl->callFunction<SimpleString, SimpleString, MessagingBus>(tmpc->controls.at(tmpc->curgroup).getResource("mouseButtonCallback"), SimpleString(sbutton), SimpleString(saction), *tmpmb);
+}
+
+void Controls::ConsoleCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+	int flags;
+	std::string keys;
+	keys = (char) key;
+
+	if (key == 32) keys = "space";
+	if (key == 257) keys = "enter";
+	if (key == 259) keys = "backspace";
+	if (key == 265) keys = "up";
+	if (key == 264) keys = "down";
+	if (key == 340) keys = "shift";
+	if (key == 263) keys = "left";
+	if (key == 262) keys = "right";
+
+	if (action == GLFW_REPEAT) {
+		flags = REPEAT;
+	}
+	else if (action == GLFW_PRESS) {
+		flags = PRESS;
+	}
+	else {
+		flags = RELEASE;
+	}
+	
+	Message tmp(C_INPUT);
+
+	tmp.setsData(keys);
+	tmp.setIData(flags);
+
+	MSGBS->postIMessage(tmp, CONSOLE_ID);
 }

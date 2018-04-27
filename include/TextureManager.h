@@ -1,6 +1,9 @@
 #pragma once
 #include "ImageCreationHandler.h"
+#include "Singleton.h"
 #include <map>
+
+#define TXMAN Singleton<TextureManager>::getInstance()
 
 /**
 * @class TextureManager
@@ -35,7 +38,7 @@ public:
 	* @param bits - The number of bits in the file.
 	* @param width - The width of the file.
 	* @param height - The height of the file.
-	* 
+	*
 	* @return bool - If the data was stored.
 	*/
 	bool storeTextureFromData(std::string name, unsigned char* data, unsigned bits, unsigned width, unsigned height);
@@ -97,6 +100,10 @@ public:
 	* @param renderer - The rendering object.
 	*/
 	void DisableMultiTex(RenderModuleStubb* renderer);
+
+	bool loadTempTex(std::string path, std::string type);
+
+	bool createSubTexFromTemp(std::string name, unsigned subwidth, unsigned subheight, unsigned x, unsigned y);
 
 private:
 	/// Map of the images.

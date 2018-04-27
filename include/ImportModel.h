@@ -45,7 +45,7 @@ public:
 	/**
 	* @brief Update function.
 	*/
-	void update();
+	void update(float time);
 
 	/**
 	* @brief rendering function.

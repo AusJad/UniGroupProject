@@ -15,3 +15,11 @@ double SimpleString::toDouble() {
 std::string SimpleString::getData() {
 	return data;
 }
+
+int SimpleString::toInt() {
+	return atoi(data.c_str());
+}
+
+void SimpleString::setData(std::string toset) {
+	data = toset;
+}

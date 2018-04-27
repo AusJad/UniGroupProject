@@ -31,7 +31,7 @@ bool ModelManger::loadModel(std::string path, std::string type, std::string name
 
 bool ModelManger::loadModel(std::string path, std::string type, std::string name, vec3 & scale) {
 	if (models.count(name) == 1) return false;
-	if (type != "IM") return false;
+	if (type != "IM" && type != "MD2") return false;
 
 	Model* tmp = modelfactory.create(path, type);
 
@@ -45,11 +45,18 @@ bool ModelManger::loadModel(std::string path, std::string type, std::string name
 	return true;
 }
 
-Model* ModelManger::useModel(std::string name) {
+Model* ModelManger::useModel(std::string name, std::string instancename) {
 	if (models.count(name) == 0) {
 		return NULL;
 	}
-	else return models[name]->create();
+	else {
+		Model* tmp = NULL;
+		tmp = models[name]->create();
+		
+		if (tmp != NULL) tmp->setName(instancename);
+
+		return tmp;
+	}
 }
 
 Model* ModelManger::getModelRefrence(std::string name) {

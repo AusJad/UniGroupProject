@@ -50,7 +50,7 @@ bool TexturedSquare::loadModel(std::string filename) {
 	return true;
 }
 
-void TexturedSquare::update() {
+void TexturedSquare::update(float time) {
 
 }
 
