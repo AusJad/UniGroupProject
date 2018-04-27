@@ -19,15 +19,14 @@ class mat4
 {
 public:
 	mat4();
-<<<<<<< HEAD
 
 	mat4(float x_0, float y_0, float z_0, float w_0,
 		float x_1, float y_1, float z_1, float w_1,
 		float x_2, float y_2, float z_2, float w_2,
 		float x_3, float y_3, float z_3, float w_3);
 
-=======
 	mat4(const mat4 & m);
+	mat4(const glm::mat4 & m);
 
 	/**
 	* @brief Get function for glm::mat4 type variable.

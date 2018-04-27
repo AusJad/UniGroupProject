@@ -85,18 +85,11 @@ void vec3::subtract(vec3 vec)
 
 const vec3 & vec3::normailse()
 {
-<<<<<<< HEAD
 	this->vector = glm::normalize(this->vector);
 	return *this;
-=======
-	return vec3(glm::normalize(vector));
+
 }
 
-void vec3::normailse()
-{
-	glm::normalize(vector);
->>>>>>> 811569cc59c13717fcda56c2ec15dc1000ee8d7d
-}
 
 float vec3::dot(const vec3 & v)
 {
