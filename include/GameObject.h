@@ -9,6 +9,7 @@
 #include "RenderMOduleStubb.h"
 #include "Model.h"
 #include "Maths.h"
+#include "ModelManger.h"
 
 /**
 * @class GameObject

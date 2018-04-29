@@ -16,6 +16,27 @@ function quit(msgbus)
 	msgbus:postMessage(Message("KILL"), Identifiers("", "RM"));
 end
 
+function changeFont(msgbus, option)
+	tmp = Message("CNG_F");
+	tmp:setsData(option)
+	msgbus:postMessage(tmp, Identifiers("", "FE"));
+end
+
+function getObjectList(msgbus, option)
+	msg = Message("G_O_L");
+	id = Identifiers("", "CONSOLE");
+	msg:setFrom(id);
+	msgbus:postMessage(msg, Identifiers("", "GOH"));
+	pushChanges(msgbus);
+end
+
+function changeModel(msgbus, option)
+	msg = Message("C_M");
+	msg:setsData(option[1]);
+	msgbus:postMessage(msg, Identifiers("", option[2]));
+	pushChanges(msgbus);
+end
+
 function changeScene(msgbus, data)
 	msgbus:postMessage(Message("SMF"), Identifiers("", "Camera"));
 	msgbus:postMessage(Message("SML"), Identifiers("", "Camera"));
@@ -26,9 +47,12 @@ function changeScene(msgbus, data)
 	tmpm = Message("CS");
 	tmpm:setiData(tonumber(data));
 	msgbus:postMessage(tmpm, Identifiers("", "SM"));
-	print(tonumber(data));
 	tmpm = Message("TGL_C");
 	msgbus:postMessage(tmpm, Identifiers("", "SM"));
 	tmpm = Message("TGL_C");
 	msgbus:postMessage(tmpm, Identifiers("", "SM"));
+end
+
+function clearScreen(msgbus)
+	msgbus:postIMessage(Message("CLS"), 1000002);
 end

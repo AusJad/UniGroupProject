@@ -86,20 +86,29 @@ void GameObject::msgrcvr() {
 }
 
 bool GameObject::defaultMessageHandler(Message & message) {
-	Identifiers tmp = message.getFrom();
+	Identifiers tmpf = message.getFrom();
 	if (message.getInstruction() == TARGET_REQUEST) {
 		message.setData(target);
 		message.setFrom(id);
 		message.setInstruction(TARGET_RESPONSE);
-		Singleton<MessagingBus>::getInstance()->postMessage(message, tmp);
+		Singleton<MessagingBus>::getInstance()->postMessage(message, tmpf);
 		return true;
 	}
+	else
 	if (message.getInstruction() == POS_REQUEST) {
 		message.setData(pos);
 		message.setFrom(id);
 		message.setInstruction(POS_RESPONSE);
-		Singleton<MessagingBus>::getInstance()->postMessage(message, tmp);
+		Singleton<MessagingBus>::getInstance()->postMessage(message, tmpf);
 		return true;
+	}
+	else
+	if (message.getInstruction() == CHNGE_MDL) {
+		Model* tmp = Singleton<ModelManger>::getInstance()->useModel(message.getsData(), id.getName());
+
+		if (tmp != NULL) {
+			setModel(tmp);
+		}
 	}
 
 	return false;
@@ -114,7 +123,7 @@ void GameObject::setModel(Model* M) {
 	
 	model = M;
 
-	model->centerOnPoint(pos);
+	//model->centerOnPoint(vec3(pos.x(), 0, pos.z()));
 }
 
 Model*  GameObject::getModel() {

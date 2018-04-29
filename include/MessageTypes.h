@@ -27,6 +27,8 @@
 #define POS_RESPONSE "PR"
 #define LPOS_RESPONSE "LPR"
 
+#define CHNGE_MDL "C_M"
+
 //Camera messages
 #define GET_FRONT "GF"
 #define GET_FRONT_RESPONSE "GFR"
@@ -62,11 +64,17 @@
 
 //Game Object handler messages
 #define ADD_TMP_OBJ "ATO"
+#define GET_OBJECT_LIST "G_O_L"
+#define OBJECT_LIST_RESPONSE "O_L_R"
 
 //Console messages
 #define C_INPUT "IN"
+#define CL_SCR "CLS"
 
-//Flag
+//Font engine commands
+#define CHNGE_FNT "CNG_F"
+
+//Flags
 #define REPEAT	0
 #define PRESS	1
 #define RELEASE 2

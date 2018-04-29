@@ -4,52 +4,64 @@ require "./Resources/Scripts/consolehelperfunctions";
 local CODE_SUCCESS = -1; 
 local ERROR_CODE_UNKOWN_COMMAND = 0;
 local ERROR_CODE_INVALID_SYNTAX = 1;
+local CODE_RETURN = 2;
+
+local res;
 
 local function handleMultiPartCMD(cmd, option, msgbus)
-	functionfound = false;
-	invalidsyntaxflag = false;
-	
+
 	if(cmd == "CS" or cmd == "CHANGESCENE") then
-		changeScene(msgbus, option);
-		functionfound = true;
-	end
-	if(cmd == "OUT" or cmd == "PRINT" or cmd == "ECHO") then
+		changeScene(msgbus, option[1]);
+		return CODE_SUCCESS;
+	elseif(cmd == "OUT" or cmd == "PRINT" or cmd == "ECHO") then
 		print(option);
-		functionfound = true;
+		return CODE_SUCCESS;
+	elseif(cmd == "PS" or cmd == "PLAYSOUND") then
+		playSoundAtPlayer(msgbus, option[1]);
+		return CODE_SUCCESS;
+	elseif(cmd == "CF" or cmd == "CHANGEFONT") then
+		changeFont(msgbus, option[1]);
+		return CODE_SUCCESS;
+	elseif(cmd == "LISTOBJ") then
+		getObjectList(msgbus, option[1]);
+		return CODE_SUCCESS;
+	elseif(cmd == "CHANGEMODEL") then
+		changeModel(msgbus, option);
+		return CODE_SUCCESS;
 	end
 	
-	if(invalidsyntaxflag) then return ERROR_CODE_INVALID_SYNTAX; end
-	if(functionfound) then return CODE_SUCCESS;
-	else return ERROR_CODE_UNKOWN_COMMAND; end
+	return ERROR_CODE_UNKOWN_COMMAND; 
 end
 
 local function handleCMD(cmd, msgbus)
-	functionfound = false;
-	invalidsyntaxflag = false;
 
 	if(cmd == "WIREFRAME" or cmd == "WF") then
 		toggleWireFrame(msgbus);
-		functionfound = true;
+		return CODE_SUCCESS;
 	elseif(cmd == "TFC") then
 		toggleFreeCam(msgbus);
 		pushChanges(msgbus);
-		functionfound = true;
+		return CODE_SUCCESS;
 	elseif(cmd == "DIE" or cmd == "QUIT" or cmd == "CLOSE") then 
 		quit(msgbus);
-		functionfound = true;
+		return CODE_SUCCESS;
+	elseif(cmd == "LISTOBJ") then
+		getObjectList(msgbus, "");
+		return CODE_SUCCESS;
+	elseif(cmd == "CLEARSCREEN" or cmd == "CLEAR") then
+		clearScreen(msgbus);
+		return CODE_SUCCESS;
 	end
 
 	--Multpart commands; require arguments
 	if(cmd == "CS" or cmd == "CHANGESCENE" or cmd == "OUT" or cmd == "PRINT" or cmd == "ECHO") then
-		invalidsyntaxflag = true;
+		return ERROR_CODE_INVALID_SYNTAX;
 	end
 
-	if(invalidsyntaxflag) then return ERROR_CODE_INVALID_SYNTAX; end
-	if(functionfound) then return CODE_SUCCESS;
-	else return ERROR_CODE_UNKOWN_COMMAND; end
+	return ERROR_CODE_UNKOWN_COMMAND;
 end
 
-function consoleEntryPoint(command, msgbus)
+function consoleEntryPoint(command, ret, msgbus)
 	datastring = command:getData();
 
 	linehead = nil;
@@ -58,12 +70,29 @@ function consoleEntryPoint(command, msgbus)
 
 	if(datastring:find(" ") ~= nil) then 
 		linehead = datastring:sub(0, datastring:find(" ") - 1);
-		lineend = datastring:sub(datastring:find(" ") + 1);
+		
+		datastring = datastring:sub(datastring:find(" ") + 1);
+
+		lineend = {};
+
+		while datastring:find(" ") ~= nil do
+			table.insert(lineend, datastring:sub(0, datastring:find(" ") - 1));
+			datastring = datastring:sub(datastring:find(" ") + 1);
+		end
+		
+		table.insert(lineend, datastring);
+
 		result = handleMultiPartCMD(linehead, lineend, msgbus);
 	else
 		linehead = datastring;
 		result = handleCMD(linehead, msgbus);
 	end
+
+	if(result == CODE_RETURN) then 
+		ret:setData(tostring(res));
+	end
+
+	--print(ret:getData());
 
 	command:setData(tostring(result));
 end

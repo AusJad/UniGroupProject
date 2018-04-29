@@ -152,6 +152,25 @@ public:
 	* @param func - The function.
 	* @param arg - The first arguement.
 	* @param arg2 - The second arguement.
+	*/
+	template <class T, class U>
+	inline void callFunction(std::string func, T & arg, T & arg2, U & arg3) {
+		try {
+			luabind::call_function<void>(lstate, func.c_str(), boost::ref<T>(arg), boost::ref<T>(arg2), boost::ref<U>(arg3));
+		}
+		catch (LUAERROR)
+		{
+			std::string error = getErrorMSG(LUAERRORMSG);
+			if (DEBUGMODE) std::cerr << error << std::endl;
+		}
+	};
+
+	/**
+	* @brief Call the function
+	*
+	* @param func - The function.
+	* @param arg - The first arguement.
+	* @param arg2 - The second arguement.
 	* @param arg3 - The third arguement.
 	*/
 	template <class T, class U, class V>

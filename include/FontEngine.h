@@ -2,6 +2,8 @@
 
 #include "Singleton.h"
 #include "FontLoader.h"
+#include "Identifiers.h"
+#include "MessagingBus.h"
 
 #define FNT_ENG Singleton<FontEngine>::getInstance()
 #define FNT_SIZE_SMALL 0.05f
@@ -19,9 +21,11 @@ public:
 	bool loadFont(std::string path, std::string name);
 	bool RenderString(std::string torender, float fontsize, unsigned numrow, unsigned maxwidth, float startx, float starty, float depth);
 	bool fontHasChar(char totest);
+	void update();
 
 private:
 	std::map<std::string, Font> fonts;
 	std::string activefont;
+	Identifiers id;
 };
 

@@ -135,6 +135,7 @@ void CtoLUABinder::bindClasses(lua_State* lstate) {
 			.def("getMessage", &MessagingBus::getMessage)
 			.def("hasMessage", &MessagingBus::hasMessage)
 			.def("postMessage", &MessagingBus::postMessage)
+			.def("postIMessage", &MessagingBus::postIMessage)
 	];
 	luabind::module(lstate)[
 		luabind::class_<Message>("Message")
@@ -147,6 +148,7 @@ void CtoLUABinder::bindClasses(lua_State* lstate) {
 			.def("setiData", &Message::setIData)
 			.def("setsData", &Message::setsData)
 			.def("getData", &Message::getData)
+			.def("getsData", &Message::getsData)
 	];
 	luabind::module(lstate)[
 		luabind::class_<Data>("data")

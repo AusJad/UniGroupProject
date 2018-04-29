@@ -5,29 +5,30 @@ bool Engine::Initalise(std::string initscript){
 	if (!initaliseRenderer()) return false;
 	if (!initaliseAudioEngine()) return false;
 
-	if(!Singleton<LUAScriptManager>::getInstance()->doScriptFromFile(initscript)) return false;
+	if(!LSM->doScriptFromFile(initscript)) return false;
 
-	Singleton<LUAScriptManager>::getInstance()->callFunction<SceneManager, LUAScriptManager, AssetManager, AudioEngine>("initGame", SM, *Singleton<LUAScriptManager>::getInstance(), *Singleton<AssetManager>::getInstance(), *Singleton<AudioEngine>::getInstance());
+	LSM->callFunction<SceneManager, LUAScriptManager, AssetManager, AudioEngine>("initGame", SM, *LSM, *Singleton<AssetManager>::getInstance(), *Singleton<AudioEngine>::getInstance());
 
 	return true;
 }
 
 void Engine::Run() {
-	while (Singleton<RenderModuleStubb>::getInstance()->shouldContinue()) {
-		Singleton<RenderModuleStubb>::getInstance()->startRenderCycle();
+	while (RNDR->shouldContinue()) {
+		RNDR->startRenderCycle();
 
-		SM.update(Singleton<RenderModuleStubb>::getInstance()->getTimeSinceUpdate());
+		SM.update(RNDR->getTimeSinceUpdate());
 
 		SM.render();
 
 		Singleton<AudioEngine>::getInstance()->update();
 		
-		Singleton<RenderModuleStubb>::getInstance()->endRenderCycle();
+		FNT_ENG->update();
+
+		RNDR->endRenderCycle();
 	}
 }
 
 bool Engine::initaliseScriptingInterface() {
-	LUAScriptManager* LSM = Singleton<LUAScriptManager>::getInstance();
 	if (!LSM->initLuaState()) return false;
 	CtoLUABinder().bindClasses(LSM->getState());
 
@@ -35,9 +36,6 @@ bool Engine::initaliseScriptingInterface() {
 }
 
 bool Engine::initaliseRenderer() {
-	RenderModuleStubb* RNDR = Singleton<RenderModuleStubb>::getInstance();
-
-	//BAD!!!! temporary while mat does rendering
 	RNDR->init(0, NULL);
 	
 	return true;

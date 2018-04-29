@@ -49,6 +49,20 @@ void GameObjectHandler::msgrcvr() {
 		if (tmpmsg.getInstruction() == ADD_TMP_OBJ) {
 			addTmpObj(Identifiers("BLT"), tmpmsg.getData().mvdata.at(0), tmpmsg.getData().mvdata.at(1), ResourceList("model", tmpmsg.getData().sdata));
 		}
+		if (tmpmsg.getInstruction() == GET_OBJECT_LIST) {
+			tmpmsg.setInstruction(OBJECT_LIST_RESPONSE);
+			
+			tmpmsg.getData().sdata = "";
+
+			for (unsigned i = 0; i < gameobjects.size(); i++) {
+				if (!gameobjects.at(i)->getIdentifiers().getName().empty()) {
+					tmpmsg.getData().sdata += gameobjects.at(i)->getIdentifiers().getName();
+					tmpmsg.getData().sdata += ",";
+				}
+			}
+			
+			MSGBS->postIMessage(tmpmsg, CONSOLE_ID);
+		}
 	}
 }
 

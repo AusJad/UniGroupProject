@@ -4,11 +4,24 @@
 
 FontEngine::FontEngine()
 {
+	id.setName("FE");
 }
 
 
 FontEngine::~FontEngine()
 {
+}
+
+void FontEngine::update() {
+	Message tmp;
+
+	while (MSGBS->hasMessage(id)) {
+		tmp = MSGBS->getMessage(id);
+		if (tmp.getInstruction() == CHNGE_FNT) {
+			setActiveFont(tmp.getData().sdata);
+		}
+
+	}
 }
 
 bool FontEngine::RenderChar(char toRender) {

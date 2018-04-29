@@ -11,6 +11,7 @@ const unsigned MAX_CMD_SIZE = 60;
 #define CODE_SUCCESS -1
 #define ERROR_CODE_UNKOWN_COMMAND 0
 #define ERROR_CODE_INVALID_SYNTAX 1
+#define CODE_RETURN 2
 
 class Console
 {
@@ -29,7 +30,7 @@ public:
 	bool isActive();
 	void toggle();
 	void attachBehaviour(std::string toadd);
-
+	void adjustEditInd(int offset);
 private: 
 	void msgrcvr();
 	std::vector<std::string> history;
@@ -38,5 +39,6 @@ private:
 	bool active;
 	int even;
 	ResourceList resources;
+	int editind;
 };
 

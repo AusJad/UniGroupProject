@@ -65,3 +65,7 @@ Identifiers & Message::getFrom() {
 void Message::setFrom(const Identifiers & nid) {
 	from = nid;
 }
+
+std::string Message::getsData() {
+	return mdata.sdata;
+}

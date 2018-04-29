@@ -127,6 +127,8 @@ public:
 
 	void setsData(std::string data);
 
+	std::string getsData();
+
 private:
 	/// The data type.
 	char dtype;

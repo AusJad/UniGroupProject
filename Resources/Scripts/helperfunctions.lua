@@ -6,7 +6,7 @@ function playSoundatSource(msgbus, self_id, sound)
 	msgbus:postMessage(msg, Identifiers("", "AE"));
 end
 
-function playSoundAtPlayer(msgbus, self_id, sound)
+function playSoundAtPlayer(msgbus, sound)
 	msg = Message("PSS");
 	msg:setiData(-1);
 	msg:setsData(sound);
