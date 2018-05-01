@@ -47,6 +47,7 @@
 
 //Scene Manager Messages
 #define CHNG_SCENE_REQUEST "CS"
+#define CHNG_SCENE_REQUEST_INC "CSR"
 #define TGL_CONSOLE "TGL_C"
 #define PUSH_CHANGES "PSH_C"
 #define SAVE_GAME "SV_GM"

@@ -95,3 +95,7 @@ function exitGameControls(button, action, MB)
 		MB:postMessage(Message("KILL"), Identifiers("", "RM"));
 	end
 end
+
+function skipCutScene(key, action, MB)
+
+end

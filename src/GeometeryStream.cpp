@@ -36,6 +36,12 @@ const GeometeryStream & GeometeryStream::operator << (const color_3 & rhs) const
 
 	return *this;
 }
+
+const GeometeryStream & GeometeryStream::operator << (const color_4 & rhs) const {
+	glColor4f(rhs.r, rhs.g, rhs.g, rhs.a);
+
+	return *this;
+}
  
 GeometeryStream & GeometeryStream::operator << (int rhs) {
 	GLint polygonMode;
@@ -82,6 +88,12 @@ GeometeryStream & GeometeryStream::operator << (int rhs) {
 			glBlendFunc(GL_ONE, GL_ONE);
 			break;
 		case DISABLE_ALPHA:
+			glDisable(GL_BLEND);
+			break;
+		case ENABLE_TRANSPARENCY:
+			glEnable(GL_BLEND); glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			break;
+		case DISABLE_TRANSPARENCY:
 			glDisable(GL_BLEND);
 			break;
 	}

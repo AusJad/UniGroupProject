@@ -107,6 +107,7 @@
     <ClInclude Include="include\CollisionEngine.h" />
     <ClInclude Include="include\Console.h" />
     <ClInclude Include="include\CtoLUABinder.h" />
+    <ClInclude Include="include\CutScene.h" />
     <ClInclude Include="include\Engine.h" />
     <ClInclude Include="include\Font.h" />
     <ClInclude Include="include\FontEngine.h" />
@@ -165,6 +166,7 @@
     <ClCompile Include="src\CollisionEngine.cpp" />
     <ClCompile Include="src\Console.cpp" />
     <ClCompile Include="src\CtoLUABinder.cpp" />
+    <ClCompile Include="src\CutScene.cpp" />
     <ClCompile Include="src\Engine.cpp" />
     <ClCompile Include="src\Font.cpp" />
     <ClCompile Include="src\FontEngine.cpp" />

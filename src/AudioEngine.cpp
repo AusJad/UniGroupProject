@@ -114,11 +114,11 @@ bool AudioEngine::soundPlaying(std::string sound) {
 
 bool AudioEngine::loadSound(std::string path, std::string type, std::string name, bool Loop) {
 	if (type != "WAV") return false;
-	
 	HSAMPLE tmp;
 
 	if(!Loop) tmp = BASS_SampleLoad(false, path.c_str(), 0, 0, 50, BASS_SAMPLE_3D);
 	else tmp = BASS_SampleLoad(false, path.c_str(), 0, 0, 50, BASS_SAMPLE_3D | BASS_SAMPLE_LOOP);
+
 	if (tmp != 0) {
 		loadedsounds[name] = tmp;
 	}
@@ -325,4 +325,8 @@ void AudioEngine::msgsndr() {
 		tmpm.setFrom(id);
 		tmpmsgbus->postIMessage(tmpm, channellistenersources[activesubgroup].id);
 	}
+}
+
+bool AudioEngine::hasSound(std::string sound) {
+	return loadedsounds.count(sound) == 1;
 }

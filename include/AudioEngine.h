@@ -9,7 +9,8 @@
 #include "MessagingBus.h"
 #include "Identifiers.h"
 
-#define DEBUGMODE true
+#define DEBUGMODE false
+#define AE Singleton<AudioEngine>::getInstance()
 
 /**
 * @struct SoundSourceWrapper
@@ -189,6 +190,8 @@ public:
 	* @brief Update method for the sound.
 	*/
 	void update();
+
+	bool hasSound(std::string sound);
 
 private:
 	/// Identifier for the sound.

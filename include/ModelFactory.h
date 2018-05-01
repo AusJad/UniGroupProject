@@ -5,6 +5,7 @@
 #include "ImportModel.h"
 #include "TexturedSquare.h"
 #include "MD2Model.h"
+#include "CutScene.h"
 
 /**
 * @class ModelFactory

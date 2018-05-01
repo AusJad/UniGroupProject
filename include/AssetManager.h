@@ -68,8 +68,6 @@ public:
 private:
 	///Pointer to texture manager module
 	TextureManager* TexMan;
-	///Pointer to audio manager module
-	AudioEngine* AE;
 	///Pointer to model manager module
 	ModelManger* MM;
 };

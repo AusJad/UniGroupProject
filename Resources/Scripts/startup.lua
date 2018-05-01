@@ -2,6 +2,10 @@ require "./Resources/Scripts/controls";
 require "./Resources/Scripts/npcai";
 require "./Resources/Scripts/console";
 
+local cs1 = 0;
+local level1 = 1;
+local level2 = 2;
+local endscreen = 3;
 
 local function loadResources(AMAN)
 	--Load height maps
@@ -28,6 +32,11 @@ local function loadResources(AMAN)
 	AMAN:addResource("./Resources/Models/lvl1popup.tsqr", "TX", "popup");
 	AMAN:addResource("./Resources/Models/lvl2popup.tsqr", "TX", "popup2");
 	AMAN:addResource("./Resources/Models/endscreen.tsqr", "TX", "endscrn");
+
+	--Cutscene test
+	if(AMAN:addResource("./Resources/CutScenes/test.cs", "CUT_S", "cutscene1")) then print("Loaded resource 'test.cs'!"); 
+	else print("Failed to load resource 'test.cs'!"); end 
+
 	AMAN:addModel("./Resources/Models/Rock.obj", "IM", "ROCK", vec3(15,15,15));
 	AMAN:addModel("./Resources/Models/bullet.obj", "IM", "bullet", vec3(1,1,1));
 	AMAN:addModel("./Resources/Models/robotgreen.obj", "IM", "ROBOT", vec3(0.5,0.5,0.5));
@@ -49,72 +58,79 @@ function initGame(SM, LSM, AMAN, AE)
 	SM:attachConsoleBehaviour("consoleEntryPoint");
 	SM:attachConsoleTex("Console");
 
+	--Start cutscene
+	SM:addScene();
+
+	SM:setCurrScene(cs1);
+
+	SM:addObject(Identifiers("MO"), cs1, vec3(0, 0, 0), ResourceList("model", "cutscene1"));
+	SM:addObject(Identifiers("CAM","Camera"), cs1, vec3(0, 0, 0), ResourceList());
+	AE:setListenerSource(SM:GetGameObjectID("Camera"), vec3(0, 0, 0));
+
 	--Initalise Level 1
 	SM:addScene();
-	SM:setCurrScene(0);
+	SM:setCurrScene(level1);
 	
 
-	SM:attachControls(0, ResourceList("keyCallback", "keys", "mouseCallback", "mouse"));
-	SM:attachTerrain(Identifiers("TO", "Terrain"), 0, vec3(0,0,0), ResourceList("model", "Terrain"));
+	SM:attachControls(level1, ResourceList("keyCallback", "keys", "mouseCallback", "mouse"));
+	SM:attachTerrain(Identifiers("TO", "Terrain"), level1, vec3(0,0,0), ResourceList("model", "Terrain"));
 	
 	--Adding game objects
 	for i = 11,1,-1 
 	do 
 		id = tostring(math.random())
-		SM:addObject(Identifiers("SE"), 0, vec3(math.random (-128*40, 128*40), 0, math.random(-128*40, 128*40)), ResourceList("model", "ROCK")); 
-		SM:addObject(Identifiers("NPC", id), 0, vec3(math.random(-128*40, 128*40), 0, math.random(-128*40, 128*40)), ResourceList("model", "DOOMGUY", "updatefunc", "start", "msgrcvr", "msgrcvr"));
+		SM:addObject(Identifiers("SE"), level1, vec3(math.random (-128*40, 128*40), 0, math.random(-128*40, 128*40)), ResourceList("model", "ROCK")); 
+		SM:addObject(Identifiers("NPC", id), level1, vec3(math.random(-128*40, 128*40), 0, math.random(-128*40, 128*40)), ResourceList("model", "DOOMGUY", "updatefunc", "start", "msgrcvr", "msgrcvr"));
 	end
-	SM:addObject(Identifiers("CAM","Camera"), 0, vec3(0, 0, 1000), ResourceList());
-	SM:addObject(Identifiers("PLYR", "Player"), 0, vec3(0, 0, 1000), ResourceList("camera", "Camera", "projmodel", "bullet", "projsnd", "gunshot"));
-	SM:addObject(Identifiers("MO","Guide"), 0, vec3(0, 0, 0), ResourceList("model", "popup"));
-	SM:addObject(Identifiers("NPC", "R1"), 0, vec3(-80,0,0), ResourceList("model", "ROBOT", "updatefunc", "start", "msgrcvr", "msgrcvr"));
-	SM:addObject(Identifiers("NPC", "R2"), 0, vec3(480,0,-1000), ResourceList("model", "ROBOT"));
-	SM:addObject(Identifiers("PROP", "SHIP"), 0, vec3(-1000,1500,2000), ResourceList("model", "SHIP"));
-	SM:addObject(Identifiers("PROP", "SHIP2"), 0, vec3(1000,2000,-2000), ResourceList("model", "SHIP"));
+	SM:addObject(Identifiers("CAM","Camera"), level1, vec3(0, 0, 1000), ResourceList());
+	SM:addObject(Identifiers("PLYR", "Player"), level1, vec3(0, 0, 1000), ResourceList("camera", "Camera", "projmodel", "bullet", "projsnd", "gunshot"));
+	SM:addObject(Identifiers("MO","Guide"), level1, vec3(0, 0, 0), ResourceList("model", "popup"));
+	SM:addObject(Identifiers("NPC", "R1"), level1, vec3(-80,0,0), ResourceList("model", "ROBOT", "updatefunc", "start", "msgrcvr", "msgrcvr"));
+	SM:addObject(Identifiers("NPC", "R2"), level1, vec3(480,0,-1000), ResourceList("model", "ROBOT"));
+	SM:addObject(Identifiers("PROP", "SHIP"), level1, vec3(-1000,1500,2000), ResourceList("model", "SHIP"));
+	SM:addObject(Identifiers("PROP", "SHIP2"), level1, vec3(1000,2000,-2000), ResourceList("model", "SHIP"));
 	
 	--Set height map
-	SM:setSceneHeightMap(0, SM:GetGameObject("Terrain"));
+	SM:setSceneHeightMap(level1, SM:GetGameObject("Terrain"));
 
 	--Setup sound
 	AE:setListenerSource(SM:GetGameObjectID("Camera"), vec3(0, 0, 0));
-	--AE:playSoundatSource("BGMUSIC1", SM:GetGameObjectID("Camera"), vec3(0, 0, 0));
-	AE:playSoundatSource("robotnoise", SM:GetGameObjectID("R1"), vec3(-80,0,0));
-	AE:playSoundatSource("robotnoise", SM:GetGameObjectID("R2"), vec3(480,0,-1000));
+	--AE:playSoundatSource("bgmusic", SM:GetGameObjectID("Camera"), vec3(0, 0, 0));
 	
 	--Initalise Level 2
 	SM:addScene();
-	SM:setCurrScene(1);
+	SM:setCurrScene(level2);
 
-	SM:attachControls(1, ResourceList("keyCallback", "keys", "mouseCallback", "mouse"));
-	SM:attachTerrain(Identifiers("TO", "Terrain2"), 1, vec3(0,0,0), ResourceList("model", "Terrain2"));
+	SM:attachControls(level2, ResourceList("keyCallback", "keys", "mouseCallback", "mouse"));
+	SM:attachTerrain(Identifiers("TO", "Terrain2"), level2, vec3(0,0,0), ResourceList("model", "Terrain2"));
 
 	--Set height map
-	SM:setSceneHeightMap(1, SM:GetGameObject("Terrain2"));
+	SM:setSceneHeightMap(level2, SM:GetGameObject("Terrain2"));
 	
 	--Adding game objects
 	for i = 15,1,-1 
 	do 
-		SM:addObject(Identifiers("SE"), 1, vec3(math.random (-128*40, 128*40), 0, math.random(-128*40, 128*40)), ResourceList("model", "ROCK")); 
-		SM:addObject(Identifiers("NPC"), 1, vec3(math.random(-128*40, 128*40), 0, math.random(-128*40, 128*40)), ResourceList("model", "Robot2"));
+		SM:addObject(Identifiers("SE"), level2, vec3(math.random (-128*40, 128*40), 0, math.random(-128*40, 128*40)), ResourceList("model", "ROCK")); 
+		SM:addObject(Identifiers("NPC"), level2, vec3(math.random(-128*40, 128*40), 0, math.random(-128*40, 128*40)), ResourceList("model", "Robot2"));
 	end
-	SM:addObject(Identifiers("CAM","Camera"), 1, vec3(0, 0, 0), ResourceList());	
-	SM:addObject(Identifiers("PLYR", "Player"), 1, vec3(0, 0, 0), ResourceList("camera", "Camera", "projmodel", "bullet", "projsnd", "gunshot"));
-	SM:addObject(Identifiers("MO","Guide"), 1, vec3(0, 0, 0), ResourceList("model", "popup2"));
+	SM:addObject(Identifiers("CAM","Camera"), level2, vec3(0, 0, 0), ResourceList());	
+	SM:addObject(Identifiers("PLYR", "Player"), level2, vec3(0, 0, 0), ResourceList("camera", "Camera", "projmodel", "bullet", "projsnd", "gunshot"));
+	SM:addObject(Identifiers("MO","Guide"), level2, vec3(0, 0, 0), ResourceList("model", "popup2"));
 	
 	--Setup Sound
 	AE:setListenerSource(SM:GetGameObjectID("Camera"), vec3(0, 0, 0));
-	AE:playSoundatSource("bgmusic1", SM:GetGameObjectID("Camera"), vec3(0, 0, 0));
+	AE:playSoundatSource("BGMUSIC1", SM:GetGameObjectID("Camera"), vec3(0, 0, 0));
 
 	--Initalise end screen scene
 	SM:addScene();
 
-	SM:setCurrScene(2);
+	SM:setCurrScene(endscreen);
 	
-	SM:attachControls(2, ResourceList("mouseButtonCallback", "exitGameControls"));
+	SM:attachControls(endscreen, ResourceList("mouseButtonCallback", "exitGameControls"));
 	
-	SM:addObject(Identifiers("CAM","Camera"), 2, vec3(0, 0, 0), ResourceList());
-	SM:addObject(Identifiers("MO","Guide"), 2, vec3(0, 0, 0), ResourceList("model", "endscrn"));
+	SM:addObject(Identifiers("CAM","Camera"), endscreen, vec3(0, 0, 0), ResourceList());
+	SM:addObject(Identifiers("MO","Guide"), endscreen, vec3(0, 0, 0), ResourceList("model", "endscrn"));
 
 	--Set Starting Scene
-	SM:setCurrScene(0);
+	SM:setCurrScene(cs1);
 end

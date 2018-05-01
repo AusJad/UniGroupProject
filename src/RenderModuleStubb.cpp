@@ -176,7 +176,7 @@ void RenderModuleStubb::renderMultiTexturedArrayTriStrip(std::vector<unsigned> &
 	for (unsigned i = 0; i < indicies.size(); i++) {
 		glColor4ub((GLubyte)lights.at(indicies.at(i)) * 1, (GLubyte)lights.at(indicies.at(i)) * 1, (GLubyte)lights.at(indicies.at(i)) * 1, (GLubyte)255);
 		glMultiTexCoord2fARB(GL_TEXTURE0_ARB, texcoords.at(indicies.at(i)).x(), texcoords.at(indicies.at(i)).y());
-		glMultiTexCoord2fARB(GL_TEXTURE1_ARB, texcoords.at(indicies.at(i)).x() * 32, texcoords.at(indicies.at(i)).y() * 32);
+		glMultiTexCoord2fARB(GL_TEXTURE1_ARB, texcoords.at(indicies.at(i)).x() * 64, texcoords.at(indicies.at(i)).y() * 64);
 		glVertex3f(vertices.at(indicies.at(i)).x(), vertices.at(indicies.at(i)).y(), vertices.at(indicies.at(i)).z());
 	}
 	glEnd();

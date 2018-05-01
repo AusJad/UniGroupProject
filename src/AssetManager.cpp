@@ -5,7 +5,6 @@
 AssetManager::AssetManager()
 {
 	TexMan = Singleton<TextureManager>::getInstance();
-	AE = Singleton<AudioEngine>::getInstance();
 	MM = Singleton<ModelManger>::getInstance();
 }
 

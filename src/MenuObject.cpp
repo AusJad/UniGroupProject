@@ -17,6 +17,7 @@ void MenuObject::render() {
 }
 
 void MenuObject::update(float time) {
+	if (resources.hasResource("model") && model != NULL) model->update(time);
 	msgrcvr();
 
 	MessagingBus* tmp = Singleton<MessagingBus>::getInstance();

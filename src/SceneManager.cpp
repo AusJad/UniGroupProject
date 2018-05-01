@@ -49,8 +49,9 @@ void SceneManager::update(float time) {
 	msgrcvr();
 
 	Singleton<LUAScriptManager>::getInstance()->setGlobal<float>(time, "time");
-
-	if (!console.isActive()) scenes.at(currscene).update(time);
+	if (!console.isActive()) {
+		scenes.at(currscene).update(time);
+	}
 }
 
 void SceneManager::render() {
@@ -89,6 +90,9 @@ void SceneManager::msgrcvr() {
 		Message tmpmsg = tmp->getMessage(id);
 		if (tmpmsg.getInstruction() == "CS") {
 			setCurrScene(tmpmsg.getData().idata);
+			//Strictly Temporary - due to bug in playing cutscene with console active
+			console.toggle();
+			CONT->switchContextConsole(console.isActive(), RNDR, CONT);
 		}
 		else
 		if (tmpmsg.getInstruction() == "CSR") {

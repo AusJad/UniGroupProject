@@ -45,6 +45,12 @@ struct color_3{
 	color_3(float nx, float ny, float nz) : r(nx), g(ny), b(nz) {};
 };
 
+struct color_4 {
+	float r, g, b, a;
+	color_4() : r(0), g(0), b(0) {};
+	color_4(float nx, float ny, float nz, float na) : r(nx), g(ny), b(nz), a(na) {};
+};
+
 #define BEGIN_STREAM 1
 #define END_STREAM 2
 #define END_PRIMITIVES 3
@@ -57,6 +63,8 @@ struct color_3{
 #define POLY_MODE_CONST 10
 #define ENABLE_ALPHA 11
 #define DISABLE_ALPHA 12
+#define ENABLE_TRANSPARENCY 13
+#define DISABLE_TRANSPARENCY 14
 
 class GeometeryStream
 {
@@ -67,6 +75,7 @@ public:
 	const GeometeryStream & operator << (const trans_3 & rhs) const;
 	const GeometeryStream & operator << (const rot_4 & rhs) const;
 	const GeometeryStream & operator << (const color_3 & rhs) const;
+	const GeometeryStream & operator << (const color_4 & rhs) const;
 	GeometeryStream & operator << (int rhs);
 private:
 	int polymodeflag = POLY_MODE_CONST;
