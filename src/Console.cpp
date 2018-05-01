@@ -21,21 +21,30 @@ void Console::update(float time) {
 	msgrcvr();
 }
 
+void Console::addTex(std::string tex) {
+	resources.addResource("texture", tex);
+}
+
 void Console::render() {
-	float maxy = 1.0f;
+	float maxy = 1.5f;
 	float cury = FNT_SIZE_SMALL;
 
 	RNDR->RenderFacingCamera();
 
-	GeoStream << ENFORCE_POLYGON_MODE_SOLID << START_ATTRIB << color_3(0, 0, 0);
+	if(resources.hasResource("texture")) TXMAN->useTexture(resources.getResource("texture"), RNDR);
+	else GeoStream << ENFORCE_POLYGON_MODE_SOLID << START_ATTRIB << color_3(0, 0, 0);
 
 	RNDR->DrawQuad(point(-1.5f, maxy), point(1.5f, 0.0f), -1.7f);
 
-	GeoStream << END_ATTRIB << RESTORE_POLYGON_MODE;
+	TXMAN->disableTexture(RNDR);
+
+	if (!resources.hasResource("texture")) GeoStream << END_ATTRIB << RESTORE_POLYGON_MODE;
 
 	RNDR->StopRenderFacingCamera();
 
 	std::string tmp;
+
+	GeoStream << ENABLE_ALPHA;
 
 	if ((editind == curline.size())) {
 		if (even % 2 == 0)  FNT_ENG->RenderString(curline, FNT_SIZE_SMALL, 30, 30, -1.1f, 0.0f, -1.5f);
@@ -55,10 +64,15 @@ void Console::render() {
 			FNT_ENG->RenderString(history.at(i), FNT_SIZE_SMALL, 30, 30, -1.1f, cury, -1.5f);
 			cury += FNT_SIZE_SMALL;
 		}
+
+
+	GeoStream << DISABLE_ALPHA;
 }
 
 void Console::toggle() {
 	active = !active;
+	if (!active) history.clear();
+	if (!active) future.clear();
 }
 
 void Console::adjustEditInd(int offset) {

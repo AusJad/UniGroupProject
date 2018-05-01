@@ -49,6 +49,8 @@
 #define CHNG_SCENE_REQUEST "CS"
 #define TGL_CONSOLE "TGL_C"
 #define PUSH_CHANGES "PSH_C"
+#define SAVE_GAME "SV_GM"
+#define LOAD_GAME "LD_GM"
 
 //Audio Engine Messages
 #define PLY_SND_SRC_REQUEST "PSS"

@@ -77,6 +77,13 @@ GeometeryStream & GeometeryStream::operator << (int rhs) {
 			}
 			break;
 			*/
+		case ENABLE_ALPHA:
+			glEnable(GL_BLEND); 
+			glBlendFunc(GL_ONE, GL_ONE);
+			break;
+		case DISABLE_ALPHA:
+			glDisable(GL_BLEND);
+			break;
 	}
 
 	return *this;

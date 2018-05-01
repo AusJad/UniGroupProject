@@ -31,6 +31,7 @@ public:
 	void toggle();
 	void attachBehaviour(std::string toadd);
 	void adjustEditInd(int offset);
+	void addTex(std::string tex);
 private: 
 	void msgrcvr();
 	std::vector<std::string> history;

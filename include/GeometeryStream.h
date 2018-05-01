@@ -55,6 +55,8 @@ struct color_3{
 #define RESTORE_POLYGON_MODE 8
 #define POLY_MODE_CHANGED 9
 #define POLY_MODE_CONST 10
+#define ENABLE_ALPHA 11
+#define DISABLE_ALPHA 12
 
 class GeometeryStream
 {

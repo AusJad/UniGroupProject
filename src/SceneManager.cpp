@@ -16,6 +16,10 @@ void SceneManager::attachConsoleBehaviour(std::string entrypoint) {
 	console.attachBehaviour(entrypoint);
 }
 
+void SceneManager::attachConsoleTex(std::string tex) {
+	console.addTex(tex);
+}
+
 bool SceneManager::attachTerrain(Identifiers & id, unsigned sceneno, vec3 pos, ResourceList & lists) {
 	if (scenes.size() <= sceneno) return false;
 	else return(scenes.at(sceneno).attachTerrain(id, pos, lists));
@@ -99,6 +103,13 @@ void SceneManager::msgrcvr() {
 		if (tmpmsg.getInstruction() == PUSH_CHANGES) {
 			scenes.at(currscene).update(0);
 		}
+		else 
+		if (tmpmsg.getInstruction() == SAVE_GAME) {
+			saveGame(tmpmsg.getData().sdata);
+		}
+		if (tmpmsg.getInstruction() == LOAD_GAME) {
+			loadGame(tmpmsg.getData().sdata);
+		}
 	}
 }
 
@@ -123,4 +134,16 @@ GameObject* SceneManager::GetGameObject(std::string name) {
 bool SceneManager::setSceneHeightMap(unsigned sceneno, GameObject* hmObj) {
 	if (sceneno > scenes.size()) return false;
 	else return scenes.at(sceneno).setHeightMap(hmObj);
+}
+
+bool SceneManager::saveGame(std::string savename) {
+	std::cout << "Inside SceneManager Function Save Game." << std::endl;
+	std::cout << "File to save as: " << savename <<std::endl;
+	return true;
+}
+
+bool SceneManager::loadGame(std::string filetoload) {
+	std::cout << "Inside SceneManager Function Load Game." << std::endl;
+	std::cout << "File to load from: " << filetoload << std::endl;
+	return true;
 }

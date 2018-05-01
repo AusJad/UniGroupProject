@@ -113,6 +113,8 @@ public:
 
 	void attachConsoleBehaviour(std::string entrypoint);
 
+	void attachConsoleTex(std::string tex);
+
 private:
 	/// The scene vector.
 	std::vector<Scene> scenes;
@@ -141,5 +143,8 @@ private:
 	* @brief The message reveiver method.
 	*/
 	void msgrcvr();
+
+	bool saveGame(std::string savename);
+	bool loadGame(std::string filetoload);
 };
 

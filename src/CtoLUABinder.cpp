@@ -14,6 +14,7 @@ void CtoLUABinder::bindClasses(lua_State* lstate) {
 			.def("attachControls", &SceneManager::attachControls)
 			.def("attachTerrain", &SceneManager::attachTerrain)
 			.def("attachConsoleBehaviour", &SceneManager::attachConsoleBehaviour)
+			.def("attachConsoleTex", &SceneManager::attachConsoleTex)
 	];
 	luabind::module(lstate)[
 		luabind::class_<vec3>("vec3")

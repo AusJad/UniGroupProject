@@ -25,7 +25,7 @@ void FontEngine::update() {
 }
 
 bool FontEngine::RenderChar(char toRender) {
-
+	
 	RNDR->RenderFacingCamera();
 
 	if (!fonts.at(activefont).useChar(toRender)) return false;
@@ -35,6 +35,7 @@ bool FontEngine::RenderChar(char toRender) {
 	RNDR->bindTexture(NULL);
 
 	RNDR->StopRenderFacingCamera();
+
 
 	return true;
 }

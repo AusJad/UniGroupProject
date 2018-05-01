@@ -19,6 +19,10 @@ local function loadResources(AMAN)
 	else print("Failed to Load Resource DODGE."); end
 	if(AMAN:addResource("./Resources/Fonts/COURIER_NEW.csv", "FNT", "COURIERNEW")) then print("Successfully Loaded Resource COURIER_NEW.");
 	else print("Failed to Load Resource COURIER_NEW."); end
+	if(AMAN:addResource("./Resources/Fonts/ConsoleFont.csv", "FNT", "CONSOLEFONT")) then print("Successfully Loaded Resource CONSOLEFONT.");
+	else print("Failed to Load Resource CONSOLEFONT."); end
+
+	if(AMAN:addResource("./Resources/Textures/console.bmp", "BMP", "Console") == false) then print("Failed to load con tex"); end
 
 	--Load models
 	AMAN:addResource("./Resources/Models/lvl1popup.tsqr", "TX", "popup");
@@ -41,8 +45,9 @@ function initGame(SM, LSM, AMAN, AE)
 	--Seed random for deterministic object placement
 	math.randomseed(5);
 
-	--Set Console Behaviour
+	--Set Console Resources
 	SM:attachConsoleBehaviour("consoleEntryPoint");
+	SM:attachConsoleTex("Console");
 
 	--Initalise Level 1
 	SM:addScene();

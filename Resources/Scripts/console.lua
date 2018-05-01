@@ -28,6 +28,12 @@ local function handleMultiPartCMD(cmd, option, msgbus)
 	elseif(cmd == "CHANGEMODEL") then
 		changeModel(msgbus, option);
 		return CODE_SUCCESS;
+	elseif(cmd == "SAVEGAME" or cmd == "SAVE") then
+		saveGame(msgbus, option[1]);
+		return CODE_SUCCESS;
+	elseif(cmd == "LOADGAME" or cmd == "LOAD") then
+		loadGame(msgbus, option[1]);
+		return CODE_SUCCESS;
 	end
 	
 	return ERROR_CODE_UNKOWN_COMMAND; 

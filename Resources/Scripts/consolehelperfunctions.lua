@@ -56,3 +56,17 @@ end
 function clearScreen(msgbus)
 	msgbus:postIMessage(Message("CLS"), 1000002);
 end
+
+function saveGame(msgbus, file)
+	msg = Message("SV_GM");
+	msg:setsData(file);
+	msgbus:postMessage(msg, Identifiers("", "SM"));
+	pushChanges(msgbus);
+end
+
+function loadGame(msgbus, file)
+	msg = Message("LD_GM");
+	msg:setsData(file);
+	msgbus:postMessage(msg, Identifiers("", "SM"));
+	pushChanges(msgbus);
+end
