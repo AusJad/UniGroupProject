@@ -2,6 +2,8 @@ require "./Resources/Scripts/controls";
 require "./Resources/Scripts/npcai";
 require "./Resources/Scripts/console";
 
+cutsceneid = "";
+
 local cs1 = 0;
 local level1 = 1;
 local level2 = 2;
@@ -63,9 +65,13 @@ function initGame(SM, LSM, AMAN, AE)
 
 	SM:setCurrScene(cs1);
 
-	SM:addObject(Identifiers("MO"), cs1, vec3(0, 0, 0), ResourceList("model", "cutscene1"));
+	SM:attachControls(cs1, ResourceList("keyCallback", "skipCutScene"));
+
+	SM:addObject(Identifiers("MO", "CUTSCENE"), cs1, vec3(0, 0, 0), ResourceList("model", "cutscene1"));
 	SM:addObject(Identifiers("CAM","Camera"), cs1, vec3(0, 0, 0), ResourceList());
 	AE:setListenerSource(SM:GetGameObjectID("Camera"), vec3(0, 0, 0));
+
+	cutsceneid = tostring(SM:GetGameObjectID("CUTSCENE"));
 
 	--Initalise Level 1
 	SM:addScene();

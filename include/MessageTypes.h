@@ -65,6 +65,9 @@
 #define PLAY_ANIM "PLYA"
 #define STOP_ANIM "STPA"
 
+//Cutscene Messages
+#define STOP_CUTSCNE "END_CUT"
+
 //Game Object handler messages
 #define ADD_TMP_OBJ "ATO"
 #define GET_OBJECT_LIST "G_O_L"

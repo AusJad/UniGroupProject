@@ -70,10 +70,10 @@ function keys(key, action, MB)
 			MB:postMessage(Message("SLD"), Identifiers("", "Camera"));
 			MB:postMessage(Message("SLU"), Identifiers("", "Camera"));
 			tmpm = Message("CS");
-			if (curscene == 0) then
-				tmpm:setiData(1);
+			if (curscene == 1) then
+				tmpm:setiData(2);
 			else
-				tmpm:setiData(0);
+				tmpm:setiData(1);
 			end
 			MB:postMessage(tmpm, Identifiers("", "SM"));
 		end
@@ -97,5 +97,7 @@ function exitGameControls(button, action, MB)
 end
 
 function skipCutScene(key, action, MB)
-
+	if key:equals("enter") and action:equals("press") then
+		MB:postMessage(Message("END_CUT"), Identifiers("", cutsceneid));
+	end
 end

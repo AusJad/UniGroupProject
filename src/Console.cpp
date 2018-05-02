@@ -154,8 +154,8 @@ void Console::popChar() {
 		if (curline.size() > 0) curline.pop_back();
 	}
 	else {
-		if (editind > 1) curline.erase(editind - 1, 1);
-		editind--;
+		if (editind > 0) curline.erase(editind - 1, 1);
+		if (editind > 0) editind--;
 	}
 }
 

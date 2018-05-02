@@ -262,6 +262,8 @@ private:
 
 	void onDone();
 
+	void msgrcvr();
+
 	bool getHeader(std::ifstream & toread);
 	bool parseFrames(std::ifstream & toread);
 	void cleanLine(std::string & toclean);

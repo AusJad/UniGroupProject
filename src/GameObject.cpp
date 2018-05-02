@@ -104,7 +104,7 @@ bool GameObject::defaultMessageHandler(Message & message) {
 	}
 	else
 	if (message.getInstruction() == CHNGE_MDL) {
-		Model* tmp = Singleton<ModelManger>::getInstance()->useModel(message.getsData(), id.getName());
+		Model* tmp = Singleton<ModelManger>::getInstance()->useModel(message.getsData(), std::to_string(id.getId()));
 
 		if (tmp != NULL) {
 			setModel(tmp);

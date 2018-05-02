@@ -39,7 +39,7 @@ HEADER
 		NAME,T0
 		TOP,0.5,-.5
 		DISTANCE,-1.45
-		VALUE,Press Enter to Skip.$(NYI)
+		VALUE,Press Enter to Skip.
 		FONT,path,DODGE
 	ENDDEF
 	DEFINETEXT
@@ -60,7 +60,7 @@ HEADER
 		NAME,T12
 		TOP,0.2,-0.25
 		DISTANCE,-1.45
-		VALUE,So making these should be easy.$See:$./Resources/CutScenes/test.cs"$Definition for this cutscene.
+		VALUE,So making these should be easy.$See:$"./Resources/CutScenes/test.cs"$Definition for this cutscene.
 		FONT,path,DODGE
 	ENDDEF
 	DEFINETEXT

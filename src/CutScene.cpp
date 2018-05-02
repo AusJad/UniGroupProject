@@ -370,10 +370,23 @@ int CutScene::stringToFlags(std::string totest) {
 }
 
 void CutScene::update(float time) {
+	msgrcvr();
+
 	if(finishedflag == false) doActiveAnimations(time);
 	else onDone();
 
 	culmtime += time;
+}
+
+void CutScene::msgrcvr() {
+	Message tmp;
+	while (MSGBS->hasMessage(id)) {
+		tmp = MSGBS->getMessage(id);
+
+		if (tmp.getInstruction() == STOP_CUTSCNE) {
+			finishedflag = true;
+		}
+	}
 }
 
 void CutScene::doActiveAnimations(float time) {
