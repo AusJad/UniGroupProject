@@ -8,11 +8,9 @@
 #include "Maths.h"
 #include "Identifiers.h"
 
-using namespace std;
-
+// This struct was created as a quick and easy fix for better access to the stored game object data.
 typedef struct
 {
-	// bad design but this was quick and easy to implement will change later
 	unsigned sceneno;
 	int state;
 	vec3 position, targetPos, targetLook;
@@ -31,7 +29,7 @@ class save
 {
 public:
 	save();
-	save(string fn);
+	save(std::string fn);
 	~save();
 
 	/**
@@ -59,25 +57,31 @@ public:
 	*/
 	bool loadFile();
 
-	vector<goData> getData() const;
+	/**
+	* @brief Get method for the data.
+	*
+	* @return vector<goData> - Vector of GameObject data points.
+	*/
+	std::vector<goData> getData() const;
 
 private:
 	/// The entire path of the save file.
-	string savePath;
+	std::string savePath;
 	/// The name of the save file.
-	string filename;
+	std::string filename;
 	/// The directory that the save file is held in.
 	const char* directory = "./saveData/";
 	/// The type of file for the save file.
-	string fileType = ".txt";
-	
-	vector<goData> d;
-
+	std::string fileType = ".txt";
+	/// All objects and their data.
+	std::vector<goData> d;
+	/// Temp string for moving scene number between two saveGame() functions for efficiency reasons.
+	std::string tmpsceneno;
 	/**
 	* @brief Opens file and loads variables into the member variables of the class
 	*
 	* @param fp - The file path
 	*/
-	void openFile(string fp);
+	void openFile(std::string fp);
 };
 

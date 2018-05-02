@@ -8,8 +8,6 @@
 #include <algorithm>
 #include <sys/types.h>
 
-using namespace std;
-
 /**
 * @class fileNameReader
 *
@@ -27,7 +25,7 @@ public:
 	*
 	* @return Vector<string> - A vector of strings of file names.
 	*/
-	static vector<string> getFileNames(const char* dirPath, const string& fileType);
+	static std::vector<std::string> getFileNames(const char* dirPath, const std::string& fileType);
 private:
 	/**
 	* @brief Check the files in the directory for the correct type.
@@ -37,6 +35,6 @@ private:
 	*
 	* @return bool - If the file is the correct type.
 	*/
-	static bool fileTypeCheck(const string& s, const string& fileType);
+	static bool fileTypeCheck(const std::string& s, const std::string& fileType);
 };
 

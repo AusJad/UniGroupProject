@@ -151,7 +151,7 @@ bool GameObject::hasGravity() {
 //mm
 void GameObject::saveGame(save sf)
 {
-	if (id.getObjectname().empty()) // If object has name (isn't a part of the default scene loading) dont save it.
+	if (!id.getName().empty()) // If object has name (isn't a part of the default scene loading) save it.
 	{
 		sf.saveGame(state, pos, target, targetlook, id);
 	}

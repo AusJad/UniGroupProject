@@ -160,7 +160,7 @@ bool SceneManager::loadGame(std::string filetoload) {
 	save sf(filetoload);
 	if (sf.loadFile()) // Checks that file exists and that it is loaded in.
 	{
-		currscene = sf.getData()[0].sceneno; // All scene nos should be the same as its 1 save per file.
+		currscene = sf.getData()[0].sceneno; // All scene numbers from the same save should be the same as its 1 save per file.
 		scenes[currscene].loadGame(sf);
 	}
 

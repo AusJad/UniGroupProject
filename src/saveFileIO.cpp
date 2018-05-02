@@ -5,12 +5,20 @@ save::save()
 
 }
 
-save::save(string fn)
+save::save(std::string fn)
 {
+	// Set file name.
 	filename = fn;
+
+	// Set file path with file type for opening the file.
 	savePath = directory;
 	savePath.append(filename);
 	savePath.append(fileType);
+
+	// Create/wipe save file here as saveGame() appends to file and if we re-use existing name we have problems.
+	std::ofstream ofile;
+	ofile.open(savePath);
+	ofile.close();
 }
 
 save::~save()
@@ -20,66 +28,63 @@ save::~save()
 
 void save::saveGame(int sceneno)
 {
-	// create file of filename
-	// open file
-	// deposit sceneno;
-	// close file
-
-	ofstream ofile;
-
-	ofile.open(savePath);
-
-	ofile << sceneno << ";";
-
-	ofile.close();
+	// Set scene number to string and store this is a varaible defined in save() because opening and closing the file constantly seems inefficient 
+	// and the 2nd saveGame() function is normally called after and if it isnt then we dont want to save this data to file anyway.
+	tmpsceneno = std::to_string(sceneno);
+	tmpsceneno.append(";");
 }
 
 void save::saveGame(int state, vec3 pos, vec3 target, vec3 targetlook, Identifiers id)
 {
-	// open file
-	// deposit state,pos[0],pos[1],pos[2],.....,id.getId(), id.getName, id.getType(), id.getName(), id.getObjectName() endl
+	std::ofstream ofile;
 
-	ofstream ofile;
-
-	ofile.open(savePath);
+	ofile.open(savePath, std::ofstream::app);
 
 	ofile
+		<< tmpsceneno
 		<< state << ","
 		<< pos[0] << "," << pos[1] << "," << pos[2] << ","
 		<< target[0] << "," << target[1] << "," << target[2] << ","
 		<< targetlook[0] << "," << targetlook[1] << "," << targetlook[2] << ","
 		<< id.getId() << "," << id.getType() << "," << id.getName() << "," << id.getObjectname()
-		<< endl;
+		<< std::endl;
+
+	ofile.close();
+	//std::cout << "SAVE - saveGame: Object saved to file." << std::endl;
 
 }
 
 bool save::loadFile()
 {
-	vector<string> allfiles = fileNameReader::getFileNames(directory, fileType);
+	// Read in all files in directory.
+	std::vector<std::string> allfiles = fileNameReader::getFileNames(directory, fileType);
 	
 	for (int i = 0; i < allfiles.size(); i++)
 	{
-		if (allfiles[i] == savePath)
+		if (allfiles[i] == savePath) // If a file in the directory vector matches the name of the savePath
 		{
+			//std::cout << "SAVE - loadFile: Save found." << std::endl;
 			openFile(allfiles[i]);
 			return true;
 		}
 	}
+	std::cout << "SAVE: Game failed to load." << std::endl;
 	return false;
 }
 
-void save::openFile(string fp)
+void save::openFile(std::string fp)
 {
-	ifstream rfile(savePath);
-	string tmp;
+	std::ifstream rfile(savePath);
+	std::string tmp;
 	goData tempdata;
 
 	if (!rfile)
 	{
-		// bad read or no save data
+		std::cout << "SAVE: BAD READ FROM: " << savePath << std::endl;
 	}
 	else
 	{
+		//std::cout << "SAVE - openFile: Loading data." << std::endl;
 		while (getline(rfile, tmp, ';'))
 		{
 			tempdata.sceneno = atoi(tmp.c_str());
@@ -127,11 +132,12 @@ void save::openFile(string fp)
 			tempdata.id.setObjectname(tmp);
 
 			d.push_back(tempdata);
+			//std::cout << "SAVE - openFile: Object found..." << std::endl;
 		}
 	}
 }
 
-vector<goData> save::getData() const
+std::vector<goData> save::getData() const
 {
 	return d;
 }
