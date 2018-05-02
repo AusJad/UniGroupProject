@@ -161,13 +161,13 @@ void GameObject::loadGame(save sf)
 {
 	for (int i = 0; i < sf.getData().size(); i++)
 	{
-		if (id.getObjectname().compare(sf.getData()[i].id.getObjectname()))
+		if (id.getName().compare(sf.getData()[i].id.getName()))
 		{
-			state = sf.getData()[i].state;
-			pos = sf.getData()[i].position;
-			target = sf.getData()[i].targetPos;
-			targetlook = sf.getData()[i].targetLook;
-			id = sf.getData()[i].id;
+			this->state = sf.getData()[i].state;
+			this->pos = sf.getData()[i].position;
+			this->target = sf.getData()[i].targetPos;
+			this->targetlook = sf.getData()[i].targetLook;
+			this->id = sf.getData()[i].id;
 		}
 	}
 }

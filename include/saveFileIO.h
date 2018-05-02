@@ -82,6 +82,6 @@ private:
 	*
 	* @param fp - The file path
 	*/
-	void openFile(std::string fp);
+	void openFile();
 };
 

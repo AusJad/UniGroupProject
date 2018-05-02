@@ -16,9 +16,11 @@ save::save(std::string fn)
 	savePath.append(fileType);
 
 	// Create/wipe save file here as saveGame() appends to file and if we re-use existing name we have problems.
+	/*
 	std::ofstream ofile;
 	ofile.open(savePath);
 	ofile.close();
+	*/
 }
 
 save::~save()
@@ -46,7 +48,7 @@ void save::saveGame(int state, vec3 pos, vec3 target, vec3 targetlook, Identifie
 		<< pos[0] << "," << pos[1] << "," << pos[2] << ","
 		<< target[0] << "," << target[1] << "," << target[2] << ","
 		<< targetlook[0] << "," << targetlook[1] << "," << targetlook[2] << ","
-		<< id.getId() << "," << id.getType() << "," << id.getName() << "," << id.getObjectname()
+		<< id.getId() << "," << id.getType() << "," << id.getName()
 		<< std::endl;
 
 	ofile.close();
@@ -63,8 +65,8 @@ bool save::loadFile()
 	{
 		if (allfiles[i] == savePath) // If a file in the directory vector matches the name of the savePath
 		{
-			//std::cout << "SAVE - loadFile: Save found." << std::endl;
-			openFile(allfiles[i]);
+			std::cout << "SAVE: Save found." << std::endl;
+			openFile();
 			return true;
 		}
 	}
@@ -72,7 +74,7 @@ bool save::loadFile()
 	return false;
 }
 
-void save::openFile(std::string fp)
+void save::openFile()
 {
 	std::ifstream rfile(savePath);
 	std::string tmp;
@@ -125,11 +127,8 @@ void save::openFile(std::string fp)
 			getline(rfile, tmp, ',');
 			tempdata.id.setType(tmp);
 
-			getline(rfile, tmp, ',');
-			tempdata.id.setName(tmp);
-
 			getline(rfile, tmp);
-			tempdata.id.setObjectname(tmp);
+			tempdata.id.setName(tmp);
 
 			d.push_back(tempdata);
 			//std::cout << "SAVE - openFile: Object found..." << std::endl;

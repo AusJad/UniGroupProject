@@ -18,7 +18,9 @@ std::vector<std::string> fileNameReader::getFileNames(const char* dirPath, const
 
 	if (directptr != NULL) // Check if directory has contents
 	{
+		/*
 		std::cout << "Directory Opened..." << std::endl;
+		*/
 
 		while ((epdf = readdir(directptr))) // Read in all file names
 		{
@@ -31,6 +33,7 @@ std::vector<std::string> fileNameReader::getFileNames(const char* dirPath, const
 		}
 	}
 
+	/*
 	// Output to annouce what files were found
 	std::cout << std::endl << "The following files were found..." << std::endl;
 
@@ -38,6 +41,7 @@ std::vector<std::string> fileNameReader::getFileNames(const char* dirPath, const
 	{
 		std::cout << "File " << i + 1 << ": " << fileNames[i] << std::endl;
 	}
+	*/
 
 	return fileNames;
 }

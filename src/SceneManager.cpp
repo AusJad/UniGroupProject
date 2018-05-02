@@ -157,7 +157,7 @@ bool SceneManager::loadGame(std::string filetoload) {
 	std::cout << "File to load from: " << filetoload << std::endl;
 
 	//mm
-	save sf(filetoload);
+	save sf(filetoload); // Create save object with filename.
 	if (sf.loadFile()) // Checks that file exists and that it is loaded in.
 	{
 		currscene = sf.getData()[0].sceneno; // All scene numbers from the same save should be the same as its 1 save per file.
