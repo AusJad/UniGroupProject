@@ -2,6 +2,9 @@
 #include "GameObjectHandler.h"
 #include "CollisionEngine.h"
 
+//mm
+#include "saveFileIO.h"
+
 /**
 * @class Scene
 * @brief Class for creating the scene
@@ -76,6 +79,10 @@ public:
 	* @return bool - If the terrain was attached.
 	*/
 	bool attachTerrain(Identifiers & id, vec3 pos, ResourceList & list);
+
+	// mm
+	void saveGame(save sf);
+	void loadGame(save sf);
 
 private:
 	/// The game object handler.

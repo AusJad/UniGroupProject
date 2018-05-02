@@ -147,3 +147,27 @@ void GameObject::onCollide(vec3 & prevloc, const Identifiers & colgoid) {
 bool GameObject::hasGravity() {
 	return true;
 }
+
+//mm
+void GameObject::saveGame(save sf)
+{
+	if (id.getObjectname().empty()) // If object has name (isn't a part of the default scene loading) dont save it.
+	{
+		sf.saveGame(state, pos, target, targetlook, id);
+	}
+}
+
+void GameObject::loadGame(save sf)
+{
+	for (int i = 0; i < sf.getData().size(); i++)
+	{
+		if (id.getObjectname().compare(sf.getData()[i].id.getObjectname()))
+		{
+			state = sf.getData()[i].state;
+			pos = sf.getData()[i].position;
+			target = sf.getData()[i].targetPos;
+			targetlook = sf.getData()[i].targetLook;
+			id = sf.getData()[i].id;
+		}
+	}
+}

@@ -49,3 +49,20 @@ bool Scene::setHeightMap(GameObject* hmObj) {
 	objects.setWorldDimensions(hmObj->getModel()->getMinX(), hmObj->getModel()->getMaxZ(), hmObj->getModel()->getMaxX(), hmObj->getModel()->getMinZ());
 	return true;
 }
+
+//mm
+void Scene::saveGame(save sf)
+{
+	for (int i = 0; i < objects.getNumObjects(); i++)
+	{
+		objects.getObject(i)->saveGame(sf);
+	}
+}
+
+void Scene::loadGame(save sf)
+{
+	for (int i = 0; i < objects.getNumObjects(); i++)
+	{
+		objects.getObject(i)->loadGame(sf);
+	}
+}

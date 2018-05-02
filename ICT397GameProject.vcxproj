@@ -109,6 +109,7 @@
     <ClInclude Include="include\CtoLUABinder.h" />
     <ClInclude Include="include\CutScene.h" />
     <ClInclude Include="include\Engine.h" />
+    <ClInclude Include="include\fileNameReader.h" />
     <ClInclude Include="include\Font.h" />
     <ClInclude Include="include\FontEngine.h" />
     <ClInclude Include="include\FontLoader.h" />
@@ -139,6 +140,7 @@
     <ClInclude Include="include\RawTerrain.h" />
     <ClInclude Include="include\RenderModuleStubb.h" />
     <ClInclude Include="include\ResourceList.h" />
+    <ClInclude Include="include\saveFileIO.h" />
     <ClInclude Include="include\Scene.h" />
     <ClInclude Include="include\SceneManager.h" />
     <ClInclude Include="include\Scenery.h" />
@@ -168,6 +170,7 @@
     <ClCompile Include="src\CtoLUABinder.cpp" />
     <ClCompile Include="src\CutScene.cpp" />
     <ClCompile Include="src\Engine.cpp" />
+    <ClCompile Include="src\fileNameReader.cpp" />
     <ClCompile Include="src\Font.cpp" />
     <ClCompile Include="src\FontEngine.cpp" />
     <ClCompile Include="src\FontLoader.cpp" />
@@ -194,6 +197,7 @@
     <ClCompile Include="src\RawTerrain.cpp" />
     <ClCompile Include="src\RenderModuleStubb.cpp" />
     <ClCompile Include="src\ResourceList.cpp" />
+    <ClCompile Include="src\saveFileIO.cpp" />
     <ClCompile Include="src\Scene.cpp" />
     <ClCompile Include="src\SceneManager.cpp" />
     <ClCompile Include="src\Scenery.cpp" />
