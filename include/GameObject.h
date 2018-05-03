@@ -150,8 +150,8 @@ public:
 	virtual bool hasGravity();
 
 	//mm
-	void saveGame(save sf);
-	void loadGame(save sf);
+	virtual std::string toString();
+	virtual bool fromstring(std::string toread);
 
 protected:
 	/// The state of the object.

@@ -81,7 +81,7 @@ public:
 	bool attachTerrain(Identifiers & id, vec3 pos, ResourceList & list);
 
 	// mm
-	void saveGame(save sf);
+	std::vector<std::string> saveGame();
 	void loadGame(save sf);
 
 private:

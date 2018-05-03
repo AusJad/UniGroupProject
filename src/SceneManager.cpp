@@ -146,8 +146,7 @@ bool SceneManager::saveGame(std::string savename) {
 
 	//mm
 	save sf(savename); // Assuming it is just a file name (no path or extention)
-	sf.saveGame(currscene); // Assuming that we only want to save current scene
-	scenes[currscene].saveGame(sf);
+	sf.saveGame(scenes[currscene].saveGame());
 	
 	return true;
 }
@@ -160,7 +159,6 @@ bool SceneManager::loadGame(std::string filetoload) {
 	save sf(filetoload); // Create save object with filename.
 	if (sf.loadFile()) // Checks that file exists and that it is loaded in.
 	{
-		currscene = sf.getData()[0].sceneno; // All scene numbers from the same save should be the same as its 1 save per file.
 		scenes[currscene].loadGame(sf);
 	}
 

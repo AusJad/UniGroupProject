@@ -8,15 +8,6 @@
 #include "Maths.h"
 #include "Identifiers.h"
 
-// This struct was created as a quick and easy fix for better access to the stored game object data.
-typedef struct
-{
-	unsigned sceneno;
-	int state;
-	vec3 position, targetPos, targetLook;
-	Identifiers id;
-}goData;
-
 /**
 * @class save
 * @brief A class to store relevant SceneManager, Scene and GameObject data in a external file and to load that data back in.
@@ -32,23 +23,7 @@ public:
 	save(std::string fn);
 	~save();
 
-	/**
-	* @brief The save game call function for scene number.
-	* 
-	* @param sceneno - The scene number being saved.
-	*/
-	void saveGame(int sceneno);
-
-	/**
-	* @brief The save game call function for game object.
-	*
-	* @param state - The game objects state.
-	* @param pos - The position of the game object.
-	* @param target - The target position of the game object.
-	* @param targetlook - The target look at position of the game object.
-	* @param id - The identifier of the object.
-	*/
-	void saveGame(int state, vec3 pos, vec3 target, vec3 targetlook, Identifiers id);
+	void saveGame(std::vector<std::string> data);
 
 	/**
 	* @brief Check if the file requested can be found and if so load it in.
@@ -62,7 +37,7 @@ public:
 	*
 	* @return vector<goData> - Vector of GameObject data points.
 	*/
-	std::vector<goData> getData() const;
+	std::vector<std::string> getData() const;
 
 private:
 	/// The entire path of the save file.
@@ -74,14 +49,13 @@ private:
 	/// The type of file for the save file.
 	std::string fileType = ".txt";
 	/// All objects and their data.
-	std::vector<goData> d;
+	std::vector<std::string> d;
 	/// Temp string for moving scene number between two saveGame() functions for efficiency reasons.
-	std::string tmpsceneno;
+
 	/**
 	* @brief Opens file and loads variables into the member variables of the class
 	*
 	* @param fp - The file path
 	*/
-	void openFile();
 };
 

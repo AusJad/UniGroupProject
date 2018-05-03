@@ -28,115 +28,39 @@ save::~save()
 
 }
 
-void save::saveGame(int sceneno)
-{
-	// Set scene number to string and store this is a varaible defined in save() because opening and closing the file constantly seems inefficient 
-	// and the 2nd saveGame() function is normally called after and if it isnt then we dont want to save this data to file anyway.
-	tmpsceneno = std::to_string(sceneno);
-	tmpsceneno.append(";");
-}
-
-void save::saveGame(int state, vec3 pos, vec3 target, vec3 targetlook, Identifiers id)
+void save::saveGame(std::vector<std::string> data)
 {
 	std::ofstream ofile;
-
-	ofile.open(savePath, std::ofstream::app);
-
-	ofile
-		<< tmpsceneno
-		<< state << ","
-		<< pos[0] << "," << pos[1] << "," << pos[2] << ","
-		<< target[0] << "," << target[1] << "," << target[2] << ","
-		<< targetlook[0] << "," << targetlook[1] << "," << targetlook[2] << ","
-		<< id.getId() << "," << id.getType() << "," << id.getName()
-		<< std::endl;
-
+	ofile.open(savePath);
+	for (int i = 0; i < data.size(); i++)
+	{
+		ofile << data[i] << std::endl;
+	}
 	ofile.close();
-	//std::cout << "SAVE - saveGame: Object saved to file." << std::endl;
-
 }
 
 bool save::loadFile()
 {
-	// Read in all files in directory.
-	std::vector<std::string> allfiles = fileNameReader::getFileNames(directory, fileType);
-	
-	for (int i = 0; i < allfiles.size(); i++)
-	{
-		if (allfiles[i] == savePath) // If a file in the directory vector matches the name of the savePath
-		{
-			std::cout << "SAVE: Save found." << std::endl;
-			openFile();
-			return true;
-		}
-	}
-	std::cout << "SAVE: Game failed to load." << std::endl;
-	return false;
-}
-
-void save::openFile()
-{
 	std::ifstream rfile(savePath);
 	std::string tmp;
-	goData tempdata;
 
 	if (!rfile)
 	{
 		std::cout << "SAVE: BAD READ FROM: " << savePath << std::endl;
+		return false;
 	}
 	else
 	{
-		//std::cout << "SAVE - openFile: Loading data." << std::endl;
-		while (getline(rfile, tmp, ';'))
+		while (getline(rfile, tmp))
 		{
-			tempdata.sceneno = atoi(tmp.c_str());
-
-			getline(rfile, tmp, ',');
-			tempdata.state = atoi(tmp.c_str());
-
-			getline(rfile, tmp, ',');
-			tempdata.position[0] = atof(tmp.c_str());
-
-			getline(rfile, tmp, ',');
-			tempdata.position[1] = atof(tmp.c_str());
-
-			getline(rfile, tmp, ',');
-			tempdata.position[2] = atof(tmp.c_str());
-
-			getline(rfile, tmp, ',');
-			tempdata.targetPos[0] = atof(tmp.c_str());
-
-			getline(rfile, tmp, ',');
-			tempdata.targetPos[1] = atof(tmp.c_str());
-
-			getline(rfile, tmp, ',');
-			tempdata.targetPos[2] = atof(tmp.c_str());
-
-			getline(rfile, tmp, ',');
-			tempdata.targetLook[0] = atof(tmp.c_str());
-
-			getline(rfile, tmp, ',');
-			tempdata.targetLook[1] = atof(tmp.c_str());
-
-			getline(rfile, tmp, ',');
-			tempdata.targetLook[2] = atof(tmp.c_str());
-
-			getline(rfile, tmp, ',');
-			tempdata.id.setId(atoi(tmp.c_str()));
-
-			getline(rfile, tmp, ',');
-			tempdata.id.setType(tmp);
-
-			getline(rfile, tmp);
-			tempdata.id.setName(tmp);
-
-			d.push_back(tempdata);
-			//std::cout << "SAVE - openFile: Object found..." << std::endl;
+			d.push_back(tmp);
 		}
 	}
+
+	return true;
 }
 
-std::vector<goData> save::getData() const
+std::vector<std::string> save::getData() const
 {
 	return d;
 }

@@ -51,18 +51,33 @@ bool Scene::setHeightMap(GameObject* hmObj) {
 }
 
 //mm
-void Scene::saveGame(save sf)
+std::vector<std::string> Scene::saveGame()
 {
+	std::vector<std::string> s;
+
 	for (int i = 0; i < objects.getNumObjects(); i++)
 	{
-		objects.getObject(i)->saveGame(sf);
+		if (!objects.getObject(i)->getIdentifiers().getName().empty()) // Only want named objects
+		{
+			s.push_back(objects.getObject(i)->toString());
+		}
 	}
+
+	return s;
 }
 
 void Scene::loadGame(save sf)
 {
 	for (int i = 0; i < objects.getNumObjects(); i++)
 	{
-		objects.getObject(i)->loadGame(sf);
+		for (int j = 0; j < sf.getData().size(); j++)
+		{
+			if (objects.getObject(i)->getIdentifiers().getName() == sf.getData()[j].substr(0, sf.getData()[j].find(','))) // First attribute is name
+			{
+				sf.getData()[j].erase(0, sf.getData()[j].find(',') + 1); // Erase the object name
+				objects.getObject(i)->fromstring(sf.getData()[j]); // Pass in only data
+			}
+		}
 	}
 }
+

@@ -149,25 +149,71 @@ bool GameObject::hasGravity() {
 }
 
 //mm
-void GameObject::saveGame(save sf)
+std::string GameObject::toString()
 {
-	if (!id.getName().empty()) // If object has name (isn't a part of the default scene loading) save it.
-	{
-		sf.saveGame(state, pos, target, targetlook, id);
-	}
+	// Always save object name first followed by ','[DATANAME],[DATA],...[DATANAME],[DATA]
+	std::string towrite;
+
+	towrite += id.getName() + ",";
+	towrite += "POS," + std::to_string(pos.x()) + "," + std::to_string(pos.y()) + "," + std::to_string(pos.z()) + ",";
+	towrite += "TARGET," + std::to_string(target.x()) + "," + std::to_string(target.y()) + "," + std::to_string(target.z()) + ",";
+	towrite += "TARGETLOOK," + std::to_string(targetlook.x()) + "," + std::to_string(targetlook.y()) + "," + std::to_string(targetlook.z());
+
+	return towrite;
 }
 
-void GameObject::loadGame(save sf)
+bool GameObject::fromstring(std::string toread)
 {
-	for (int i = 0; i < sf.getData().size(); i++)
+	float tmpf;
+	std::string linehead;
+
+	while (!toread.empty())
 	{
-		if (id.getName().compare(sf.getData()[i].id.getName()))
+		linehead = toread.substr(0, toread.find(','));
+		toread.erase(0, toread.find(',') + 1);
+
+		if (linehead == "POS")
 		{
-			this->state = sf.getData()[i].state;
-			this->pos = sf.getData()[i].position;
-			this->target = sf.getData()[i].targetPos;
-			this->targetlook = sf.getData()[i].targetLook;
-			this->id = sf.getData()[i].id;
+			tmpf = stof(toread.substr(0, toread.find(',')));
+			pos.sx(tmpf);
+			toread.erase(0, toread.find(',') + 1);
+
+			tmpf = stof(toread.substr(0, toread.find(',')));
+			pos.sy(tmpf);
+			toread.erase(0, toread.find(',') + 1);
+
+			tmpf = stof(toread.substr(0, toread.find(',')));
+			pos.sz(tmpf);
+			toread.erase(0, toread.find(',') + 1);
+		}
+		else if (linehead == "TARGET")
+		{
+			tmpf = stof(toread.substr(0, toread.find(',')));
+			target.sx(tmpf);
+			toread.erase(0, toread.find(',') + 1);
+
+			tmpf = stof(toread.substr(0, toread.find(',')));
+			target.sy(tmpf);
+			toread.erase(0, toread.find(',') + 1);
+
+			tmpf = stof(toread.substr(0, toread.find(',')));
+			target.sz(tmpf);
+			toread.erase(0, toread.find(',') + 1);
+		}
+		else if (linehead == "TARGETLOOK")
+		{
+			tmpf = stof(toread.substr(0, toread.find(',')));
+			targetlook.sx(tmpf);
+			toread.erase(0, toread.find(',') + 1);
+
+			tmpf = stof(toread.substr(0, toread.find(',')));
+			targetlook.sy(tmpf);
+			toread.erase(0, toread.find(',') + 1);
+
+			tmpf = stof(toread);
+			targetlook.sz(tmpf);
+			toread.erase();
 		}
 	}
+	return true;
 }
