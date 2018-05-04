@@ -48,6 +48,10 @@ class MenuObject : public GameObject {
 		*/
 		void setModel(Model* M);
 
+		// mm
+		std::string toString();
+		bool fromstring(std::string toread);
+
 	private:
 		/// Is the menu visable.
 		bool visible;

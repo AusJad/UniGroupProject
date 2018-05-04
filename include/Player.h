@@ -41,6 +41,10 @@ public:
 	* @return bool - If the player is collidable or not.
 	*/
 	bool isCollidable();
+
+	std::string toString();
+	bool fromstring(std::string toread);
+
 private:
 	/// The direction the player should be facing.
 	vec3 front;

@@ -73,3 +73,57 @@ vec3 Player::getCenterOffset() {
 
 	return vec3(0, 0, 0);
 }
+
+std::string Player::toString()
+{
+	std::string towrite;
+
+	towrite += GameObject::id.getName() + ",";
+	towrite += "POS," + std::to_string(GameObject::getPos().x()) + "," + std::to_string(GameObject::getPos().y()) + "," + std::to_string(GameObject::getPos().z()) + ",";
+	towrite += "FRONT," + std::to_string(front.x()) + "," + std::to_string(front.y()) + "," + std::to_string(front.z());
+
+	return towrite;
+}
+
+bool Player::fromstring(std::string toread)
+{
+	float tmpf;
+	std::string linehead;
+	int delimlen = 1;
+
+	while (!toread.empty())
+	{
+		linehead = toread.substr(0, toread.find(','));
+		toread.erase(0, toread.find(',') + delimlen);
+
+		if (linehead == "POS")
+		{
+			tmpf = stof(toread.substr(0, toread.find(',')));
+			GameObject::pos.sx(tmpf);
+			toread.erase(0, toread.find(',') + delimlen);
+
+			tmpf = stof(toread.substr(0, toread.find(',')));
+			GameObject::pos.sy(tmpf);
+			toread.erase(0, toread.find(',') + delimlen);
+
+			tmpf = stof(toread.substr(0, toread.find(',')));
+			GameObject::pos.sz(tmpf);
+			toread.erase(0, toread.find(',') + delimlen);
+		}
+		else if (linehead == "FRONT")
+		{
+			tmpf = stof(toread.substr(0, toread.find(',')));
+			front.sx(tmpf);
+			toread.erase(0, toread.find(',') + delimlen);
+
+			tmpf = stof(toread.substr(0, toread.find(',')));
+			front.sy(tmpf);
+			toread.erase(0, toread.find(',') + delimlen);
+
+			tmpf = stof(toread.substr(0, toread.find(',')));
+			front.sz(tmpf);
+			toread.erase();
+		}
+	}
+	return true;
+}

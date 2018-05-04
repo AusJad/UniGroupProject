@@ -179,6 +179,11 @@ public:
 	* @return bool - If the camera can collide.
 	*/
 	bool isCollidable();
+
+	//mm
+	std::string toString();
+	bool fromstring(std::string toread);
+
 private:
 	/// Move speed of camera.
 	float moveSpeed;

@@ -59,11 +59,15 @@ public:
 
 	void lookAt(vec3 target);
 
+	//mm
+	std::string toString();
+	bool fromstring(std::string toread);
+
 private:
 	vec3 velocity;
 	vec3 heading;
 	float lookmat[16];
-	bool lookat ;
+	bool lookat;
 	float health;
 	float speed;
 };
