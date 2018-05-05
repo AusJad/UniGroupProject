@@ -87,6 +87,8 @@ local function initEntity(this, msgbus)
 	pos_table[this:getIdentifiers():getId()] = this:getPos();
 end
 
+function isnan(x) return x ~= x end
+
 --Entry Point
 function start(this, msgbus)
 	if this:getState() == -1 then
@@ -99,7 +101,10 @@ function start(this, msgbus)
 		stateDIE(this, msgbus);
 	end
 
-	--print(AIMvmnt.faceTarget(this:getPos(), this:getHeading()))
+	if isnan(AIMvmnt.faceTarget(this:getPos(), this:getTarget())) == false then
+		this:setLAngle(math.abs(AIMvmnt.faceTarget(this:getPos(), this:getTarget())));
+		--print(tonumber(AIMvmnt.faceTarget(this:getPos(), this:getTarget())));
+	end
 	--this:lookAt(this:getTarget());
 
 	--for i, j in pairs(pos_table) do 

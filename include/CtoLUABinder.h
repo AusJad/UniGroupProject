@@ -17,6 +17,7 @@
 #include "Maths.h"
 #include "Scenery.h"
 #include "AIMovementBehaviours.h"
+#include "MenuTools.h"
 
 extern "C" {
 	#include "lua/lua.h"

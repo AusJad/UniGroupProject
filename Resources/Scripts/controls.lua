@@ -70,10 +70,10 @@ function keys(key, action, MB)
 			MB:postMessage(Message("SLD"), Identifiers("", "Camera"));
 			MB:postMessage(Message("SLU"), Identifiers("", "Camera"));
 			tmpm = Message("CS");
-			if (curscene == 1) then
-				tmpm:setiData(2);
+			if (curscene == 2) then
+				tmpm:setiData(3);
 			else
-				tmpm:setiData(1);
+				tmpm:setiData(2);
 			end
 			MB:postMessage(tmpm, Identifiers("", "SM"));
 		end

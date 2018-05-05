@@ -55,13 +55,13 @@ bool FontEngine::RenderString(std::string torender, float fontsize, unsigned num
 		curchar = toupper(torender.at(i));
 
 		if (!fonts.at(activefont).useChar(curchar)) errorflagnotset = false;
-		
-		RNDR->DrawQuad(point(startx, starty + fontsize), point(startx + fontsize, starty), depth);
+		else {
+			RNDR->DrawQuad(point(startx, starty + fontsize), point(startx + fontsize, starty), depth);
 
-		RNDR->bindTexture(NULL);
+			RNDR->bindTexture(NULL);
 
-		startx += ((float)fonts.at(activefont).getCharOffset(curchar) / (float)fonts.at(activefont).getCharWidth()) * fontsize;
-	
+			startx += ((float)fonts.at(activefont).getCharOffset(curchar) / (float)fonts.at(activefont).getCharWidth()) * fontsize;
+		}
 	}
 
 	RNDR->StopRenderFacingCamera();

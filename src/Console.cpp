@@ -1,7 +1,5 @@
 #include "Console.h"
 
-
-
 Console::Console()
 {
 	active = false;

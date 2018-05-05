@@ -123,7 +123,7 @@ void GameObject::setModel(Model* M) {
 	
 	model = M;
 
-	//model->centerOnPoint(vec3(pos.x(), 0, pos.z()));
+	model->centerOnPoint(vec3(0, 0, 0));
 }
 
 Model*  GameObject::getModel() {

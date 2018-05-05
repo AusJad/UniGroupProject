@@ -91,7 +91,7 @@ void SceneManager::msgrcvr() {
 		if (tmpmsg.getInstruction() == "CS") {
 			setCurrScene(tmpmsg.getData().idata);
 			//Strictly Temporary - due to bug in playing cutscene with console active
-			console.toggle();
+			if(console.isActive()) console.toggle();
 			CONT->switchContextConsole(console.isActive(), RNDR, CONT);
 		}
 		else

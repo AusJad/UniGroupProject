@@ -101,8 +101,8 @@ bool MD2Model::loadModel(std::string filename) {
 
 	infile.seekg(header.offsetTexCoord);
 	for (unsigned i = 0; i < (unsigned) header.numTexCoords; i++) {
-		infile.read((char*)& tmptx, sizeof(md2texcord));
-		texcoords.push_back(vec2(tmptx.x, tmptx.y));
+		infile.read((char*) &tmptx, sizeof(md2texcord));
+		texcoords.push_back(md2texcord(tmptx.x, tmptx.y));
 	}
 
 	md2Tri tmptri;
@@ -120,7 +120,6 @@ bool MD2Model::loadModel(std::string filename) {
 		frames.at(i).verticies = (md2vertex *) malloc(sizeof(md2vertex) *header.numVerts);
 		if (!frames.at(i).verticies) return false;
 	}
-
 
 	infile.seekg(header.offsetFrame);
 
@@ -190,7 +189,7 @@ void MD2Model::render(const vec3 & transmat) {
 
 	lasttrans = transmat;
 
-	GeoStream << trans_3(lasttrans) << rot_4(90, 0, 1, 0);
+	//GeoStream << trans_3(lasttrans) << rot_4(90, 0, 1, 0);
 
 	if (animationplaying) renderAnimated();
 	else renderStatic();
@@ -211,16 +210,16 @@ void MD2Model::renderAnimated() {
 
 	for (unsigned i = 0; i < triangles.size(); i++) {
 		for (unsigned j = 0; j < 3; j++) {
-			texcoordtmp.sx(texcoords.at(triangles.at(i).txcoordind[j]).x() / header.skinWidth);
-			texcoordtmp.sy(texcoords.at(triangles.at(i).txcoordind[j]).y() / header.skinHeight);
+			texcoordtmp.sx( (float) texcoords.at(triangles.at(i).txcoordind[j]).x / header.skinWidth);
+			texcoordtmp.sy( (float) texcoords.at(triangles.at(i).txcoordind[j]).y / header.skinHeight);
 
-			vertc.sx(scale.x() * frames.at(curframe).scale.data[0] * frames.at(curframe).verticies[triangles.at(i).faces[j]].pos[0] + frames.at(curframe).trans.data[0] * scale.x());
-			vertc.sz(scale.z() * frames.at(curframe).scale.data[1] * frames.at(curframe).verticies[triangles.at(i).faces[j]].pos[1] + frames.at(curframe).trans.data[1] * scale.z());
-			vertc.sy(scale.y() * frames.at(curframe).scale.data[2] * frames.at(curframe).verticies[triangles.at(i).faces[j]].pos[2] + frames.at(curframe).trans.data[2] * scale.y());
+			vertc.sx((scale.x() * frames.at(curframe).scale.data[0] * frames.at(curframe).verticies[triangles.at(i).faces[j]].pos[0]) + frames.at(curframe).trans.data[0] * scale.x());
+			vertc.sz((scale.z() * frames.at(curframe).scale.data[1] * frames.at(curframe).verticies[triangles.at(i).faces[j]].pos[1]) + frames.at(curframe).trans.data[1] * scale.z());
+			vertc.sy((scale.y() * frames.at(curframe).scale.data[2] * frames.at(curframe).verticies[triangles.at(i).faces[j]].pos[2]) + frames.at(curframe).trans.data[2] * scale.y());
 
-			vertn.sx(scale.x() * frames.at(nextframe).scale.data[0] * frames.at(nextframe).verticies[triangles.at(i).faces[j]].pos[0] + frames.at(nextframe).trans.data[0] * scale.x());
-			vertn.sz(scale.z() * frames.at(nextframe).scale.data[1] * frames.at(nextframe).verticies[triangles.at(i).faces[j]].pos[1] + frames.at(nextframe).trans.data[1] * scale.z());
-			vertn.sy(scale.y() * frames.at(nextframe).scale.data[2] * frames.at(nextframe).verticies[triangles.at(i).faces[j]].pos[2] + frames.at(nextframe).trans.data[2] * scale.y());
+			vertn.sx((scale.x() * frames.at(nextframe).scale.data[0] * frames.at(nextframe).verticies[triangles.at(i).faces[j]].pos[0]) + frames.at(nextframe).trans.data[0] * scale.x());
+			vertn.sz((scale.z() * frames.at(nextframe).scale.data[1] * frames.at(nextframe).verticies[triangles.at(i).faces[j]].pos[1]) + frames.at(nextframe).trans.data[1] * scale.z());
+			vertn.sy((scale.y() * frames.at(nextframe).scale.data[2] * frames.at(nextframe).verticies[triangles.at(i).faces[j]].pos[2]) + frames.at(nextframe).trans.data[2] * scale.y());
 	
 			vert = (vertc + ((vertn - vertc) * curinerpolation));
 
@@ -244,8 +243,8 @@ void MD2Model::renderStatic() {
 
 	for (unsigned i = 0; i < triangles.size(); i++) {
 		for (unsigned j = 0; j < 3; j++) {
-			texcoordtmp.sx(texcoords.at(triangles.at(i).txcoordind[j]).x() / header.skinWidth);
-			texcoordtmp.sy(texcoords.at(triangles.at(i).txcoordind[j]).y() / header.skinHeight);
+			texcoordtmp.sx((float)texcoords.at(triangles.at(i).txcoordind[j]).x / header.skinWidth);
+			texcoordtmp.sy((float)texcoords.at(triangles.at(i).txcoordind[j]).y / header.skinHeight);
 
 			vert.sx(scale.x() * frames.at(curframe).scale.data[0] * frames.at(curframe).verticies[triangles.at(i).faces[j]].pos[0] + frames.at(curframe).trans.data[0] * scale.x());
 			vert.sz(scale.z() * frames.at(curframe).scale.data[1] * frames.at(curframe).verticies[triangles.at(i).faces[j]].pos[1] + frames.at(curframe).trans.data[1] * scale.z());

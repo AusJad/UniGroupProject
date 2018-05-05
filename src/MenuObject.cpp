@@ -8,6 +8,13 @@ MenuObject::MenuObject(Identifiers & id, vec3 pos, ResourceList & list) : GameOb
 void MenuObject::render() {
 	if (!visible) return;
 
+	if (resources.hasResource("renderfunc")) {
+		RenderModuleStubb* tmp = Singleton<RenderModuleStubb>::getInstance();
+		tmp->RenderFacingCamera();
+		LSM->callFunction<MenuObject, MessagingBus>(resources.getResource("renderfunc"), *this, *(Singleton<MessagingBus>::getInstance()));
+		tmp->StopRenderFacingCamera();
+	}
+
 	if (resources.hasResource("model") && model != NULL){
 		RenderModuleStubb* tmp = Singleton<RenderModuleStubb>::getInstance();
 		tmp->RenderFacingCamera();
@@ -19,6 +26,9 @@ void MenuObject::render() {
 void MenuObject::update(float time) {
 	if (resources.hasResource("model") && model != NULL) model->update(time);
 	msgrcvr();
+
+	if(resources.hasResource("updatefunc"))
+		LSM->callFunction<MenuObject, MessagingBus>(resources.getResource("updatefunc"), *this, *(Singleton<MessagingBus>::getInstance()));
 
 	MessagingBus* tmp = Singleton<MessagingBus>::getInstance();
 	Message tmpm;

@@ -127,6 +127,7 @@
     <ClInclude Include="include\Maths.h" />
     <ClInclude Include="include\MD2Model.h" />
     <ClInclude Include="include\MenuObject.h" />
+    <ClInclude Include="include\MenuTools.h" />
     <ClInclude Include="include\Message.h" />
     <ClInclude Include="include\MessageTypes.h" />
     <ClInclude Include="include\MessagingBus.h" />
@@ -185,6 +186,7 @@
     <ClCompile Include="src\Maths.cpp" />
     <ClCompile Include="src\MD2Model.cpp" />
     <ClCompile Include="src\MenuObject.cpp" />
+    <ClCompile Include="src\MenuTools.cpp" />
     <ClCompile Include="src\Message.cpp" />
     <ClCompile Include="src\MessagingBus.cpp" />
     <ClCompile Include="src\ModelFactory.cpp" />
@@ -213,8 +215,10 @@
     <None Include="Resources\Scripts\consolehelperfunctions.lua" />
     <None Include="Resources\Scripts\controls.lua" />
     <None Include="Resources\Scripts\helperfunctions.lua" />
+    <None Include="Resources\Scripts\mainmenu.lua" />
     <None Include="Resources\Scripts\npcai.lua" />
     <None Include="Resources\Scripts\npcpatrolai.lua" />
+    <None Include="Resources\Scripts\player.lua" />
     <None Include="Resources\Scripts\startup.lua" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

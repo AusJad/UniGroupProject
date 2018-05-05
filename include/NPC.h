@@ -57,13 +57,12 @@ public:
 
 	void setHeading(const vec3 & heading);
 
-	void lookAt(vec3 target);
+	void setLAngle(float nangle);
 
 private:
 	vec3 velocity;
 	vec3 heading;
-	float lookmat[16];
-	bool lookat ;
+	float lookangle;
 	float health;
 	float speed;
 };

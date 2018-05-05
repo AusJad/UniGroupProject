@@ -15,8 +15,20 @@ bool Player::isCollidable() {
 }
 
 void Player::render() {
+
+	if (resources.hasResource("renderfunc")) {
+		RenderModuleStubb* tmp = Singleton<RenderModuleStubb>::getInstance();
+		tmp->RenderFacingCamera();
+		LSM->callFunction<Player, MessagingBus>(resources.getResource("renderfunc"), *this, *(Singleton<MessagingBus>::getInstance()));
+		tmp->StopRenderFacingCamera();
+	}
+}
+
+void Player::drawModel(vec3 & trans, float rot) {
 	Singleton<RenderModuleStubb>::getInstance()->RenderFacingCamera();
-	if (resources.hasResource("model") && model != NULL) GameObject::model->render(vec3(0,0,0));
+	GeoStream << BEGIN_STREAM << trans_3(trans.x(), trans.y(), trans.z()) << rot_4(rot, 0, 1, 0);
+	if (resources.hasResource("model") && model != NULL) GameObject::model->render(vec3(0, 0, 0));
+	GeoStream << END_STREAM;
 	Singleton<RenderModuleStubb>::getInstance()->StopRenderFacingCamera();
 }
 

@@ -19,6 +19,13 @@ ResourceList::ResourceList(std::string k1, std::string v1, std::string k2, std::
 	resources[k3] = v3;
 }
 
+ResourceList::ResourceList(std::string k1, std::string v1, std::string k2, std::string v2, std::string k3, std::string v3, std::string k4, std::string v4) {
+	resources[k1] = v1;
+	resources[k2] = v2;
+	resources[k3] = v3;
+	resources[k4] = v4;
+}
+
 bool ResourceList::hasResource(std::string key) {
 	return resources.count(key) == 1;
 }

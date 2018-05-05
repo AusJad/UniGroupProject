@@ -32,6 +32,34 @@ void CtoLUABinder::bindClasses(lua_State* lstate) {
 			.def(luabind::self * vec3())
 	];
 	luabind::module(lstate)[
+		luabind::class_<vec2>("vec2")
+			.def(luabind::constructor<>())
+			.def(luabind::constructor<float, float>())
+			.def("x", &vec2::sx)
+			.def("y", &vec2::sy)
+			.def("x", &vec2::x)
+			.def("y", &vec2::y)
+			.def(luabind::self + vec2())
+			.def(luabind::self - vec2())
+			.def(luabind::self / vec2())
+	];
+	luabind::module(lstate)[
+		luabind::class_<vec4>("vec4")
+			.def(luabind::constructor<>())
+			.def(luabind::constructor<float, float, float, float>())
+			.def("x", &vec4::sx)
+			.def("y", &vec4::sy)
+			.def("z", &vec4::sz)
+			.def("w", &vec4::sw)
+			.def("x", &vec4::x)
+			.def("y", &vec4::y)
+			.def("z", &vec4::z)
+			.def("w", &vec4::w)
+			.def(luabind::self + vec4())
+			.def(luabind::self - vec4())
+			.def(luabind::self / vec4())
+	];
+	luabind::module(lstate)[
 		luabind::class_<LUAScriptManager >("LUAScriptManager")
 			.def(luabind::constructor<>())
 			.def("loadScript", &LUAScriptManager::loadScript)
@@ -59,7 +87,7 @@ void CtoLUABinder::bindClasses(lua_State* lstate) {
 			.def("NPCDefaultMessageHandler", &NPC::NPCDefaultMessageHandler)
 			.def("getHeading", &NPC::getHeading)
 			.def("setHeading", &NPC::setHeading)
-			.def("lookAt", &NPC::lookAt)
+			.def("setLAngle", &NPC::setLAngle)
 	];
 	luabind::module(lstate)[
 		luabind::class_<StaticEntity>("StaticEntity")
@@ -104,6 +132,7 @@ void CtoLUABinder::bindClasses(lua_State* lstate) {
 			.def("getState", &Player::getState)
 			.def("getID", &Player::getID)
 			.def("getIdentifiers", &Player::getIdentifiers)
+			.def("drawModel", &Player::drawModel)
 	];
 	luabind::module(lstate)[
 		luabind::class_<Scenery>("Scenery")
@@ -161,6 +190,7 @@ void CtoLUABinder::bindClasses(lua_State* lstate) {
 			.def(luabind::constructor<std::string, std::string>())
 			.def(luabind::constructor<std::string, std::string, std::string, std::string>())
 			.def(luabind::constructor<std::string, std::string, std::string, std::string, std::string, std::string>())
+			.def(luabind::constructor<std::string, std::string, std::string, std::string, std::string, std::string, std::string, std::string>())
 			.def("hasResource", &ResourceList::hasResource)
 			.def("getResource", &ResourceList::getResource)
 			.def("addResource", &ResourceList::addResource)
@@ -197,5 +227,14 @@ void CtoLUABinder::bindClasses(lua_State* lstate) {
 		luabind::def("capSpeed", &AIMovementBehaviours::capSpeed), 
 		luabind::def("getDistance", &AIMovementBehaviours::getDistance),
 		luabind::def("faceTarget", &AIMovementBehaviours::faceTarget)
+	];
+	luabind::module(lstate, "MenuTools")[
+		luabind::def("drawTSquare", &MenuTools::drawTSquare),
+		luabind::def("drawSquare", &MenuTools::drawSquare),
+		luabind::def("drawButton", &MenuTools::drawButton),
+		luabind::def("renderText", &MenuTools::renderText),
+		luabind::def("fadeIn", &MenuTools::fadeIn),
+		luabind::def("fadeOut", &MenuTools::fadeOut),
+		luabind::def("drawModel", &MenuTools::drawModel)
 	];
 }

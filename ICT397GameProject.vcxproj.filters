@@ -189,6 +189,9 @@
     <ClInclude Include="include\CutScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\MenuTools.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\CtoLUABinder.cpp">
@@ -344,6 +347,9 @@
     <ClCompile Include="src\CutScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\MenuTools.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Scripts\controls.lua">
@@ -365,6 +371,12 @@
       <Filter>Resource Files\Scripts</Filter>
     </None>
     <None Include="Resources\Scripts\consolehelperfunctions.lua">
+      <Filter>Resource Files\Scripts</Filter>
+    </None>
+    <None Include="Resources\Scripts\mainmenu.lua">
+      <Filter>Resource Files\Scripts</Filter>
+    </None>
+    <None Include="Resources\Scripts\player.lua">
       <Filter>Resource Files\Scripts</Filter>
     </None>
   </ItemGroup>

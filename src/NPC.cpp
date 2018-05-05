@@ -5,13 +5,13 @@ NPC::NPC(Identifiers & id, vec3 pos, ResourceList & list) : GameObject( id, pos,
 {
 	health = 0;
 	speed = 0;
-	lookat = false;
+	lookangle = 0;
 }
 
 NPC::NPC() : GameObject(){
 	health = 0;
 	speed = 0;
-	lookat = false;
+	lookangle = 0;
 }
 
 NPC::~NPC()
@@ -24,9 +24,10 @@ void NPC::render() {
 	RenderModuleStubb* tmp = Singleton<RenderModuleStubb>::getInstance();
 
 	if (resources.hasResource("model") && model != NULL) {
-		if(lookat) tmp->pushMatrix(lookmat);
+
+		GeoStream << BEGIN_STREAM << trans_3(this->pos.x(), this->pos.y(), this->pos.z()) << rot_4(lookangle, 0, 1, 0);
 		GameObject::model->render(this->pos);
-		if (lookat) { tmp->popMatrix(); lookat = false; }
+		GeoStream << END_STREAM;
 	}
 	else {
 
@@ -45,6 +46,10 @@ bool NPC::NPCDefaultMessageHandler(Message & message) {
 	}
 
 	return false;
+}
+
+void NPC::setLAngle(float nangle) {
+	lookangle = nangle;
 }
 
 void NPC::update(float time) {
@@ -75,21 +80,6 @@ vec3 NPC::getCenterOffset() {
 	}
 
 	return vec3(0, 0, 0);
-}
-
-void NPC::lookAt(vec3 target) {
-	target.normailse();
-	lookat = true;
-	vec3 up = vec3(0.0f, 1.0f, 0.0f);
-	
-	vec3 foward = ( target - pos).normailse();
-	vec3 left = up.cross(foward).normailse();
-	up = foward.cross(left).normailse();
-
-	lookmat[0] = left.x();		lookmat[1] = up.x();		lookmat[2] = foward.x();		lookmat[3] = 0.0f;
-	lookmat[4] = left.y();		lookmat[5] = up.y();		lookmat[6] = foward.y();		lookmat[7] = 0.0f;
-	lookmat[8] = left.z();		lookmat[9] = up.z();		lookmat[10] = foward.z();			lookmat[11] = 0.0f;
-	lookmat[12] = 0.0f;			lookmat[13] = 0.0f;			lookmat[14] = 0.0f;				lookmat[15] = 1.0f;
 }
 
 const vec3 &  NPC::getVelocity() {

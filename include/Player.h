@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GameObject.h"
+#include "LUAScriptManager.h"
 
 /**
 * @class NPC
@@ -41,6 +42,8 @@ public:
 	* @return bool - If the player is collidable or not.
 	*/
 	bool isCollidable();
+
+	void drawModel(vec3 & trans, float rot);
 private:
 	/// The direction the player should be facing.
 	vec3 front;

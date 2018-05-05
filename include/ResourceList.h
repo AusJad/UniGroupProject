@@ -18,6 +18,7 @@ class ResourceList
 		ResourceList(std::string k1, std::string v1);
 		ResourceList(std::string k1, std::string v1, std::string k2, std::string v2);
 		ResourceList(std::string k1, std::string v1, std::string k2, std::string v2, std::string k3, std::string v3);
+		ResourceList(std::string k1, std::string v1, std::string k2, std::string v2, std::string k3, std::string v3, std::string k4, std::string v4);
 
 		/**
 		* @brief If the object has data.

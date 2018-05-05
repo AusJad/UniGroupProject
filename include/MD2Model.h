@@ -38,6 +38,8 @@ struct md2skin {
 struct md2texcord {
 	short x;
 	short y;
+	md2texcord(short nx, short ny) : x(nx), y(ny) {};
+	md2texcord() {};
 };
 
 struct md2Tri {
@@ -206,7 +208,7 @@ private:
 	std::map<std::string, std::vector<unsigned> > animations;
 	MD2header header;
 	std::string skins;
-	std::vector<vec2> texcoords;
+	std::vector<md2texcord> texcoords;
 	std::vector<md2Tri> triangles;
 	std::vector<md2animframe> frames;
 	unsigned curframe;

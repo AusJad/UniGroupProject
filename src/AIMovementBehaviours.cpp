@@ -74,7 +74,18 @@ vec3 AIMovementBehaviours::capSpeed(const vec3 & velocity, float maxspeed) {
 }
 
 float AIMovementBehaviours::faceTarget(const vec3 & self, const vec3 & target) {
-	float angle = atan2(target.y() - self.y(), target.x() - self.x());
+	vec3 tmps = self;
+	tmps.normailse();
 
-	return angle * 180 / M_PI;
+	vec3 tmpt = target;
+	tmpt.normailse();
+	
+	float angle = atan2(tmpt.y() - tmps.y(), tmpt.x() - tmps.x());
+
+	angle = angle * 180 / M_PI;
+	
+	if (angle < 0 && angle < -90) angle = abs(angle + 180) + 180;
+	else if(angle < 0) angle = abs(angle + 90) + 270;
+
+	return angle;
 }
