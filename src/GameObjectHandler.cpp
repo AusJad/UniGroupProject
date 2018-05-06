@@ -122,14 +122,14 @@ GameObject* GameObjectHandler::GetGameObject(std::string name) {
 }
 
 void GameObjectHandler::render() {
+	if (terrain != NULL) terrain->render();
 	searchres.clear();
 	gameobjectQT.traverse(travfunc);
-	for (unsigned i = 0; i < searchres.size(); i++) {
-		searchres.at(i)->render();
-	}
-	if(terrain != NULL) terrain->render();
 	for (unsigned i = 0; i < tmpobjects.size(); i++) {
 		tmpobjects.at(i)->render();
+	}
+	for (unsigned i = 0; i < gameobjects.size(); i++) {
+		gameobjects.at(i)->render();
 	}
 }
 

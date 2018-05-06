@@ -3,6 +3,7 @@ require "./Resources/Scripts/npcai";
 require "./Resources/Scripts/console";
 require "./Resources/Scripts/mainmenu";
 require "./Resources/Scripts/player";
+require "./Resources/Scripts/helperfunctions";
 
 cutsceneid = "";
 
@@ -18,10 +19,11 @@ local function loadResources(AMAN)
 	AMAN:addResource("./Resources/Models/RAW2.tdef", "RAWTRN", "Terrain2");
 	
 	--Load audio
-	AMAN:addResource("./Resources/Audio/mgmusic.wav", "WAV", "bgmusic");
+	AMAN:addResource("./Resources/Audio/s1music.wav", "WAV", "S1MUSIC");
 	AMAN:addResource("./Resources/Audio/bgmusic1.wav", "WAV", "BGMUSIC1");
 	AMAN:addResource("./Resources/Audio/rb.wav", "WAV", "robotnoise");
 	AMAN:addSound("./Resources/Audio/gunshot.wav", "WAV", "gunshot", false);
+	AMAN:addSound("./Resources/Audio/hg.wav", "WAV", "HIGHGROUND", false);
 
 	--Load fonts
 	if(AMAN:addResource("./Resources/Fonts/DODGE.csv", "FNT", "DODGE")) then print("Successfully Loaded Resource DODGE.");
@@ -77,7 +79,7 @@ function initGame(SM, LSM, AMAN, AE)
 	SM:addObject(Identifiers("MO", "CUTSCENE"), cs1, vec3(0, 0, 0), ResourceList("model", "cutscene1"));
 	SM:addObject(Identifiers("CAM","Camera"), cs1, vec3(0, 0, 0), ResourceList());
 	AE:setListenerSource(SM:GetGameObjectID("Camera"), vec3(0, 0, 0));
-
+	
 	cutsceneid = tostring(SM:GetGameObjectID("CUTSCENE"));
 
 	--Main menu
@@ -105,23 +107,24 @@ function initGame(SM, LSM, AMAN, AE)
 		id = tostring(math.random())
 		SM:addObject(Identifiers("SE"), level1, vec3(math.random (-128*40, 128*40), 0, math.random(-128*40, 128*40)), ResourceList("model", "ROCK")); 
 		SM:addObject(Identifiers("NPC", id), level1, vec3(math.random(-128*40, 128*40), 0, math.random(-128*40, 128*40)), ResourceList("model", "PLAYERW", "updatefunc", "start", "msgrcvr", "msgrcvr"));
-		break;
 	end
-	SM:addObject(Identifiers("CAM","Camera"), level1, vec3(0, 0, 1000), ResourceList());
-	SM:addObject(Identifiers("PLYR", "Player"), level1, vec3(0, 0, 1000), ResourceList("camera", "Camera", "projmodel", "bullet", "projsnd", "gunshot", "renderfunc", "playerHUDRenderer"));
+	SM:addObject(Identifiers("CAM","Camera"), level1, vec3(0, 0, -4000), ResourceList());
 	--SM:addObject(Identifiers("MO","Guide"), level1, vec3(0, 0, 0), ResourceList("model", "popup"));
 	--SM:addObject(Identifiers("NPC", "R1"), level1, vec3(-80,0,0), ResourceList("model", "ROBOT", "updatefunc", "start", "msgrcvr", "msgrcvr"));
 	--SM:addObject(Identifiers("NPC", "R2"), level1, vec3(480,0,-1000), ResourceList("model", "ROBOT"));
 	SM:addObject(Identifiers("PROP", "SHIP"), level1, vec3(-1000,1500,2000), ResourceList("model", "SHIP"));
 	SM:addObject(Identifiers("PROP", "SHIP2"), level1, vec3(1000,2000,-2000), ResourceList("model", "SHIP"));
+
+	SM:addObject(Identifiers("PLYR", "Player"), level1, vec3(0, 0, -4000), ResourceList("camera", "Camera", "projmodel", "bullet", "projsnd", "gunshot", "renderfunc", "playerHUDRenderer"));
 	
 	--Set height map
 	SM:setSceneHeightMap(level1, SM:GetGameObject("Terrain"));
 
 	--Setup sound
 	AE:setListenerSource(SM:GetGameObjectID("Camera"), vec3(0, 0, 0));
-	--AE:playSoundatSource("bgmusic", SM:GetGameObjectID("Camera"), vec3(0, 0, 0));
-	
+	AE:playSoundatSource("S1MUSIC", SM:GetGameObjectID("Camera"), vec3(0, 0, 0));
+	AE:playSoundatSource("HIGHGROUND", SM:GetGameObjectID("Camera"), vec3(0, 0, 0));
+
 	--Initalise Level 2
 	SM:addScene();
 	SM:setCurrScene(level2);
@@ -131,15 +134,17 @@ function initGame(SM, LSM, AMAN, AE)
 
 	--Set height map
 	SM:setSceneHeightMap(level2, SM:GetGameObject("Terrain2"));
-	
+
 	--Adding game objects
 	for i = 15,1,-1 
 	do 
 		SM:addObject(Identifiers("SE"), level2, vec3(math.random (-128*40, 128*40), 0, math.random(-128*40, 128*40)), ResourceList("model", "ROCK")); 
-		SM:addObject(Identifiers("NPC"), level2, vec3(math.random(-128*40, 128*40), 0, math.random(-128*40, 128*40)), ResourceList("model", "Robot2"));
+		SM:addObject(Identifiers("NPC"), level2, vec3(math.random(-128*40, 128*40), 0, math.random(-128*40, 128*40)), ResourceList("model", "PLAYERW"));
 	end
+
 	SM:addObject(Identifiers("CAM","Camera"), level2, vec3(0, 0, 0), ResourceList());	
 	SM:addObject(Identifiers("PLYR", "Player"), level2, vec3(0, 0, 0), ResourceList("camera", "Camera", "projmodel", "bullet", "projsnd", "gunshot"));
+
 	--SM:addObject(Identifiers("MO","Guide"), level2, vec3(0, 0, 0), ResourceList("model", "popup2"));
 	
 	--Setup Sound

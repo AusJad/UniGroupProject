@@ -13,8 +13,8 @@ Camera::Camera(Identifiers & id, vec3 pos, ResourceList & list) : GameObject(id,
 	nearPlane = 0.01f;
 	farPlane = 100.0f;
 	aspectRatio = (4.0f / 3.0f);
-	horizontalAngle = 0.0f;
-	verticalAngle = 20.0f;
+	horizontalAngle = 180.0f;
+	verticalAngle = 0.0f;
 	maxlspeed = 100.0f;
 	moveForward = false;
 	moveBack = false;

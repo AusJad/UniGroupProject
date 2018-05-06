@@ -235,6 +235,7 @@ void CtoLUABinder::bindClasses(lua_State* lstate) {
 		luabind::def("renderText", &MenuTools::renderText),
 		luabind::def("fadeIn", &MenuTools::fadeIn),
 		luabind::def("fadeOut", &MenuTools::fadeOut),
-		luabind::def("drawModel", &MenuTools::drawModel)
+		luabind::def("drawModel", &MenuTools::drawModel),
+		luabind::def("drawRotTSquare", &MenuTools::drawRotTSquare)
 	];
 }

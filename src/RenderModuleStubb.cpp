@@ -238,7 +238,7 @@ void RenderModuleStubb::init(int argc, char** argv) {
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 	//::ShowWindow(::GetConsoleWindow(), SW_HIDE);
 	reshape(window, 1280, 720);
-	glClearColor(0.52f, 0.8f, 0.8f, 0.92f);
+	glClearColor(0.0f, 0.0f, 0.0f, 0.92f);
 	glClearDepth(1.0f);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_TEXTURE_2D);

@@ -67,8 +67,15 @@ function loadMenuRes(AMAN)
 	AMAN:addResource("./Resources/Textures/MainMenu/buttonexitplain.tga", "TGA", "BEXITP");
 	AMAN:addResource("./Resources/Textures/MainMenu/buttonexithighlight.tga", "TGA", "BEXITH");
 
+	--todo: move to player.lua
+	if(AMAN:addResource("./Resources/Textures/scanline.tga", "TGA", "SCAN")) then print("good"); end
+	if(AMAN:addResource("./Resources/Textures/target.tga", "TGA", "TARGET")) then print("good"); end
+	if(AMAN:addResource("./Resources/Textures/targetinner.tga", "TGA", "TARGETINNER")) then print("good"); end
+	if(AMAN:addResource("./Resources/Textures/ammo.tga", "TGA", "AMMO")) then print("good"); end
+	if(AMAN:addResource("./Resources/Textures/robot.tga", "TGA", "ROBOT")) then print("good"); end
+
 	AMAN:addSound("./Resources/Audio/menumusic.wav", "WAV", "MENUMUSIC", true);
-	AMAN:addSound("./Resources/Audio/select.wav", "WAV", "MENUSELECT", false);
+	AMAN:addSound("./Resources/Audio/select.wav", "WAV", "MENUSELECT", true);
 end
 
 local function init(this, msgbus)

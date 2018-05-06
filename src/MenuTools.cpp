@@ -37,6 +37,22 @@ void MenuTools::drawTSquare(vec2 & tl, vec2 & br, float z, std::string texture, 
 	if(trans) GeoStream << DISABLE_ALPHA;
 }
 
+void MenuTools::drawRotTSquare(vec2 & tl, vec2 & br, float z, std::string texture, bool trans, const vec4 & rot) {
+	if (trans) GeoStream << ENABLE_ALPHA;
+
+	GeoStream << BEGIN_STREAM << rot_4(rot.x(), rot.y(), rot.z(), rot.w());
+
+	TXMAN->useTexture(texture, RNDR);
+
+	RNDR->DrawQuad(point(tl.x(), tl.y()), point(br.x(), br.y()), z);
+
+	TXMAN->disableTexture(RNDR);
+
+	GeoStream << END_STREAM;
+
+	if (trans) GeoStream << DISABLE_ALPHA;
+}
+
 void MenuTools::renderText(vec2 start, float z, float size, std::string torender) {
 	GeoStream << ENABLE_ALPHA;
 

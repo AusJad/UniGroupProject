@@ -10,6 +10,7 @@ class MenuTools
 public:
 	static void drawButton(vec2 & tl, vec2 & br, float z, vec4 & color, std::string text, std::string font);
 	static void drawTSquare(vec2 & tl, vec2 & br, float z, std::string texture, bool trans);
+	static void drawRotTSquare(vec2 & tl, vec2 & br, float z, std::string texture, bool trans, const vec4 & rot);
 	static void drawSquare(vec2 & tl, vec2 & br, float z, vec4 & color);
 	static void renderText(vec2 start, float z, float size, std::string torender);
 	static float fadeIn(vec2 & tl, vec2 & br, float z,  float curfade, float time);
