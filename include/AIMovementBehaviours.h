@@ -2,6 +2,7 @@
 
 #include "vec3.h"
 #include <iostream>
+#include "Maths.h"
 
 #define M_PI 3.14159265358979323846
 
