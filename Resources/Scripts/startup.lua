@@ -122,7 +122,7 @@ function initGame(SM, LSM, AMAN, AE)
 
 	--Setup sound
 	AE:setListenerSource(SM:GetGameObjectID("Camera"), vec3(0, 0, 0));
-	AE:playSoundatSource("S1MUSIC", SM:GetGameObjectID("Camera"), vec3(0, 0, 0));
+	--AE:playSoundatSource("S1MUSIC", SM:GetGameObjectID("Camera"), vec3(0, 0, 0));
 	AE:playSoundatSource("HIGHGROUND", SM:GetGameObjectID("Camera"), vec3(0, 0, 0));
 
 	--Initalise Level 2
