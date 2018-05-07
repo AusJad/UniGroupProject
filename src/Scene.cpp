@@ -11,8 +11,17 @@ Scene::~Scene()
 {
 }
 
+void Scene::addResources(ResourceList & toadd) {
+	resources = toadd;
+}
+
 void Scene::render() {
 	objects.render();
+	if (resources.hasResource("renderfunc")) {
+		RNDR->RenderFacingCamera();
+		LSM->callFunction<Scene, MessagingBus>(resources.getResource("renderfunc"), *this, *(Singleton<MessagingBus>::getInstance()));
+		RNDR->StopRenderFacingCamera();
+	}
 }
 
 bool Scene::attachTerrain(Identifiers & id, vec3 pos, ResourceList & list) {
@@ -24,6 +33,10 @@ bool Scene::addObject(Identifiers & id, vec3 pos, ResourceList & list){
 }
 
 void Scene::update(float time) {
+	if (resources.hasResource("updatefunc")) {
+		LSM->callFunction<Scene, MessagingBus>(resources.getResource("updatefunc"), *this, *(Singleton<MessagingBus>::getInstance()));
+	}
+
 	objects.refreshTree();
 
 	for (unsigned i = 0; i < objects.getNumObjects(); i++) {

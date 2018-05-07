@@ -215,6 +215,7 @@
     <None Include="Resources\Scripts\consolehelperfunctions.lua" />
     <None Include="Resources\Scripts\controls.lua" />
     <None Include="Resources\Scripts\helperfunctions.lua" />
+    <None Include="Resources\Scripts\level1.lua" />
     <None Include="Resources\Scripts\mainmenu.lua" />
     <None Include="Resources\Scripts\npcai.lua" />
     <None Include="Resources\Scripts\npcpatrolai.lua" />

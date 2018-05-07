@@ -379,5 +379,8 @@
     <None Include="Resources\Scripts\player.lua">
       <Filter>Resource Files\Scripts</Filter>
     </None>
+    <None Include="Resources\Scripts\level1.lua">
+      <Filter>Resource Files\Scripts</Filter>
+    </None>
   </ItemGroup>
 </Project>

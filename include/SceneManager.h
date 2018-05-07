@@ -115,6 +115,8 @@ public:
 
 	void attachConsoleTex(std::string tex);
 
+	bool setSceneResources(ResourceList & toset, unsigned sceneno);
+
 private:
 	/// The scene vector.
 	std::vector<Scene> scenes;

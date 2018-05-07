@@ -151,3 +151,9 @@ bool SceneManager::loadGame(std::string filetoload) {
 	std::cout << "File to load from: " << filetoload << std::endl;
 	return true;
 }
+
+bool SceneManager::setSceneResources(ResourceList & toset, unsigned sceneno) {
+	if (sceneno > scenes.size()) return false;
+	scenes.at(sceneno).addResources(toset);
+	return true;
+}

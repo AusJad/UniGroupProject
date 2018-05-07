@@ -77,10 +77,14 @@ public:
 	*/
 	bool attachTerrain(Identifiers & id, vec3 pos, ResourceList & list);
 
+	void addResources(ResourceList & toadd);
+
 private:
 	/// The game object handler.
 	GameObjectHandler objects;
 	/// The collision object.
 	CollisionEngine collision;
+
+	ResourceList resources;
 };
 

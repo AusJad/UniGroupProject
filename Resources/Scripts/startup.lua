@@ -3,6 +3,7 @@ require "./Resources/Scripts/npcai";
 require "./Resources/Scripts/console";
 require "./Resources/Scripts/mainmenu";
 require "./Resources/Scripts/player";
+require "./Resources/Scripts/level1";
 require "./Resources/Scripts/helperfunctions";
 
 cutsceneid = "";
@@ -19,11 +20,11 @@ local function loadResources(AMAN)
 	AMAN:addResource("./Resources/Models/RAW2.tdef", "RAWTRN", "Terrain2");
 	
 	--Load audio
-	AMAN:addResource("./Resources/Audio/s1music.wav", "WAV", "S1MUSIC");
+	AMAN:addResource("./Resources/Audio/battlemusic.wav", "WAV", "S1MUSIC");
 	AMAN:addResource("./Resources/Audio/bgmusic1.wav", "WAV", "BGMUSIC1");
 	AMAN:addResource("./Resources/Audio/rb.wav", "WAV", "robotnoise");
 	AMAN:addSound("./Resources/Audio/gunshot.wav", "WAV", "gunshot", false);
-	AMAN:addSound("./Resources/Audio/hg.wav", "WAV", "HIGHGROUND", false);
+	AMAN:addSound("./Resources/Audio/introclip.wav", "WAV", "HIGHGROUND", false);
 
 	--Load fonts
 	if(AMAN:addResource("./Resources/Fonts/DODGE.csv", "FNT", "DODGE")) then print("Successfully Loaded Resource DODGE.");
@@ -96,7 +97,7 @@ function initGame(SM, LSM, AMAN, AE)
 	--Initalise Level 1
 	SM:addScene();
 	SM:setCurrScene(level1);
-	
+	SM:setSceneResources(ResourceList("updatefunc", "level1Update", "renderfunc", "level1Render"), level1);
 
 	SM:attachControls(level1, ResourceList("keyCallback", "keys", "mouseCallback", "mouse"));
 	SM:attachTerrain(Identifiers("TO", "Terrain"), level1, vec3(0,0,0), ResourceList("model", "Terrain"));
@@ -122,7 +123,7 @@ function initGame(SM, LSM, AMAN, AE)
 
 	--Setup sound
 	AE:setListenerSource(SM:GetGameObjectID("Camera"), vec3(0, 0, 0));
-	--AE:playSoundatSource("S1MUSIC", SM:GetGameObjectID("Camera"), vec3(0, 0, 0));
+	AE:playSoundatSource("S1MUSIC", SM:GetGameObjectID("Camera"), vec3(0, 0, 0));
 	AE:playSoundatSource("HIGHGROUND", SM:GetGameObjectID("Camera"), vec3(0, 0, 0));
 
 	--Initalise Level 2
