@@ -128,6 +128,7 @@
     <ClInclude Include="include\MD2Model.h" />
     <ClInclude Include="include\MenuObject.h" />
     <ClInclude Include="include\MenuTools.h" />
+    <ClInclude Include="include\ModelMesh.h" />
     <ClInclude Include="include\Message.h" />
     <ClInclude Include="include\MessageTypes.h" />
     <ClInclude Include="include\MessagingBus.h" />
@@ -187,6 +188,7 @@
     <ClCompile Include="src\MD2Model.cpp" />
     <ClCompile Include="src\MenuObject.cpp" />
     <ClCompile Include="src\MenuTools.cpp" />
+    <ClCompile Include="src\ModelMesh.cpp" />
     <ClCompile Include="src\Message.cpp" />
     <ClCompile Include="src\MessagingBus.cpp" />
     <ClCompile Include="src\ModelFactory.cpp" />
