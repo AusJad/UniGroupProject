@@ -67,6 +67,10 @@ bool ImportModel::loadModel(std::string filename)
 			tempMesh.texture.clear();
 
 		modelDetails.push_back(tempMesh);
+		tempMesh.vertIndex.clear();
+		tempMesh.Verticies.clear();
+		tempMesh.texCoords.clear();
+		tempMesh.Normals.clear();
 
 	}
 
@@ -76,6 +80,14 @@ bool ImportModel::loadModel(std::string filename)
 		for (unsigned j = 0; j < modelDetails[i].Verticies.size(); j++)
 		{
 			allVerticies.push_back(modelDetails[i].Verticies[j]);
+		}
+	}
+
+	if (modelDetails.size() == 6)
+	{
+		for (unsigned i = 0; i < modelDetails.size(); i++)
+		{
+			std::cout << "Normals, x: " << modelDetails[i].Normals[0].x() << "y: " << modelDetails[i].Normals[0].y() << "z: " << modelDetails[i].Normals[0].z() << std::endl;
 		}
 	}
 
