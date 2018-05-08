@@ -70,7 +70,7 @@ local function stateWait(this, msgbus)
 			waittime = 0.0;
 			attackcooldown = 1.0;
 			velocity = AIMvmnt.Seek(this:getPos(), this:getTarget(), this:getSpeed());
-			playAnimationLoop(msgbus, this:getIdentifiers(), "crattak");
+			playAnimationLoop(msgbus, this:getIdentifiers(), "attack");
 			fireProjectile(this:getPos(), Math.normalize(velocity), "bullet", msgbus);
 			playSoundatSource(msgbus, this:getIdentifiers(), "gunshot");
 		end
