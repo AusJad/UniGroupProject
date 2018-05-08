@@ -31,7 +31,7 @@ end
 local diagnostics = {};
 diagnostics[0] = "Status Check #98SImxb434:$All Systems At Maximum Capacity";
 diagnostics[1] = "Tactical Note #233MisOE21:$Elevated Position Acquired$Victory Assured";
-diagnostics[2] = "Bettle Music Playback Code #xf329sMKd:$La_Dee_Da.wav";
+diagnostics[2] = "Battle Music Playback Code #xf329sMKd:$La_Dee_Da.wav";
 local diagind = 0;
 local maxdiag = 3;
 local curtext = "";

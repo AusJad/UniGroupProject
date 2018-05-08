@@ -81,7 +81,7 @@ local function stateDIE(this, msgbus)
 end
 
 local function initEntity(this, msgbus)
-	this:setSpeed(400);
+	this:setSpeed(300);
 	this:setHealth(100);
 	this:setState(0);
 	pos_table[this:getIdentifiers():getId()] = this:getPos();

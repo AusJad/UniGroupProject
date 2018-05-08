@@ -66,7 +66,8 @@ void CollisionEngine::update(GameObject* toupdate, std::vector<GameObject*> coll
 		if (collGO.at(i)->getID() != toupdate->getID() && collGO.at(i)->isCollidable()) {
 			compb = genAABB(collGO.at(i));
 			if (updateb.xmax >= compb.xmin && updateb.xmin <= compb.xmax
-				&& updateb.zmax >= compb.zmin && updateb.zmin <= compb.zmax) {
+				&& updateb.zmax >= compb.zmin && updateb.zmin <= compb.zmax
+				&& updateb.ymax >= compb.ymin && updateb.ymin <= compb.ymax) {
 				toupdate->onCollide(tmpos, collGO.at(i)->getIdentifiers());
 			}
 		}

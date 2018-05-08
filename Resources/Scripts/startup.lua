@@ -37,7 +37,7 @@ local function loadResources(AMAN)
 	if(AMAN:addResource("./Resources/Textures/console.bmp", "BMP", "Console") == false) then print("Failed to load con tex"); end
 
 	--Load models
-	AMAN:addResource("./Resources/Models/lvl1popup.tsqr", "TX", "popup");
+	AMAN:addResource("./Resources/Models/lvl1popup.tsqr", "TX", "POPUP");
 	AMAN:addResource("./Resources/Models/lvl2popup.tsqr", "TX", "popup2");
 	AMAN:addResource("./Resources/Models/endscreen.tsqr", "TX", "endscrn");
 

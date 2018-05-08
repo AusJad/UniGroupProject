@@ -74,8 +74,8 @@ function loadMenuRes(AMAN)
 	if(AMAN:addResource("./Resources/Textures/ammo.tga", "TGA", "AMMO")) then print("good"); end
 	if(AMAN:addResource("./Resources/Textures/robot.tga", "TGA", "ROBOT")) then print("good"); end
 
-	AMAN:addSound("./Resources/Audio/menumusic.wav", "WAV", "MENUMUSIC", true);
-	AMAN:addSound("./Resources/Audio/select.wav", "WAV", "MENUSELECT", true);
+	AMAN:addSound("./Resources/Audio/test.mp4", "WAV", "MENUMUSIC", true);
+	AMAN:addSound("./Resources/Audio/select.wav", "WAV", "MENUSELECT", false);
 end
 
 local function init(this, msgbus)

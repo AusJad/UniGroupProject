@@ -96,6 +96,8 @@ void Console::appendChar(char toadd) {
 }
 
 void Console::executeCurStatement() {
+	if (curline.empty()) return;
+
 	history.push_back(curline);
 
 	if (resources.hasResource("behaviour")) {
