@@ -129,6 +129,8 @@ public:
 
 	std::string getsData();
 
+	void addmvData(const vec3 & toadd);
+
 private:
 	/// The data type.
 	char dtype;

@@ -54,20 +54,41 @@ local function stateSeek(this, msgbus)
 	end
 end
 
+local waittime = 0;
+local attackcooldown = 0.0
+
 local function stateWait(this, msgbus)
 	--heading = AIMvmnt.Arrive(this:getPos(), this:getTarget(), this:getVelocity(), this:getSpeed(), 0.001, 150); 
 	--heading = AIMvmnt.capSpeed(heading, this:getSpeed());
 	this:setVelocity(vec3());
 
-	playAnimationLoop(msgbus, this:getIdentifiers(), "stand");
+	waittime = waittime + time;
+	if(attackcooldown > 0) then attackcooldown = attackcooldown - time; end
+	
+	if waittime > 2.0 then 
+		if(attackcooldown <= 0.0) then
+			waittime = 0.0;
+			attackcooldown = 1.0;
+			velocity = AIMvmnt.Seek(this:getPos(), this:getTarget(), this:getSpeed());
+			playAnimationLoop(msgbus, this:getIdentifiers(), "crattak");
+			fireProjectile(this:getPos(), Math.normalize(velocity), "bullet", msgbus);
+			playSoundatSource(msgbus, this:getIdentifiers(), "gunshot");
+		end
+	elseif attackcooldown <= 0 then
+		playAnimationLoop(msgbus, this:getIdentifiers(), "stand");
 
-	playerdistance = AIMvmnt.getDistance(this:getPos(), this:getTarget());
+		playerdistance = AIMvmnt.getDistance(this:getPos(), this:getTarget());
 
-	--print(playerdistance);
-
-	if playerdistance > 250 then
-		this:setState(1);
+		if playerdistance > 250 then
+			this:setState(1);
+		end
 	end
+end
+
+local function stateAttack(this, msgbus)
+	velocity = AIMvmnt.Seek(this:getPos(), this:getTarget(), this:getSpeed());
+	playAnimationOnce(msgbus, this:getIdentifiers(), "crattak");
+	fireProjectile(this:getPos(), Math.normalize(velocity), "bullet", msgbus);
 end
 
 local function stateDIE(this, msgbus)

@@ -14,6 +14,26 @@ bool Player::isCollidable() {
 	return false;
 }
 
+const vec3 & Player::getFront() {
+	return front;
+}
+
+
+bool Player::playerDefaultMessageHandler(Message & tocheck) {
+	if (tocheck.getInstruction() == GET_FRONT_RESPONSE) {
+		front = tocheck.getData().vdata;
+		return true;
+	}
+	else
+	if (tocheck.getInstruction() == POS_RESPONSE) {
+		pos = tocheck.getData().vdata;
+		return true;
+	}
+
+	return false;
+}
+
+
 void Player::render() {
 
 	if (resources.hasResource("renderfunc")) {
@@ -34,7 +54,10 @@ void Player::drawModel(vec3 & trans, float rot) {
 
 void Player::update(float time) {
 	msgrcvr();
-	
+
+	if (resources.hasResource("msgrcvr"))
+		LSM->callFunction<Player, MessagingBus>(resources.getResource("msgrcvr"), *this, *MSGBS);
+
 	if (resources.hasResource("model") && model != NULL) model->update(time);
 
 	MessagingBus* tmp = Singleton<MessagingBus>::getInstance();
@@ -53,27 +76,7 @@ void Player::update(float time) {
 
 			tmpm = tmp->getMessage(id);
 
-			if (tmpm.getInstruction() == GET_FRONT_RESPONSE) {
-				front = tmpm.getData().vdata;
-			}
-			else
-			if (tmpm.getInstruction() == POS_RESPONSE) {
-				pos = tmpm.getData().vdata;
-			}
-			else
-			if (tmpm.getInstruction() == FIRE_WEAPON) {
-				tmpm = Message(ADD_TMP_OBJ);
-				tmpm.getData().mvdata.push_back(pos);
-				tmpm.getData().mvdata.push_back(front);
-				if(resources.hasResource("projmodel")) tmpm.getData().sdata = resources.getResource("projmodel");
-				tmp->postMessage(tmpm, Identifiers("", "GOH"));
-				if(resources.hasResource("projsnd")) {
-					tmpm.setInstruction(PLY_SND_SRC_REQUEST);
-					if (resources.hasResource("projsnd")) tmpm.getData().sdata = resources.getResource("projsnd");
-					tmpm.getData().idata = -1;
-					tmp->postMessage(tmpm, Identifiers("", "AE"));
-				}
-			}
+
 		}
 	}
 }

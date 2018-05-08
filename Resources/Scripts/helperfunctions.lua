@@ -36,6 +36,14 @@ function checkDamage(message, this)
 	end
 end
 
+function fireProjectile(start, velocity, model, msgbus)
+	tmpm = Message("ATO");
+	tmpm:addmvData(start); 
+	tmpm:addmvData(velocity);
+	tmpm:setsData(model);
+	msgbus:postMessage(tmpm, Identifiers("", "GOH"));
+end
+
 function mod(x, y)
 	return x - math.floor(x/y)*y;
 end

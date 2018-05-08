@@ -79,6 +79,17 @@ function playerHUDRenderer(this, msgbus)
 	renderDiagnostics();
 
 	renderAmmo();
+end
 
+function playerMsgRcvr(this, msgbus)
+	while msgbus:hasMessage(this:getIdentifiers()) do
+		tocheck = msgbus:getMessage(this:getIdentifiers());
 
+		if (tocheck:getInstruction() == "FIRE") then 
+			fireProjectile(this:getPos(), this:getFront(), "bullet", msgbus);
+			playSoundAtPlayer(msgbus,"gunshot");
+		elseif this:playerDefaultMessageHandler(tocheck) == false then 
+			this:defaultMessageHandler(tocheck) 
+		end
+	end
 end

@@ -67,7 +67,7 @@ bool AudioEngine::initalise(const HWND & window) {
 		return false;
 	}
 
-	if (!BASS_Set3DFactors(0, 0.3f, 0)) {
+	if (!BASS_Set3DFactors(0, 0.001f, 0)) {
 		if (DEBUGMODE) std::cerr << "Error Initalising Audio Engine! Code: " << BASS_ErrorGetCode() << std::endl;
 		return false;
 	}

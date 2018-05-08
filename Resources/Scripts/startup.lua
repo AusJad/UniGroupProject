@@ -116,7 +116,7 @@ function initGame(SM, LSM, AMAN, AE)
 	SM:addObject(Identifiers("PROP", "SHIP"), level1, vec3(-1000,1500,2000), ResourceList("model", "SHIP"));
 	SM:addObject(Identifiers("PROP", "SHIP2"), level1, vec3(1000,2000,-2000), ResourceList("model", "SHIP"));
 
-	SM:addObject(Identifiers("PLYR", "Player"), level1, vec3(0, 0, -4000), ResourceList("camera", "Camera", "projmodel", "bullet", "projsnd", "gunshot", "renderfunc", "playerHUDRenderer"));
+	SM:addObject(Identifiers("PLYR", "Player"), level1, vec3(0, 0, -4000), ResourceList("camera", "Camera", "msgrcvr", "playerMsgRcvr", "renderfunc", "playerHUDRenderer"));
 	
 	--Set height map
 	SM:setSceneHeightMap(level1, SM:GetGameObject("Terrain"));

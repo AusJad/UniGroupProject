@@ -60,7 +60,7 @@ mat4 Maths::perspective(float fovy, float width, float height, float near, float
 	return tmp;
 }
 
-vec4 Maths::normalize(vec4 vec)
+vec4 Maths::normalizev4(vec4 vec)
 {
 	vec.setVec(glm::normalize(vec.getVec()));
 	return vec;

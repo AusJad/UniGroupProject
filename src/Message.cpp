@@ -69,3 +69,7 @@ void Message::setFrom(const Identifiers & nid) {
 std::string Message::getsData() {
 	return mdata.sdata;
 }
+
+void Message::addmvData(const vec3 & toadd) {
+	mdata.mvdata.push_back(toadd);
+}

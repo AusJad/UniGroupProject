@@ -140,7 +140,7 @@ public:
 	*
 	* @return vec4 - Normalized vector.
 	*/
-	static vec4 normalize(vec4 vec);
+	static vec4 normalizev4(vec4 vec);
 
 	/**
 	* @brief Nomalize a vec3.

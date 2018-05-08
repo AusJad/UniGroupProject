@@ -139,6 +139,9 @@ void CtoLUABinder::bindClasses(lua_State* lstate) {
 			.def("getID", &Player::getID)
 			.def("getIdentifiers", &Player::getIdentifiers)
 			.def("drawModel", &Player::drawModel)
+			.def("defaultMessageHandler", &Player::defaultMessageHandler)
+			.def("playerDefaultMessageHandler", &Player::playerDefaultMessageHandler)
+			.def("getFront", &Player::getFront)
 	];
 	luabind::module(lstate)[
 		luabind::class_<Scenery>("Scenery")
@@ -183,6 +186,7 @@ void CtoLUABinder::bindClasses(lua_State* lstate) {
 			.def("setfData", &Message::setfData)
 			.def("setiData", &Message::setIData)
 			.def("setsData", &Message::setsData)
+			.def("addmvData", &Message::addmvData)
 			.def("getData", &Message::getData)
 			.def("getsData", &Message::getsData)
 	];
@@ -243,5 +247,8 @@ void CtoLUABinder::bindClasses(lua_State* lstate) {
 		luabind::def("fadeOut", &MenuTools::fadeOut),
 		luabind::def("drawModel", &MenuTools::drawModel),
 		luabind::def("drawRotTSquare", &MenuTools::drawRotTSquare)
+	];
+	luabind::module(lstate, "Math")[
+		luabind::def("normalize", &Maths::normalize)
 	];
 }

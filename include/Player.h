@@ -44,6 +44,10 @@ public:
 	bool isCollidable();
 
 	void drawModel(vec3 & trans, float rot);
+
+	const vec3 & getFront();
+
+	bool playerDefaultMessageHandler(Message & tocheck);
 private:
 	/// The direction the player should be facing.
 	vec3 front;
