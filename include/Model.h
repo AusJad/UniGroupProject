@@ -111,16 +111,46 @@ class Model
 		 */
 		virtual float getMaxY() { return maxy; };
 		 
+		/**
+		* @brief Get the min translated adjusted x value
+		*
+		* @return float - The min x value + the last translation x value.
+		*/
 		virtual float getMinTX() { return minx + lasttrans.x(); };
 
+		/**
+		* @brief Get the min translated adjusted z value
+		*
+		* @return float - The min z value + the last translation z value.
+		*/
 		virtual float getMinTZ() { return minz + lasttrans.z(); };
 
+		/**
+		* @brief Get the min translated adjusted y value
+		*
+		* @return float - The min y value + the last translation y value.
+		*/
 		virtual float getMinTY() { return miny + lasttrans.y(); };
 
+		/**
+		* @brief Get the max translated adjusted x value
+		*
+		* @return float - The max x value + the last translation x value.
+		*/
 		virtual float getMaxTX() { return maxx + lasttrans.x(); };
 
+		/**
+		* @brief Get the max translated adjusted z value
+		*
+		* @return float - The max z value + the last translation z value.
+		*/
 		virtual float getMaxTZ() { return maxz + lasttrans.z(); };
 
+		/**
+		* @brief Get the max translated adjusted y value
+		*
+		* @return float - The max y value + the last translation y value.
+		*/
 		virtual float getMaxTY() { return maxy + lasttrans.y(); };
 
 		 /**
@@ -137,6 +167,11 @@ class Model
 		*/
 		unsigned getId() { return id.getId(); };
 
+		/**
+		* @brief Set the name.
+		*
+		* @param name - The new name;
+		*/
 		void setName(std::string name) { id.setName(name); };
 
 	protected:
@@ -144,7 +179,7 @@ class Model
 		float minx, maxx, minz, maxz, miny, maxy;
 		/// The models id.
 		Identifiers id;
-
+		/// The last translation position.
 		vec3 lasttrans;
 };
 
