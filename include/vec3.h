@@ -324,6 +324,11 @@ public:
 	*/
 	void operator = (const vec3 & v);
 
+	/**
+	* @brief Get the length of the vector.
+	*
+	* @return float - The length.
+	*/
 	float getLength();
 
 private:

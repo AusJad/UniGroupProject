@@ -66,18 +66,90 @@ struct color_4 {
 #define ENABLE_TRANSPARENCY 13
 #define DISABLE_TRANSPARENCY 14
 
+/**
+* @class GeometeryStream
+* @brief Provides overloaded output operators for various colour, rotation matrix and texture coord structs.
+*
+* @author Morgan Smolder
+* @version 01
+* @date 08/05/2018
+*/
 class GeometeryStream
 {
 public:
+	/**
+	* @brief A overload method for outputing vertex_3 type data.
+	*
+	* @param rhs - The output data.
+	*
+	* @return GeometeryStream - The output type.
+	*/
 	const GeometeryStream & operator << (const vertex_3 & rhs) const;
+
+	/**
+	* @brief A overload method for outputing texCoord_2 type data.
+	*
+	* @param rhs - The output data.
+	*
+	* @return GeometeryStream - The output type.
+	*/
 	const GeometeryStream & operator << (const texCoord_2 & rhs) const;
+
+	/**
+	* @brief A overload method for outputing normal_3 type data.
+	*
+	* @param rhs - The output data.
+	*
+	* @return GeometeryStream - The output type.
+	*/
 	const GeometeryStream & operator << (const normal_3 & rhs) const;
+
+	/**
+	* @brief A overload method for outputing trans_3 type data.
+	*
+	* @param rhs - The output data.
+	*
+	* @return GeometeryStream - The output type.
+	*/
 	const GeometeryStream & operator << (const trans_3 & rhs) const;
+
+	/**
+	* @brief A overload method for outputing rot_4 type data.
+	*
+	* @param rhs - The output data.
+	*
+	* @return GeometeryStream - The output type.
+	*/
 	const GeometeryStream & operator << (const rot_4 & rhs) const;
+
+	/**
+	* @brief A overload method for outputing color_3 type data.
+	*
+	* @param rhs - The output data.
+	*
+	* @return GeometeryStream - The output type.
+	*/
 	const GeometeryStream & operator << (const color_3 & rhs) const;
+
+	/**
+	* @brief A overload method for outputing color_4 type data.
+	*
+	* @param rhs - The output data.
+	*
+	* @return GeometeryStream - The output type.
+	*/
 	const GeometeryStream & operator << (const color_4 & rhs) const;
+
+	/**
+	* @brief A overload method for outputing int type data.
+	*
+	* @param rhs - The output data.
+	*
+	* @return GeometeryStream - The output type.
+	*/
 	GeometeryStream & operator << (int rhs);
 private:
+	/// The poly flag for the mode type.
 	int polymodeflag = POLY_MODE_CONST;
 };
 

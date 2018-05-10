@@ -123,12 +123,32 @@ public:
 	*/
 	char getDType();
 
+	/**
+	* @brief Set int data.
+	*
+	* @param idata - Int data.
+	*/
 	void setIData(int idata);
 
+	/**
+	* @brief Set string data.
+	*
+	* @param data - String data.
+	*/
 	void setsData(std::string data);
 
+	/**
+	* @brief Get string data.
+	*
+	* @return string - The data.
+	*/
 	std::string getsData();
 
+	/**
+	* @brief Add vec3 data.
+	*
+	* @param toadd - The vec3.
+	*/
 	void addmvData(const vec3 & toadd);
 
 private:

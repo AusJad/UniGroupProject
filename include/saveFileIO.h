@@ -23,6 +23,11 @@ public:
 	save(std::string fn);
 	~save();
 
+	/**
+	* @brief A method to output a string to a file.
+	*
+	* @parma data - The data to be saved.
+	*/
 	void saveGame(std::vector<std::string> data);
 
 	/**
@@ -51,11 +56,5 @@ private:
 	/// All objects and their data.
 	std::vector<std::string> d;
 	/// Temp string for moving scene number between two saveGame() functions for efficiency reasons.
-
-	/**
-	* @brief Opens file and loads variables into the member variables of the class
-	*
-	* @param fp - The file path
-	*/
 };
 

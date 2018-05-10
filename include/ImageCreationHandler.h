@@ -57,8 +57,24 @@ public:
 	*/
 	bool CreateMultiTexture(std::vector<vec3> heightmap, std::vector<std::string> textures, std::string name, const int & id);
 
+	/**
+	* @brief Get the active image data.
+	*
+	* @return char* - The active image data.
+	*/
 	unsigned char* getActiveImageData();
 
+	/**
+	* @brief Bind the sub image.
+	*
+	* @param id - The id of the image.
+	* @param subwidth - The width of the image.
+	* @param subheight - The height of the image.
+	* @param x - The x coord.
+	* @param y - The y coord.
+	*
+	* @return bool - If the image was bound.
+	*/
 	bool bindSubImage(const int & id, unsigned subwidth, unsigned subheight, unsigned x, unsigned y);
 private:
 	/// Current image loader object.

@@ -32,8 +32,18 @@ public:
 	*/
 	double toDouble();
 
+	/**
+	* @brief Convert a string to a int.
+	*
+	* @return int - The data.
+	*/
 	int toInt();
 
+	/**
+	* @brief Set the data.
+	*
+	* @param toset - The new data.
+	*/
 	void setData(std::string toset);
 
 	/**

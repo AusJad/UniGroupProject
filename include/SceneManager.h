@@ -114,10 +114,28 @@ public:
 	*/
 	bool attachControls(unsigned sceneno, ResourceList toset);
 
+	/**
+	* @brief Attach console behaviour to the console.
+	*
+	* @param entrypoint - The behaviour.
+	*/
 	void attachConsoleBehaviour(std::string entrypoint);
 
+	/**
+	* @brief Attach text to the console.
+	*
+	* @param tex - The texture data for the text.
+	*/
 	void attachConsoleTex(std::string tex);
 
+	/**
+	* @brief Set the scene resource list.
+	*
+	* @param toset - The resource list.
+	* @param sceneno - The scene number.
+	*
+	* @return bool - If the resources were set.
+	*/
 	bool setSceneResources(ResourceList & toset, unsigned sceneno);
 
 private:
@@ -127,7 +145,7 @@ private:
 	unsigned currscene;
 	/// The identifier.
 	Identifiers id;
-
+	/// The console.
 	Console console;
 	
 	/**
@@ -149,7 +167,22 @@ private:
 	*/
 	void msgrcvr();
 
+	/**
+	* @brief A method to save the game.
+	*
+	* @param savename - The name of the file to be saved.
+	*
+	* @return bool - If the game was saved.
+	*/
 	bool saveGame(std::string savename);
+
+	/**
+	* @brief A method to load the game from file.
+	*
+	* @param filetoload - The file to load.
+	*
+	* @return bool - If the game loaded.
+	*/
 	bool loadGame(std::string filetoload);
 };
 
