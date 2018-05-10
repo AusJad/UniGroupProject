@@ -59,6 +59,10 @@ public:
 
 	void setLAngle(float nangle);
 
+	//mm
+	std::string toString();
+	bool fromstring(std::string toread);
+
 private:
 	vec3 velocity;
 	vec3 heading;

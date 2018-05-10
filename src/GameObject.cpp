@@ -147,3 +147,74 @@ void GameObject::onCollide(vec3 & prevloc, const Identifiers & colgoid) {
 bool GameObject::hasGravity() {
 	return true;
 }
+
+//mm
+std::string GameObject::toString()
+{
+	// Always save object name first followed by ','[DATANAME],[DATA],...[DATANAME],[DATA]
+	std::string towrite;
+
+	towrite += id.getName() + ",";
+	towrite += "POS," + std::to_string(pos.x()) + "," + std::to_string(pos.y()) + "," + std::to_string(pos.z()) + ",";
+	towrite += "TARGET," + std::to_string(target.x()) + "," + std::to_string(target.y()) + "," + std::to_string(target.z()) + ",";
+	towrite += "TARGETLOOK," + std::to_string(targetlook.x()) + "," + std::to_string(targetlook.y()) + "," + std::to_string(targetlook.z());
+
+	return towrite;
+}
+
+bool GameObject::fromstring(std::string toread)
+{
+	float tmpf;
+	std::string linehead;
+	int delimlen = 1;
+
+	while (!toread.empty())
+	{
+		linehead = toread.substr(0, toread.find(','));
+		toread.erase(0, toread.find(',') + delimlen);
+
+		if (linehead == "POS")
+		{
+			tmpf = stof(toread.substr(0, toread.find(',')));
+			pos.sx(tmpf);
+			toread.erase(0, toread.find(',') + delimlen);
+
+			tmpf = stof(toread.substr(0, toread.find(',')));
+			pos.sy(tmpf);
+			toread.erase(0, toread.find(',') + delimlen);
+
+			tmpf = stof(toread.substr(0, toread.find(',')));
+			pos.sz(tmpf);
+			toread.erase(0, toread.find(',') + delimlen);
+		}
+		else if (linehead == "TARGET")
+		{
+			tmpf = stof(toread.substr(0, toread.find(',')));
+			target.sx(tmpf);
+			toread.erase(0, toread.find(',') + delimlen);
+
+			tmpf = stof(toread.substr(0, toread.find(',')));
+			target.sy(tmpf);
+			toread.erase(0, toread.find(',') + delimlen);
+
+			tmpf = stof(toread.substr(0, toread.find(',')));
+			target.sz(tmpf);
+			toread.erase(0, toread.find(',') + delimlen);
+		}
+		else if (linehead == "TARGETLOOK")
+		{
+			tmpf = stof(toread.substr(0, toread.find(',')));
+			targetlook.sx(tmpf);
+			toread.erase(0, toread.find(',') + delimlen);
+
+			tmpf = stof(toread.substr(0, toread.find(',')));
+			targetlook.sy(tmpf);
+			toread.erase(0, toread.find(',') + delimlen);
+
+			tmpf = stof(toread);
+			targetlook.sz(tmpf);
+			toread.erase();
+		}
+	}
+	return true;
+}

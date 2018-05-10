@@ -11,6 +11,9 @@
 #include "Maths.h"
 #include "ModelManger.h"
 
+// mm
+#include "saveFileIO.h"
+
 /**
 * @class GameObject
 * @brief Class for handling game objects and all their data.
@@ -145,6 +148,10 @@ public:
 	virtual void onCollide(vec3 & prevloc, const Identifiers & colgoid);
 
 	virtual bool hasGravity();
+
+	//mm
+	virtual std::string toString();
+	virtual bool fromstring(std::string toread);
 
 protected:
 	/// The state of the object.

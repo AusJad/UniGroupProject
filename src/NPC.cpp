@@ -117,3 +117,141 @@ const vec3 & NPC::getHeading() {
 void NPC::setHeading(const vec3 & heading) {
 	this->heading = heading;
 }
+
+//mm
+std::string NPC::toString()
+{
+	std::string towrite;
+
+	towrite += GameObject::id.getName() + ",";
+	towrite += "POS," + std::to_string(GameObject::pos.x()) + "," + std::to_string(GameObject::pos.y()) + "," + std::to_string(GameObject::pos.z()) + ",";
+	towrite += "TARGET," + std::to_string(GameObject::target.x()) + "," + std::to_string(GameObject::target.y()) + "," + std::to_string(GameObject::target.z()) + ",";
+	towrite += "TARGETLOOK," + std::to_string(GameObject::targetlook.x()) + "," + std::to_string(GameObject::targetlook.y()) + "," + std::to_string(GameObject::targetlook.z()) + ",";
+	towrite += "VELOCITY," + std::to_string(velocity.x()) + "," + std::to_string(velocity.y()) + "," + std::to_string(velocity.z()) + ",";
+	towrite += "HEADING," + std::to_string(heading.x()) + "," + std::to_string(heading.y()) + "," + std::to_string(heading.z()) + ",";
+	towrite += "HEALTH," + std::to_string(health) + ",";
+	towrite += "SPEED," + std::to_string(speed) + ",";
+	towrite += "LOOKANGLE," + std::to_string(lookangle);
+
+	return towrite;
+}
+
+bool NPC::fromstring(std::string toread)
+{
+	float tmpf;
+	std::string linehead;
+
+	int delimlen = 1;
+
+	while (!toread.empty())
+	{
+		linehead = toread.substr(0, toread.find(','));
+		toread.erase(0, toread.find(',') + delimlen);
+
+		if (linehead == "POS" || linehead == ",POS")
+		{
+			tmpf = stof(toread.substr(0, toread.find(',')));
+			GameObject::pos.sx(tmpf);
+			toread.erase(0, toread.find(',') + delimlen);
+
+			tmpf = stof(toread.substr(0, toread.find(',')));
+			GameObject::pos.sy(tmpf);
+			toread.erase(0, toread.find(',') + delimlen);
+
+			tmpf = stof(toread.substr(0, toread.find(',')));
+			GameObject::pos.sz(tmpf);
+			toread.erase(0, toread.find(',') + delimlen);
+		}
+		else if (linehead == "TARGET")
+		{
+			tmpf = stof(toread.substr(0, toread.find(',')));
+			GameObject::target.sx(tmpf);
+			toread.erase(0, toread.find(',') + delimlen);
+
+			tmpf = stof(toread.substr(0, toread.find(',')));
+			GameObject::target.sy(tmpf);
+			toread.erase(0, toread.find(',') + delimlen);
+
+			tmpf = stof(toread.substr(0, toread.find(',')));
+			GameObject::target.sz(tmpf);
+			toread.erase(0, toread.find(',') + delimlen);
+		}
+		else if (linehead == "TARGETLOOK")
+		{
+			tmpf = stof(toread.substr(0, toread.find(',')));
+			GameObject::targetlook.sx(tmpf);
+			toread.erase(0, toread.find(',') + delimlen);
+
+			tmpf = stof(toread.substr(0, toread.find(',')));
+			GameObject::targetlook.sy(tmpf);
+			toread.erase(0, toread.find(',') + delimlen);
+
+			tmpf = stof(toread);
+			GameObject::targetlook.sz(tmpf);
+			toread.erase(0, toread.find(',') + delimlen);
+		}
+		else if (linehead == "VELOCITY")
+		{
+			tmpf = stof(toread.substr(0, toread.find(',')));
+			velocity.sx(tmpf);
+			toread.erase(0, toread.find(',') + delimlen);
+
+			tmpf = stof(toread.substr(0, toread.find(',')));
+			velocity.sy(tmpf);
+			toread.erase(0, toread.find(',') + delimlen);
+
+			tmpf = stof(toread.substr(0, toread.find(',')));
+			velocity.sz(tmpf);
+			toread.erase(0, toread.find(',') + delimlen);
+		}
+		else if (linehead == "HEADING")
+		{
+			// Had problem with some heading variables where it was empty.
+			if (toread.substr(0, toread.find(',')) == "-nan(ind)")
+				heading.sx(0);
+			else
+			{
+				tmpf = stof(toread.substr(0, toread.find(',')));
+				heading.sx(tmpf);
+			}
+			toread.erase(0, toread.find(',') + delimlen);
+
+			if (toread.substr(0, toread.find(',')) == "-nan(ind)")
+				heading.sy(0);
+			else
+			{
+				tmpf = stof(toread.substr(0, toread.find(',')));
+				heading.sx(tmpf);
+			}
+			toread.erase(0, toread.find(',') + delimlen);
+
+			if (toread.substr(0, toread.find(',')) == "-nan(ind)")
+				heading.sx(0);
+			else
+			{
+				tmpf = stof(toread.substr(0, toread.find(',')));
+				heading.sy(tmpf);
+			}
+			toread.erase(0, toread.find(',') + delimlen);
+		}
+		else if (linehead == "HEALTH")
+		{
+			tmpf = stof(toread.substr(0, toread.find(',')));
+			health = tmpf;
+			toread.erase(0, toread.find(',') + delimlen);
+		}
+		else if (linehead == "SPEED")
+		{
+			tmpf = stof(toread.substr(0, toread.find(',')));
+			speed = tmpf;
+			toread.erase(0, toread.find(',') + delimlen);
+		}
+		else if (linehead == "LOOKANGLE")
+		{
+			tmpf = stof(toread);
+			lookangle = tmpf;
+			toread.erase();
+		}
+	}
+	return true;
+}

@@ -143,12 +143,25 @@ bool SceneManager::setSceneHeightMap(unsigned sceneno, GameObject* hmObj) {
 bool SceneManager::saveGame(std::string savename) {
 	std::cout << "Inside SceneManager Function Save Game." << std::endl;
 	std::cout << "File to save as: " << savename <<std::endl;
+
+	//mm
+	save sf(savename); // Assuming it is just a file name (no path or extention)
+	sf.saveGame(scenes[currscene].saveGame());
+
 	return true;
 }
 
 bool SceneManager::loadGame(std::string filetoload) {
 	std::cout << "Inside SceneManager Function Load Game." << std::endl;
 	std::cout << "File to load from: " << filetoload << std::endl;
+
+	//mm
+	save sf(filetoload); // Create save object with filename.
+	if (sf.loadFile()) // Checks that file exists and that it is loaded in.
+	{
+		scenes[currscene].loadGame(sf);
+	}
+
 	return true;
 }
 

@@ -2,6 +2,9 @@
 #include "GameObjectHandler.h"
 #include "CollisionEngine.h"
 
+//mm
+#include "saveFileIO.h"
+
 /**
 * @class Scene
 * @brief Class for creating the scene
@@ -78,6 +81,10 @@ public:
 	bool attachTerrain(Identifiers & id, vec3 pos, ResourceList & list);
 
 	void addResources(ResourceList & toadd);
+
+	// mm
+	std::vector<std::string> saveGame();
+	void loadGame(save sf);
 
 private:
 	/// The game object handler.

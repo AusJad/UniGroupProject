@@ -48,6 +48,10 @@ public:
 	const vec3 & getFront();
 
 	bool playerDefaultMessageHandler(Message & tocheck);
+	
+	// mm
+	std::string toString();
+	bool fromstring(std::string toread);
 private:
 	/// The direction the player should be facing.
 	vec3 front;
