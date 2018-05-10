@@ -251,4 +251,9 @@ void CtoLUABinder::bindClasses(lua_State* lstate) {
 	luabind::module(lstate, "Math")[
 		luabind::def("normalize", &Maths::normalize)
 	];
+
+	// mm
+	luabind::module(lstate, "FileLoading")[
+		luabind::def("getFileName", &fileNameReader::getFileNames)
+	];
 }
