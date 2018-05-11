@@ -65,6 +65,8 @@ struct color_4 {
 #define DISABLE_ALPHA 12
 #define ENABLE_TRANSPARENCY 13
 #define DISABLE_TRANSPARENCY 14
+#define ENABLE_LIGHTING 15
+#define DISABLE_LIGHTING 16
 
 /**
 * @class GeometeryStream

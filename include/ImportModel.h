@@ -8,6 +8,7 @@
 //#include "vec2.h"
 #include "TextureManager.h"
 #include "Maths.h"
+#include "ModelMesh.h"
 
 /**
 * @class ImportModel
@@ -62,6 +63,9 @@ public:
 	std::vector<vec3>& getVerticies();
 
 private:
+	/// The model data.
+	const aiScene *model;
+
 	/**
 	* @brief Set the max and min values.
 	*/
@@ -76,46 +80,14 @@ private:
 	*/
 	std::string RandomString(unsigned len);
 
-	/// Vector for the verticies.
-	std::vector<vec3> Vertices;
-	/// Vector for the texture coords.
-	std::vector<vec2> texCoords;
-	/// Vector for the normals.
-	std::vector<vec3> Normals;
-	/// Vector for the indexies
-	std::vector<unsigned> vertIndex;
+	///Vector storing meshes for a model.
+	std::vector<ModelMesh> modelDetails;
+
 	/// The texture data.
-	std::string texture;
-	/// The model data.
-	const aiScene *model;
+	std::vector<std::string> texture;
 
-	/**
-	* @brief Set the vertices.
-	*
-	* @param mesh - The Mesh.
-	*/
-	void setVertices(aiMesh *mesh);
-
-	/**
-	* @brief Set the texture coords.
-	*
-	* @param mesh - The Mesh.
-	*/
-	void setTexCoords(aiMesh *mesh);
-
-	/**
-	* @brief Set the normals.
-	*
-	* @param mesh - The Mesh.
-	*/
-	void setNormals(aiMesh *mesh);
-
-	/**
-	* @brief Set the indexies.
-	*
-	* @param mesh - The Mesh.
-	*/
-	void setIndexes(aiMesh *mesh);
+	///stores all the verticies of all the meshes of a model.
+	std::vector<vec3> allVerticies;
 
 	/**
 	* @brief Set the center of the point.
