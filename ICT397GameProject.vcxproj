@@ -135,6 +135,7 @@
     <ClInclude Include="include\Model.h" />
     <ClInclude Include="include\ModelFactory.h" />
     <ClInclude Include="include\ModelManger.h" />
+    <ClInclude Include="include\ModelMesh.h" />
     <ClInclude Include="include\NPC.h" />
     <ClInclude Include="include\Player.h" />
     <ClInclude Include="include\QuadTree.h" />
@@ -194,6 +195,7 @@
     <ClCompile Include="src\MessagingBus.cpp" />
     <ClCompile Include="src\ModelFactory.cpp" />
     <ClCompile Include="src\ModelManger.cpp" />
+    <ClCompile Include="src\ModelMesh.cpp" />
     <ClCompile Include="src\NPC.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\RawTerrain.cpp" />
