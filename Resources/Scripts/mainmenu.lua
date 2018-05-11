@@ -158,6 +158,7 @@ function mainMenuRender(this, msgbus)
 		MenuTools.drawTSquare(vec2(buttonstartx, yoff), vec2(buttonstartx + buttonwidth, yoff - buttonheight), buttonz, "BEXITP", true);
 	end
 
+
 	--draw button underlay
 	MenuTools.drawSquare(vec2(buttonstartx*2.35, buttonstarty + .3), vec2(buttonstartx*2.35 + buttonwidth*2.35, buttonstarty + yoff - (buttonheight * 4)), middle, vec4(0,0,0,.7));
 

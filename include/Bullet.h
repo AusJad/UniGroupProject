@@ -42,8 +42,19 @@ public:
 	*/
 	void setTarget(const vec3 target);
 
+	/**
+	* @brief Class to determine what happens to the bullet on collision with another object.
+	*
+	* @param prevloc - The previous location of the bullet before collision.
+	* @param colgoid - The ID of the GameObject being collided with.
+	*/
 	void onCollide(vec3 & prevloc, const Identifiers & colgoid);
 
+	/**
+	* @brief Class to determine if the bullet has gravity acting on it.
+	*
+	* @return bool - If the bullet has gravity acting on it.
+	*/
 	bool hasGravity();
 
 private:

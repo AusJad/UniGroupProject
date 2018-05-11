@@ -179,6 +179,23 @@ public:
 	* @return bool - If the camera can collide.
 	*/
 	bool isCollidable();
+
+	//mm
+	/**
+	* @brief Get all data relating to the camera GameObject and return it as a string.
+	*
+	* @return string - All data to be saved for camera.
+	*/
+	std::string toString();
+
+	/**
+	* @brief Load in all data relating to the camera GameObject and set the values.
+	*
+	* @param toread - The input string from file.
+	*
+	* @return bool - If the load was successful.
+	*/
+	bool fromstring(std::string toread);
 private:
 	/// Move speed of camera.
 	float moveSpeed;

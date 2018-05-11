@@ -219,6 +219,13 @@ public:
 	*/
 	mat4 operator / (const float f);
 
+	/**
+	* @brief A overload function for [].
+	*
+	* @param index - The index in the matrix.
+	*
+	* @return float - The value.
+	*/
 	float operator[] (int index) const;
 
 private:

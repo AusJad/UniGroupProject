@@ -11,6 +11,9 @@
 #include "Maths.h"
 #include "ModelManger.h"
 
+// mm
+#include "saveFileIO.h"
+
 /**
 * @class GameObject
 * @brief Class for handling game objects and all their data.
@@ -116,7 +119,16 @@ public:
 	*/
 	Model* getModel();
 
+	/**
+	* @brief A virtual method for if the GameObject is visible or not.
+	*
+	* @return bool - If the object is visible or not.
+	*/
 	virtual bool isVisible();
+
+	/**
+	* @brief A virtual method to stop the object.
+	*/
 	virtual void stop();
 
 	/**
@@ -140,11 +152,46 @@ public:
 	*/
 	virtual bool isCollidable();
 
+	/**
+	* @brief The default message handler for GameObjects.
+	*
+	* @param message - The message.
+	*
+	* @return bool - If the message was processed.
+	*/
 	bool defaultMessageHandler(Message & message);
 
+	/**
+	* @brief A virtual method to determine what to do with the object apon collision.
+	*
+	* @param prevloc - The objects previous location.
+	* @param colgoid - The ID of the object collided with.
+	*/
 	virtual void onCollide(vec3 & prevloc, const Identifiers & colgoid);
 
+	/**
+	* @brief A virtual method to determine if the object has gravity or not.
+	*
+	* @return bool - If the object has gravity.
+	*/
 	virtual bool hasGravity();
+
+	//mm
+	/**
+	* @brief A virtual method for putting all data in a string to be saved to file.
+	*
+	* @return string - The data for file.
+	*/
+	virtual std::string toString();
+
+	/**
+	* @brief A virtual method for putting all data from file back into the object.
+	*
+	* @param toread - The data from file.
+	* 
+	* @return bool - If the data was input.
+	*/
+	virtual bool fromstring(std::string toread);
 
 protected:
 	/// The state of the object.
