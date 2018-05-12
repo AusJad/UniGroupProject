@@ -183,6 +183,13 @@ public:
 	*/
 	void callLookAt(vec3 r1, vec3 r2, vec3 r3);
 
+	/**
+	* @brief A method to change the look at position.
+	*
+	* @param r1 - The first look vector.
+	* @param r2 - The second look vector.
+	* @param r3 - The third look vector.
+	*/
 	void callLookAtImmediate(vec3 r1, vec3 r2, vec3 r3);
 
 	/**
@@ -247,13 +254,38 @@ public:
 	*/
 	bool shouldContinue();
 
-
+	/**
+	* @brief A method to push the matrix.
+	*
+	* @param mat - The matrix.
+	*/
 	void pushMatrix(const float mat[16]);
 
+	/**
+	* @brief A method to pop the matrix.
+	*/
 	void popMatrix();
 
+	/**
+	* @brief A method to get output functions for the various custom data types.
+	*
+	* @return GeometeryStream - The class with all the output overloads.
+	*/
 	GeometeryStream & getGeoStream();
 
+	/**
+	* @brief A method to generate sub textures.
+	*
+	* @param texID - The texture id.
+	* @param pixelsize - The pixel size of the texture.
+	* @param width - The width of the texture.
+	* @param height - The height of the texture.
+	* @param subx - The x coord of the sub.
+	* @param suby - The y coord of the sub.
+	* @param subwidth - The width of the sub.
+	* @param subheight - The height of the sub.
+	* @param data - The texture data.
+	*/
 	void genSubTex(const int & texID, unsigned pixelsize, unsigned width, unsigned height, unsigned subx, unsigned suby, unsigned subwidth, unsigned subheight, const unsigned char* data);
 
 private:
@@ -336,6 +368,7 @@ private:
 	*/
 	void commitLights();
 
+	/// The GeometeryStream object for custom data type output overloads.
 	GeometeryStream geoStream;
 };
 

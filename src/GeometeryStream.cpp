@@ -94,6 +94,12 @@ GeometeryStream & GeometeryStream::operator << (int rhs) {
 		case DISABLE_TRANSPARENCY:
 			glDisable(GL_BLEND);
 			break;
+		case ENABLE_LIGHTING:
+			glEnable(GL_LIGHTING);
+			break;
+		case DISABLE_LIGHTING:
+			glDisable(GL_LIGHTING);
+			break;
 	}
 
 	return *this;

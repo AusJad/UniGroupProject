@@ -45,9 +45,9 @@ struct SoundSourceWrapper {
 * @date 02/04/2018
 */
 struct ListenerSourceWrapper {
-	///Bound game object id
+	/// Bound game object id
 	int id;
-	///position of listener
+	/// Position of listener
 	vec3 pos;
 	ListenerSourceWrapper() : id(-1) {};
 };
@@ -61,7 +61,9 @@ struct ListenerSourceWrapper {
 * @date 02/04/2018
 */
 struct FFTData {
+	/// If the data is empty.
 	bool empty;
+	/// The data.
 	float data[8];
 	FFTData() : empty(true) {};
 };
@@ -182,6 +184,11 @@ public:
 	*/
 	void update();
 
+	/**
+	* @brief If the data has sound.
+	*
+	* @return bool - If it has sound.
+	*/
 	bool hasSound(std::string sound);
 
 private:

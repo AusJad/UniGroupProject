@@ -155,6 +155,7 @@ void RenderModuleStubb::msgrcvr() {
 }
 
 void RenderModuleStubb::renderArrayTri(std::vector<unsigned>& indicies, std::vector<vec3>& vertices, std::vector<vec3> normals, std::vector<vec2> & texcoords, const vec3 & trans) {
+	glDisable(GL_LIGHTING);
 	glPushMatrix();
 	glTranslatef(trans.x(), trans.y(), trans.z());
 	glBegin(GL_TRIANGLES);
@@ -166,6 +167,7 @@ void RenderModuleStubb::renderArrayTri(std::vector<unsigned>& indicies, std::vec
 	}
 	glEnd();
 	glPopMatrix();
+	glEnable(GL_LIGHTING);
 }
 
 void RenderModuleStubb::renderMultiTexturedArrayTriStrip(std::vector<unsigned> & indicies, std::vector<vec3> & vertices, std::vector<vec2> & texcoords, std::vector<float> lights, const vec3 & trans) {
@@ -306,7 +308,7 @@ void RenderModuleStubb::reshape(GLFWwindow* window, int width, int height) {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	glViewport(0, 0, width, height);
-	gluPerspective(45.0f, aspect, 1, 10000);
+	gluPerspective(45.0f, aspect, 1, 20000);
 	glMatrixMode(GL_MODELVIEW);
 }
 

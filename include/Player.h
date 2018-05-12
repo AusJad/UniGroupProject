@@ -46,11 +46,46 @@ public:
 	*/
 	bool isCollidable();
 
+	/**
+	* @brief Draw the player model.
+	*
+	* @param trans - The translation matrix.
+	* @param rot - The rotation value.
+	*/
 	void drawModel(vec3 & trans, float rot);
 
+	/**
+	* @brief Get the front.
+	*
+	* @return vec3 - The front postion.
+	*/
 	const vec3 & getFront();
 
+	/**
+	* @brief The default message handler.
+	*
+	* @param tocheck - The message.
+	*
+	* @return bool - If the message was handled.
+	*/
 	bool playerDefaultMessageHandler(Message & tocheck);
+	
+	// mm
+	/**
+	* @brief A method to output player data as a string.
+	*
+	* @return string - Player data.
+	*/
+	std::string toString();
+
+	/**
+	* @brief A method to parse a string and set player data.
+	*
+	* @param toread - The string to be parsed.
+	*
+	* @return bool - If the string was parsed.
+	*/
+	bool fromstring(std::string toread);
 private:
 	/// The direction the player should be facing.
 	vec3 front;

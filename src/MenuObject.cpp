@@ -74,3 +74,56 @@ MenuObject::MenuObject(const MenuObject & tocpy) : GameObject(tocpy) {
 GameObject* MenuObject::create() {
 	return new MenuObject(*this);    
 }
+
+std::string MenuObject::toString()
+{
+	std::string towrite;
+
+	towrite += GameObject::id.getName() + ",";
+	towrite += "POS," + std::to_string(GameObject::pos.x()) + "," + std::to_string(GameObject::pos.y()) + "," + std::to_string(GameObject::pos.z()) + ",";
+	if (visible)
+		towrite += "VISIBLE,1";
+	else
+		towrite += "VISIBLE,0";
+
+	return towrite;
+}
+
+bool MenuObject::fromstring(std::string toread)
+{
+	float tmpf;
+	std::string linehead;
+	int delimlen = 1;
+
+	while (!toread.empty())
+	{
+		linehead = toread.substr(0, toread.find(','));
+		toread.erase(0, toread.find(',') + delimlen);
+
+		if (linehead == "POS")
+		{
+			tmpf = stof(toread.substr(0, toread.find(',')));
+			GameObject::pos.sx(tmpf);
+			toread.erase(0, toread.find(',') + delimlen);
+
+			tmpf = stof(toread.substr(0, toread.find(',')));
+			GameObject::pos.sy(tmpf);
+			toread.erase(0, toread.find(',') + delimlen);
+
+			tmpf = stof(toread.substr(0, toread.find(',')));
+			GameObject::pos.sz(tmpf);
+			toread.erase(0, toread.find(',') + delimlen);
+		}
+		else if (linehead == "VISIBLE")
+		{
+			tmpf = stof(toread.substr(0, toread.find(',')));
+			if (tmpf == 1)
+				visible = true;
+			else
+				visible = false;
+			toread.erase();
+		}
+	}
+
+	return true;
+}

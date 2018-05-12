@@ -53,6 +53,14 @@
 #define GO_TO_STR					"GOTO"
 #define GO_TO						3
 
+/**
+* @struct SceneObject
+* @brief A struct for handling SceneObject data.
+*
+* @author Morgan Smolder
+* @version 01
+* @date 08/05/2018
+*/
 struct SceneObject {
 	std::string name;
 	vec2 top;
@@ -82,6 +90,14 @@ struct SceneObject {
 	}
 };
 
+/**
+* @struct SceneText
+* @brief A struct for handling SceneText data.
+*
+* @author Morgan Smolder
+* @version 01
+* @date 08/05/2018
+*/
 struct SceneText {
 	std::string name;
 	vec2 startlocation;
@@ -112,6 +128,14 @@ struct SceneText {
 	}
 };
 
+/**
+* @struct SceneAudio
+* @brief A struct for handling SceneAudio data.
+*
+* @author Morgan Smolder
+* @version 01
+* @date 08/05/2018
+*/
 struct SceneAudio {
 	std::string name;
 	std::string file;
@@ -127,6 +151,14 @@ struct SceneAudio {
 	}
 };
 
+/**
+* @struct Animation
+* @brief A struct for handling Animation data.
+*
+* @author Morgan Smolder
+* @version 01
+* @date 08/05/2018
+*/
 struct Animation {
 	std::string name;
 	float time;
@@ -152,6 +184,14 @@ struct Animation {
 	}
 };
 
+/**
+* @struct FrameSound
+* @brief A struct for handling FrameSound data.
+*
+* @author Morgan Smolder
+* @version 01
+* @date 08/05/2018
+*/
 struct FrameSound {
 	float starttime;
 	bool playing;
@@ -169,6 +209,14 @@ struct FrameSound {
 	}
 };
 
+/**
+* @struct Frame
+* @brief A struct for handling Frame data.
+*
+* @author Morgan Smolder
+* @version 01
+* @date 08/05/2018
+*/
 struct Frame {
 	float duration;
 	std::vector<Animation> animations;
@@ -186,6 +234,14 @@ struct Frame {
 	}
 };
 
+/**
+* @class CutScene
+* @brief Provides an interface for creating cut scenes.
+*
+* @author Morgan Smolder
+* @version 01
+* @date 08/05/2018
+*/
 class CutScene : public Model
 {
 public:
@@ -243,31 +299,105 @@ public:
 	void setScale(vec3 & toset);
 
 private:
+	/// A map for holding all cut scene objects.
 	std::map<std::string, SceneObject> cutsceneObjects;
+	/// A map for holding all cut scene text.
 	std::map<std::string, SceneText> cutsceneText;
+	/// A map for holding all cut scene audio.
 	std::map<std::string, SceneAudio> cutsceneAudio;
+	/// A vector for holding all scenes.
 	std::vector<Frame> scenes;
+	/// A current animation key.
 	unsigned currentAnimation;
+	/// The total running time across all frames.
 	float culmtime;
+	/// If the cut scene is finished or not.
 	bool finishedflag;
 
+	/**
+	* @brief A method to draw text on the screen.
+	*
+	* @param todraw - The text to be drawn.
+	*/
 	void drawText(SceneText & todraw);
+
+	/**
+	* @brief A method to draw something on the screen.
+	*
+	* @param todraw - The thing to be drawn, a picture, etc.
+	*/
 	void drawActor(SceneObject & todraw);
 
+	/**
+	* @brief A method to carry out the active animation.
+	*
+	* @param time - The time the animation takes.
+	*/
 	void doActiveAnimations(float time);
+
+	/**
+	* @brief A method to carry out any animation.
+	*
+	* @param todo - The animation data.
+	* @param name - The name of the animation.
+	* @param time - The time the animation takes.
+	*/
 	void doAnimation(Animation & todo, std::string name, float time);
 
+	/**
+	* @brief A animation fading method.
+	*
+	* @param alpha - The alpha channel value.
+	*/
 	void RenderFade(float alpha);
 
+	/**
+	* @brief Change the scene to the next one.
+	*/
 	void changeScene();
 
+	/**
+	* @brief What to do after the scene is finished.
+	*/
 	void onDone();
 
+	/**
+	* @brief Message receiver method.
+	*/
 	void msgrcvr();
 
+	/**
+	* @brief Get the header of the string being parsed.
+	*
+	* @param toread - The string being parsed.
+	*
+	* @return bool - If the header was found.
+	*/
 	bool getHeader(std::ifstream & toread);
+
+	/**
+	* @brief Get the frames to be parsed from string.
+	*
+	* @param toread - The string being parsed.
+	*
+	* @return bool - If the frames were parsed.
+	*/
 	bool parseFrames(std::ifstream & toread);
+
+	/**
+	* @brief Clean the string out of data once its been taken from the string.
+	*
+	* @oaram toclean - The string.
+	*/
 	void cleanLine(std::string & toclean);
+
+	/**
+	* @brief Take data from the string and output it as useable data for flags.
+	*
+	* @param totest - The string with data.
+	*
+	* @return int - The testing result.
+	*/
 	int stringToFlags(std::string totest);
 };
 

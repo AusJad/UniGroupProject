@@ -45,6 +45,7 @@ local function loadResources(AMAN)
 	if(AMAN:addResource("./Resources/CutScenes/test.cs", "CUT_S", "CUTSCENE1")) then print("Loaded resource 'test.cs'!"); 
 	else print("Failed to load resource 'test.cs'!"); end 
 
+	AMAN:addModel("./Resources/Models/skybox.obj", "IM", "SKYBOX", vec3(1000,750,1000));
 	AMAN:addModel("./Resources/Models/Rock.obj", "IM", "ROCK", vec3(15,15,15));
 	AMAN:addModel("./Resources/Models/bullet.obj", "IM", "bullet", vec3(1,1,1));
 	AMAN:addModel("./Resources/Models/robotgreen.obj", "IM", "ROBOT", vec3(0.5,0.5,0.5));
@@ -112,6 +113,7 @@ function initGame(SM, LSM, AMAN, AE)
 		SM:addObject(Identifiers("NPC", id), level1, vec3(math.random(-128*40, 128*40), 0, math.random(-128*40, 128*40)), ResourceList("model", "PLAYERW", "updatefunc", "start", "msgrcvr", "msgrcvr"));
 	end
 	SM:addObject(Identifiers("CAM","Camera"), level1, vec3(0, 0, -4000), ResourceList());
+	SM:addObject(Identifiers("PROP", "SKYBOX"), level1, vec3(0,-5000,0), ResourceList("model", "SKYBOX"));
 	--SM:addObject(Identifiers("MO","Guide"), level1, vec3(0, 0, 0), ResourceList("model", "popup"));
 	--SM:addObject(Identifiers("NPC", "R1"), level1, vec3(-80,0,0), ResourceList("model", "ROBOT", "updatefunc", "start", "msgrcvr", "msgrcvr"));
 	--SM:addObject(Identifiers("NPC", "R2"), level1, vec3(480,0,-1000), ResourceList("model", "ROBOT"));
@@ -145,7 +147,7 @@ function initGame(SM, LSM, AMAN, AE)
 		SM:addObject(Identifiers("NPC"), level2, vec3(math.random(-128*40, 128*40), 0, math.random(-128*40, 128*40)), ResourceList("model", "PLAYERW"));
 	end
 
-	SM:addObject(Identifiers("CAM","Camera"), level2, vec3(0, 0, 0), ResourceList());	
+	SM:addObject(Identifiers("CAM","Camera"), level2, vec3(0, 0, 0), ResourceList());
 	SM:addObject(Identifiers("PLYR", "Player"), level2, vec3(0, 0, 0), ResourceList("camera", "Camera", "projmodel", "bullet", "projsnd", "gunshot"));
 
 	--SM:addObject(Identifiers("MO","Guide"), level2, vec3(0, 0, 0), ResourceList("model", "popup2"));

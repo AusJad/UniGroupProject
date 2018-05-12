@@ -29,6 +29,11 @@ public:
 	*/
 	vec3 getCenterOffset();
 	
+	/**
+	* @brief A method to find if the object is collidable.
+	*
+	* @return bool - If the object was collidable.
+	*/
 	bool isCollidable();
 };
 
