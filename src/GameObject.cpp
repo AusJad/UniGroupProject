@@ -120,7 +120,7 @@ bool GameObject::isVisible() {
 
 void GameObject::setModel(Model* M) {
 	if (model != NULL) delete model;
-	
+
 	model = M;
 
 	model->centerOnPoint(vec3(0, 0, 0));
@@ -146,4 +146,22 @@ void GameObject::onCollide(vec3 & prevloc, const Identifiers & colgoid) {
 
 bool GameObject::hasGravity() {
 	return true;
+}
+
+GameObject::GameObject(const GameObject & tocpy) {
+
+	state = tocpy.state;
+	pos = tocpy.pos;
+	target = tocpy.target;
+	targetlook = tocpy.targetlook;
+	id = tocpy.id;
+	resources = tocpy.resources;
+
+	if (tocpy.model != NULL) {
+		model = tocpy.model->create();
+		model->setName(std::to_string(id.getId()));
+	}
+	else {
+		model = NULL;
+	}
 }

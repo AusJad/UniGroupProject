@@ -66,3 +66,11 @@ bool MenuObject::isCollidable(){
 void MenuObject::setModel(Model* M) {
 	model = M;
 }
+
+MenuObject::MenuObject(const MenuObject & tocpy) : GameObject(tocpy) {
+	visible = tocpy.visible;
+}
+
+GameObject* MenuObject::create() {
+	return new MenuObject(*this);    
+}

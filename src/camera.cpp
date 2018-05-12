@@ -25,7 +25,7 @@ Camera::Camera(Identifiers & id, vec3 pos, ResourceList & list) : GameObject(id,
 	maxAngle = 80.0f;
 	maxNangle = -80.0f;
 	birdseye = false;
-	yoff = 20.0f;
+	yoff = 30.0f;
 }
 
 void Camera::update(float time) {
@@ -306,4 +306,32 @@ void Camera::CorrectAngleBoundaries() {
 
 vec3 Camera::getCenterOffset() {
 	return vec3(0, yoff, 0);
+}
+
+
+Camera::Camera(const Camera & tocpy) : GameObject(tocpy) {
+	moveSpeed = tocpy.moveSpeed;
+	rotateSpeed = tocpy.rotateSpeed;
+	speedDecay = tocpy.speedDecay;
+	moveForward = tocpy.moveForward;
+	moveBack = tocpy.moveBack;
+	moveRight = tocpy.moveRight;
+	moveLeft = tocpy.moveLeft;
+	lookDown = tocpy.lookDown;
+	lookUp = tocpy.lookUp;
+	maxlspeed = tocpy.maxlspeed;
+	fov = tocpy.fov;
+	aspectRatio = tocpy.aspectRatio;
+	nearPlane = tocpy.nearPlane;
+	farPlane = tocpy.farPlane;
+	horizontalAngle = tocpy.horizontalAngle;
+	verticalAngle = tocpy.verticalAngle;
+	maxAngle = tocpy.maxAngle;
+	maxNangle = tocpy.maxNangle;
+	birdseye = tocpy.birdseye;
+	yoff = tocpy.yoff;
+}
+
+GameObject* Camera::create() {
+	return new Camera(*this);
 }

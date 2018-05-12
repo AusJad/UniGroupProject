@@ -94,6 +94,7 @@ bool MD2Model::loadModel(std::string filename) {
 	}
 
 	if (!TXMAN->loadNewTexture(skins, "TGA", skins, RNDR)) {
+		std::cout << skins << std::endl;
 		skins.clear();
 	}
 
@@ -293,6 +294,7 @@ void MD2Model::buildAnimationList() {
 			animations[curanim] = tmp;
 			animations.at(curanim).push_back(i);
 		}
+		std::cout << frames.at(i).name << std::endl;
 	}
 }
 

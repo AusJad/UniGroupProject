@@ -16,6 +16,9 @@ class Player : public GameObject
 public:
 	Player(Identifiers & id, vec3 pos, ResourceList & list);
 	Player();
+	Player(const Player & tocpy);
+
+	GameObject* create();
 
 	/**
 	* @brief Update the player object.

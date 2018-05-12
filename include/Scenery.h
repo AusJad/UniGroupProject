@@ -7,7 +7,9 @@ class Scenery : public GameObject
 public:
 	Scenery(Identifiers & id, vec3 pos, ResourceList & list);
 	Scenery();
+	Scenery(const Scenery & tocpy);
 
+	GameObject* create();
 	/**
 	* @brief The update function.
 	*

@@ -10,13 +10,13 @@ cutsceneid = "";
 
 local cs1 = 0;
 local mainmenu = 1;
-local level1 = 2;
-local level2 = 3;
+level1 = 2;
+level2 = 3;
 local endscreen = 4;
 
 local function loadResources(AMAN)
 	--Load height maps
-	AMAN:addResource("./Resources/Models/RAW1.tdef", "RAWTRN", "Terrain");
+	AMAN:addResource("./Resources/Models/RAW1.tdef", "RAWTRN", "TERRAIN");
 	AMAN:addResource("./Resources/Models/RAW2.tdef", "RAWTRN", "Terrain2");
 	
 	--Load audio
@@ -42,7 +42,7 @@ local function loadResources(AMAN)
 	AMAN:addResource("./Resources/Models/endscreen.tsqr", "TX", "endscrn");
 
 	--Cutscene test
-	if(AMAN:addResource("./Resources/CutScenes/test.cs", "CUT_S", "cutscene1")) then print("Loaded resource 'test.cs'!"); 
+	if(AMAN:addResource("./Resources/CutScenes/test.cs", "CUT_S", "CUTSCENE1")) then print("Loaded resource 'test.cs'!"); 
 	else print("Failed to load resource 'test.cs'!"); end 
 
 	AMAN:addModel("./Resources/Models/Rock.obj", "IM", "ROCK", vec3(15,15,15));
@@ -51,6 +51,8 @@ local function loadResources(AMAN)
 	AMAN:addModel("./Resources/Models/robotgreen.obj", "IM", "Robot2", vec3(0.3,0.3,0.3));
 	AMAN:addModel("./Resources/Models/corvet.obj", "IM", "SHIP", vec3(0.5,0.5,0.5));
 	if AMAN:addModel("./Resources/Models/guard.md2", "MD2", "PLAYERW", vec3(0.6,0.6,0.6)) == false then
+	print("Bad") end
+	if AMAN:addModel("./Resources/Models/playerweapon.md2", "MD2", "PWEAPON", vec3(0.6,0.6,0.6)) == false then
 	print("Bad") end
 	if AMAN:addModel("./Resources/Models/tris.md2", "MD2", "DOOMGUY", vec3(0.6,0.6,0.6)) == false then
 	print("Bad") end
@@ -77,7 +79,7 @@ function initGame(SM, LSM, AMAN, AE)
 
 	SM:attachControls(cs1, ResourceList("keyCallback", "skipCutScene"));
 
-	SM:addObject(Identifiers("MO", "CUTSCENE"), cs1, vec3(0, 0, 0), ResourceList("model", "cutscene1"));
+	SM:addObject(Identifiers("MO", "CUTSCENE"), cs1, vec3(0, 0, 0), ResourceList("model", "CUTSCENE1"));
 	SM:addObject(Identifiers("CAM","Camera"), cs1, vec3(0, 0, 0), ResourceList());
 	AE:setListenerSource(SM:GetGameObjectID("Camera"), vec3(0, 0, 0));
 	
@@ -99,11 +101,11 @@ function initGame(SM, LSM, AMAN, AE)
 	SM:setCurrScene(level1);
 	SM:setSceneResources(ResourceList("updatefunc", "level1Update", "renderfunc", "level1Render"), level1);
 
-	SM:attachControls(level1, ResourceList("keyCallback", "keys", "mouseCallback", "mouse"));
-	SM:attachTerrain(Identifiers("TO", "Terrain"), level1, vec3(0,0,0), ResourceList("model", "Terrain"));
+	SM:attachControls(level1, ResourceList("keyCallback", "keys", "mouseCallback", "mouse", "mouseButtonCallback", "playerAttack"));
+	SM:attachTerrain(Identifiers("TO", "Terrain"), level1, vec3(0,0,0), ResourceList("model", "TERRAIN"));
 	
 	--Adding game objects
-	for i = 11,1,-1 
+	for i =  20,1,-1 
 	do 
 		id = tostring(math.random())
 		SM:addObject(Identifiers("SE"), level1, vec3(math.random (-128*40, 128*40), 0, math.random(-128*40, 128*40)), ResourceList("model", "ROCK")); 
@@ -113,10 +115,10 @@ function initGame(SM, LSM, AMAN, AE)
 	--SM:addObject(Identifiers("MO","Guide"), level1, vec3(0, 0, 0), ResourceList("model", "popup"));
 	--SM:addObject(Identifiers("NPC", "R1"), level1, vec3(-80,0,0), ResourceList("model", "ROBOT", "updatefunc", "start", "msgrcvr", "msgrcvr"));
 	--SM:addObject(Identifiers("NPC", "R2"), level1, vec3(480,0,-1000), ResourceList("model", "ROBOT"));
-	SM:addObject(Identifiers("PROP", "SHIP"), level1, vec3(-1000,1500,2000), ResourceList("model", "SHIP"));
-	SM:addObject(Identifiers("PROP", "SHIP2"), level1, vec3(1000,2000,-2000), ResourceList("model", "SHIP"));
+	SM:addObject(Identifiers("PROP", "SHIP"), level1, vec3(-1000,2500,2000), ResourceList("model", "SHIP"));
+	SM:addObject(Identifiers("PROP", "SHIP2"), level1, vec3(1000,4000,-2000), ResourceList("model", "SHIP"));
 
-	SM:addObject(Identifiers("PLYR", "Player"), level1, vec3(0, 0, -4000), ResourceList("camera", "Camera", "msgrcvr", "playerMsgRcvr", "renderfunc", "playerHUDRenderer"));
+	SM:addObject(Identifiers("PLYR", "Player"), level1, vec3(0, 0, -4000), ResourceList("camera", "Camera", "msgrcvr", "playerMsgRcvr", "renderfunc", "playerHUDRenderer", "model", "PWEAPON"));
 	
 	--Set height map
 	SM:setSceneHeightMap(level1, SM:GetGameObject("Terrain"));

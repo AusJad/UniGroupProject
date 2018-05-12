@@ -17,6 +17,9 @@ public:
 	NPC(Identifiers & id, vec3 pos, ResourceList & list);
 	NPC();
 	~NPC();
+	NPC(const NPC & tocpy);
+
+	GameObject* create();
 
 	/**
 	* @brief The update function.

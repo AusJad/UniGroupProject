@@ -9,7 +9,6 @@ local CODE_RETURN = 2;
 local res;
 
 local function handleMultiPartCMD(cmd, option, msgbus)
-
 	if(cmd == "CS" or cmd == "CHANGESCENE") then
 		changeScene(msgbus, option[1]);
 		return CODE_SUCCESS;

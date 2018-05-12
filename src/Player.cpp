@@ -88,3 +88,11 @@ vec3 Player::getCenterOffset() {
 
 	return vec3(0, 0, 0);
 }
+
+Player::Player(const Player & tocpy) : GameObject(tocpy) {
+	front = tocpy.front;
+}
+
+GameObject* Player::create() {
+	return new Player(*this);
+}

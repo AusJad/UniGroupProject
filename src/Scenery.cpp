@@ -46,3 +46,11 @@ vec3 Scenery::getCenterOffset() {
 bool Scenery::isCollidable() {
 	return false;
 }
+
+Scenery::Scenery(const Scenery & tocpy) : GameObject(tocpy) {
+
+}
+
+GameObject* Scenery::create() {
+	return new Scenery(*this);
+}

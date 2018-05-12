@@ -22,7 +22,7 @@ vec3 AIMovementBehaviours::Arrive(const vec3 & self, const vec3 & target, const 
 	float distance = getDistance(self, target);
 
 	if (distance > mindistance) {
-		float decelspeed = distance / slowspeed * 0.1;
+		float decelspeed = distance / slowspeed * 0.1f;
 
 		if (decelspeed > maxspeed) decelspeed = maxspeed;
 		if (decelspeed < -maxspeed) decelspeed = -maxspeed;
@@ -75,7 +75,7 @@ vec3 AIMovementBehaviours::capSpeed(const vec3 & velocity, float maxspeed) {
 
 float AIMovementBehaviours::faceTarget(const vec3 & self, const vec3 & target) {
 	vec3 direction = Maths::normalize(target.getVec() - self.getVec());
-	float angle = (180 / M_PI) * atan2f(direction.x(), direction.z()) - 90;
+	float angle = (float) (180 / M_PI) * atan2f(direction.x(), direction.z()) - 90;
 	if (angle < 0) { angle += 360; }
 	return angle;
 }

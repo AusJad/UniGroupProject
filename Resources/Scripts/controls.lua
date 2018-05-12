@@ -1,6 +1,18 @@
 
 function keys(key, action, MB)
-	if key:equals("w") or key:equals("W") then 
+	if key:equals("esc") then 
+		if action:equals("press") then
+			MB:postMessage(Message("SMF"), Identifiers("", "Camera"));
+			MB:postMessage(Message("SML"), Identifiers("", "Camera"));
+			MB:postMessage(Message("SMR"), Identifiers("", "Camera"));
+			MB:postMessage(Message("SMB"), Identifiers("", "Camera"));
+			MB:postMessage(Message("SLD"), Identifiers("", "Camera"));
+			MB:postMessage(Message("SLU"), Identifiers("", "Camera"));
+			tmpm = Message("CS");
+			tmpm:setiData(1);
+			MB:postMessage(tmpm, Identifiers("", "SM"));
+		end 
+	elseif key:equals("w") or key:equals("W") then 
 		if(action:equals("press") or action:equals("repeat")) then
 			MB:postMessage(Message("MVF"), Identifiers("", "Camera"));
 		elseif(action:equals("release")) then
@@ -39,10 +51,6 @@ function keys(key, action, MB)
 	elseif key:equals("m") or key:equals("M") then
 		if action:equals("press") then
 			MB:postMessage(Message("TG"), Identifiers("", "Guide"));
-		end
-	elseif key:equals("space") then
-		if action:equals("press") then
-			MB:postMessage(Message("FIRE"), Identifiers("", "Player"));
 		end
 	elseif key:equals("X") then
 		if action:equals("press") then
@@ -93,6 +101,12 @@ end
 function exitGameControls(button, action, MB)
 	if button:equals("left") and action:equals("press") then
 		MB:postMessage(Message("KILL"), Identifiers("", "RM"));
+	end
+end
+
+function playerAttack(button, action, MB)
+	if button:equals("left") and action:equals("press") then
+		MB:postMessage(Message("FIRE"), Identifiers("", "Player"));
 	end
 end
 

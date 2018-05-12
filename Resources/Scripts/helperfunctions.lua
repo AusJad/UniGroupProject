@@ -27,12 +27,11 @@ function playAnimationOnce(msgbus, self_id, animation)
 	msgbus:postMessage(msg, Identifiers("", tostring(self_id:getId())));
 end
 
-function checkDamage(message, this)
+function checkDamage(message)
 	if(message:getInstruction() == "DMG") then
-		this:setHealth(this:getHealth() - 15000);
-		return true;
+		return message:getiData();
 	else
-		return false;
+		return -1;
 	end
 end
 

@@ -28,7 +28,7 @@ void AudioEngine::setActiveChannelSubGroup(unsigned nchannel) {
 }
 
 void AudioEngine::addChannelSubgroup(unsigned groupno) {
-	std::map<std::string, SoundSourceWrapper> tmp;
+	std::map<std::string, std::vector<SoundSourceWrapper> > tmp;
 	ListenerSourceWrapper tmpls;
 	activechannels[groupno] = tmp;
 	channellistenersources[groupno] = tmpls;
@@ -38,10 +38,14 @@ bool AudioEngine::pauseActiveChannels() {
 
 	bool good = true;
 
-	for (std::map<std::string, SoundSourceWrapper>::const_iterator mapit = activechannels.at(activesubgroup).begin(); mapit != activechannels.at(activesubgroup).end(); ++mapit) {
-		if (!BASS_ChannelPause(mapit->second.channel)) {
-			if (DEBUGMODE) std::cerr << "Error Pausing Sound! Code: " << BASS_ErrorGetCode() << std::endl;
-			good = false;
+	for (std::map<std::string, std::vector<SoundSourceWrapper> >::const_iterator mapit = activechannels.at(activesubgroup).begin(); mapit != activechannels.at(activesubgroup).end(); ++mapit) {
+		for (unsigned i = 0; i < mapit->second.size(); i++) {
+			if (BASS_ChannelIsActive(mapit->second.at(i).channel)) {
+				if (!BASS_ChannelPause(mapit->second.at(i).channel)) {
+					if (DEBUGMODE) std::cerr << "Error Pausing Sound! Code: " << BASS_ErrorGetCode() << std::endl;
+					good = false;
+				}
+			}
 		}
 	}
 
@@ -51,10 +55,12 @@ bool AudioEngine::pauseActiveChannels() {
 bool AudioEngine::unpauseChannels() {
 	bool good = true;
 
-	for (std::map<std::string, SoundSourceWrapper>::const_iterator mapit = activechannels.at(activesubgroup).begin(); mapit != activechannels.at(activesubgroup).end(); ++mapit) {
-		if (!BASS_ChannelPlay(mapit->second.channel, false)) {
-			if (DEBUGMODE) std::cerr << "Error Pausing Sound! Code: " << BASS_ErrorGetCode() << std::endl;
-			good = false;
+	for (std::map<std::string, std::vector<SoundSourceWrapper> >::const_iterator mapit = activechannels.at(activesubgroup).begin(); mapit != activechannels.at(activesubgroup).end(); ++mapit) {
+		for (unsigned i = 0; i < mapit->second.size(); i++) {
+			if (!BASS_ChannelPlay(mapit->second.at(i).channel, false)) {
+				if (DEBUGMODE) std::cerr << "Error Pausing Sound! Code: " << BASS_ErrorGetCode() << std::endl;
+				good = false;
+			}
 		}
 	}
 
@@ -75,37 +81,6 @@ bool AudioEngine::initalise(const HWND & window) {
 	BASS_Apply3D();
 
 	return true;
-}
-
-FFTData AudioEngine::performFFT(std::string sound) {
-	FFTData tmp;
-	float data[128];
-
-	int ind = 0;
-
-	float sum = 0;
-
-	if (BASS_ChannelGetData(activechannels[activesubgroup][sound].channel, data, BASS_DATA_FFT256) != -1) {
-		for (unsigned i = 0; i < 128; i++) {
-			sum += data[i];
-			if (i + 1 % 16 == 0) {
-				tmp.data[ind] = floorf((sum / 16) * 100) / 100;
-				while (tmp.data[ind] < 0.1) tmp.data[ind] *= 10;
-				ind++;
-				sum = 0;
-			}
-		}
-		for (unsigned i = 0; i < 8; i++)
-			std::cout << tmp.data[i] << " ";
-		std::cout << std::endl;
-
-		tmp.empty = false;
-	}
-	else {
-		if (DEBUGMODE) std::cerr << "Error Performing FFT Analysis! Code: " << BASS_ErrorGetCode() << std::endl;
-	}
-
-	return tmp;
 }
 
 bool AudioEngine::soundPlaying(std::string sound) {
@@ -133,27 +108,75 @@ bool AudioEngine::loadSound(std::string path, std::string type, std::string name
 bool AudioEngine::playSound(std::string sound) {
 	if (loadedsounds.count(sound) == 0) return false;
 
-	HCHANNEL channel = BASS_SampleGetChannel(loadedsounds[sound], FALSE);
-	if (channel == 0) {
-		if (DEBUGMODE) std::cerr << "Error Creating Channel! Code: " << BASS_ErrorGetCode() << std::endl;
-		return false;
-	}
-	else {
-		if (BASS_ChannelPlay(channel, FALSE)) {
-			activechannels[activesubgroup][sound] = SoundSourceWrapper(channel);
-			return true;
-		}
-		else {
-			if (DEBUGMODE) std::cerr << "Error Playing Sound! Code: " << BASS_ErrorGetCode() << std::endl;
+	if (activechannels.at(activesubgroup).count(sound) == 0) {
+		std::vector<SoundSourceWrapper> tmp;
+		
+		HCHANNEL channel = BASS_SampleGetChannel(loadedsounds[sound], FALSE);
+		if (channel == 0) {
+			if (DEBUGMODE) std::cerr << "Error Creating Channel! Code: " << BASS_ErrorGetCode() << std::endl;
 			return false;
 		}
+		else {
+			if (BASS_ChannelPlay(channel, FALSE)) {
+				tmp.push_back(SoundSourceWrapper(channel));
+				activechannels[activesubgroup][sound] = tmp;
+				return true;
+			}
+			else {
+				if (DEBUGMODE) std::cerr << "Error Playing Sound! Code: " << BASS_ErrorGetCode() << std::endl;
+				return false;
+			}
+		}
 	}
+	else{
+		int actind = -1;
+		for (unsigned i = 0; i < activechannels.at(activesubgroup).at(sound).size() && actind == -1; i++) {
+			if (BASS_ChannelIsActive(activechannels.at(activesubgroup).at(sound).at(i).channel) == false) {
+				actind = i;
+			}
+		}
+
+		if (actind != -1) {
+			if (BASS_ChannelPlay(activechannels.at(activesubgroup).at(sound).at(actind).channel, TRUE)) {
+				return true;
+			}
+			else {
+				if (DEBUGMODE) std::cerr << "Error Playing Sound! Code: " << BASS_ErrorGetCode() << std::endl;
+				return false;
+			}
+		}
+		else {
+			HCHANNEL channel = BASS_SampleGetChannel(loadedsounds[sound], FALSE);
+			if (channel == 0) {
+				if (DEBUGMODE) std::cerr << "Error Creating Channel! Code: " << BASS_ErrorGetCode() << std::endl;
+				return false;
+			}
+			else {
+				if (BASS_ChannelPlay(channel, FALSE)) {
+					activechannels.at(activesubgroup).at(sound).push_back(SoundSourceWrapper(channel));
+					return true;
+				}
+				else {
+					if (DEBUGMODE) std::cerr << "Error Playing Sound! Code: " << BASS_ErrorGetCode() << std::endl;
+					return false;
+				}
+			}
+		}
+
+	}
+
 }
 
-bool AudioEngine::stopSound(std::string sound) {
-	if (!BASS_ChannelStop(activechannels[activesubgroup][sound].channel)) {
-		if (DEBUGMODE) std::cerr << "Error Stopping Channel! Code: " << BASS_ErrorGetCode() << std::endl;
-		return false;
+bool AudioEngine::stopSound(std::string sound){
+	if (activechannels.at(activesubgroup).count(sound) == 0) return false;
+
+	for (unsigned i = 0; i < activechannels.at(activesubgroup).at(sound).size(); i++) {
+		if (BASS_ChannelIsActive(activechannels.at(activesubgroup).at(sound).at(i).channel) == TRUE) {
+			if (!BASS_ChannelStop(activechannels.at(activesubgroup).at(sound).at(i).channel)) {
+				if (DEBUGMODE) std::cerr << "Error Stopping Channel! Code: " << BASS_ErrorGetCode() << std::endl;
+				return false;
+			}
+		}
 	}
 
 	return true;
@@ -163,27 +186,71 @@ bool AudioEngine::playSoundatSource(std::string sound, int gameobject, vec3 & po
 	if (gameobject == -1) return false;
 	if (loadedsounds.count(sound) == 0) return false;
 
-	HCHANNEL channel = BASS_SampleGetChannel(loadedsounds[sound], FALSE);
-	if (channel == 0) {
-		if (DEBUGMODE) std::cerr << "Error Creating Channel! Code: " << BASS_ErrorGetCode() << std::endl;
-		return false;
-	}
-	else {
-		if (BASS_ChannelPlay(channel, FALSE)) {
-			activechannels[activesubgroup][sound] = SoundSourceWrapper(channel, true);
-		}
-		else {
-			if (DEBUGMODE) std::cerr << "Error Playing Sound! Code: " << BASS_ErrorGetCode() << std::endl;
+	int insind;
+
+	if (activechannels.at(activesubgroup).count(sound) == 0) {
+		HCHANNEL channel = BASS_SampleGetChannel(loadedsounds[sound], FALSE);
+		if (channel == 0) {
+			if (DEBUGMODE) std::cerr << "Error Creating Channel! Code: " << BASS_ErrorGetCode() << std::endl;
 			return false;
 		}
+		else {
+			if (BASS_ChannelPlay(channel, FALSE)) {
+				std::vector<SoundSourceWrapper> tmp;
+				tmp.push_back(SoundSourceWrapper(channel, true));
+				activechannels[activesubgroup][sound] = tmp;
+				insind = 0;
+			}
+			else {
+				if (DEBUGMODE) std::cerr << "Error Playing Sound! Code: " << BASS_ErrorGetCode() << std::endl;
+				return false;
+			}
+		}
 	}
+	else {
+		int actind = -1;
+		for (unsigned i = 0; i < activechannels.at(activesubgroup).at(sound).size() && actind == -1; i++) {
+			if (BASS_ChannelIsActive(activechannels.at(activesubgroup).at(sound).at(i).channel) == false) {
+				actind = i;
+			}
+		}
+
+		if (actind != -1) {
+			if (BASS_ChannelPlay(activechannels.at(activesubgroup).at(sound).at(actind).channel, TRUE)) {
+				activechannels.at(activesubgroup).at(sound).at(actind).positional = true;
+				insind = actind;
+			}
+			else {
+				if (DEBUGMODE) std::cerr << "Error Playing Sound! Code: " << BASS_ErrorGetCode() << std::endl;
+				return false;
+			}
+		}
+		else {
+			HCHANNEL channel = BASS_SampleGetChannel(loadedsounds[sound], FALSE);
+			if (channel == 0) {
+				if (DEBUGMODE) std::cerr << "Error Creating Channel! Code: " << BASS_ErrorGetCode() << std::endl;
+				return false;
+			}
+			else {
+				if (BASS_ChannelPlay(channel, FALSE)) {
+					activechannels.at(activesubgroup).at(sound).push_back(SoundSourceWrapper(channel, true));
+					insind = activechannels.at(activesubgroup).at(sound).size() - 1;
+				}
+				else {
+					if (DEBUGMODE) std::cerr << "Error Playing Sound! Code: " << BASS_ErrorGetCode() << std::endl;
+					return false;
+				}
+			}
+		}
+	}
+
 
 	BASS_3DVECTOR tmppos(pos.x(), pos.y(), pos.z());
 
-	activechannels[activesubgroup][sound].pos = pos;
-	activechannels[activesubgroup][sound].associatedgameobject = gameobject;
+	activechannels[activesubgroup][sound].at(insind).pos = pos;
+	activechannels[activesubgroup][sound].at(insind).associatedgameobject = gameobject;
 
-	if (!BASS_ChannelSet3DPosition(channel, &tmppos, NULL, NULL)) {
+	if (!BASS_ChannelSet3DPosition(activechannels.at(activesubgroup).at(sound).at(insind).channel, &tmppos, NULL, NULL)) {
 		if (DEBUGMODE) std::cerr << "Error Playing Sound! Code: " << BASS_ErrorGetCode() << std::endl;
 		return false;
 	}
@@ -237,14 +304,18 @@ void AudioEngine::update() {
 	msgsndr();
 }
 
-bool AudioEngine::updateChannelPos(std::string sound) {
-	BASS_3DVECTOR tmp(activechannels[activesubgroup][sound].pos.x(), activechannels[activesubgroup][sound].pos.y(), activechannels[activesubgroup][sound].pos.z());
+bool AudioEngine::updateChannelPos(std::string sound, int id, vec3 & newpos) {
+	for (unsigned i = 0; i < activechannels.at(activesubgroup).at(sound).size(); i++) {
+		if (activechannels.at(activesubgroup).at(sound).at(i).associatedgameobject == id) {
+			activechannels[activesubgroup][sound].at(i).pos = newpos;
+			BASS_3DVECTOR tmp(activechannels[activesubgroup][sound].at(i).pos.x(), activechannels[activesubgroup][sound].at(i).pos.y(), activechannels[activesubgroup][sound].at(i).pos.z());
 
-	if (!BASS_ChannelSet3DPosition(activechannels[activesubgroup][sound].channel, &tmp, NULL, NULL)) {
-		if (DEBUGMODE) std::cerr << "Error Playing Sound! Code: " << BASS_ErrorGetCode() << std::endl;
-		return false;
+			if (!BASS_ChannelSet3DPosition(activechannels[activesubgroup][sound].at(i).channel, &tmp, NULL, NULL)) {
+				if (DEBUGMODE) std::cerr << "Error Playing Sound! Code: " << BASS_ErrorGetCode() << std::endl;
+				return false;
+			}
+		}
 	}
-
 	return true;
 }
 
@@ -272,8 +343,7 @@ void AudioEngine::msgrcvr() {
 
 		if (tmpmsg.getInstruction() == "PR") {
 			if (activechannels[activesubgroup].count(tmpmsg.getData().sdata) == 1) {
-				activechannels[activesubgroup][tmpmsg.getData().sdata].pos = tmpmsg.getData().vdata;
-				updateChannelPos(tmpmsg.getData().sdata);
+				updateChannelPos(tmpmsg.getData().sdata, tmpmsg.getFrom().getId(), tmpmsg.getData().vdata);
 			}
 		}
 		else
@@ -311,12 +381,14 @@ void AudioEngine::msgsndr() {
 	MessagingBus* tmpmsgbus = Singleton<MessagingBus>::getInstance();
 	Message tmpm;
 
-	for (std::map<std::string, SoundSourceWrapper>::const_iterator mapit = activechannels.at(activesubgroup).begin(); mapit != activechannels.at(activesubgroup).end(); ++mapit) {
-		if (mapit->second.positional) {
-			tmpm.setInstruction("POS");
-			tmpm.setData(mapit->first);
-			tmpm.setFrom(id);
-			tmpmsgbus->postIMessage(tmpm, mapit->second.associatedgameobject);
+	for (std::map<std::string, std::vector<SoundSourceWrapper> >::const_iterator mapit = activechannels.at(activesubgroup).begin(); mapit != activechannels.at(activesubgroup).end(); ++mapit) {
+		for (unsigned i = 0; i < mapit->second.size(); i++) {
+			if (mapit->second.at(i).positional) {
+				tmpm.setInstruction("POS");
+				tmpm.setData(mapit->first);
+				tmpm.setFrom(id);
+				tmpmsgbus->postIMessage(tmpm, mapit->second.at(i).associatedgameobject);
+			}
 		}
 	}
 

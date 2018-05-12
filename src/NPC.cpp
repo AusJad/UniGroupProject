@@ -117,3 +117,15 @@ const vec3 & NPC::getHeading() {
 void NPC::setHeading(const vec3 & heading) {
 	this->heading = heading;
 }
+
+NPC::NPC(const NPC & tocpy) : GameObject(tocpy) {
+	velocity = tocpy.velocity;
+	heading = tocpy.heading;
+	lookangle = tocpy.lookangle;
+	health = tocpy.health;
+	speed = tocpy.speed;
+}
+
+GameObject* NPC::create() {
+	return new NPC(*this);
+}

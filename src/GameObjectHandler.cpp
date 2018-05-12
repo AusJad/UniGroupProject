@@ -4,15 +4,72 @@ std::vector<GameObject*> GameObjectHandler::searchres;
 
 GameObjectHandler::GameObjectHandler()
 {
-	GOF = Singleton<GameObjectFactory>::getInstance();
 	terrain = NULL;
 	id.setName("GOH");
 }
 
-GameObjectHandler::~GameObjectHandler()
-{
-	GOF = NULL;
+GameObjectHandler::~GameObjectHandler(){
+	if (terrain != NULL) delete terrain;
+	terrain = NULL;
+
+	for (unsigned i = 0; i < gameobjects.size(); i++) {
+		delete gameobjects.at(i);
+		gameobjects.at(i) = NULL;
+	}
+
+	for (unsigned i = 0; i < tmpobjects.size(); i++) {
+		delete tmpobjects.at(i);
+		tmpobjects.at(i) = NULL;
+	}
+
 	gameobjectQT.clear();
+}
+
+GameObjectHandler::GameObjectHandler(const GameObjectHandler & tocpy) {
+	if (tocpy.terrain != NULL) terrain = tocpy.terrain->create();
+	else terrain = NULL;
+
+	for (unsigned i = 0; i < tocpy.gameobjects.size(); i++) {
+		gameobjects.push_back(tocpy.gameobjects.at(i)->create());
+	}
+
+	for (unsigned i = 0; i < tocpy.tmpobjects.size(); i++) {
+		tmpobjects.push_back(tocpy.tmpobjects.at(i)->create());
+	}
+
+	id = tocpy.id;
+}
+
+const GameObjectHandler & GameObjectHandler::operator = (const GameObjectHandler & rhs) {
+	if (terrain != NULL) delete terrain;
+	terrain = NULL;
+
+	for (unsigned i = 0; i < gameobjects.size(); i++) {
+		delete gameobjects.at(i);
+		gameobjects.at(i) = NULL;
+	}
+
+	for (unsigned i = 0; i < tmpobjects.size(); i++) {
+		delete tmpobjects.at(i);
+		tmpobjects.at(i) = NULL;
+	}
+
+	gameobjectQT.clear();
+
+	if (rhs.terrain != NULL) terrain = rhs.terrain->create();
+	else terrain = NULL;
+	
+	for (unsigned i = 0; i < rhs.gameobjects.size(); i++) {
+		gameobjects.push_back(rhs.gameobjects.at(i)->create());
+	}
+	
+	for (unsigned i = 0; i < rhs.tmpobjects.size(); i++) {
+		tmpobjects.push_back(rhs.tmpobjects.at(i)->create());
+	}
+	
+	id = rhs.id;
+
+	return *this;
 }
 
 bool GameObjectHandler::addTerrain(Identifiers id, vec3 pos, ResourceList & list) {

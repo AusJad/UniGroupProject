@@ -63,11 +63,12 @@ void SceneManager::render() {
 void SceneManager::setCurrScene(unsigned sceneno) {
 	if (sceneno < scenes.size()) {
 		closeScene(currscene);
+		Singleton<LUAScriptManager>::getInstance()->setGlobal<double>(currscene, "prevscene");
 		currscene = sceneno;
 		initScene(sceneno);
 		scenes.at(currscene).update(0);
+		Singleton<LUAScriptManager>::getInstance()->setGlobal<double>(currscene, "curscene");
 	}
-	Singleton<LUAScriptManager>::getInstance()->setGlobal<double>(currscene, "curscene");
 }
 
 unsigned SceneManager::getNumScenes() {
@@ -137,7 +138,16 @@ GameObject* SceneManager::GetGameObject(std::string name) {
 
 bool SceneManager::setSceneHeightMap(unsigned sceneno, GameObject* hmObj) {
 	if (sceneno > scenes.size()) return false;
-	else return scenes.at(sceneno).setHeightMap(hmObj);
+	else
+	if (scenes.at(sceneno).setHeightMap(hmObj)) {
+		Singleton<LUAScriptManager>::getInstance()->setGlobal<float>(hmObj->getModel()->getMinX(), "worldminx" + std::to_string(sceneno));
+		Singleton<LUAScriptManager>::getInstance()->setGlobal<float>(hmObj->getModel()->getMaxX(), "worldmaxx" + std::to_string(sceneno));
+		Singleton<LUAScriptManager>::getInstance()->setGlobal<float>(hmObj->getModel()->getMaxZ(), "worldmaxz" + std::to_string(sceneno));
+		Singleton<LUAScriptManager>::getInstance()->setGlobal<float>(hmObj->getModel()->getMinZ(), "worldminz" + std::to_string(sceneno));
+		return true;
+	}
+
+	return false;
 }
 
 bool SceneManager::saveGame(std::string savename) {

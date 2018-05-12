@@ -6,6 +6,16 @@ CutScene::CutScene(){
 	culmtime = 0;
 	currentAnimation = 0;
 	finishedflag = false;
+	maxy = 30;
+}
+
+CutScene::~CutScene() {
+	for (unsigned i = 0; i < scenes.size(); i++) {
+		for (unsigned j = 0; j < scenes.at(i).sounds.size(); j++) {
+			AE->stopSound(cutsceneAudio.at(scenes.at(i).sounds.at(j).sound).file);
+			scenes.at(i).sounds.at(j).playing = false;
+		}
+	}
 }
 
 CutScene::CutScene(const CutScene & tocpy){
@@ -16,6 +26,7 @@ CutScene::CutScene(const CutScene & tocpy){
 	this->cutsceneText = tocpy.cutsceneText;
 	this->scenes = tocpy.scenes;
 	this->finishedflag = tocpy.finishedflag;
+	this->maxy = tocpy.maxy;
 }
 
 CutScene * CutScene::create() const {
@@ -420,7 +431,7 @@ void CutScene::doAnimation(Animation & todo, std::string name, float time) {
 	if (cutsceneText.count(name) != 0) {
 		if (cutsceneText.at(name).curstring.size() < ((unsigned) (time / todo.time * cutsceneText.at(name).value.size())) % 1 == 0) {
 			if (cutsceneText.at(name).curstring.size() < cutsceneText.at(name).value.size()) {
-				int numpersec = cutsceneText.at(name).value.size() / todo.time;
+				int numpersec = (int) (cutsceneText.at(name).value.size() / todo.time);
 				if (cutsceneText.at(name).curstring.size() > culmtime < numpersec) {
 					cutsceneText.at(name).curstring += cutsceneText.at(name).value.at(cutsceneText.at(name).nextchar);
 					cutsceneText.at(name).nextchar++;

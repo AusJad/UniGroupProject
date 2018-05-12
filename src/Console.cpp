@@ -38,8 +38,6 @@ void Console::render() {
 
 	if (!resources.hasResource("texture")) GeoStream << END_ATTRIB << RESTORE_POLYGON_MODE;
 
-	RNDR->StopRenderFacingCamera();
-
 	std::string tmp;
 
 	GeoStream << ENABLE_ALPHA;
@@ -65,6 +63,8 @@ void Console::render() {
 
 
 	GeoStream << DISABLE_ALPHA;
+
+	RNDR->StopRenderFacingCamera();
 }
 
 void Console::toggle() {

@@ -188,6 +188,7 @@ void CtoLUABinder::bindClasses(lua_State* lstate) {
 			.def("setsData", &Message::setsData)
 			.def("addmvData", &Message::addmvData)
 			.def("getData", &Message::getData)
+			.def("getiData", &Message::getiData)
 			.def("getsData", &Message::getsData)
 	];
 	luabind::module(lstate)[

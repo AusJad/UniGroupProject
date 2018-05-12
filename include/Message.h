@@ -129,6 +129,8 @@ public:
 
 	std::string getsData();
 
+	int getiData();
+
 	void addmvData(const vec3 & toadd);
 
 private:

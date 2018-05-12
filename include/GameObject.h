@@ -25,6 +25,9 @@ public:
 	GameObject();
 	GameObject(Identifiers & id, vec3 pos, ResourceList & list);
 	~GameObject();
+	GameObject(const GameObject & tocpy);
+
+	virtual GameObject* create() = 0;
 
 	/**
 	* @brief Set the id of the object

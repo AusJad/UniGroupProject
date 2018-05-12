@@ -190,6 +190,7 @@ class CutScene : public Model
 {
 public:
 	CutScene();
+	~CutScene();
 	CutScene(const CutScene & tocpy);
 
 	/**

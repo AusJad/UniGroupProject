@@ -1,7 +1,8 @@
 require "./Resources/Scripts/helperfunctions";
 
 local culmtime = 0;
-local health;
+local health = 100;
+local ammo = 45;
 
 local scantrans = 0;
 local scantransup = true;
@@ -60,17 +61,17 @@ end
 
 local function renderAmmo()
 	MenuTools.drawTSquare(vec2(-1.3, -.2), vec2(-1.1, -.4), -1.95, "AMMO", true);
-	MenuTools.renderText(vec2(-1.11, -0.4), -2, 0.15, "45");
+	MenuTools.renderText(vec2(-1.11, -0.4), -2, 0.15, tostring(ammo));
 	MenuTools.drawTSquare(vec2(-1.3, -.45), vec2(-1.1, -.65), -1.95, "ROBOT", true);
-	MenuTools.renderText(vec2(-1.11, -0.65), -2, 0.15, "100");
+	MenuTools.renderText(vec2(-1.11, -0.65), -2, 0.15, tostring(health));
 end
 
 function playerHUDRenderer(this, msgbus)
 	if(time ~= nil) then culmtime = culmtime + time; end
 
-	playAnimationLoop(msgbus, this:getIdentifiers(), "crattak");
+	playAnimationLoop(msgbus, this:getIdentifiers(), "attack");
 	
-	this:drawModel(vec3(2,-5,-2), 90);
+	this:drawModel(vec3(8,2,-10), 90);
 
 	renderScan();
 
@@ -84,10 +85,18 @@ end
 function playerMsgRcvr(this, msgbus)
 	while msgbus:hasMessage(this:getIdentifiers()) do
 		tocheck = msgbus:getMessage(this:getIdentifiers());
-
-		if (tocheck:getInstruction() == "FIRE") then 
-			fireProjectile(this:getPos(), this:getFront(), "bullet", msgbus);
-			playSoundAtPlayer(msgbus,"gunshot");
+		
+		--if(checkDamage(msg, this)) then
+		--	if(this:getHealth() < 0) then this:setState(STATE_DEAD) end
+		if(checkDamage(msg) > -1) then
+			print("here");
+			health = health - checkDamage(msg);
+		elseif (tocheck:getInstruction() == "FIRE") then 
+			if(ammo > 0) then
+				fireProjectile(this:getPos(), this:getFront(), "bullet", msgbus);
+				playSoundAtPlayer(msgbus,"gunshot");
+				ammo = ammo - 1;
+			end
 		elseif this:playerDefaultMessageHandler(tocheck) == false then 
 			this:defaultMessageHandler(tocheck) 
 		end
