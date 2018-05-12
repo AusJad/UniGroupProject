@@ -187,6 +187,8 @@ public:
 	*/
 	virtual std::string toString();
 
+	virtual bool fromstring(std::string toread);
+
 	/**
 	* @brief A virtual method for putting all data from file back into the object.
 	*
@@ -194,7 +196,7 @@ public:
 	* 
 	* @return bool - If the data was input.
 	*/
-	virtual bool fromstring(std::string toread);
+	virtual bool fromstring(std::string linehead, std::string & toread);
 
 protected:
 	/// The state of the object.

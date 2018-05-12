@@ -294,7 +294,6 @@ void MD2Model::buildAnimationList() {
 			animations[curanim] = tmp;
 			animations.at(curanim).push_back(i);
 		}
-		std::cout << frames.at(i).name << std::endl;
 	}
 }
 

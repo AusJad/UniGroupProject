@@ -172,6 +172,7 @@ std::string GameObject::toString()
 	std::string towrite;
 
 	towrite += id.getName() + ",";
+	towrite += "STATE," + std::to_string(state) + ",";
 	towrite += "POS," + std::to_string(pos.x()) + "," + std::to_string(pos.y()) + "," + std::to_string(pos.z()) + ",";
 	towrite += "TARGET," + std::to_string(target.x()) + "," + std::to_string(target.y()) + "," + std::to_string(target.z()) + ",";
 	towrite += "TARGETLOOK," + std::to_string(targetlook.x()) + "," + std::to_string(targetlook.y()) + "," + std::to_string(targetlook.z());
@@ -179,9 +180,7 @@ std::string GameObject::toString()
 	return towrite;
 }
 
-bool GameObject::fromstring(std::string toread)
-{
-	float tmpf;
+bool GameObject::fromstring(std::string toread) {
 	std::string linehead;
 	int delimlen = 1;
 
@@ -190,48 +189,67 @@ bool GameObject::fromstring(std::string toread)
 		linehead = toread.substr(0, toread.find(','));
 		toread.erase(0, toread.find(',') + delimlen);
 
-		if (linehead == "POS")
-		{
-			tmpf = stof(toread.substr(0, toread.find(',')));
-			pos.sx(tmpf);
-			toread.erase(0, toread.find(',') + delimlen);
-
-			tmpf = stof(toread.substr(0, toread.find(',')));
-			pos.sy(tmpf);
-			toread.erase(0, toread.find(',') + delimlen);
-
-			tmpf = stof(toread.substr(0, toread.find(',')));
-			pos.sz(tmpf);
-			toread.erase(0, toread.find(',') + delimlen);
-		}
-		else if (linehead == "TARGET")
-		{
-			tmpf = stof(toread.substr(0, toread.find(',')));
-			target.sx(tmpf);
-			toread.erase(0, toread.find(',') + delimlen);
-
-			tmpf = stof(toread.substr(0, toread.find(',')));
-			target.sy(tmpf);
-			toread.erase(0, toread.find(',') + delimlen);
-
-			tmpf = stof(toread.substr(0, toread.find(',')));
-			target.sz(tmpf);
-			toread.erase(0, toread.find(',') + delimlen);
-		}
-		else if (linehead == "TARGETLOOK")
-		{
-			tmpf = stof(toread.substr(0, toread.find(',')));
-			targetlook.sx(tmpf);
-			toread.erase(0, toread.find(',') + delimlen);
-
-			tmpf = stof(toread.substr(0, toread.find(',')));
-			targetlook.sy(tmpf);
-			toread.erase(0, toread.find(',') + delimlen);
-
-			tmpf = stof(toread);
-			targetlook.sz(tmpf);
-			toread.erase();
-		}
+		fromstring(linehead, toread);
 	}
+
 	return true;
+}
+
+bool GameObject::fromstring(std::string linehead, std::string & toread)
+{
+	float tmpf;
+	int delimlen = 1;
+	
+	if (linehead == "STATE")
+	{
+		state = atoi(toread.substr(0, toread.find(',')).c_str());
+		toread.erase(0, toread.find(',') + delimlen);
+	}
+	else if (linehead == "POS")
+	{
+		tmpf = stof(toread.substr(0, toread.find(',')));
+		pos.sx(tmpf);
+		toread.erase(0, toread.find(',') + delimlen);
+
+		tmpf = stof(toread.substr(0, toread.find(',')));
+		pos.sy(tmpf);
+		toread.erase(0, toread.find(',') + delimlen);
+
+		tmpf = stof(toread.substr(0, toread.find(',')));
+		pos.sz(tmpf);
+		toread.erase(0, toread.find(',') + delimlen);
+		return true;
+	}
+	else if (linehead == "TARGET")
+	{
+		tmpf = stof(toread.substr(0, toread.find(',')));
+		target.sx(tmpf);
+		toread.erase(0, toread.find(',') + delimlen);
+
+		tmpf = stof(toread.substr(0, toread.find(',')));
+		target.sy(tmpf);
+		toread.erase(0, toread.find(',') + delimlen);
+
+		tmpf = stof(toread.substr(0, toread.find(',')));
+		target.sz(tmpf);
+		toread.erase(0, toread.find(',') + delimlen);
+		return true;
+	}
+	else if (linehead == "TARGETLOOK")
+	{
+		tmpf = stof(toread.substr(0, toread.find(',')));
+		targetlook.sx(tmpf);
+		toread.erase(0, toread.find(',') + delimlen);
+
+		tmpf = stof(toread.substr(0, toread.find(',')));
+		targetlook.sy(tmpf);
+		toread.erase(0, toread.find(',') + delimlen);
+
+		tmpf = stof(toread);
+		targetlook.sz(tmpf);
+		toread.erase();
+		return true;
+	}
+
+	return false;
 }

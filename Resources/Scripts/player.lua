@@ -69,7 +69,7 @@ end
 function playerHUDRenderer(this, msgbus)
 	if(time ~= nil) then culmtime = culmtime + time; end
 
-	playAnimationLoop(msgbus, this:getIdentifiers(), "attack");
+	playAnimationOnce(msgbus, this:getIdentifiers(), "attack");
 	
 	this:drawModel(vec3(8,2,-10), 90);
 

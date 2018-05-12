@@ -339,8 +339,7 @@ std::string Camera::toString()
 {
 	std::string towrite;
 
-	towrite += GameObject::id.getName() + ",";
-	towrite += "POS," + std::to_string(GameObject::getPos().x()) + "," + std::to_string(GameObject::getPos().y()) + "," + std::to_string(GameObject::getPos().z()) + ",";
+	towrite = GameObject::toString();
 	towrite += "FACING," + std::to_string(horizontalAngle) + "," + std::to_string(verticalAngle);
 
 	return towrite;
@@ -357,21 +356,8 @@ bool Camera::fromstring(std::string toread)
 		linehead = toread.substr(0, toread.find(','));
 		toread.erase(0, toread.find(',') + delimlen);
 
-		if (linehead == "POS")
-		{
-			tmpf = stof(toread.substr(0, toread.find(',')));
-			GameObject::pos.sx(tmpf);
-			toread.erase(0, toread.find(',') + delimlen);
-
-			tmpf = stof(toread.substr(0, toread.find(',')));
-			GameObject::pos.sy(tmpf);
-			toread.erase(0, toread.find(',') + delimlen);
-
-			tmpf = stof(toread.substr(0, toread.find(',')));
-			GameObject::pos.sz(tmpf);
-			toread.erase(0, toread.find(',') + delimlen);
-		}
-		else if (linehead == "FACING")
+		if(!GameObject::fromstring(linehead, toread))
+		if (linehead == "FACING")
 		{
 			tmpf = stof(toread.substr(0, toread.find(',')));
 			horizontalAngle = tmpf;

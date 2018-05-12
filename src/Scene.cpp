@@ -70,9 +70,14 @@ std::vector<std::string> Scene::saveGame()
 
 	for (unsigned i = 0; i < objects.getNumObjects(); i++)
 	{
-		if (!objects.getObject(i)->getIdentifiers().getName().empty()) // Only want named objects
-		{
-			s.push_back(objects.getObject(i)->toString());
+		//While game objects are never deleted, thay do go inactive
+		//GameObjectHandler returns NULL if an inactive object is requested
+		//So we must check for this (root of your "saving the game with dead enimies" issue)
+		if (objects.getObject(i) != NULL) {
+			if (!objects.getObject(i)->getIdentifiers().getName().empty()) // Only want named objects
+			{
+				s.push_back(objects.getObject(i)->toString());
+			}
 		}
 	}
 
@@ -81,14 +86,23 @@ std::vector<std::string> Scene::saveGame()
 
 void Scene::loadGame(save sf)
 {
-	for (unsigned i = 0; i < objects.getNumObjects(); i++)
-	{
-		for (unsigned j = 0; j < sf.getData().size(); j++)
+	bool match;
+
+	for (unsigned j = 0; j < sf.getData().size(); j++){
+		match = false;
+		//Loop until match is found (saves redudant searching)
+		for (unsigned i = 0; i < objects.getNumObjects() && !match; i++)
 		{
-			if (objects.getObject(i)->getIdentifiers().getName() == sf.getData()[j].substr(0, sf.getData()[j].find(','))) // First attribute is name
-			{
-				sf.getData()[j].erase(0, sf.getData()[j].find(',') + 1); // Erase the object name
-				objects.getObject(i)->fromstring(sf.getData()[j]); // Pass in only data
+			//While game objects are never deleted, thay do go inactive
+			//GameObjectHandler returns NULL if an inactive object is requested
+			//So we must check for this (root of your "game crashes when loading file with lots of bullets and such" issue)
+			if (objects.getObject(i) != NULL) {
+				if (objects.getObject(i)->getIdentifiers().getName() == sf.getData()[j].substr(0, sf.getData()[j].find(','))) // First attribute is name
+				{
+					match = true;
+					sf.getData()[j].erase(0, sf.getData()[j].find(',') + 1); // Erase the object name
+					objects.getObject(i)->fromstring(sf.getData()[j]); // Pass in only data
+				}
 			}
 		}
 	}
