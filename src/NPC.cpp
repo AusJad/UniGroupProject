@@ -6,12 +6,16 @@ NPC::NPC(Identifiers & id, vec3 pos, ResourceList & list) : GameObject( id, pos,
 	health = 0;
 	speed = 0;
 	lookangle = 0;
+	canUpdate = false;
+	canRender = false;
 }
 
 NPC::NPC() : GameObject(){
 	health = 0;
 	speed = 0;
 	lookangle = 0;
+	canUpdate = false;
+	canRender = false;
 }
 
 NPC::~NPC()
@@ -20,6 +24,8 @@ NPC::~NPC()
 }
 
 void NPC::render() {
+
+	if (!canRender) return;
 
 	RenderModuleStubb* tmp = Singleton<RenderModuleStubb>::getInstance();
 
@@ -42,6 +48,27 @@ bool NPC::NPCDefaultMessageHandler(Message & message) {
 		message.setFrom(id);
 		message.setInstruction(VELOCITY_RESPONSE);
 		Singleton<MessagingBus>::getInstance()->postMessage(message, tmp);
+		
+	}
+	else
+	if (message.getInstruction() == SET_HIDDEN) {
+		canRender = false;
+		return true;
+	}
+	else
+	if(message.getInstruction() == SET_NOUPDATE){
+		canUpdate = false;
+		return true;
+	}
+	else
+	if (message.getInstruction() == SET_STATE) {
+		state = message.getiData();
+	}
+	else
+	if (message.getInstruction() ==  PING) {
+		Identifiers tmp = message.getFrom();
+		message.setFrom(id);
+		MSGBS->postMessage(message, tmp);
 		return true;
 	}
 
@@ -52,10 +79,35 @@ void NPC::setLAngle(float nangle) {
 	lookangle = nangle;
 }
 
+void NPC::checkUpdateRndrChange() {
+	Message tmp;
+	
+	while (MSGBS->hasMessage(id)) {
+		tmp = MSGBS->getMessage(id);
+
+		if (tmp.getInstruction() == SET_UPDATEABLE) {
+			canUpdate = true;
+		}
+		else
+		if (tmp.getInstruction() == SET_VISIBLE) {
+			canRender = true;
+		}
+		else
+		if (tmp.getInstruction() == SET_STATE) {
+			state = tmp.getiData();
+		}
+	}
+}
+
 void NPC::update(float time) {
 	LUAScriptManager* tmp = Singleton<LUAScriptManager>::getInstance();
 
 	if (resources.hasResource("model") && model != NULL) model->update(time);
+
+	if (!canUpdate || !canRender) {
+		checkUpdateRndrChange();
+		return;
+	}
 
 	msgrcvr();
 
@@ -124,6 +176,10 @@ NPC::NPC(const NPC & tocpy) : GameObject(tocpy) {
 	lookangle = tocpy.lookangle;
 	health = tocpy.health;
 	speed = tocpy.speed;
+}
+
+void NPC::setUpdatable(bool toset) {
+	canUpdate = toset;
 }
 
 GameObject* NPC::create() {

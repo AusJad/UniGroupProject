@@ -12,8 +12,8 @@ newmtl Top
 	Kd 0.5882 0.5882 0.5882
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
-	map_Ka ./Resources/Textures/redplanet_up.tga
-	map_Kd ./Resources/Textures/redplanet_up.tga
+	map_Ka ./Resources/Textures/stars.tga
+	map_Kd ./Resources/Textures/stars.tga
 
 newmtl Front
 	Ns 10.0000
@@ -26,8 +26,8 @@ newmtl Front
 	Kd 0.5882 0.5882 0.5882
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
-	map_Ka ./Resources/Textures/redplanet_ft.tga
-	map_Kd ./Resources/Textures/redplanet_ft.tga
+	map_Ka ./Resources/Textures/stars.tga
+	map_Kd ./Resources/Textures/stars.tga
 
 newmtl Right
 	Ns 10.0000
@@ -40,8 +40,8 @@ newmtl Right
 	Kd 0.5882 0.5882 0.5882
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
-	map_Ka ./Resources/Textures/redplanet_lf.tga
-	map_Kd ./Resources/Textures/redplanet_lf.tga
+	map_Ka ./Resources/Textures/stars.tga
+	map_Kd ./Resources/Textures/stars.tga
 
 newmtl Left
 	Ns 10.0000
@@ -54,8 +54,8 @@ newmtl Left
 	Kd 0.5882 0.5882 0.5882
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
-	map_Ka ./Resources/Textures/redplanet_rt.tga
-	map_Kd ./Resources/Textures/redplanet_rt.tga
+	map_Ka ./Resources/Textures/stars.tga
+	map_Kd ./Resources/Textures/stars.tga
 
 newmtl Back
 	Ns 10.0000
@@ -68,8 +68,8 @@ newmtl Back
 	Kd 0.5882 0.5882 0.5882
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
-	map_Ka ./Resources/Textures/redplanet_bk.tga
-	map_Kd ./Resources/Textures/redplanet_bk.tga
+	map_Ka ./Resources/Textures/stars.tga
+	map_Kd ./Resources/Textures/stars.tga
 
 newmtl Bottom
 	Ns 10.0000
@@ -82,5 +82,5 @@ newmtl Bottom
 	Kd 0.5882 0.5882 0.5882
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
-	map_Ka ./Resources/Textures/redplanet_dn.tga
-	map_Kd ./Resources/Textures/redplanet_dn.tga
+	map_Ka ./Resources/Textures/stars.tga
+	map_Kd ./Resources/Textures/stars.tga

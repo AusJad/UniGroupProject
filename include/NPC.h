@@ -134,6 +134,10 @@ public:
 	*/
 	bool fromstring(std::string toread);
 
+	void checkUpdateRndrChange();
+
+	void setUpdatable(bool toset);
+
 private:
 	/// Velocity of the NPC.
 	vec3 velocity;
@@ -145,5 +149,9 @@ private:
 	float health;
 	/// The speed of the NPC.
 	float speed;
+	///Flag to determine wether npc should be updated(is active)
+	bool canUpdate = false;
+	///Flag to determine whether npc should be rendered
+	bool canRender = false;
 };
 

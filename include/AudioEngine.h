@@ -177,7 +177,7 @@ public:
 	*
 	* @return bool - If the sound is playing.
 	*/
-	bool soundPlaying(std::string sound);
+	bool soundPlaying(std::string totest);
 
 	/**
 	* @brief Update method for the sound.

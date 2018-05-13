@@ -10,21 +10,19 @@ cutsceneid = "";
 
 local cs1 = 0;
 local mainmenu = 1;
-level1 = 2;
+
 level2 = 3;
 local endscreen = 4;
 
 local function loadResources(AMAN)
 	--Load height maps
-	AMAN:addResource("./Resources/Models/RAW1.tdef", "RAWTRN", "TERRAIN");
 	AMAN:addResource("./Resources/Models/RAW2.tdef", "RAWTRN", "Terrain2");
 	
 	--Load audio
-	AMAN:addResource("./Resources/Audio/battlemusic.wav", "WAV", "S1MUSIC");
 	AMAN:addResource("./Resources/Audio/bgmusic1.wav", "WAV", "BGMUSIC1");
 	AMAN:addResource("./Resources/Audio/rb.wav", "WAV", "robotnoise");
 	AMAN:addSound("./Resources/Audio/gunshot.wav", "WAV", "gunshot", false);
-	AMAN:addSound("./Resources/Audio/introclip.wav", "WAV", "HIGHGROUND", false);
+
 
 	--Load fonts
 	if(AMAN:addResource("./Resources/Fonts/DODGE.csv", "FNT", "DODGE")) then print("Successfully Loaded Resource DODGE.");
@@ -45,7 +43,7 @@ local function loadResources(AMAN)
 	if(AMAN:addResource("./Resources/CutScenes/test.cs", "CUT_S", "CUTSCENE1")) then print("Loaded resource 'test.cs'!"); 
 	else print("Failed to load resource 'test.cs'!"); end 
 
-	AMAN:addModel("./Resources/Models/skybox.obj", "IM", "SKYBOX", vec3(1000,750,1000));
+
 	AMAN:addModel("./Resources/Models/Rock.obj", "IM", "ROCK", vec3(15,15,15));
 	AMAN:addModel("./Resources/Models/bullet.obj", "IM", "bullet", vec3(1,1,1));
 	AMAN:addModel("./Resources/Models/robotgreen.obj", "IM", "ROBOT", vec3(0.5,0.5,0.5));
@@ -59,6 +57,7 @@ local function loadResources(AMAN)
 	print("Bad") end
 
 	loadMenuRes(AMAN);
+	loadLvl1Res(AMAN);
 end
 
 function initGame(SM, LSM, AMAN, AE)
@@ -100,35 +99,7 @@ function initGame(SM, LSM, AMAN, AE)
 	--Initalise Level 1
 	SM:addScene();
 	SM:setCurrScene(level1);
-	SM:setSceneResources(ResourceList("updatefunc", "level1Update", "renderfunc", "level1Render"), level1);
-
-	SM:attachControls(level1, ResourceList("keyCallback", "keys", "mouseCallback", "mouse", "mouseButtonCallback", "playerAttack"));
-	SM:attachTerrain(Identifiers("TO", "Terrain"), level1, vec3(0,0,0), ResourceList("model", "TERRAIN"));
-	
-	--Adding game objects
-	for i =  20,1,-1 
-	do 
-		id = tostring(math.random())
-		SM:addObject(Identifiers("SE"), level1, vec3(math.random (-128*40, 128*40), 0, math.random(-128*40, 128*40)), ResourceList("model", "ROCK")); 
-		SM:addObject(Identifiers("NPC", id), level1, vec3(math.random(-128*40, 128*40), 0, math.random(-128*40, 128*40)), ResourceList("model", "PLAYERW", "updatefunc", "start", "msgrcvr", "msgrcvr"));
-	end
-	SM:addObject(Identifiers("CAM","Camera"), level1, vec3(0, 0, -4000), ResourceList());
-	SM:addObject(Identifiers("PROP", "SKYBOX"), level1, vec3(0,-5000,0), ResourceList("model", "SKYBOX"));
-	--SM:addObject(Identifiers("MO","Guide"), level1, vec3(0, 0, 0), ResourceList("model", "popup"));
-	--SM:addObject(Identifiers("NPC", "R1"), level1, vec3(-80,0,0), ResourceList("model", "ROBOT", "updatefunc", "start", "msgrcvr", "msgrcvr"));
-	--SM:addObject(Identifiers("NPC", "R2"), level1, vec3(480,0,-1000), ResourceList("model", "ROBOT"));
-	SM:addObject(Identifiers("PROP", "SHIP"), level1, vec3(-1000,2500,2000), ResourceList("model", "SHIP"));
-	SM:addObject(Identifiers("PROP", "SHIP2"), level1, vec3(1000,4000,-2000), ResourceList("model", "SHIP"));
-
-	SM:addObject(Identifiers("PLYR", "Player"), level1, vec3(0, 0, -4000), ResourceList("camera", "Camera", "msgrcvr", "playerMsgRcvr", "renderfunc", "playerHUDRenderer", "model", "PWEAPON"));
-	
-	--Set height map
-	SM:setSceneHeightMap(level1, SM:GetGameObject("Terrain"));
-
-	--Setup sound
-	AE:setListenerSource(SM:GetGameObjectID("Camera"), vec3(0, 0, 0));
-	AE:playSoundatSource("S1MUSIC", SM:GetGameObjectID("Camera"), vec3(0, 0, 0));
-	AE:playSoundatSource("HIGHGROUND", SM:GetGameObjectID("Camera"), vec3(0, 0, 0));
+	initLvl1(SM, AE);
 
 	--Initalise Level 2
 	SM:addScene();

@@ -4,11 +4,21 @@
 Scene::Scene()
 {
 	objects.setWorldDimensions(-100, 100, 100, -100);
+	state = -1;
 }
 
 
 Scene::~Scene()
 {
+}
+
+
+int Scene::getState() {
+	return state;
+}
+
+void Scene::setState(int state) {
+	this->state = state;
 }
 
 void Scene::addResources(ResourceList & toadd) {

@@ -83,10 +83,6 @@ bool AudioEngine::initalise(const HWND & window) {
 	return true;
 }
 
-bool AudioEngine::soundPlaying(std::string sound) {
-	return activechannels[activesubgroup].count(sound) == 1;
-}
-
 bool AudioEngine::loadSound(std::string path, std::string type, std::string name, bool Loop) {
 	if (type != "WAV") return false;
 	HSAMPLE tmp;
@@ -373,8 +369,32 @@ void AudioEngine::msgrcvr() {
 		if (tmpmsg.getInstruction() == "PS") {
 			playSound(tmpmsg.getData().sdata);
 		}
-	}
+		else
+		if (tmpmsg.getInstruction() == SND_PLAYING) {
+			tmpmsg.setInstruction(SND_PLAYING_R);
+			
+			int ret;
+			
+			if (soundPlaying(tmpmsg.getsData())) ret = 1;
+			else ret = -1;
 
+			tmpmsg.setIData(ret);
+
+			MSGBS->postMessage(tmpmsg, tmpmsg.getFrom());
+		}
+	}
+}
+
+bool AudioEngine::soundPlaying(std::string totest) {
+	if (activechannels.at(activesubgroup).count(totest) == 0) return false;
+
+	for (unsigned i = 0; i < activechannels.at(activesubgroup).at(totest).size(); i++) {
+		if (BASS_ChannelIsActive(activechannels.at(activesubgroup).at(totest).at(i).channel) == TRUE) {
+			return true;
+		}
+	}
+	
+	return false;
 }
 
 void AudioEngine::msgsndr() {

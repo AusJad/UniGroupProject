@@ -34,6 +34,14 @@
 #define GET_FRONT_RESPONSE "GFR"
 #define SWITCH_VIEW_MODE "SVM"
 
+//NPC Messages
+#define SET_VISIBLE "S_VIS"
+#define SET_HIDDEN "S_H"
+#define SET_UPDATEABLE "S_UD"
+#define SET_NOUPDATE "S_ND"
+#define SET_STATE "S_STATE"
+#define PING "PING"
+
 //Player Messages
 #define FIRE_WEAPON "FIRE"
 
@@ -56,6 +64,8 @@
 //Audio Engine Messages
 #define PLY_SND_SRC_REQUEST "PSS"
 #define PLY_SND_REQUEST "PS"
+#define SND_PLAYING "SND_P"
+#define SND_PLAYING_R "SND_P_R"
 
 //Render Module Messages
 #define WIREFRAME "WF"

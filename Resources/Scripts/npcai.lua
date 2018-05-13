@@ -69,7 +69,7 @@ local function stateWait(this, msgbus)
 	if waittime > 1.0 then 
 		if(attackcooldown <= 0.0) then
 			waittime = 0.0;
-			attackcooldown = 1.0;
+			attackcooldown = 1.5;
 			velocity = AIMvmnt.Seek(this:getPos(), this:getTarget(), this:getSpeed());
 			playAnimationLoop(msgbus, this:getIdentifiers(), "attack");
 			fireProjectile(this:getPos(), Math.normalize(velocity), "bullet", msgbus);
@@ -99,6 +99,8 @@ local function stateDIE(this, msgbus)
 
 	playAnimationOnce(msgbus, this:getIdentifiers(), "death");
 
+	this:setUpdateable(false);
+
 	this:setState(STATE_INACTIVE);
 end
 
@@ -106,6 +108,10 @@ local function initEntity(this, msgbus)
 	this:setSpeed(300);
 	this:setHealth(100);
 	this:setState(0);
+	this:setTarget(vec3());
+	waittime = 0;
+	attackcooldown = 0.0
+	print("in npc set state");
 	pos_table[this:getIdentifiers():getId()] = this:getPos();
 end
 

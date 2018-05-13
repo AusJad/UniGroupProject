@@ -1,35 +1,95 @@
+require "./Resources/Scripts/scriptedsegment";
 
+level1 = 2;
 
-function level1Update(this, msgbus)
+local segments = {};
+local maxsegment = 2;
 
+local poda = {"e1", "e2", "e3", "e4", "e5", "e6", "e7", "e8", "e9", "e10"};
+local podasize = 10;
+
+local podb = {"e11", "e12", "e13", "e14", "e15", "e16", "e17", "e18", "e19", "e20"};
+local podbsize = 10;
+
+function loadLvl1Res(AMAN)
+	AMAN:addModel("./Resources/Models/skybox.obj", "IM", "SKYBOX", vec3(1000,750,1000));
+	AMAN:addResource("./Resources/Models/RAW1.tdef", "RAWTRN", "TERRAIN");
+
+	AMAN:addSound("./Resources/Audio/Voices/lvl1_1.wav", "WAV", "lvl1_1", false);
+	AMAN:addSound("./Resources/Audio/Voices/lvl1_2.wav", "WAV", "lvl1_2", false);
+	AMAN:addSound("./Resources/Audio/Voices/lvl1_3.wav", "WAV", "lvl1_3", false);
+	AMAN:addSound("./Resources/Audio/Voices/lvl1_4.wav", "WAV", "lvl1_4", false);
+	AMAN:addResource("./Resources/Audio/battlemusic.wav", "WAV", "S1MUSIC");
 end
 
-local objective = "Objective: Defeat Enemies";
-local curtext = "";
-local wait = false;
-local waittime = 0;
+function initLvl1(SM, AE)
+	SM:setSceneResources(ResourceList("updatefunc", "level1Update", "renderfunc", "level1Render"), level1);
 
-local function 	renderObjective()
-	if (wait == false) then
-		if(string.len(curtext) < string.len(objective)) then
-			curtext = string.sub(objective, 0, string.len(curtext) + 1);
-		else
-			waittime = 4.5;
-			wait = true;
-		end
-	else
-		waittime = waittime - time;
-		if(waittime <= 0) then wait = false; curtext = ""; objective = ""; end
+	SM:attachControls(level1, ResourceList("keyCallback", "keys", "mouseCallback", "mouse", "mouseButtonCallback", "playerAttack"));
+	SM:attachTerrain(Identifiers("TO", "Terrain"), level1, vec3(0,0,0), ResourceList("model", "TERRAIN"));
+	
+	--add rocks
+	for i =  20,1,-1 
+	do 
+		SM:addObject(Identifiers("SE"), level1, vec3(math.random (-128*40, 128*40), 0, math.random(-128*40, 128*40)), ResourceList("model", "ROCK")); 
 	end
 
-	MenuTools.renderText(vec2(0, 0.65), -2, 0.1, curtext);
+	--initalise pod a
+	for i = 1,podasize,1
+	do
+		SM:addObject(Identifiers("NPC", poda[i]), level1, vec3(math.random(-128*40, 128*40), 0, math.random(-128*40, 128*40)), ResourceList("model", "PLAYERW", "updatefunc", "start", "msgrcvr", "msgrcvr"));
+	end
+
+	--initalise pod b
+	for i = 1,podbsize,1
+	do
+		SM:addObject(Identifiers("NPC", podb[i]), level1, vec3(math.random(-128*40, 128*40), 0, math.random(-128*40, 128*40)), ResourceList("model", "PLAYERW", "updatefunc", "start", "msgrcvr", "msgrcvr"));
+	end
+
+	SM:addObject(Identifiers("CAM","Camera"), level1, vec3(0, 0, -4000), ResourceList());
+	SM:addObject(Identifiers("PROP", "SKYBOX"), level1, vec3(0,-5000,0), ResourceList("model", "SKYBOX"));
+	SM:addObject(Identifiers("PROP", "SHIP"), level1, vec3(-1000,2500,2000), ResourceList("model", "SHIP"));
+	SM:addObject(Identifiers("PROP", "SHIP2"), level1, vec3(1000,4000,-2000), ResourceList("model", "SHIP"));
+
+	SM:addObject(Identifiers("PLYR", "Player"), level1, vec3(0, 0, -4000), ResourceList("camera", "Camera", "msgrcvr", "playerMsgRcvr", "renderfunc", "playerHUDRenderer", "model", "PWEAPON"));
+	
+	SM:setSceneHeightMap(level1, SM:GetGameObject("Terrain"));
+
+	AE:setListenerSource(SM:GetGameObjectID("Camera"), vec3(0, 0, 0));
 end
 
-local function newObjective()
-	if(string.len(objective) > 0) then return true;
-	else return false; end
-end	
+local function init(this, msgbus)
+	segments[0] = S_Seg:create("Objective: Communicate with Allies");
+	
+	segments[0]:Add_Event(A_Conv:create("BGIMG1", "Prime-Tron, They're in The Valley!", "lvl1_1"));
+	segments[0]:Add_Event(A_Conv:create("BGIMG2", "Don't worry, I can't Lose.$I have the High Ground.", "lvl1_2"));
+	segments[0]:Add_Event(A_Conv:create("BGIMG2", "Just Give Me a moment to activate my$battle music.", "lvl1_3"));
+	segments[0]:Add_Event(A_Conv:create(nil, nil, "S1MUSIC", true));
+	--segments[0]:Add_Event(A_Conv:create("BGIMG2", "Oh Yeah!", "lvl1_4"));
+
+	segments[1] = S_Seg:create("Objective: Defeat Enemies in the$valley.");
+
+	segments[1]:Add_Event(A_Battle:create(poda, podasize));
+	segments[1]:Add_Event(A_Conv:create("BGIMG2", "Oh Yeah!", "lvl1_4"));
+	
+	segments[2] = S_Seg:create("Objective: Defeat the Other Enemies");
+
+	segments[2]:Add_Event(A_Battle:create(podb, podbsize));
+	segments[2]:Add_Event(A_Conv:create("BGIMG2", "Oh Yeah!", "lvl1_4"));
+
+	this:setState(0);
+end
+
+function level1Update(this, msgbus)
+	if(this:getState() == -1) then init(this, msgbus); end
+
+	segments[this:getState()]:Do(msgbus);
+	if(segments[this:getState()]:Check_Done()) then 
+		this:setState(this:getState() + 1); 
+		if(this:getState() > maxsegment) then this:setState(maxsegment); end
+	end
+end
 
 function level1Render(this, msgbus)
-	if(newObjective()) then renderObjective(); end
+	segments[this:getState()]:Render();
 end

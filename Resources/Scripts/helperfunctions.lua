@@ -47,11 +47,15 @@ function mod(x, y)
 	return x - math.floor(x/y)*y;
 end
 
-function addTmpObject(msgbus, objtype, model)
-	
+function testSoundPlaying(msgbus, self_id, sound)
+	msg = Message("SND_P");
+	msg:setFrom(self_id);
+	msg:setsData(sound);
+
+	msgbus:postMessage(msg, Identifiers("", "AE"));
 end
 
-function requestPosition(msgbus, self_id, target_id)
-
+function testSoundDone(msg)
+	if(msg:getInstruction() ~= "SND_P_R") then print("beer") return -2; 
+	else return msg:getiData(); end
 end
-
