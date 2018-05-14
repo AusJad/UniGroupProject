@@ -10,21 +10,19 @@ cutsceneid = "";
 
 local cs1 = 0;
 local mainmenu = 1;
-local level1 = 2;
-local level2 = 3;
+
+level2 = 3;
 local endscreen = 4;
 
 local function loadResources(AMAN)
 	--Load height maps
-	AMAN:addResource("./Resources/Models/RAW1.tdef", "RAWTRN", "Terrain");
 	AMAN:addResource("./Resources/Models/RAW2.tdef", "RAWTRN", "Terrain2");
 	
 	--Load audio
-	AMAN:addResource("./Resources/Audio/battlemusic.wav", "WAV", "S1MUSIC");
 	AMAN:addResource("./Resources/Audio/bgmusic1.wav", "WAV", "BGMUSIC1");
 	AMAN:addResource("./Resources/Audio/rb.wav", "WAV", "robotnoise");
 	AMAN:addSound("./Resources/Audio/gunshot.wav", "WAV", "gunshot", false);
-	AMAN:addSound("./Resources/Audio/introclip.wav", "WAV", "HIGHGROUND", false);
+
 
 	--Load fonts
 	if(AMAN:addResource("./Resources/Fonts/DODGE.csv", "FNT", "DODGE")) then print("Successfully Loaded Resource DODGE.");
@@ -42,10 +40,10 @@ local function loadResources(AMAN)
 	AMAN:addResource("./Resources/Models/endscreen.tsqr", "TX", "endscrn");
 
 	--Cutscene test
-	if(AMAN:addResource("./Resources/CutScenes/test.cs", "CUT_S", "cutscene1")) then print("Loaded resource 'test.cs'!"); 
+	if(AMAN:addResource("./Resources/CutScenes/test.cs", "CUT_S", "CUTSCENE1")) then print("Loaded resource 'test.cs'!"); 
 	else print("Failed to load resource 'test.cs'!"); end 
 
-	AMAN:addModel("./Resources/Models/skybox.obj", "IM", "SKYBOX", vec3(1000,750,1000));
+
 	AMAN:addModel("./Resources/Models/Rock.obj", "IM", "ROCK", vec3(15,15,15));
 	AMAN:addModel("./Resources/Models/lava.obj", "IM", "LAVA", vec3(50,50,50));
 	AMAN:addModel("./Resources/Models/bullet.obj", "IM", "bullet", vec3(1,1,1));
@@ -54,10 +52,13 @@ local function loadResources(AMAN)
 	AMAN:addModel("./Resources/Models/corvet.obj", "IM", "SHIP", vec3(0.5,0.5,0.5));
 	if AMAN:addModel("./Resources/Models/guard.md2", "MD2", "PLAYERW", vec3(0.6,0.6,0.6)) == false then
 	print("Bad") end
+	if AMAN:addModel("./Resources/Models/playerweapon.md2", "MD2", "PWEAPON", vec3(0.6,0.6,0.6)) == false then
+	print("Bad") end
 	if AMAN:addModel("./Resources/Models/tris.md2", "MD2", "DOOMGUY", vec3(0.6,0.6,0.6)) == false then
 	print("Bad") end
 
 	loadMenuRes(AMAN);
+	loadLvl1Res(AMAN);
 end
 
 function initGame(SM, LSM, AMAN, AE)
@@ -79,7 +80,7 @@ function initGame(SM, LSM, AMAN, AE)
 
 	SM:attachControls(cs1, ResourceList("keyCallback", "skipCutScene"));
 
-	SM:addObject(Identifiers("MO", "CUTSCENE"), cs1, vec3(0, 0, 0), ResourceList("model", "cutscene1"));
+	SM:addObject(Identifiers("MO", "CUTSCENE"), cs1, vec3(0, 0, 0), ResourceList("model", "CUTSCENE1"));
 	SM:addObject(Identifiers("CAM","Camera"), cs1, vec3(0, 0, 0), ResourceList());
 	AE:setListenerSource(SM:GetGameObjectID("Camera"), vec3(0, 0, 0));
 	
@@ -99,6 +100,7 @@ function initGame(SM, LSM, AMAN, AE)
 	--Initalise Level 1
 	SM:addScene();
 	SM:setCurrScene(level1);
+<<<<<<< HEAD
 	SM:setSceneResources(ResourceList("updatefunc", "level1Update", "renderfunc", "level1Render"), level1);
 
 	SM:attachControls(level1, ResourceList("keyCallback", "keys", "mouseCallback", "mouse"));
@@ -131,6 +133,9 @@ function initGame(SM, LSM, AMAN, AE)
 	AE:setListenerSource(SM:GetGameObjectID("Camera"), vec3(0, 0, 0));
 	AE:playSoundatSource("S1MUSIC", SM:GetGameObjectID("Camera"), vec3(0, 0, 0));
 	AE:playSoundatSource("HIGHGROUND", SM:GetGameObjectID("Camera"), vec3(0, 0, 0));
+=======
+	initLvl1(SM, AE);
+>>>>>>> master
 
 	--Initalise Level 2
 	SM:addScene();

@@ -42,11 +42,7 @@ bool FontEngine::RenderChar(char toRender) {
 
 bool FontEngine::RenderString(std::string torender, float fontsize, unsigned numrow, unsigned maxwidth, float startx, float starty, float depth) {
 
-	unsigned culmwidth;
-
 	char curchar;
-
-	RNDR->RenderFacingCamera();
 
 	bool errorflagnotset = true;
 
@@ -63,8 +59,6 @@ bool FontEngine::RenderString(std::string torender, float fontsize, unsigned num
 			startx += ((float)fonts.at(activefont).getCharOffset(curchar) / (float)fonts.at(activefont).getCharWidth()) * fontsize;
 		}
 	}
-
-	RNDR->StopRenderFacingCamera();
 
 	return errorflagnotset;
 }

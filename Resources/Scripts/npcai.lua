@@ -24,7 +24,8 @@ function msgrcvr(this, msgbus)
 	while msgbus:hasMessage(this:getIdentifiers()) do
 		msg = msgbus:getMessage(this:getIdentifiers());
 
-		if(checkDamage(msg, this)) then
+		if(checkDamage(msg) > -1) then
+			this:setHealth(this:getHealth() - checkDamage(msg));
 			if(this:getHealth() < 0) then this:setState(STATE_DEAD) end
 		elseif msg:getInstruction() == "PR" then
 			this:setTarget(msg:getData():getvData());
@@ -65,10 +66,10 @@ local function stateWait(this, msgbus)
 	waittime = waittime + time;
 	if(attackcooldown > 0) then attackcooldown = attackcooldown - time; end
 	
-	if waittime > 2.0 then 
+	if waittime > 1.0 then 
 		if(attackcooldown <= 0.0) then
 			waittime = 0.0;
-			attackcooldown = 1.0;
+			attackcooldown = 1.5;
 			velocity = AIMvmnt.Seek(this:getPos(), this:getTarget(), this:getSpeed());
 			playAnimationLoop(msgbus, this:getIdentifiers(), "attack");
 			fireProjectile(this:getPos(), Math.normalize(velocity), "bullet", msgbus);
@@ -98,6 +99,8 @@ local function stateDIE(this, msgbus)
 
 	playAnimationOnce(msgbus, this:getIdentifiers(), "death");
 
+	this:setUpdateable(false);
+
 	this:setState(STATE_INACTIVE);
 end
 
@@ -105,6 +108,9 @@ local function initEntity(this, msgbus)
 	this:setSpeed(300);
 	this:setHealth(100);
 	this:setState(0);
+	this:setTarget(vec3());
+	waittime = 0;
+	attackcooldown = 0.0
 	pos_table[this:getIdentifiers():getId()] = this:getPos();
 end
 
@@ -127,8 +133,4 @@ function start(this, msgbus)
 		--print(tonumber(AIMvmnt.faceTarget(this:getPos(), this:getTarget())));
 	end
 	--this:lookAt(this:getTarget());
-
-	--for i, j in pairs(pos_table) do 
-	--print("Entity  at pos: " , this:getTarget():x() , " " , this:getTarget():y() , " " , this:getTarget():z());
-	--end
 end

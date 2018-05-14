@@ -26,6 +26,10 @@ public:
 	Camera(Identifiers & id, vec3 pos, ResourceList & list);
 	void stop();
 
+	Camera(const Camera & tocpy);
+
+	GameObject* create();
+
 	/**
 	* @brief Get the center offset vector.
 	*

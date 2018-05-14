@@ -29,6 +29,7 @@ class GameObjectHandler
 public:
 	GameObjectHandler();
 	~GameObjectHandler();
+	GameObjectHandler(const GameObjectHandler & tocpy);
 
 	/**
 	* @brief Set the world dimensions
@@ -121,6 +122,8 @@ public:
 	*/
 	bool addTerrain(Identifiers id, vec3 pos, ResourceList & list);
 
+	const GameObjectHandler & operator = (const GameObjectHandler & rhs);
+
 private:
 	/// Terrain.
 	GameObject* terrain;
@@ -128,8 +131,6 @@ private:
 	std::vector<GameObject*> gameobjects;
 	/// Quadtree for game objects.
 	QuadTree<GameObjectWrapper> gameobjectQT;
-	/// Game object factory object to create game objects.
-	GameObjectFactory* GOF;
 	/// The identifier object.
 	Identifiers id;
 	/// Vector of game objects for temporary useage.

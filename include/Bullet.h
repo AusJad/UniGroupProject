@@ -15,6 +15,9 @@ public:
 	Bullet();
 	~Bullet() {};
 	Bullet(Identifiers & id, vec3 pos, ResourceList & list);
+	Bullet(const Bullet & tocpy);
+
+	GameObject* create();
 
 	/**
 	* @brief Update function for the bullet.

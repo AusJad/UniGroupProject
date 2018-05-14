@@ -73,3 +73,7 @@ std::string Message::getsData() {
 void Message::addmvData(const vec3 & toadd) {
 	mdata.mvdata.push_back(toadd);
 }
+
+int Message::getiData() {
+	return mdata.idata;
+}

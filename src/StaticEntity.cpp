@@ -13,6 +13,12 @@ StaticEntity::~StaticEntity()
 {
 }
 
+StaticEntity::StaticEntity(const StaticEntity & tocpy) : GameObject(tocpy) {};
+
+GameObject* StaticEntity::create() {
+	return new StaticEntity(*this);
+}
+
 void StaticEntity::update(float time) {
 	msgrcvr();
 }

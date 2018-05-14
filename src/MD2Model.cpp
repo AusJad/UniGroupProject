@@ -94,6 +94,7 @@ bool MD2Model::loadModel(std::string filename) {
 	}
 
 	if (!TXMAN->loadNewTexture(skins, "TGA", skins, RNDR)) {
+		std::cout << skins << std::endl;
 		skins.clear();
 	}
 

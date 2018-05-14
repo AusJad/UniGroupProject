@@ -44,8 +44,6 @@ const GeometeryStream & GeometeryStream::operator << (const color_4 & rhs) const
 }
  
 GeometeryStream & GeometeryStream::operator << (int rhs) {
-	GLint polygonMode;
-
 	switch (rhs) {
 		case BEGIN_STREAM:
 			glPushMatrix();

@@ -16,7 +16,9 @@ public:
 	StaticEntity(Identifiers & id, vec3 pos, ResourceList & list);
 	StaticEntity();
 	~StaticEntity();
+	StaticEntity(const StaticEntity & tocpy);
 
+	GameObject* create();
 
 	/**
 	* @brief The update function.

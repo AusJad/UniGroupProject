@@ -34,3 +34,11 @@ void TerrainObject::setModel(Model* M) {
 vec3 TerrainObject::getCenterOffset() {
 	return vec3(0, 0, 0);
 }
+
+TerrainObject::TerrainObject(const TerrainObject & tocpy) : GameObject(tocpy) {
+
+}
+
+GameObject* TerrainObject::create() {
+	return new TerrainObject(*this);
+}

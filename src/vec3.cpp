@@ -215,5 +215,5 @@ float& vec3::operator[] (int x)
 }
 
 float vec3::getLength() {
-	return vector.length();
+	return (float) vector.length();
 }

@@ -61,7 +61,7 @@ bool ImportModel::loadModel(std::string filename)
 		tempMesh.setTexCoords(model->mMeshes[i]);
 		tempMesh.setNormals(model->mMeshes[i]);
 		tempMesh.setIndexes(model->mMeshes[i]);
-		if (totalTextures > i)
+		if ((unsigned) totalTextures > i)
 			tempMesh.texture = texture[i];
 		else
 			tempMesh.texture.clear();

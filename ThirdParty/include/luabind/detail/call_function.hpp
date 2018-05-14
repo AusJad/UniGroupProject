@@ -345,7 +345,7 @@ namespace luabind
 
 		lua_getglobal(L, name);
 
-		if (lua_gc(L, LUA_GCCOUNT, 0) > 2000) {
+		if (lua_gc(L, LUA_GCCOUNT, 0) > 1000) {
 			lua_gc(L, LUA_GCCOLLECT, 0);
 		}
 
@@ -364,6 +364,10 @@ namespace luabind
 #else
 		tuple_t args(BOOST_PP_ENUM_PARAMS(BOOST_PP_ITERATION(), &a));
 #endif
+		if (lua_gc(L, LUA_GCCOUNT, 0) > 1000) {
+			lua_gc(L, LUA_GCCOLLECT, 0);
+		}
+
 		typedef typename boost::mpl::if_<boost::is_void<Ret>
 			, luabind::detail::proxy_function_void_caller<boost::tuples::tuple<BOOST_PP_ENUM(BOOST_PP_ITERATION(), LUABIND_TUPLE_PARAMS, _)> >
 			, luabind::detail::proxy_function_caller<Ret, boost::tuples::tuple<BOOST_PP_ENUM(BOOST_PP_ITERATION(), LUABIND_TUPLE_PARAMS, _)> > >::type proxy_type;

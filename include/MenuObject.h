@@ -14,6 +14,10 @@ class MenuObject : public GameObject {
 	public:	
 		MenuObject() {};
 		MenuObject(Identifiers & id, vec3 pos, ResourceList & list);
+		MenuObject(const MenuObject & tocpy);
+
+		GameObject* create();
+
 
 		/**
 		* @brief Update the menu.

@@ -21,6 +21,8 @@ void CtoLUABinder::bindClasses(lua_State* lstate) {
 		luabind::class_<Scene>("Scene")
 			.def(luabind::constructor<>())
 			.def("GetGameObject", &Scene::GetGameObject)
+			.def("getState", &Scene::getState)
+			.def("setState", &Scene::setState)
 	];
 	luabind::module(lstate)[
 		luabind::class_<vec3>("vec3")
@@ -94,6 +96,7 @@ void CtoLUABinder::bindClasses(lua_State* lstate) {
 			.def("getHeading", &NPC::getHeading)
 			.def("setHeading", &NPC::setHeading)
 			.def("setLAngle", &NPC::setLAngle)
+			.def("setUpdateable", &NPC::setUpdatable)
 	];
 	luabind::module(lstate)[
 		luabind::class_<StaticEntity>("StaticEntity")
@@ -188,6 +191,7 @@ void CtoLUABinder::bindClasses(lua_State* lstate) {
 			.def("setsData", &Message::setsData)
 			.def("addmvData", &Message::addmvData)
 			.def("getData", &Message::getData)
+			.def("getiData", &Message::getiData)
 			.def("getsData", &Message::getsData)
 	];
 	luabind::module(lstate)[

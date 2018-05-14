@@ -102,6 +102,10 @@ public:
 	*/
 	void loadGame(save sf);
 
+	int getState();
+
+	void setState(int state);
+
 private:
 	/// The game object handler.
 	GameObjectHandler objects;
@@ -109,5 +113,7 @@ private:
 	CollisionEngine collision;
 	/// The resource list.
 	ResourceList resources;
+
+	int state;
 };
 

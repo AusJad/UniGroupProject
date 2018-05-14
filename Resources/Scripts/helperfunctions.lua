@@ -27,12 +27,11 @@ function playAnimationOnce(msgbus, self_id, animation)
 	msgbus:postMessage(msg, Identifiers("", tostring(self_id:getId())));
 end
 
-function checkDamage(message, this)
+function checkDamage(message)
 	if(message:getInstruction() == "DMG") then
-		this:setHealth(this:getHealth() - 15000);
-		return true;
+		return message:getiData();
 	else
-		return false;
+		return -1;
 	end
 end
 
@@ -48,11 +47,15 @@ function mod(x, y)
 	return x - math.floor(x/y)*y;
 end
 
-function addTmpObject(msgbus, objtype, model)
-	
+function testSoundPlaying(msgbus, self_id, sound)
+	msg = Message("SND_P");
+	msg:setFrom(self_id);
+	msg:setsData(sound);
+
+	msgbus:postMessage(msg, Identifiers("", "AE"));
 end
 
-function requestPosition(msgbus, self_id, target_id)
-
+function testSoundDone(msg)
+	if(msg:getInstruction() ~= "SND_P_R") then print("beer") return -2; 
+	else return msg:getiData(); end
 end
-

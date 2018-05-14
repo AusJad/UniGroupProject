@@ -12,6 +12,8 @@
 #include "Player.h"
 #include "Scenery.h"
 
+#define GOF Singleton<GameObjectFactory>::getInstance()
+
 /**
 * @class GameObjectFactory	
 * @brief Class for handling the creation of game objects.

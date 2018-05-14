@@ -144,6 +144,8 @@ public:
 	*/
 	std::string getsData();
 
+	int getiData();
+
 	/**
 	* @brief Add vec3 data.
 	*

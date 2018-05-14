@@ -52,7 +52,9 @@ private:
 	/// The directory that the save file is held in.
 	const char* directory = "./saveData/";
 	/// The type of file for the save file.
-	std::string fileType = ".txt";
+	std::string fileType = ".save";
+	//^ make ourselves look a little cooler with a format the OS won't recognise
+
 	/// All objects and their data.
 	std::vector<std::string> d;
 	/// Temp string for moving scene number between two saveGame() functions for efficiency reasons.

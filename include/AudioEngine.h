@@ -9,7 +9,7 @@
 #include "MessagingBus.h"
 #include "Identifiers.h"
 
-#define DEBUGMODE false
+#define DEBUGMODE true
 #define AE Singleton<AudioEngine>::getInstance()
 
 /**
@@ -177,16 +177,7 @@ public:
 	*
 	* @return bool - If the sound is playing.
 	*/
-	bool soundPlaying(std::string sound);
-
-	/**
-	* @brief Perform FFT
-	*
-	* @param sound - The sound being searched for.
-	* 
-	* @return bool - If FFT is being performed.
-	*/
-	FFTData performFFT(std::string sound);
+	bool soundPlaying(std::string totest);
 
 	/**
 	* @brief Update method for the sound.
@@ -206,7 +197,7 @@ private:
 	/// Map of loaded sounds.
 	std::map<std::string, int> loadedsounds;
 	/// Map of active channels.
-	std::map<int, std::map<std::string, SoundSourceWrapper>> activechannels;
+	std::map<int, std::map<std::string, std::vector<SoundSourceWrapper> > > activechannels;
 	/// Map of channel listener resources.
 	std::map<int, ListenerSourceWrapper> channellistenersources;
 	
@@ -260,7 +251,7 @@ private:
 	*
 	* @return bool - If the sound was updated.
 	*/
-	bool updateChannelPos(std::string sound);
+	bool updateChannelPos(std::string sound, int id, vec3 & newpos);
 
 	/**
 	* @brief Receive any messages.

@@ -15,7 +15,9 @@ public:
 	TerrainObject();
 	TerrainObject(Identifiers & id, vec3 pos, ResourceList & list);
 	~TerrainObject();
+	TerrainObject(const TerrainObject & tocpy);
 
+	GameObject* create();
 	/**
 	* @brief The update function.
 	*

@@ -25,7 +25,7 @@ Camera::Camera(Identifiers & id, vec3 pos, ResourceList & list) : GameObject(id,
 	maxAngle = 80.0f;
 	maxNangle = -80.0f;
 	birdseye = false;
-	yoff = 20.0f;
+	yoff = 30.0f;
 }
 
 void Camera::update(float time) {
@@ -133,6 +133,10 @@ void Camera::update(float time) {
 		else
 		if (tmpm.getInstruction() == SWITCH_VIEW_MODE) {
 			switchViewMode();
+		}
+		else
+		if (tmpm.getInstruction() == DAMAGE) {
+			if (resources.hasResource("player")) MSGBS->postMessage(tmpm, Identifiers("", resources.getResource("player")));
 		}
 	}
 
@@ -308,13 +312,38 @@ vec3 Camera::getCenterOffset() {
 	return vec3(0, yoff, 0);
 }
 
-// mm
+Camera::Camera(const Camera & tocpy) : GameObject(tocpy) {
+	moveSpeed = tocpy.moveSpeed;
+	rotateSpeed = tocpy.rotateSpeed;
+	speedDecay = tocpy.speedDecay;
+	moveForward = tocpy.moveForward;
+	moveBack = tocpy.moveBack;
+	moveRight = tocpy.moveRight;
+	moveLeft = tocpy.moveLeft;
+	lookDown = tocpy.lookDown;
+	lookUp = tocpy.lookUp;
+	maxlspeed = tocpy.maxlspeed;
+	fov = tocpy.fov;
+	aspectRatio = tocpy.aspectRatio;
+	nearPlane = tocpy.nearPlane;
+	farPlane = tocpy.farPlane;
+	horizontalAngle = tocpy.horizontalAngle;
+	verticalAngle = tocpy.verticalAngle;
+	maxAngle = tocpy.maxAngle;
+	maxNangle = tocpy.maxNangle;
+	birdseye = tocpy.birdseye;
+	yoff = tocpy.yoff;
+}
+
+GameObject* Camera::create() {
+	return new Camera(*this);
+}
+
 std::string Camera::toString()
 {
 	std::string towrite;
 
-	towrite += GameObject::id.getName() + ",";
-	towrite += "POS," + std::to_string(GameObject::getPos().x()) + "," + std::to_string(GameObject::getPos().y()) + "," + std::to_string(GameObject::getPos().z()) + ",";
+	towrite = GameObject::toString();
 	towrite += "FACING," + std::to_string(horizontalAngle) + "," + std::to_string(verticalAngle);
 
 	return towrite;
@@ -331,21 +360,8 @@ bool Camera::fromstring(std::string toread)
 		linehead = toread.substr(0, toread.find(','));
 		toread.erase(0, toread.find(',') + delimlen);
 
-		if (linehead == "POS")
-		{
-			tmpf = stof(toread.substr(0, toread.find(',')));
-			GameObject::pos.sx(tmpf);
-			toread.erase(0, toread.find(',') + delimlen);
-
-			tmpf = stof(toread.substr(0, toread.find(',')));
-			GameObject::pos.sy(tmpf);
-			toread.erase(0, toread.find(',') + delimlen);
-
-			tmpf = stof(toread.substr(0, toread.find(',')));
-			GameObject::pos.sz(tmpf);
-			toread.erase(0, toread.find(',') + delimlen);
-		}
-		else if (linehead == "FACING")
+		if(!GameObject::fromstring(linehead, toread))
+		if (linehead == "FACING")
 		{
 			tmpf = stof(toread.substr(0, toread.find(',')));
 			horizontalAngle = tmpf;

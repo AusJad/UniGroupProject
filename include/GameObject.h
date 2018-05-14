@@ -28,6 +28,9 @@ public:
 	GameObject();
 	GameObject(Identifiers & id, vec3 pos, ResourceList & list);
 	~GameObject();
+	GameObject(const GameObject & tocpy);
+
+	virtual GameObject* create() = 0;
 
 	/**
 	* @brief Set the id of the object
@@ -184,6 +187,8 @@ public:
 	*/
 	virtual std::string toString();
 
+	virtual bool fromstring(std::string toread);
+
 	/**
 	* @brief A virtual method for putting all data from file back into the object.
 	*
@@ -191,7 +196,7 @@ public:
 	* 
 	* @return bool - If the data was input.
 	*/
-	virtual bool fromstring(std::string toread);
+	virtual bool fromstring(std::string linehead, std::string & toread);
 
 protected:
 	/// The state of the object.

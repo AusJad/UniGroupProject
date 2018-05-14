@@ -30,6 +30,7 @@ void Bullet::setTarget(const vec3 target) {
 	this->target = target;
 	inUse = true;
 	timealive = 0;
+	this->pos += this->target * 10;
 }
 
 void Bullet::render() {
@@ -48,19 +49,28 @@ bool Bullet::isVisible() {
 }
 
 void Bullet::onCollide(vec3 & prevloc, const Identifiers & colgoid) {
+	Message tmpm;
 
-	if (this->timealive > 0.1) {
-		Message tmpm;
+	tmpm.setInstruction(DAMAGE);
+	tmpm.setIData(15000);
 
-		tmpm.setInstruction(DAMAGE);
-		tmpm.setIData(15000);
+	MSGBS->postMessage(tmpm, colgoid);
 
-		MSGBS->postMessage(tmpm, colgoid);
-
-		this->inUse = false;
-	}
+	this->inUse = false;
 }
 
 bool Bullet::hasGravity() {
 	return false;
 }
+
+Bullet::Bullet(const Bullet & tocpy) : GameObject(tocpy) {
+	inUse = tocpy.inUse;
+	lifespan = tocpy.lifespan;
+	timealive = tocpy.timealive;
+	speed = tocpy.speed;
+}
+
+GameObject* Bullet::create() {
+	return new Bullet(*this);
+}
+

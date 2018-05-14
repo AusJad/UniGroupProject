@@ -74,7 +74,7 @@ function loadMenuRes(AMAN)
 	if(AMAN:addResource("./Resources/Textures/ammo.tga", "TGA", "AMMO")) then print("good"); end
 	if(AMAN:addResource("./Resources/Textures/robot.tga", "TGA", "ROBOT")) then print("good"); end
 
-	AMAN:addSound("./Resources/Audio/test.mp4", "WAV", "MENUMUSIC", true);
+	AMAN:addSound("./Resources/Audio/menumusic.wav", "WAV", "MENUMUSIC", true);
 	AMAN:addSound("./Resources/Audio/select.wav", "WAV", "MENUSELECT", false);
 end
 
@@ -110,6 +110,8 @@ local function drawSide()
 	else if(sidefade >= .96) then fadedir = true; sidefade = 1; cursidetex = cursidetex + 1; if cursidetex >= numsidetex then cursidetex = 0; end MenuTools.fadeOut(vec2(.4, .4), vec2(1.6, -.8), middle, sidefade, time); else MenuTools.fadeOut(vec2(.4, .4), vec2(1.6, -.8), middle, sidefade, time); sidefade = sidefade + time/8; end end
 end
 
+local exitind = 3;
+
 function mainMenuRender(this, msgbus)
 	--Draw backdrop
 	MenuTools.drawSquare(vec2(bminx, bminy + byheight), vec2(bminx + bxwidth, bminy), back, vec4(0,0,0,1));
@@ -142,17 +144,25 @@ function mainMenuRender(this, msgbus)
 		MenuTools.drawTSquare(vec2(buttonstartx, yoff), vec2(buttonstartx + buttonwidth, yoff - buttonheight), buttonz, "BLOADP", true);
 	end
 	
-	yoff = yoff - buttonoffsety - buttonheight;
+	if (prevscene == level1 or prevscene == level2) then
+		yoff = yoff - buttonoffsety - buttonheight;
 	
-	if(selected == 2) then
-		MenuTools.drawTSquare(vec2(buttonstartx, yoff), vec2(buttonstartx + buttonwidth, yoff - buttonheight), buttonz, "BSAVEH", true);
+		if(selected == 2) then
+			MenuTools.drawTSquare(vec2(buttonstartx, yoff), vec2(buttonstartx + buttonwidth, yoff - buttonheight), buttonz, "BSAVEH", true);
+		else
+			MenuTools.drawTSquare(vec2(buttonstartx, yoff), vec2(buttonstartx + buttonwidth, yoff - buttonheight), buttonz, "BSAVEP", true);
+		end
+
+		numitems = 3;
+		exitind = 3;
 	else
-		MenuTools.drawTSquare(vec2(buttonstartx, yoff), vec2(buttonstartx + buttonwidth, yoff - buttonheight), buttonz, "BSAVEP", true);
+		numitems = 2;
+		exitind = 2;
 	end
 	
 	yoff = yoff - buttonoffsety - buttonheight;
 	
-	if(selected == 3) then
+	if(selected == exitind) then
 		MenuTools.drawTSquare(vec2(buttonstartx, yoff), vec2(buttonstartx + buttonwidth, yoff - buttonheight), buttonz, "BEXITH", true);
 	else
 		MenuTools.drawTSquare(vec2(buttonstartx, yoff), vec2(buttonstartx + buttonwidth, yoff - buttonheight), buttonz, "BEXITP", true);
@@ -177,7 +187,7 @@ local function doSelected(MB)
 		tmpm = Message("CS");
 		tmpm:setiData(curscene + 1);
 		MB:postMessage(tmpm, Identifiers("", "SM"));
-	elseif(selected == 3) then
+	elseif(selected == exitind) then
 		MB:postMessage(Message("KILL"), Identifiers("", "RM"));
 	end
 end
