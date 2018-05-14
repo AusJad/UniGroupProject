@@ -134,6 +134,10 @@ void Camera::update(float time) {
 		if (tmpm.getInstruction() == SWITCH_VIEW_MODE) {
 			switchViewMode();
 		}
+		else
+		if (tmpm.getInstruction() == DAMAGE) {
+			if (resources.hasResource("player")) MSGBS->postMessage(tmpm, Identifiers("", resources.getResource("player")));
+		}
 	}
 
 	if (this->moveForward) {

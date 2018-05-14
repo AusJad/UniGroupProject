@@ -111,7 +111,6 @@ local function initEntity(this, msgbus)
 	this:setTarget(vec3());
 	waittime = 0;
 	attackcooldown = 0.0
-	print("in npc set state");
 	pos_table[this:getIdentifiers():getId()] = this:getPos();
 end
 

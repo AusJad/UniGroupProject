@@ -88,9 +88,8 @@ function playerMsgRcvr(this, msgbus)
 		
 		--if(checkDamage(msg, this)) then
 		--	if(this:getHealth() < 0) then this:setState(STATE_DEAD) end
-		if(checkDamage(msg) > -1) then
-			print("here");
-			health = health - checkDamage(msg);
+		if(checkDamage(tocheck) > -1) then
+			health = health - checkDamage(tocheck);
 		elseif (tocheck:getInstruction() == "FIRE") then 
 			if(ammo > 0) then
 				fireProjectile(this:getPos(), this:getFront(), "bullet", msgbus);

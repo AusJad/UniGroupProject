@@ -31,7 +31,7 @@ function A_Battle:create(Etities, num_ent)
 end
 
 function A_Battle:init(msgbus)
-	msg = Message("S_STATE");
+	local msg = Message("S_STATE");
 	msg:setiData(-1);
 
 	for i = 1,self.num_ent,1
@@ -46,7 +46,7 @@ function A_Battle:init(msgbus)
 end
 
 function A_Battle:Get_Living(msgbus)
-	msg = Message("PING");
+	local msg = Message("PING");
 	msg:setFrom(self.id);
 
 	for i = 1, self.num_ent,1
@@ -74,7 +74,7 @@ function A_Battle:Get_Living(msgbus)
 		if(self.tocheck[i] ~= nil) then
 			if(self.tocheck[i] > 5) then
 				self.entities[i] = nil;
-				self.tocheck[i] = nil
+				self.tocheck[i] = nil;
 				self.num_alive = self.num_alive - 1;
 			end
 		end
@@ -82,7 +82,7 @@ function A_Battle:Get_Living(msgbus)
 end
 
 function A_Battle:Do(msgbus)
-	if self.done then return; end
+	if self.num_alive == 0 then return; end
 	if(self.started == -1) then self:init(msgbus); end
 	
 	if(self.graceperiod > 0) then self.graceperiod = self.graceperiod - time; return; end
@@ -147,7 +147,7 @@ function A_Conv:Do(msgbus)
 		testSoundPlaying(msgbus, self.id, self.sound);
 
 		while msgbus:hasMessage(self.id) do
-			msg = msgbus:getMessage(self.id);
+			local msg = msgbus:getMessage(self.id);
 
 			if testSoundDone(msg) == -1 then
 				self.done = true;

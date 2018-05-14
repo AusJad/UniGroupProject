@@ -49,16 +49,14 @@ bool Bullet::isVisible() {
 }
 
 void Bullet::onCollide(vec3 & prevloc, const Identifiers & colgoid) {
-	if (colgoid.getType() != "CAM") {
-		Message tmpm;
+	Message tmpm;
 
-		tmpm.setInstruction(DAMAGE);
-		tmpm.setIData(15000);
+	tmpm.setInstruction(DAMAGE);
+	tmpm.setIData(15000);
 
-		MSGBS->postMessage(tmpm, colgoid);
+	MSGBS->postMessage(tmpm, colgoid);
 
-		this->inUse = false;
-	}
+	this->inUse = false;
 }
 
 bool Bullet::hasGravity() {
