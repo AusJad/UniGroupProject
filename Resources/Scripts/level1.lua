@@ -106,5 +106,6 @@ function level1Update(this, msgbus)
 end
 
 function level1Render(this, msgbus)
+	if(this:getState() == -2) then return; end
 	segments[this:getState()]:Render();
 end
