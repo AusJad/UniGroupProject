@@ -210,6 +210,12 @@ void CtoLUABinder::bindClasses(lua_State* lstate) {
 			.def("addResource", &ResourceList::addResource)
 	];
 	luabind::module(lstate)[
+		luabind::class_<ObjectLocList>("ObjectLocList")
+			.def(luabind::constructor<>())
+			.def(luabind::constructor<std::string, vec3>())
+			.def("add", &ObjectLocList::addObjectLoc)
+	];
+	luabind::module(lstate)[
 		luabind::class_<AssetManager>("AssetManager")
 			.def(luabind::constructor<>())
 			.def("addResource", &AssetManager::addResource)
@@ -240,7 +246,8 @@ void CtoLUABinder::bindClasses(lua_State* lstate) {
 		luabind::def("Chase", &AIMovementBehaviours::Chase),
 		luabind::def("capSpeed", &AIMovementBehaviours::capSpeed), 
 		luabind::def("getDistance", &AIMovementBehaviours::getDistance),
-		luabind::def("faceTarget", &AIMovementBehaviours::faceTarget)
+		luabind::def("faceTarget", &AIMovementBehaviours::faceTarget),
+		luabind::def("findPath", &AIMovementBehaviours::findPath)
 	];
 	luabind::module(lstate, "MenuTools")[
 		luabind::def("drawTSquare", &MenuTools::drawTSquare),

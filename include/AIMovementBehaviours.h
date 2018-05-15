@@ -3,9 +3,34 @@
 #include "vec3.h"
 #include "Maths.h"
 #include <iostream>
+#include <stack>
+#include <unordered_map>
 #include "Maths.h"
+#include "ObjectLocList.h"
 
 #define M_PI 3.14159265358979323846
+#define SEEN 0
+#define OPEN 1
+#define CLOSED 2
+
+struct indexpair {
+	indexpair(int nz, int nx) : x(nx), z(nz) {};
+	int x;
+	int z;
+};
+
+struct AsNode {
+	AsNode() : f(0), g(0), h(0), x(0), z(0), parent(-1, -1), status(SEEN) {};
+	AsNode(int nx, int nz) : f(0), g(0), h(0), x(nx), z(nz), parent(-1, -1), status(SEEN) {};
+	int f;
+	int g;
+	int h;
+	int x;
+	int z;
+	indexpair parent;
+	int status;
+};
+
 
 /**
 * @class AIMovementBehavious
@@ -98,5 +123,11 @@ public:
 	* @return vec3 - The new velocity vector.
 	*/
 	static vec3 capSpeed(const vec3 & velocity, float maxspeed);
+
+	static std::stack<AsNode> findPath(vec3 & current, vec3 & target, ObjectLocList & list, std::string level);
+
+private:
+	//calculate Manhattan distance from start node to target (H)
+	static int AIMovementBehaviours::calcH(AsNode & current, AsNode & target);
 };
 

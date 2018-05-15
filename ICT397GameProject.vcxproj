@@ -137,6 +137,7 @@
     <ClInclude Include="include\ModelManger.h" />
     <ClInclude Include="include\ModelMesh.h" />
     <ClInclude Include="include\NPC.h" />
+    <ClInclude Include="include\ObjectLocList.h" />
     <ClInclude Include="include\Player.h" />
     <ClInclude Include="include\QuadTree.h" />
     <ClInclude Include="include\RawTerrain.h" />
@@ -197,6 +198,7 @@
     <ClCompile Include="src\ModelManger.cpp" />
     <ClCompile Include="src\ModelMesh.cpp" />
     <ClCompile Include="src\NPC.cpp" />
+    <ClCompile Include="src\ObjectLocList.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\RawTerrain.cpp" />
     <ClCompile Include="src\RenderModuleStubb.cpp" />

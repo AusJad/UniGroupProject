@@ -18,6 +18,7 @@
 #include "Scenery.h"
 #include "AIMovementBehaviours.h"
 #include "MenuTools.h"
+#include "ObjectLocList.h"
 
 extern "C" {
 	#include "lua/lua.h"
