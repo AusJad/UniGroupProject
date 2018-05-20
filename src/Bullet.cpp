@@ -37,7 +37,9 @@ void Bullet::render() {
 	if (!inUse) return;
 
 	if (model != NULL) {
+		GeoStream << BEGIN_STREAM << trans_3(this->pos.x(), this->pos.y(), this->pos.z());
 		GameObject::model->render(this->pos);
+		GeoStream << END_STREAM;
 	}
 	else {
 		RNDR->DrawQuad(point(pos.x(), pos.y() + 1), point(pos.x() + 1, pos.y()), pos.z());

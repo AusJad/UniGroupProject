@@ -69,8 +69,8 @@ void Console::render() {
 
 void Console::toggle() {
 	active = !active;
-	if (!active) history.clear();
-	if (!active) future.clear();
+	//if (!active) history.clear();
+	//if (!active) future.clear();
 }
 
 void Console::adjustEditInd(int offset) {
@@ -116,10 +116,14 @@ void Console::executeCurStatement() {
 			case ERROR_CODE_INVALID_SYNTAX:
 				history.push_back("ERROR: Invalid Syntax");
 				break;
+			default:
+				if (!ret.getData().empty()) history.push_back(ret.getData());
+				break;
 		}
-		
+
 	}
 	else history.push_back("ERROR: No Console Behaviour Defined");
+
 
 	editind = 0;
 	curline.clear();

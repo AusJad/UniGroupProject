@@ -195,7 +195,7 @@ QuadTree<T>::QuadTree() {
 	top_right = NULL;
 	bottom_left = NULL;
 	bottom_right = NULL;
-	this->ceiling = 50;
+	this->ceiling = 1000;
 	this->topleft = pair(0,100);
 	this->bottomright = pair(100,0);
 }

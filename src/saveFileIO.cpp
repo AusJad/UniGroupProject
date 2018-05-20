@@ -13,7 +13,7 @@ save::save(std::string fn)
 	// Set file path with file type for opening the file.
 	savePath = directory;
 	savePath.append(filename);
-	savePath.append(fileType);
+	//savePath.append(fileType);
 
 	// Create/wipe save file here as saveGame() appends to file and if we re-use existing name we have problems.
 	/*
@@ -31,8 +31,8 @@ save::~save()
 void save::saveGame(std::vector<std::string> data)
 {
 	std::ofstream ofile;
-	ofile.open(savePath);
-	for (int i = 0; i < data.size(); i++)
+	ofile.open(savePath + fileType);
+	for (unsigned i = 0; i < data.size(); i++)
 	{
 		ofile << data[i] << std::endl;
 	}
@@ -60,7 +60,7 @@ bool save::loadFile()
 	return true;
 }
 
-std::vector<std::string> save::getData() const
+std::vector<std::string> & save::getData()
 {
 	return d;
 }

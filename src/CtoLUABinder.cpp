@@ -250,14 +250,17 @@ void CtoLUABinder::bindClasses(lua_State* lstate) {
 		luabind::def("fadeIn", &MenuTools::fadeIn),
 		luabind::def("fadeOut", &MenuTools::fadeOut),
 		luabind::def("drawModel", &MenuTools::drawModel),
-		luabind::def("drawRotTSquare", &MenuTools::drawRotTSquare)
+		luabind::def("drawRotTSquare", &MenuTools::drawRotTSquare),
+		luabind::def("renderTextF", &MenuTools::renderTextF)
 	];
 	luabind::module(lstate, "Math")[
 		luabind::def("normalize", &Maths::normalize)
 	];
 
 	// mm
-	luabind::module(lstate, "FileLoading")[
-		luabind::def("getFileName", &fileNameReader::getFileNames)
+	luabind::module(lstate, "File")[
+		luabind::def("readFileNames", &fileNameReader::getFileNames),
+		luabind::def("hasFiles", &fileNameReader::hasFiles),
+		luabind::def("getFile", &fileNameReader::getFile)
 	];
 }

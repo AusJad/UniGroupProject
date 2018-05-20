@@ -23,6 +23,10 @@ NPC::~NPC()
 
 }
 
+bool NPC::isCollidable() {
+	return canUpdate;
+}
+
 void NPC::render() {
 
 	if (!canRender) return;

@@ -59,3 +59,9 @@ function testSoundDone(msg)
 	if(msg:getInstruction() ~= "SND_P_R") then print("beer") return -2; 
 	else return msg:getiData(); end
 end
+
+function incScene(msgbus)
+	tmpm = Message("CS");
+	tmpm:setiData(curscene + 1);
+	msgbus:postMessage(tmpm, Identifiers("", "SM"));
+end

@@ -18,7 +18,9 @@ void TerrainObject::update(float time) {
 }
 
 void TerrainObject::render() {
-	if (resources.hasResource("model") && model != NULL) GameObject::model->render(pos);
+	if (resources.hasResource("model") && model != NULL) {
+		GameObject::model->render(pos);
+	}
 	else {
 		RenderModuleStubb* tmp = Singleton<RenderModuleStubb>::getInstance();
 

@@ -74,6 +74,29 @@ void MenuTools::renderText(vec2 start, float z, float size, std::string torender
 	GeoStream << DISABLE_ALPHA;
 }
 
+void MenuTools::renderTextF(vec2 start, float z, float size, std::string torender, std::string font) {
+	GeoStream << ENABLE_ALPHA;
+
+	FNT_ENG->setActiveFont(font);
+
+	std::string tmpstr;
+	float culmheight = start.y();
+	if (torender.find('$') == std::string::npos) {
+		FNT_ENG->RenderString(torender, size, 30, 30, start.x(), start.y(), z);
+	}
+	else {
+		tmpstr = torender;
+		while (tmpstr.find('$') != std::string::npos) {
+			FNT_ENG->RenderString(tmpstr.substr(0, tmpstr.find('$')), size, 30, 30, start.x(), culmheight, z);
+			tmpstr = tmpstr.substr(tmpstr.find('$') + 1);
+			culmheight -= size;
+		}
+		FNT_ENG->RenderString(tmpstr, size, 30, 30, start.x(), culmheight, z);
+	}
+
+	GeoStream << DISABLE_ALPHA;
+}
+
 float MenuTools::fadeIn(vec2 & tl, vec2 & br, float z, float curfade, float time) {
 	glEnable(GL_BLEND); glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 

@@ -71,6 +71,17 @@ public:
 	static void renderText(vec2 start, float z, float size, std::string torender);
 	
 	/**
+	* @brief Render the text onto the menu.
+	*
+	* @param start - The starting position.
+	* @param z - The menu z value.
+	* @param size - The size of the text.
+	* @param torender - The string to render.
+	*/
+	static void renderTextF(vec2 start, float z, float size, std::string torender, std::string font);
+
+
+	/**
 	* @brief A method to fade the menu in.
 	*
 	* @param t1 - The first position vector.

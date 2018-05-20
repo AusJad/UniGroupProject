@@ -266,4 +266,8 @@ function S_Seg:Inc_Event(msgbus)
 	if self.curevent == self.maxevent then self.curevent = -1; end
 end
 
+function S_Seg:Write()
+	return SimpleString(tostring(self.curevent));
+end
+
 --Scripted Segment End

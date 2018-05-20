@@ -42,7 +42,7 @@ public:
 	*
 	* @return vector<goData> - Vector of GameObject data points.
 	*/
-	std::vector<std::string> getData() const;
+	std::vector<std::string> & getData();
 
 private:
 	/// The entire path of the save file.

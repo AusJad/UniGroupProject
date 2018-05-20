@@ -25,12 +25,11 @@ local function loadResources(AMAN)
 
 
 	--Load fonts
-	if(AMAN:addResource("./Resources/Fonts/DODGE.csv", "FNT", "DODGE")) then print("Successfully Loaded Resource DODGE.");
-	else print("Failed to Load Resource DODGE."); end
-	if(AMAN:addResource("./Resources/Fonts/COURIER_NEW.csv", "FNT", "COURIERNEW")) then print("Successfully Loaded Resource COURIER_NEW.");
-	else print("Failed to Load Resource COURIER_NEW."); end
-	if(AMAN:addResource("./Resources/Fonts/ConsoleFont.csv", "FNT", "CONSOLEFONT")) then print("Successfully Loaded Resource CONSOLEFONT.");
-	else print("Failed to Load Resource CONSOLEFONT."); end
+	AMAN:addResource("./Resources/Fonts/DODGE.csv", "FNT", "DODGE");
+	AMAN:addResource("./Resources/Fonts/COURIER_NEW.csv", "FNT", "COURIERNEW");
+	AMAN:addResource("./Resources/Fonts/ConsoleFontBlue.csv", "FNT", "CONSOLEFONTBLUE");
+	AMAN:addResource("./Resources/Fonts/ConsoleFont.csv", "FNT", "CONSOLEFONT");
+	
 
 	if(AMAN:addResource("./Resources/Textures/console.bmp", "BMP", "Console") == false) then print("Failed to load con tex"); end
 

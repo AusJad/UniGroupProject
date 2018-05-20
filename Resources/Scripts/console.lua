@@ -8,7 +8,7 @@ local CODE_RETURN = 2;
 
 local res;
 
-local function handleMultiPartCMD(cmd, option, msgbus)
+local function handleMultiPartCMD(cmd, option, msgbus, ret)
 	if(cmd == "CS" or cmd == "CHANGESCENE") then
 		changeScene(msgbus, option[1]);
 		return CODE_SUCCESS;
@@ -33,12 +33,15 @@ local function handleMultiPartCMD(cmd, option, msgbus)
 	elseif(cmd == "LOADGAME" or cmd == "LOAD") then
 		loadGame(msgbus, option[1]);
 		return CODE_SUCCESS;
+	elseif(cmd == "ERROR:") then
+		ret:setData("SMART ASS");
+		return CODE_SUCCESS;
 	end
 	
 	return ERROR_CODE_UNKOWN_COMMAND; 
 end
 
-local function handleCMD(cmd, msgbus)
+local function handleCMD(cmd, msgbus, ret)
 
 	if(cmd == "WIREFRAME" or cmd == "WF") then
 		toggleWireFrame(msgbus);
@@ -87,7 +90,7 @@ function consoleEntryPoint(command, ret, msgbus)
 		
 		table.insert(lineend, datastring);
 
-		result = handleMultiPartCMD(linehead, lineend, msgbus);
+		result = handleMultiPartCMD(linehead, lineend, msgbus, ret);
 	else
 		linehead = datastring;
 		result = handleCMD(linehead, msgbus);
@@ -96,7 +99,7 @@ function consoleEntryPoint(command, ret, msgbus)
 	if(result == CODE_RETURN) then 
 		ret:setData(tostring(res));
 	end
-
+	
 	--print(ret:getData());
 
 	command:setData(tostring(result));

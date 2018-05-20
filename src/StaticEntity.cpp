@@ -24,7 +24,11 @@ void StaticEntity::update(float time) {
 }
 
 void StaticEntity::render() {
-	if (resources.hasResource("model") && model != NULL) GameObject::model->render(pos);
+	if (resources.hasResource("model") && model != NULL) {
+		GeoStream << BEGIN_STREAM << trans_3(this->pos.x(), this->pos.y(), this->pos.z());
+		GameObject::model->render(pos);
+		GeoStream << END_STREAM;
+	}
 	else {
 		RenderModuleStubb* tmp = Singleton<RenderModuleStubb>::getInstance();
 

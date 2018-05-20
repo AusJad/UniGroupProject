@@ -178,7 +178,7 @@ void Camera::switchViewMode() {
 	if (!birdseye) {
 		maxAngle = 80.0f;
 		maxNangle = -80.0f;
-		yoff = 15.0f;
+		//yoff = 15.0f;
 		moveSpeed = 3.0f;
 	}
 	else {

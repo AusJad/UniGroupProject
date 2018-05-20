@@ -138,6 +138,8 @@ public:
 
 	void setUpdatable(bool toset);
 
+	bool isCollidable();
+
 private:
 	/// Velocity of the NPC.
 	vec3 velocity;

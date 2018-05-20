@@ -96,7 +96,7 @@ void CollisionEngine::update(GameObject* toupdate, std::vector<GameObject*> coll
 AABB CollisionEngine::genAABB(GameObject* toupdate) {
 	if (toupdate->getModel() == NULL) 
 		return AABB(toupdate->getPos().x() + 7.0f, toupdate->getPos().x() - 7.0f,
-			toupdate->getPos().y() + 7.0f, toupdate->getPos().y() - 7.0f,
+			toupdate->getPos().y() + 7.0f, toupdate->getPos().y() - 17.0f,
 			toupdate->getPos().z() + 7.0f, toupdate->getPos().z() - 7.0f);
 	else 
 		return AABB(toupdate->getModel()->getMaxTX(), toupdate->getModel()->getMinTX(),

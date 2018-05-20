@@ -1,7 +1,6 @@
 #pragma once
 #include <string>
-#include <iostream>
-#include <vector>
+#include <stack>
 
 // Headers for directory searching
 #include "dirent/dirent.h"
@@ -25,7 +24,11 @@ public:
 	*
 	* @return Vector<string> - A vector of strings of file names.
 	*/
-	static std::vector<std::string> getFileNames(const char* dirPath, const std::string& fileType);
+	static bool getFileNames(const char* dirPath, const std::string& fileType);
+
+	static bool hasFiles();
+
+	static std::string getFile();
 private:
 	/**
 	* @brief Check the files in the directory for the correct type.
@@ -36,5 +39,7 @@ private:
 	* @return bool - If the file is the correct type.
 	*/
 	static bool fileTypeCheck(const std::string& s, const std::string& fileType);
+	
+	static std::stack<std::string> files;
 };
 

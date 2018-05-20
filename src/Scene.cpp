@@ -78,6 +78,8 @@ std::vector<std::string> Scene::saveGame()
 {
 	std::vector<std::string> s;
 
+	s.push_back("STATE," + std::to_string(state) + "\n");
+
 	for (unsigned i = 0; i < objects.getNumObjects(); i++)
 	{
 		//While game objects are never deleted, thay do go inactive
@@ -98,7 +100,9 @@ void Scene::loadGame(save sf)
 {
 	bool match;
 
-	for (unsigned j = 0; j < sf.getData().size(); j++){
+	state = atoi(sf.getData().at(1).substr(sf.getData().at(1).find(',') + 1).c_str());
+
+	for (unsigned j = 2; j < sf.getData().size(); j++){
 		match = false;
 		//Loop until match is found (saves redudant searching)
 		for (unsigned i = 0; i < objects.getNumObjects() && !match; i++)

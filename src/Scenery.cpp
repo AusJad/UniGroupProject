@@ -14,7 +14,11 @@ Scenery::Scenery() : GameObject() {
 
 void Scenery::render() {
 
-	if (resources.hasResource("model") && model != NULL) GameObject::model->render(this->pos);
+	if (resources.hasResource("model") && model != NULL) {
+		GeoStream << BEGIN_STREAM << trans_3(this->pos.x(), this->pos.y(), this->pos.z());
+		GameObject::model->render(this->pos);
+		GeoStream << END_STREAM;
+	}
 	else {
 		RenderModuleStubb* tmp = Singleton<RenderModuleStubb>::getInstance();
 

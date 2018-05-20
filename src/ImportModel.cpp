@@ -192,9 +192,9 @@ void ImportModel::render(const vec3 & transmat)
 		if (modelDetails[i].texture.empty() == false)
 			Singleton<TextureManager>::getInstance()->useTexture(modelDetails[i].texture, Singleton<RenderModuleStubb>::getInstance());
 		if (modelDetails[i].Normals.empty())
-			Singleton<RenderModuleStubb>::getInstance()->renderArrayTri(modelDetails[i].vertIndex, modelDetails[i].Verticies, modelDetails[i].texCoords, lasttrans);
+			Singleton<RenderModuleStubb>::getInstance()->renderArrayTri(modelDetails[i].vertIndex, modelDetails[i].Verticies, modelDetails[i].texCoords, vec3(0, 0, 0));
 		else
-			Singleton<RenderModuleStubb>::getInstance()->renderArrayTri(modelDetails[i].vertIndex, modelDetails[i].Verticies, modelDetails[i].Normals, modelDetails[i].texCoords, lasttrans);
+			Singleton<RenderModuleStubb>::getInstance()->renderArrayTri(modelDetails[i].vertIndex, modelDetails[i].Verticies, modelDetails[i].Normals, modelDetails[i].texCoords, vec3(0,0,0));
 	}
 		Singleton<TextureManager>::getInstance()->disableTexture(Singleton<RenderModuleStubb>::getInstance());
 }
