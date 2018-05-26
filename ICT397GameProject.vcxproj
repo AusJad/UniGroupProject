@@ -220,6 +220,7 @@
     <None Include="Resources\Scripts\console.lua" />
     <None Include="Resources\Scripts\consolehelperfunctions.lua" />
     <None Include="Resources\Scripts\controls.lua" />
+    <None Include="Resources\Scripts\deathmenu.lua" />
     <None Include="Resources\Scripts\helperfunctions.lua" />
     <None Include="Resources\Scripts\level1.lua" />
     <None Include="Resources\Scripts\mainmenu.lua" />

@@ -43,6 +43,17 @@ local cursidetex = 0; local numsidetex = 2;
 --file vars
 local files = {}; local maxfile;
 
+local function genFileList()
+	File.readFileNames("./saveData", ".save");
+
+	maxfile = 0;
+
+	while(File.hasFiles()) do
+		files[maxfile] = (File.getFile());
+		maxfile = maxfile + 1;
+	end
+end
+
 function loadMenuRes(AMAN)
 	AMAN:addResource("./Resources/Textures/MainMenu/banner.tga", "TGA", "BANNER");
 	AMAN:addResource("./Resources/Textures/MainMenu/skull.tga", "TGA", "BGIMG1");
@@ -58,24 +69,16 @@ function loadMenuRes(AMAN)
 	AMAN:addResource("./Resources/Textures/MainMenu/return.tga", "TGA", "RETURN");
 
 	--todo: move to player.lua
-	if(AMAN:addResource("./Resources/Textures/scanline.tga", "TGA", "SCAN")) then print("good"); end
-	if(AMAN:addResource("./Resources/Textures/target.tga", "TGA", "TARGET")) then print("good"); end
-	if(AMAN:addResource("./Resources/Textures/targetinner.tga", "TGA", "TARGETINNER")) then print("good"); end
-	if(AMAN:addResource("./Resources/Textures/ammo.tga", "TGA", "AMMO")) then print("good"); end
-	if(AMAN:addResource("./Resources/Textures/robot.tga", "TGA", "ROBOT")) then print("good"); end
+	AMAN:addResource("./Resources/Textures/scanline.tga", "TGA", "SCAN");
+	AMAN:addResource("./Resources/Textures/target.tga", "TGA", "TARGET");
+	AMAN:addResource("./Resources/Textures/targetinner.tga", "TGA", "TARGETINNER");
+	AMAN:addResource("./Resources/Textures/ammo.tga", "TGA", "AMMO");
+	AMAN:addResource("./Resources/Textures/robot.tga", "TGA", "ROBOT");
 
 	AMAN:addSound("./Resources/Audio/menumusic.wav", "WAV", "MENUMUSIC", true);
 	AMAN:addSound("./Resources/Audio/select.wav", "WAV", "MENUSELECT", false);
 	
-	File.readFileNames("./saveData", ".save");
-
-	maxfile = 0;
-
-	while(File.hasFiles()) do
-		files[maxfile] = (File.getFile());
-		print(files[maxfile]);
-		maxfile = maxfile + 1;
-	end
+	genFileList();
 end
 
 local function init(this, msgbus)
@@ -99,6 +102,8 @@ function mainMenuUpdate(this, msgbus)
 
 	if(time ~= nil) then culmtime = culmtime + time; end
 
+	genFileList();
+
 	incString();
 end
 
@@ -111,6 +116,8 @@ local function drawSide()
 end
 
 local exitind = 3;
+
+local cansave = false;
 
 local function drawButtons()
 	--Draw Buttons 
@@ -130,9 +137,11 @@ local function drawButtons()
 		MenuTools.drawTSquare(vec2(buttonstartx, yoff), vec2(buttonstartx + buttonwidth, yoff - buttonheight), buttonz, "BLOADP", true);
 	end
 	
-	if (prevscene == level1 or prevscene == level2) then
+	if (prevscene == level1) then
 		yoff = yoff - buttonoffsety - buttonheight;
-	
+		
+		cansave = true;
+
 		if(selected == 2) then
 			MenuTools.drawTSquare(vec2(buttonstartx, yoff), vec2(buttonstartx + buttonwidth, yoff - buttonheight), buttonz, "BSAVEH", true);
 		else
@@ -142,6 +151,8 @@ local function drawButtons()
 		numitems = 3;
 		exitind = 3;
 	else
+		cansave = false;
+
 		numitems = 2;
 		exitind = 2;
 	end
@@ -157,7 +168,7 @@ local function drawButtons()
 end
 
 local state2selected = 0;
-local st; local fin;
+local st = 0; local fin = 5;
 
 local function listFiles()
 	local yoff = buttonstarty - .1;
@@ -179,10 +190,10 @@ local function listFiles()
 		for i = st, fin do
 			if(files[i] ~= nil) then
 				if(state2selected == i) then
-					MenuTools.renderTextF(vec2(buttonstartx - .1, yoff), buttonz, 0.052, files[i], "CONSOLEFONTBLUE");
+					MenuTools.renderTextF(vec2(buttonstartx - .25, yoff), buttonz, 0.052, files[i], "CONSOLEFONTBLUE");
 					MenuTools.renderTextF(vec2(-10,-10), 0, 0.005, "", "CONSOLEFONT");
 				else
-					MenuTools.renderText(vec2(buttonstartx - .1, yoff), buttonz, 0.052, files[i]);
+					MenuTools.renderText(vec2(buttonstartx - .25, yoff), buttonz, 0.052, files[i]);
 				end
 		
 				yoff = yoff - buttonoffsety - buttonheight;
@@ -194,7 +205,7 @@ local function listFiles()
 		yoff = yoff - buttonoffsety - buttonheight;
 	end
 
-	MenuTools.drawTSquare(vec2(buttonstartx - buttonwidth*.5, yoff), vec2(buttonstartx + buttonwidth*1.5, yoff - buttonheight*2), buttonz, "RETURN", true);
+	MenuTools.drawTSquare(vec2(buttonstartx - buttonwidth*.5, -.45), vec2(buttonstartx + buttonwidth*1.5, -.45 - buttonheight*2), buttonz, "RETURN", true);
 
 end
 
@@ -238,10 +249,13 @@ local loadind = 1;
 local function doSelected(MB)
 	if (selected == 0) then
 		tmpm = Message("CS");
-		tmpm:setiData(curscene + 1);
+		tmpm:setiData(level1);
 		MB:postMessage(tmpm, Identifiers("", "SM"));
 	elseif(selected == loadind) then
 		menustate = MENU_STATE_FILE_DISPLAY;
+	elseif(selected == 2 and cansave) then
+		print("here");
+		saveGame(MB, "Save_" .. tostring(os.date("%m-%d-%Y-") .. tostring(os.time())), level1); 
 	elseif(selected == exitind) then
 		MB:postMessage(Message("KILL"), Identifiers("", "RM"));
 	end
@@ -268,7 +282,7 @@ local function fileBrowseControls(key, action, MB)
 	if key:equals("enter") and action:equals("press") then 
 		loadFile(files[state2selected], MB); 
 	elseif key:equals("down") and action:equals("press") then
-		if(selected < maxfile) then state2selected = state2selected + 1; playSoundAtPlayer(MB, "MENUSELECT"); end
+		if(state2selected < maxfile - 1) then state2selected = state2selected + 1; playSoundAtPlayer(MB, "MENUSELECT"); end
 	elseif key:equals("up") and action:equals("press") then
 		if(state2selected > 0) then state2selected = state2selected - 1; playSoundAtPlayer(MB, "MENUSELECT"); end
 	elseif key:equals("backspace") and action:equals("press") then

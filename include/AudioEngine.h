@@ -170,6 +170,8 @@ public:
 	*/
 	bool unpauseChannels();
 
+	void destroyActiveChannels();
+
 	/**
 	* @brief Find if a sound is playing
 	*

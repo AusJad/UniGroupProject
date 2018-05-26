@@ -56,9 +56,21 @@ void Camera::update(float time) {
 	while (tmp->hasMessage(id)) {
 
 		tmpm = tmp->getMessage(id);
-
 		if (defaultMessageHandler(tmpm)) {
 			//no action -- handled automatically.
+		}
+		else
+		if (tmpm.getInstruction() == "RESET_CAM") {
+			this->pos = vec3(0, 0, -4000);
+			this->target = vec3(0, 0, 0);
+			horizontalAngle = 180.0f;
+			verticalAngle = 0.0f;
+			moveForward = false;
+			moveBack = false;
+			moveRight = false;
+			moveLeft = false;
+			lookDown = false;
+			lookUp = false;
 		}
 		else
 		if (tmpm.getInstruction() == "MVF") {

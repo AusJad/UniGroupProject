@@ -34,6 +34,11 @@ void CollisionEngine::setHeightMap(std::vector<vec3> & toset) {
 		}
 	}
 
+	minx += 1000;
+	maxx -= 1000;
+	minz += 1000;
+	maxz -= 1000;
+
 	hasHMap = true;
 }
 
@@ -80,6 +85,7 @@ void CollisionEngine::update(GameObject* toupdate, std::vector<GameObject*> coll
 		if ((x < maxx && x > minx && z > minz && z < maxz) == false) {
 			toupdate->setPos(tmpos);
 			toupdate->stop();
+			if (toupdate->getIdentifiers().getType() == "BLT") toupdate->onCollide(tmpos, Identifiers("NAN"));
 		}
 
 		if (x < maxx && x > minx && z > minz && z < maxz && hasHMap && toupdate->hasGravity()) {
@@ -89,6 +95,7 @@ void CollisionEngine::update(GameObject* toupdate, std::vector<GameObject*> coll
 
 			toupdate->setPos(vec3(toupdate->getPos().x(), y + toupdate->getCenterOffset().y(), toupdate->getPos().z()));
 			toupdate->setTarget(vec3(toupdate->getTarget().x(), 0, toupdate->getTarget().z()));
+			if (toupdate->getIdentifiers().getType() == "BLT") toupdate->onCollide(tmpos, Identifiers("NAN"));
 		}
 	}
 }

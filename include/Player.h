@@ -86,8 +86,18 @@ public:
 	* @return bool - If the string was parsed.
 	*/
 	bool fromstring(std::string toread);
+
+	void setHealth(float nh);
+	void setAmmo(int na);
+	float getHealth();
+	int getAmmo();
+
 private:
 	/// The direction the player should be facing.
 	vec3 front;
+
+	float health;
+
+	int ammo;
 };
 

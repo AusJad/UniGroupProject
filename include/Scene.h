@@ -106,6 +106,8 @@ public:
 
 	void setState(int state);
 
+	bool getLoaded();
+
 private:
 	/// The game object handler.
 	GameObjectHandler objects;
@@ -115,5 +117,7 @@ private:
 	ResourceList resources;
 
 	int state;
+
+	bool loaded;
 };
 

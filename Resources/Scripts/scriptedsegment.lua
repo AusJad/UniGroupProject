@@ -6,7 +6,7 @@ A_Battle = {};
 
 A_Battle.__index = A_Battle;
 
-function A_Battle:create(Etities, num_ent)	
+function A_Battle:create(Etities, num_ent, refresh)	
 	local battle = {};
 
 	setmetatable(battle, A_Battle);
@@ -20,6 +20,8 @@ function A_Battle:create(Etities, num_ent)
 	battle.tocheck = {};
 
 	battle.started = -1;
+
+	battle.refresh = refresh;
 	
 	battle.id = Identifiers("", tostring(math.random()));
 
@@ -38,7 +40,11 @@ function A_Battle:init(msgbus)
 	do
 		msgbus:postMessage(Message("S_VIS"), Identifiers("", self.entities[i]));
 		msgbus:postMessage(Message("S_UD"), Identifiers("", self.entities[i]));
-		msgbus:postMessage(msg, Identifiers("", self.entities[i]));
+		
+		if(self.refresh ~= true) then
+		 msgbus:postMessage(msg, Identifiers("", self.entities[i])); 
+		end
+
 		self.tocheck[i] = 0;
 	end
 
@@ -51,7 +57,7 @@ function A_Battle:Get_Living(msgbus)
 
 	for i = 1, self.num_ent,1
 	do
-		if(self.entities[i] ~= nil) then
+		if(self.tocheck[i] ~= nil) then
 			msgbus:postMessage(msg, Identifiers("", self.entities[i]));
 			self.tocheck[i] = self.tocheck[i] + 1;
 		end
@@ -61,7 +67,7 @@ function A_Battle:Get_Living(msgbus)
 		msg = msgbus:getMessage(self.id);
 		for i = 1, self.num_ent,1
 		do
-			if(self.entities[i] ~= nil) then
+			if(self.tocheck[i] ~= nil) then
 				if(msg:getFrom():getName() == self.entities[i]) then
 					self.tocheck[i] = 0;
 				end
@@ -73,7 +79,6 @@ function A_Battle:Get_Living(msgbus)
 	do
 		if(self.tocheck[i] ~= nil) then
 			if(self.tocheck[i] > 5) then
-				self.entities[i] = nil;
 				self.tocheck[i] = nil;
 				self.num_alive = self.num_alive - 1;
 			end

@@ -1,9 +1,7 @@
 require "./Resources/Scripts/helperfunctions";
+require "./Resources/Scripts/consolehelperfunctions";
 
 local culmtime = 0;
-local health = 100;
-local ammo = 45;
-
 local scantrans = 0;
 local scantransup = true;
 
@@ -59,19 +57,40 @@ local function renderDiagnostics()
 	MenuTools.renderText(vec2(-1.4, 0.7), -2, 0.05, curtext);
 end
 
-local function renderAmmo()
+local function renderAmmo(this)
 	MenuTools.drawTSquare(vec2(-1.3, -.2), vec2(-1.1, -.4), -1.95, "AMMO", true);
-	MenuTools.renderText(vec2(-1.11, -0.4), -2, 0.15, tostring(ammo));
+	MenuTools.renderText(vec2(-1.11, -0.4), -2, 0.15, tostring(this:getAmmo()));
 	MenuTools.drawTSquare(vec2(-1.3, -.45), vec2(-1.1, -.65), -1.95, "ROBOT", true);
-	MenuTools.renderText(vec2(-1.11, -0.65), -2, 0.15, tostring(health));
+	MenuTools.renderText(vec2(-1.11, -0.65), -2, 0.15, tostring(this:getHealth()));
+end
+
+local sway = 0;
+local swayup = true;
+
+local function calcSway()
+	if(swayup) then
+		if(sway < 0.1) then
+			sway = sway + 0.2 * time;
+		else
+			swayup = false;
+		end
+	else
+		if(sway > -0.1) then
+			sway = sway - 0.2 * time;
+		else
+			swayup = true;
+		end
+	end
 end
 
 function playerHUDRenderer(this, msgbus)
 	if(time ~= nil) then culmtime = culmtime + time; end
 
-	playAnimationOnce(msgbus, this:getIdentifiers(), "attack");
+	if(time ~= nil) then calcSway(); end
+
+	--playAnimationOnce(msgbus, this:getIdentifiers(), "idle");
 	
-	this:drawModel(vec3(8,2,-10), 90);
+	this:drawModel(vec3(8,2 + sway,-10), 90);
 
 	renderScan();
 
@@ -79,22 +98,48 @@ function playerHUDRenderer(this, msgbus)
 
 	renderDiagnostics();
 
-	renderAmmo();
+	renderAmmo(this);
+end
+
+local function init(this)
+	this:setAmmo(200);
+	this:setHealth(15000);
 end
 
 function playerMsgRcvr(this, msgbus)
+	if(this:getAmmo() == -20) then init(this); end
+
+	if this:getHealth() <= 0 then
+		print(this:getHealth());
+		msgbus:postMessage(Message("RESET_S"), Identifiers("", "level1"));
+		this:setHealth(15000);
+		this:setAmmo(200);
+
+		msgbus:postMessage(Message("SMF"), Identifiers("", "Camera"));
+		msgbus:postMessage(Message("SML"), Identifiers("", "Camera"));
+		msgbus:postMessage(Message("SMR"), Identifiers("", "Camera"));
+		msgbus:postMessage(Message("SMB"), Identifiers("", "Camera"));
+		msgbus:postMessage(Message("SLD"), Identifiers("", "Camera"));
+		msgbus:postMessage(Message("SLU"), Identifiers("", "Camera"));
+
+		tmpm = Message("CS");
+		tmpm:setiData(deathscreen);
+		msgbus:postMessage(tmpm, Identifiers("", "SM"));
+
+		pushChanges(msgbus);
+	end
+
 	while msgbus:hasMessage(this:getIdentifiers()) do
 		tocheck = msgbus:getMessage(this:getIdentifiers());
 		
-		--if(checkDamage(msg, this)) then
-		--	if(this:getHealth() < 0) then this:setState(STATE_DEAD) end
 		if(checkDamage(tocheck) > -1) then
-			health = health - checkDamage(tocheck);
+			this:setHealth(this:getHealth() - checkDamage(tocheck));
 		elseif (tocheck:getInstruction() == "FIRE") then 
-			if(ammo > 0) then
+			if(this:getAmmo() > 0) then
 				fireProjectile(this:getPos(), this:getFront(), "bullet", msgbus);
 				playSoundAtPlayer(msgbus,"gunshot");
-				ammo = ammo - 1;
+				playAnimationOnce(msgbus, this:getIdentifiers(), "attack");
+				this:setAmmo(this:getAmmo() - 1);
 			end
 		elseif this:playerDefaultMessageHandler(tocheck) == false then 
 			this:defaultMessageHandler(tocheck) 

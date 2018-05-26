@@ -178,6 +178,12 @@ void MD2Model::msgrcvr() {
 		if (tmp.getInstruction() == STOP_ANIM) {
 			stopAnimation();
 		}
+		if (tmp.getInstruction() == ANIM_PLAYING) {
+			Message tmpmsg(ANIM_PLAYING_RESPONSE);
+			if (animationplaying) tmpmsg.setIData(1);
+			else tmpmsg.setIData(-1);
+			MSGBS->postMessage(tmpmsg, tmp.getFrom());
+		}
 	}
 }
 
@@ -273,7 +279,6 @@ void MD2Model::linInterpolate() {
 }
 
 void MD2Model::buildAnimationList() {
-	
 	if (frames.size() == 0) return;
 
 	std::string curanim = frames.at(0).name.substr(0, getNumInd(frames.at(0).name));
@@ -347,7 +352,10 @@ void MD2Model::incFrame() {
 	nextframe = (nextframe + 1);
 	if (nextframe > animations.at(activeanimation).at(animations.at(activeanimation).size() - 1)) {
 		if(loop) nextframe = animations.at(activeanimation).at(0);
-		else animationplaying = false;
+		else {
+			animationplaying = false;
+			activeanimation = "";
+		}
 	}
 	else if (nextframe < animations.at(activeanimation).at(0)) nextframe = animations.at(activeanimation).at(0);
 }

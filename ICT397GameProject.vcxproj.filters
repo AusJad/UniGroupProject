@@ -403,5 +403,8 @@
     <None Include="Resources\Scripts\scriptedsegment.lua">
       <Filter>Resource Files\Scripts</Filter>
     </None>
+    <None Include="Resources\Scripts\deathmenu.lua">
+      <Filter>Resource Files\Scripts</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -175,7 +175,7 @@ std::string GameObject::toString()
 	towrite += "STATE," + std::to_string(state) + ",";
 	towrite += "POS," + std::to_string(pos.x()) + "," + std::to_string(pos.y()) + "," + std::to_string(pos.z()) + ",";
 	towrite += "TARGET," + std::to_string(target.x()) + "," + std::to_string(target.y()) + "," + std::to_string(target.z()) + ",";
-	towrite += "TARGETLOOK," + std::to_string(targetlook.x()) + "," + std::to_string(targetlook.y()) + "," + std::to_string(targetlook.z());
+	towrite += "TARGETLOOK," + std::to_string(targetlook.x()) + "," + std::to_string(targetlook.y()) + "," + std::to_string(targetlook.z()) + ",";
 
 	return towrite;
 }
@@ -247,7 +247,8 @@ bool GameObject::fromstring(std::string linehead, std::string & toread)
 
 		tmpf = stof(toread);
 		targetlook.sz(tmpf);
-		toread.erase();
+		toread.erase(0, toread.find(',') + delimlen);
+
 		return true;
 	}
 

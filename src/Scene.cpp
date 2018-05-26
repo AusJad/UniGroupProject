@@ -5,6 +5,7 @@ Scene::Scene()
 {
 	objects.setWorldDimensions(-100, 100, 100, -100);
 	state = -1;
+	loaded = false;
 }
 
 
@@ -100,6 +101,8 @@ void Scene::loadGame(save sf)
 {
 	bool match;
 
+	loaded = true;
+
 	state = atoi(sf.getData().at(1).substr(sf.getData().at(1).find(',') + 1).c_str());
 
 	for (unsigned j = 2; j < sf.getData().size(); j++){
@@ -120,4 +123,13 @@ void Scene::loadGame(save sf)
 			}
 		}
 	}
+}
+
+bool Scene::getLoaded() {
+	if (loaded == true) {
+		loaded = false;
+		return true;
+	}
+
+	return loaded;
 }

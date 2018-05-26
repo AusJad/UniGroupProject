@@ -140,6 +140,10 @@ public:
 
 	bool isCollidable();
 
+	bool getCanAttack();
+
+	void setCanAttack(bool nval);
+
 private:
 	/// Velocity of the NPC.
 	vec3 velocity;
@@ -155,5 +159,7 @@ private:
 	bool canUpdate = false;
 	///Flag to determine whether npc should be rendered
 	bool canRender = false;
+	///can attack
+	bool canAttack;
 };
 

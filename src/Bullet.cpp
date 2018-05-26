@@ -30,7 +30,7 @@ void Bullet::setTarget(const vec3 target) {
 	this->target = target;
 	inUse = true;
 	timealive = 0;
-	this->pos += this->target * 10;
+	this->pos += (this->target * 15);
 }
 
 void Bullet::render() {
@@ -54,9 +54,9 @@ void Bullet::onCollide(vec3 & prevloc, const Identifiers & colgoid) {
 	Message tmpm;
 
 	tmpm.setInstruction(DAMAGE);
-	tmpm.setIData(15000);
+	tmpm.setIData(500);
 
-	MSGBS->postMessage(tmpm, colgoid);
+	if(colgoid.getType() != "NAN") MSGBS->postMessage(tmpm, colgoid);
 
 	this->inUse = false;
 }

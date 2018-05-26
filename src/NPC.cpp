@@ -8,6 +8,7 @@ NPC::NPC(Identifiers & id, vec3 pos, ResourceList & list) : GameObject( id, pos,
 	lookangle = 0;
 	canUpdate = false;
 	canRender = false;
+	canAttack = false;
 }
 
 NPC::NPC() : GameObject(){
@@ -16,6 +17,7 @@ NPC::NPC() : GameObject(){
 	lookangle = 0;
 	canUpdate = false;
 	canRender = false;
+	canAttack = false;
 }
 
 NPC::~NPC()
@@ -75,6 +77,12 @@ bool NPC::NPCDefaultMessageHandler(Message & message) {
 		MSGBS->postMessage(message, tmp);
 		return true;
 	}
+	else
+	if (message.getInstruction() == SET_POS) {
+		pos = message.getvData();
+		target = vec3(0, 0, 0);
+		velocity = vec3(0, 0, 0);
+	}
 
 	return false;
 }
@@ -97,8 +105,22 @@ void NPC::checkUpdateRndrChange() {
 			canRender = true;
 		}
 		else
+		if (tmp.getInstruction() == SET_HIDDEN) {
+			canRender = false;
+		}
+		else
+		if (tmp.getInstruction() == SET_NOUPDATE) {
+			canUpdate = false;
+		}
+		else
 		if (tmp.getInstruction() == SET_STATE) {
 			state = tmp.getiData();
+		}
+		else
+		if (tmp.getInstruction() == SET_POS) {
+			pos = tmp.getvData();
+			target = vec3(0, 0, 0);
+			velocity = vec3(0, 0, 0);
 		}
 	}
 }
@@ -180,6 +202,9 @@ NPC::NPC(const NPC & tocpy) : GameObject(tocpy) {
 	lookangle = tocpy.lookangle;
 	health = tocpy.health;
 	speed = tocpy.speed;
+	canUpdate = tocpy.canUpdate;
+	canRender = tocpy.canRender;
+	canAttack = tocpy.canAttack;
 }
 
 void NPC::setUpdatable(bool toset) {
@@ -205,6 +230,12 @@ std::string NPC::toString()
 	*/
 	towrite += "HEALTH," + std::to_string(health) + ",";
 	towrite += "SPEED," + std::to_string(speed) + ",";
+	towrite += "CANUPDATE,";
+	towrite += (canUpdate == true && health > 0) ? "1," : "0,";
+	towrite += "CANRENDER,";
+	towrite += (canUpdate == true && health > 0) ? "1," : "0,";
+	towrite += "CANATTACK,";
+	towrite += (canAttack) ? "1," : "0,";
 	towrite += "LOOKANGLE," + std::to_string(lookangle);
 
 	return towrite;
@@ -213,6 +244,7 @@ std::string NPC::toString()
 bool NPC::fromstring(std::string toread)
 {
 	float tmpf;
+	int tmpi;
 	std::string linehead;
 
 	int delimlen = 1;
@@ -221,54 +253,9 @@ bool NPC::fromstring(std::string toread)
 	{
 		linehead = toread.substr(0, toread.find(','));
 		toread.erase(0, toread.find(',') + delimlen);
-		/*
-			See Above
 
-			else if (linehead == "VELOCITY")
-			{
-				tmpf = stof(toread.substr(0, toread.find(',')));
-				velocity.sx(tmpf);
-				toread.erase(0, toread.find(',') + delimlen);
+		//std::cout << linehead << std::endl;
 
-				tmpf = stof(toread.substr(0, toread.find(',')));
-				velocity.sy(tmpf);
-				toread.erase(0, toread.find(',') + delimlen);
-
-				tmpf = stof(toread.substr(0, toread.find(',')));
-				velocity.sz(tmpf);
-				toread.erase(0, toread.find(',') + delimlen);
-			}
-			else if (linehead == "HEADING")
-			{
-				// Had problem with some heading variables where it was empty.
-				if (toread.substr(0, toread.find(',')) == "-nan(ind)")
-					heading.sx(0);
-				else
-				{
-					tmpf = stof(toread.substr(0, toread.find(',')));
-					heading.sx(tmpf);
-				}
-				toread.erase(0, toread.find(',') + delimlen);
-
-				if (toread.substr(0, toread.find(',')) == "-nan(ind)")
-					heading.sy(0);
-				else
-				{
-					tmpf = stof(toread.substr(0, toread.find(',')));
-					heading.sx(tmpf);
-				}
-				toread.erase(0, toread.find(',') + delimlen);
-
-				if (toread.substr(0, toread.find(',')) == "-nan(ind)")
-					heading.sx(0);
-				else
-				{
-					tmpf = stof(toread.substr(0, toread.find(',')));
-					heading.sy(tmpf);
-				}
-				toread.erase(0, toread.find(',') + delimlen);
-			}
-		*/
 		if (!GameObject::fromstring(linehead, toread))
 		if (linehead == "HEALTH")
 		{
@@ -288,6 +275,43 @@ bool NPC::fromstring(std::string toread)
 			lookangle = tmpf;
 			toread.erase();
 		}
+		else if (linehead == "CANUPDATE")
+		{
+			tmpi = atoi(toread.substr(0, toread.find(',')).c_str());
+			if (tmpi == 1) canUpdate = true;
+			else canUpdate = false;
+
+			toread.erase(0, toread.find(',') + delimlen);
+		}
+		else if (linehead == "CANRENDER")
+		{
+			tmpi = atoi(toread.substr(0, toread.find(',')).c_str());
+			if (tmpi == 1) canRender = true;
+			else canRender = false;
+
+			toread.erase(0, toread.find(',') + delimlen);
+		}
+		else if (linehead == "CANATTACK")
+		{
+			tmpi = atoi(toread.substr(0, toread.find(',')).c_str());
+			if (tmpi == 1) canAttack = true;
+			else canAttack = false;
+
+			toread.erase(0, toread.find(',') + delimlen);
+		}
 	}
+
+	velocity = vec3();
+	heading = vec3();
+	target = vec3();
+
 	return true;
+}
+
+bool NPC::getCanAttack() {
+	return canAttack;
+}
+
+void NPC::setCanAttack(bool nval) {
+	canAttack = nval;
 }

@@ -40,6 +40,7 @@
 #define SET_UPDATEABLE "S_UD"
 #define SET_NOUPDATE "S_ND"
 #define SET_STATE "S_STATE"
+#define SET_POS "SS_POS"
 #define PING "PING"
 
 //Player Messages
@@ -66,6 +67,7 @@
 #define PLY_SND_REQUEST "PS"
 #define SND_PLAYING "SND_P"
 #define SND_PLAYING_R "SND_P_R"
+#define STOP_ALL_SND "STP_ALL_S"
 
 //Render Module Messages
 #define WIREFRAME "WF"
@@ -74,6 +76,8 @@
 //Model animation controllers
 #define PLAY_ANIM "PLYA"
 #define STOP_ANIM "STPA"
+#define ANIM_PLAYING "ANIM_P"
+#define ANIM_PLAYING_RESPONSE "ANIM_P_R"
 
 //Cutscene Messages
 #define STOP_CUTSCNE "END_CUT"

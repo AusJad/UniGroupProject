@@ -3,11 +3,13 @@
 
 Player::Player(Identifiers & id, vec3 pos, ResourceList & list) : GameObject(id, pos, list)
 {
-
+	ammo = -20;
+	health = 0;
 }
 
 Player::Player() : GameObject() {
-
+	ammo = -20;
+	health = 0;
 }
 
 bool Player::isCollidable() {
@@ -91,6 +93,8 @@ vec3 Player::getCenterOffset() {
 
 Player::Player(const Player & tocpy) : GameObject(tocpy) {
 	front = tocpy.front;
+	ammo = tocpy.ammo;
+	health = tocpy.health;
 }
 
 GameObject* Player::create() {
@@ -103,6 +107,8 @@ std::string Player::toString()
 
 	towrite += GameObject::id.getName() + ",";
 	towrite += "POS," + std::to_string(GameObject::getPos().x()) + "," + std::to_string(GameObject::getPos().y()) + "," + std::to_string(GameObject::getPos().z()) + ",";
+	towrite += "HEALTH," + std::to_string(health) + ",";
+	towrite += "AMMO," + std::to_string(ammo) + ",";
 	towrite += "FRONT," + std::to_string(front.x()) + "," + std::to_string(front.y()) + "," + std::to_string(front.z());
 
 	return towrite;
@@ -133,6 +139,18 @@ bool Player::fromstring(std::string toread)
 			GameObject::pos.sz(tmpf);
 			toread.erase(0, toread.find(',') + delimlen);
 		}
+		else if (linehead == "HEALTH")
+		{
+			tmpf = stof(toread.substr(0, toread.find(',')));
+			health = tmpf;
+			toread.erase(0, toread.find(',') + delimlen);
+		}
+		else if (linehead == "AMMO")
+		{
+			tmpf = stof(toread.substr(0, toread.find(',')));
+			ammo = tmpf;
+			toread.erase(0, toread.find(',') + delimlen);
+		}
 		else if (linehead == "FRONT")
 		{
 			tmpf = stof(toread.substr(0, toread.find(',')));
@@ -149,4 +167,20 @@ bool Player::fromstring(std::string toread)
 		}
 	}
 	return true;
+}
+
+void Player::setHealth(float nh) {
+	health = nh;
+}
+
+void Player::setAmmo(int na) {
+	ammo = na;
+}
+
+float Player::getHealth() {
+	return health;
+}
+
+int Player::getAmmo() {
+	return ammo;
 }

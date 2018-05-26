@@ -77,3 +77,11 @@ void Message::addmvData(const vec3 & toadd) {
 int Message::getiData() {
 	return mdata.idata;
 }
+
+vec3 &  Message::getvData() {
+	return mdata.vdata;
+}
+
+void  Message::setvData(const vec3 & toset) {
+	mdata.vdata = toset;
+}

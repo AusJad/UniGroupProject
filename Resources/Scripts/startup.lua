@@ -2,6 +2,7 @@ require "./Resources/Scripts/controls";
 require "./Resources/Scripts/npcai";
 require "./Resources/Scripts/console";
 require "./Resources/Scripts/mainmenu";
+require "./Resources/Scripts/deathmenu";
 require "./Resources/Scripts/player";
 require "./Resources/Scripts/level1";
 require "./Resources/Scripts/helperfunctions";
@@ -9,10 +10,10 @@ require "./Resources/Scripts/helperfunctions";
 cutsceneid = "";
 
 local cs1 = 0;
-local mainmenu = 1;
-
+mainmenu = 1;
 level2 = 3;
-local endscreen = 4;
+deathscreen = 4;
+local endscreen = 5;
 
 local function loadResources(AMAN)
 	--Load height maps
@@ -56,6 +57,7 @@ local function loadResources(AMAN)
 	print("Bad") end
 
 	loadMenuRes(AMAN);
+	loadDeathMenuRes(AMAN);
 	loadLvl1Res(AMAN);
 end
 
@@ -125,6 +127,17 @@ function initGame(SM, LSM, AMAN, AE)
 	--Setup Sound
 	AE:setListenerSource(SM:GetGameObjectID("Camera"), vec3(0, 0, 0));
 	AE:playSoundatSource("BGMUSIC1", SM:GetGameObjectID("Camera"), vec3(0, 0, 0));
+
+
+	--Initalise death screen scene
+	SM:addScene();
+
+	SM:setCurrScene(deathscreen);
+
+	SM:attachControls(deathscreen, ResourceList("keyCallback", "deathMenuControls"));
+
+	SM:addObject(Identifiers("CAM","Camera"), deathscreen, vec3(0, 0, 0), ResourceList());
+	SM:addObject(Identifiers("MO","DEATHMENU"), deathscreen, vec3(0, 0, 0), ResourceList("renderfunc", "deathMenuRender", "updatefunc", "deathMenuUpdate"));
 
 	--Initalise end screen scene
 	SM:addScene();

@@ -382,6 +382,10 @@ void AudioEngine::msgrcvr() {
 
 			MSGBS->postMessage(tmpmsg, tmpmsg.getFrom());
 		}
+		else
+		if (tmpmsg.getInstruction() == STOP_ALL_SND) {
+			destroyActiveChannels();
+		}
 	}
 }
 
@@ -395,6 +399,11 @@ bool AudioEngine::soundPlaying(std::string totest) {
 	}
 	
 	return false;
+}
+
+void AudioEngine::destroyActiveChannels() {
+	pauseActiveChannels();
+	activechannels.at(activesubgroup).clear();
 }
 
 void AudioEngine::msgsndr() {

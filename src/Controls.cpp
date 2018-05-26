@@ -72,6 +72,8 @@ void Controls::keyCallback(GLFWwindow* window, int key, int scancode, int action
 	if (key == 259) keys = "backspace"; 
 	if (key == 265) keys = "up";
 	if (key == 264) keys = "down";
+	if (key == 263) keys = "left";
+	if (key == 262) keys = "right";
 	if (key == GLFW_KEY_ESCAPE) keys = "esc";
 
 	if (action == GLFW_REPEAT) {

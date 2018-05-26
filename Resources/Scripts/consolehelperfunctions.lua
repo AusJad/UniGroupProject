@@ -57,9 +57,12 @@ function clearScreen(msgbus)
 	msgbus:postIMessage(Message("CLS"), 1000002);
 end
 
-function saveGame(msgbus, file)
+function saveGame(msgbus, file, scene)
+	if(scene == nil) then scene = level1 end
 	msg = Message("SV_GM");
 	msg:setsData(file);
+	msg:setiData(scene);
+	print(scene)
 	msgbus:postMessage(msg, Identifiers("", "SM"));
 	pushChanges(msgbus);
 end

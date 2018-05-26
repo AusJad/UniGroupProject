@@ -1,7 +1,7 @@
 require "./Resources/Scripts/helperfunctions";
+require "./Resources/Scripts/level1";
 
 --NPC variables
-local pos_table = {};
 
 local plyr_targ = vec3();
 
@@ -26,7 +26,10 @@ function msgrcvr(this, msgbus)
 
 		if(checkDamage(msg) > -1) then
 			this:setHealth(this:getHealth() - checkDamage(msg));
-			if(this:getHealth() < 0) then this:setState(STATE_DEAD) end
+		elseif (animFinished(msg) ~= nil) then
+			if(animFinished(msg)) then 
+				this:setCanAttack(true); 
+			end
 		elseif msg:getInstruction() == "PR" then
 			this:setTarget(msg:getData():getvData());
 		elseif msg:getInstruction() == "TRGTR" then
@@ -39,7 +42,7 @@ end
 
 local function stateSeek(this, msgbus)
 	--heading = AIMvmnt.Seek(this:getPos(), this:getTarget(), this:getSpeed());
-
+	
 	heading = AIMvmnt.Chase(this:getPos(), this:getTarget(), this:getVelocity(), plyr_targ, this:getHeading(), this:getSpeed(), 3);
 	heading = AIMvmnt.capSpeed(heading, this:getSpeed());
 	this:setVelocity(heading);
@@ -51,33 +54,26 @@ local function stateSeek(this, msgbus)
 	playAnimationLoop(msgbus, this:getIdentifiers(), "run");
 
 	if playerdistance < 200 then
-		this:setState(0);
+		this:setState(STATE_WAIT);
+		this:setCanAttack(true);
 	end
 end
 
-local waittime = 0;
-local attackcooldown = 0.0
-
 local function stateWait(this, msgbus)
-	--heading = AIMvmnt.Arrive(this:getPos(), this:getTarget(), this:getVelocity(), this:getSpeed(), 0.001, 150); 
-	--heading = AIMvmnt.capSpeed(heading, this:getSpeed());
 	this:setVelocity(vec3());
 
-	waittime = waittime + time;
-	if(attackcooldown > 0) then attackcooldown = attackcooldown - time; end
-	
-	if waittime > 1.0 then 
-		if(attackcooldown <= 0.0) then
-			waittime = 0.0;
-			attackcooldown = 1.5;
-			velocity = AIMvmnt.Seek(this:getPos(), this:getTarget(), this:getSpeed());
-			playAnimationLoop(msgbus, this:getIdentifiers(), "attack");
-			fireProjectile(this:getPos(), Math.normalize(velocity), "bullet", msgbus);
-			playSoundatSource(msgbus, this:getIdentifiers(), "gunshot");
-		end
-	elseif attackcooldown <= 0 then
-		playAnimationLoop(msgbus, this:getIdentifiers(), "stand");
+	if this:getCanAttack() == true then 
+		playAnimationOnce(msgbus, this:getIdentifiers(), "attack");
 
+		velocity = AIMvmnt.Seek(this:getPos(), this:getTarget(), this:getSpeed());
+		fireProjectile(this:getPos(), Math.normalize(velocity), "bullet", msgbus);
+
+		playSoundatSource(msgbus, this:getIdentifiers(), "gunshot");
+		
+		this:setCanAttack(false);
+	else
+		if(math.random(0, 100) <= 10) then checkAnimFinished(this:getIdentifiers(), msgbus); end
+		
 		playerdistance = AIMvmnt.getDistance(this:getPos(), this:getTarget());
 
 		if playerdistance > 250 then
@@ -86,15 +82,7 @@ local function stateWait(this, msgbus)
 	end
 end
 
-local function stateAttack(this, msgbus)
-	velocity = AIMvmnt.Seek(this:getPos(), this:getTarget(), this:getSpeed());
-	playAnimationOnce(msgbus, this:getIdentifiers(), "crattak");
-	fireProjectile(this:getPos(), Math.normalize(velocity), "bullet", msgbus);
-end
-
 local function stateDIE(this, msgbus)
-	--heading = AIMvmnt.Arrive(this:getPos(), this:getTarget(), this:getVelocity(), this:getSpeed(), 0.001, 150); 
-	--heading = AIMvmnt.capSpeed(heading, this:getSpeed());
 	this:setVelocity(vec3());
 
 	playAnimationOnce(msgbus, this:getIdentifiers(), "death");
@@ -106,12 +94,9 @@ end
 
 local function initEntity(this, msgbus)
 	this:setSpeed(300);
-	this:setHealth(100);
+	this:setHealth(1500);
 	this:setState(0);
 	this:setTarget(vec3());
-	waittime = 0;
-	attackcooldown = 0.0
-	pos_table[this:getIdentifiers():getId()] = this:getPos();
 end
 
 function isnan(x) return x ~= x end
@@ -128,9 +113,10 @@ function start(this, msgbus)
 		stateDIE(this, msgbus);
 	end
 
+	if(this:getHealth() <= 0) then this:setState(STATE_DEAD) end
+
+
 	if isnan(AIMvmnt.faceTarget(this:getPos(), this:getTarget())) == false then
 		this:setLAngle(math.abs(AIMvmnt.faceTarget(this:getPos(), this:getTarget())));
-		--print(tonumber(AIMvmnt.faceTarget(this:getPos(), this:getTarget())));
 	end
-	--this:lookAt(this:getTarget());
 end

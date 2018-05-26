@@ -110,7 +110,12 @@ void SceneManager::msgrcvr() {
 		}
 		else 
 		if (tmpmsg.getInstruction() == SAVE_GAME) {
-			saveGame(tmpmsg.getData().sdata);
+			if (scenes.size() > tmpmsg.getiData()) {
+				unsigned tmpc = currscene;
+				currscene = tmpmsg.getiData();
+				saveGame(tmpmsg.getData().sdata);
+				currscene = tmpc;
+			}
 		}
 		if (tmpmsg.getInstruction() == LOAD_GAME) {
 			loadGame(tmpmsg.getData().sdata);
@@ -151,9 +156,6 @@ bool SceneManager::setSceneHeightMap(unsigned sceneno, GameObject* hmObj) {
 }
 
 bool SceneManager::saveGame(std::string savename) {
-	std::cout << "Inside SceneManager Function Save Game." << std::endl;
-	std::cout << "File to save as: " << savename <<std::endl;
-
 	std::string savef = std::to_string(currscene) + "\n";
 
 	//mm
@@ -170,9 +172,6 @@ bool SceneManager::saveGame(std::string savename) {
 }
 
 bool SceneManager::loadGame(std::string filetoload) {
-	std::cout << "Inside SceneManager Function Load Game." << std::endl;
-	std::cout << "File to load from: " << filetoload << std::endl;
-
 	try {
 		//mm
 		save sf(filetoload); // Create save object with filename.

@@ -56,7 +56,7 @@ function testSoundPlaying(msgbus, self_id, sound)
 end
 
 function testSoundDone(msg)
-	if(msg:getInstruction() ~= "SND_P_R") then print("beer") return -2; 
+	if(msg:getInstruction() ~= "SND_P_R") then return -2; 
 	else return msg:getiData(); end
 end
 
@@ -64,4 +64,16 @@ function incScene(msgbus)
 	tmpm = Message("CS");
 	tmpm:setiData(curscene + 1);
 	msgbus:postMessage(tmpm, Identifiers("", "SM"));
+end
+
+function checkAnimFinished(self_id, msgbus)
+	msg = Message("ANIM_P");
+	msg:setFrom(self_id);
+	msgbus:postMessage(msg, Identifiers("", tostring(self_id:getId())));
+end
+
+function animFinished(msg)
+	if(msg:getInstruction() ~= "ANIM_P_R") then return nil;
+	elseif msg:getiData() == 1 then return false;
+	else return true; end
 end

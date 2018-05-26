@@ -153,6 +153,9 @@ public:
 	*/
 	void addmvData(const vec3 & toadd);
 
+	vec3 & getvData();
+	void setvData(const vec3 & toset);
+
 private:
 	/// The data type.
 	char dtype;

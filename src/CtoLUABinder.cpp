@@ -23,6 +23,7 @@ void CtoLUABinder::bindClasses(lua_State* lstate) {
 			.def("GetGameObject", &Scene::GetGameObject)
 			.def("getState", &Scene::getState)
 			.def("setState", &Scene::setState)
+			.def("getLoaded", &Scene::getLoaded)
 	];
 	luabind::module(lstate)[
 		luabind::class_<vec3>("vec3")
@@ -97,6 +98,8 @@ void CtoLUABinder::bindClasses(lua_State* lstate) {
 			.def("setHeading", &NPC::setHeading)
 			.def("setLAngle", &NPC::setLAngle)
 			.def("setUpdateable", &NPC::setUpdatable)
+			.def("getCanAttack", &NPC::getCanAttack)
+			.def("setCanAttack", &NPC::setCanAttack)
 	];
 	luabind::module(lstate)[
 		luabind::class_<StaticEntity>("StaticEntity")
@@ -145,6 +148,11 @@ void CtoLUABinder::bindClasses(lua_State* lstate) {
 			.def("defaultMessageHandler", &Player::defaultMessageHandler)
 			.def("playerDefaultMessageHandler", &Player::playerDefaultMessageHandler)
 			.def("getFront", &Player::getFront)
+			.def("getHealth", &Player::getHealth)
+			.def("getAmmo", &Player::getAmmo)
+			.def("setHealth", &Player::setHealth)
+			.def("setAmmo", &Player::setAmmo)
+
 	];
 	luabind::module(lstate)[
 		luabind::class_<Scenery>("Scenery")
@@ -193,6 +201,8 @@ void CtoLUABinder::bindClasses(lua_State* lstate) {
 			.def("getData", &Message::getData)
 			.def("getiData", &Message::getiData)
 			.def("getsData", &Message::getsData)
+			.def("getvData", &Message::getvData)
+			.def("setvData", &Message::setvData)
 	];
 	luabind::module(lstate)[
 		luabind::class_<Data>("data")
