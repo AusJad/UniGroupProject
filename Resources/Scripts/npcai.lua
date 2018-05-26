@@ -97,7 +97,7 @@ local function stateSeek(this, msgbus)
 
 	playAnimationLoop(msgbus, this:getIdentifiers(), "run");
 
-	if playerdistance < 200 then
+	if playerdistance < 400 then
 		this:setState(STATE_WAIT);
 		this:setCanAttack(true);
 	end
@@ -105,6 +105,9 @@ end
 
 local function stateWait(this, msgbus)
 	this:setVelocity(vec3());
+
+	if(math.random(0, 1000) == 1) then playSoundatSource(msgbus, this:getIdentifiers(), "TAUNT1"); 
+	elseif(math.random(0, 1000) == 1) then playSoundatSource(msgbus, this:getIdentifiers(), "TAUNT2"); end
 
 	if this:getCanAttack() == true then 
 		playAnimationOnce(msgbus, this:getIdentifiers(), "attack");
@@ -120,7 +123,7 @@ local function stateWait(this, msgbus)
 		
 		playerdistance = AIMvmnt.getDistance(this:getPos(), this:getTarget());
 
-		if playerdistance > 250 then
+		if playerdistance > 450 then
 			this:setState(1);
 		end
 	end
@@ -168,6 +171,7 @@ function start(this, msgbus)
 	if(this:getHealth() <= 500) then
 		if(math.random(0, 1000) <= 10) then
 			this:setState(STATE_FLEE);
+			if(math.random(0, 10) == 1) then playSoundatSource(msgbus, this:getIdentifiers(), "NOOO"); end
 		end
 	end
 
@@ -175,7 +179,7 @@ function start(this, msgbus)
 		if(this:getState() ~= STATE_FLEE) then
 			this:setLAngle(math.abs(AIMvmnt.faceTarget(this:getPos(), this:getTarget())));
 		else
-			this:setLAngle(math.abs(AIMvmnt.faceTarget(this:getPos(), AIMvmnt.Flee(this:getPos(), this:getTarget(), this:getSpeed()))));
+			this:setLAngle(AIMvmnt.faceTarget(this:getPos(), AIMvmnt.Flee(this:getPos(), this:getTarget(), this:getSpeed())));
 		end
 	end
 end

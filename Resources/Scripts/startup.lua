@@ -26,7 +26,9 @@ local function loadResources(AMAN)
 	AMAN:addResource("./Resources/Audio/bgmusic1.wav", "WAV", "BGMUSIC1");
 	AMAN:addResource("./Resources/Audio/rb.wav", "WAV", "robotnoise");
 	AMAN:addSound("./Resources/Audio/gunshot.wav", "WAV", "gunshot", false);
-
+	AMAN:addSound("./Resources/Audio/no.wav", "WAV", "NOOO", false);
+	AMAN:addSound("./Resources/Audio/taunt1.wav", "WAV", "TAUNT1", false);
+	AMAN:addSound("./Resources/Audio/taunt2.wav", "WAV", "TAUNT2", false);
 
 	--Load fonts
 	AMAN:addResource("./Resources/Fonts/DODGE.csv", "FNT", "DODGE");

@@ -69,22 +69,6 @@ function keys(key, action, MB)
 			tmpm = Message("TGL_C");
 			MB:postMessage(tmpm, Identifiers("", "SM"));
 		end
-	elseif key:equals("o") or key:equals("O") then
-		if action:equals("press") then
-			MB:postMessage(Message("SMF"), Identifiers("", "Camera"));
-			MB:postMessage(Message("SML"), Identifiers("", "Camera"));
-			MB:postMessage(Message("SMR"), Identifiers("", "Camera"));
-			MB:postMessage(Message("SMB"), Identifiers("", "Camera"));
-			MB:postMessage(Message("SLD"), Identifiers("", "Camera"));
-			MB:postMessage(Message("SLU"), Identifiers("", "Camera"));
-			tmpm = Message("CS");
-			if (curscene == 2) then
-				tmpm:setiData(3);
-			else
-				tmpm:setiData(2);
-			end
-			MB:postMessage(tmpm, Identifiers("", "SM"));
-		end
 	end
 end
 

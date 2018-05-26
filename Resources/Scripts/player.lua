@@ -135,8 +135,6 @@ function playerMsgRcvr(this, msgbus)
 		tmpm = Message("CS");
 		tmpm:setiData(deathscreen);
 		msgbus:postMessage(tmpm, Identifiers("", "SM"));
-
-		pushChanges(msgbus);
 	end
 
 	while msgbus:hasMessage(this:getIdentifiers()) do
