@@ -45,7 +45,7 @@ local function loadResources(AMAN)
 
 
 	AMAN:addModel("./Resources/Models/Rock.obj", "IM", "ROCK", vec3(15,15,15));
-	AMAN:addModel("./Resources/Models/lava.obj", "IM", "LAVA", vec3(1,1,1));
+	AMAN:addModel("./Resources/Models/lava.obj", "IM", "LAVA", vec3(15,3,15));
 	AMAN:addModel("./Resources/Models/bullet.obj", "IM", "bullet", vec3(1,1,1));
 	AMAN:addModel("./Resources/Models/robotgreen.obj", "IM", "ROBOT", vec3(0.5,0.5,0.5));
 	AMAN:addModel("./Resources/Models/robotgreen.obj", "IM", "Robot2", vec3(0.3,0.3,0.3));

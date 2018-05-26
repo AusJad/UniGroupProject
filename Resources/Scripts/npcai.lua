@@ -112,9 +112,12 @@ function start(this, msgbus)
 	elseif this:getState() == STATE_DEAD then
 		stateDIE(this, msgbus);
 	end
+		
+	if(this:getPos():y() < 310 and this:getPos():y() ~= 0) then
+		this:setHealth(0);
+	end
 
 	if(this:getHealth() <= 0) then this:setState(STATE_DEAD) end
-
 
 	if isnan(AIMvmnt.faceTarget(this:getPos(), this:getTarget())) == false then
 		this:setLAngle(math.abs(AIMvmnt.faceTarget(this:getPos(), this:getTarget())));

@@ -109,6 +109,10 @@ end
 function playerMsgRcvr(this, msgbus)
 	if(this:getAmmo() == -20) then init(this); end
 
+	if(this:getPos():y() < 310 and this:getPos():y() > 280) then
+		this:setHealth(0);
+	end
+
 	if this:getHealth() <= 0 then
 		print(this:getHealth());
 		msgbus:postMessage(Message("RESET_S"), Identifiers("", "level1"));

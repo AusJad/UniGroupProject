@@ -61,6 +61,8 @@ function initLvl1(SM, AE)
 	SM:attachControls(level1, ResourceList("keyCallback", "keys", "mouseCallback", "mouse", "mouseButtonCallback", "playerAttack"));
 	SM:attachTerrain(Identifiers("TO", "Terrain"), level1, vec3(0,0,0), ResourceList("model", "TERRAIN"));
 	
+	SM:addObject(Identifiers("PROP"), level1, vec3(4000,300,0), ResourceList("model", "LAVA"));
+
 	--add rocks
 	for i =  20,1,-1 
 	do  
