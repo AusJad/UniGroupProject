@@ -178,7 +178,13 @@ function level1Update(this, msgbus)
 	segments[this:getState()]:Do(msgbus);
 	if(segments[this:getState()]:Check_Done()) then 
 		this:setState(this:getState() + 1); 
-		if(this:getState() > maxsegment) then this:setState(-2); end
+		if(this:getState() > maxsegment) then 
+			this:setState(-2); 
+			tmpm = Message("CS");
+			tmpm:setiData(victorycutscene);
+			reset = true;
+			msgbus:postMessage(tmpm, Identifiers("", "SM"));
+		end
 	end
 end
 

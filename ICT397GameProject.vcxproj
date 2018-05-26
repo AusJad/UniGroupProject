@@ -225,7 +225,7 @@
     <None Include="Resources\Scripts\level1.lua" />
     <None Include="Resources\Scripts\mainmenu.lua" />
     <None Include="Resources\Scripts\npcai.lua" />
-    <None Include="Resources\Scripts\npcpatrolai.lua" />
+    <None Include="Resources\Scripts\harmlessnpc.lua" />
     <None Include="Resources\Scripts\player.lua" />
     <None Include="Resources\Scripts\scriptedsegment.lua" />
     <None Include="Resources\Scripts\startup.lua" />

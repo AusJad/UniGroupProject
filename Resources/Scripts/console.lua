@@ -13,7 +13,7 @@ local function handleMultiPartCMD(cmd, option, msgbus, ret)
 		changeScene(msgbus, option[1]);
 		return CODE_SUCCESS;
 	elseif(cmd == "OUT" or cmd == "PRINT" or cmd == "ECHO") then
-		print(option);
+		print(option[0]);
 		return CODE_SUCCESS;
 	elseif(cmd == "PS" or cmd == "PLAYSOUND") then
 		playSoundAtPlayer(msgbus, option[1]);

@@ -103,7 +103,7 @@ end
 
 local function init(this)
 	this:setAmmo(200);
-	this:setHealth(15000);
+	this:setHealth(30000);
 end
 
 local bulletcooldown = .75;
@@ -122,7 +122,7 @@ function playerMsgRcvr(this, msgbus)
 	if this:getHealth() <= 0 then
 		print(this:getHealth());
 		msgbus:postMessage(Message("RESET_S"), Identifiers("", "level1"));
-		this:setHealth(15000);
+		this:setHealth(30000);
 		this:setAmmo(200);
 
 		msgbus:postMessage(Message("SMF"), Identifiers("", "Camera"));

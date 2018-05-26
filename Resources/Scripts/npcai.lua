@@ -175,8 +175,7 @@ function start(this, msgbus)
 		if(this:getState() ~= STATE_FLEE) then
 			this:setLAngle(math.abs(AIMvmnt.faceTarget(this:getPos(), this:getTarget())));
 		else
-			heading = AIMvmnt.Flee(this:getPos(), this:getTarget(), this:getSpeed());
-			this:setLAngle(math.abs(AIMvmnt.faceTarget(this:getPos(), heading)));
+			this:setLAngle(math.abs(AIMvmnt.faceTarget(this:getPos(), AIMvmnt.Flee(this:getPos(), this:getTarget(), this:getSpeed()))));
 		end
 	end
 end

@@ -6,6 +6,8 @@ require "./Resources/Scripts/deathmenu";
 require "./Resources/Scripts/player";
 require "./Resources/Scripts/level1";
 require "./Resources/Scripts/helperfunctions";
+require "./Resources/Scripts/harmlessnpc";
+
 
 cutsceneid = "";
 
@@ -13,7 +15,8 @@ local cs1 = 0;
 mainmenu = 1;
 level2 = 3;
 deathscreen = 4;
-local endscreen = 5;
+victorycutscene = 5;
+local endscreen = 6;
 
 local function loadResources(AMAN)
 	--Load height maps
@@ -43,6 +46,7 @@ local function loadResources(AMAN)
 	if(AMAN:addResource("./Resources/CutScenes/test.cs", "CUT_S", "CUTSCENE1")) then print("Loaded resource 'test.cs'!"); 
 	else print("Failed to load resource 'test.cs'!"); end 
 
+	AMAN:addModel("./Resources/Models/skybox2.obj", "IM", "SKYBOX2", vec3(1000,1000,1000));
 
 	AMAN:addModel("./Resources/Models/Rock.obj", "IM", "ROCK", vec3(15,15,15));
 	AMAN:addModel("./Resources/Models/lava.obj", "IM", "LAVA", vec3(15,3,15));
@@ -108,8 +112,12 @@ function initGame(SM, LSM, AMAN, AE)
 	SM:addScene();
 	SM:setCurrScene(level2);
 
+	SM:setSceneResources(ResourceList("updatefunc", "level2Update"), level2);
+
 	SM:attachControls(level2, ResourceList("keyCallback", "keys", "mouseCallback", "mouse"));
 	SM:attachTerrain(Identifiers("TO", "Terrain2"), level2, vec3(0,0,0), ResourceList("model", "Terrain2"));
+
+	SM:addObject(Identifiers("PROP", "SKYBOX"), level2, vec3(0,-8750,0), ResourceList("model", "SKYBOX2"));
 
 	--Set height map
 	SM:setSceneHeightMap(level2, SM:GetGameObject("Terrain2"));
@@ -117,11 +125,13 @@ function initGame(SM, LSM, AMAN, AE)
 	--Adding game objects
 	for i = 15,1,-1 
 	do 
-		SM:addObject(Identifiers("SE"), level2, vec3(math.random (-128*40, 128*40), 0, math.random(-128*40, 128*40)), ResourceList("model", "ROCK")); 
-		SM:addObject(Identifiers("NPC"), level2, vec3(math.random(-128*40, 128*40), 0, math.random(-128*40, 128*40)), ResourceList("model", "PLAYERW"));
+		SM:addObject(Identifiers("SE"), level2, vec3(math.random (-128*35, 128*35), 0, math.random(-128*35, 128*35)), ResourceList("model", "ROCK")); 
 	end
+
 	SM:addObject(Identifiers("CAM","Camera"), level2, vec3(0, 0, 0), ResourceList());
 	SM:addObject(Identifiers("PLYR", "Player"), level2, vec3(0, 0, 0), ResourceList("camera", "Camera", "projmodel", "bullet", "projsnd", "gunshot"));
+	
+	SM:addObject(Identifiers("NPC", "GUY"), level2, vec3(math.random(-128*35, 128*35), 0, math.random(-128*35, 128*35)), ResourceList("model", "DOOMGUY", "updatefunc", "hupdate", "msgrcvr", "hmsgrcvr"));
 
 	--SM:addObject(Identifiers("MO","Guide"), level2, vec3(0, 0, 0), ResourceList("model", "popup2"));
 	
@@ -139,6 +149,16 @@ function initGame(SM, LSM, AMAN, AE)
 
 	SM:addObject(Identifiers("CAM","Camera"), deathscreen, vec3(0, 0, 0), ResourceList());
 	SM:addObject(Identifiers("MO","DEATHMENU"), deathscreen, vec3(0, 0, 0), ResourceList("renderfunc", "deathMenuRender", "updatefunc", "deathMenuUpdate"));
+
+	--Initalise victory cut scene
+	SM:addScene();
+
+	SM:setCurrScene(victorycutscene);
+
+	SM:attachControls(victorycutscene, ResourceList("keyCallback", "deathMenuControls"));
+
+	SM:addObject(Identifiers("CAM","Camera"), victorycutscene, vec3(0, 0, 0), ResourceList());
+	SM:addObject(Identifiers("MO","VICTORYCUTSCENE"), victorycutscene, vec3(0, 0, 0), ResourceList());
 
 	--Initalise end screen scene
 	SM:addScene();
