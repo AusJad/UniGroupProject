@@ -78,7 +78,7 @@ local function stateFlee(this, msgbus)
 		end
 	end
 
-	if(math.random(0, 1000) <= 10) then
+	if(math.random(0, 5000) <= 10) then
 		this:setHealth(1500);
 		this:setState(STATE_CHASE);
 	end
@@ -138,7 +138,7 @@ end
 
 local function initEntity(this, msgbus)
 	this:setSpeed(300);
-	this:setHealth(1500);
+	this:setHealth(1000);
 	this:setState(0);
 	this:setTarget(vec3());
 end
@@ -175,7 +175,8 @@ function start(this, msgbus)
 		if(this:getState() ~= STATE_FLEE) then
 			this:setLAngle(math.abs(AIMvmnt.faceTarget(this:getPos(), this:getTarget())));
 		else
-			this:setLAngle(math.abs(AIMvmnt.faceTarget(this:getPos(), this:getVelocity())));
+			heading = AIMvmnt.Flee(this:getPos(), this:getTarget(), this:getSpeed());
+			this:setLAngle(math.abs(AIMvmnt.faceTarget(this:getPos(), heading)));
 		end
 	end
 end

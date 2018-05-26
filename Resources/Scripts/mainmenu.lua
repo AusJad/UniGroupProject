@@ -279,7 +279,8 @@ local function loadFile(file, msgbus)
 end
 
 local function fileBrowseControls(key, action, MB)
-	if key:equals("enter") and action:equals("press") then 
+	if key:equals("enter") and action:equals("press") then
+		menustate = MENU_STATE_START;
 		loadFile(files[state2selected], MB); 
 	elseif key:equals("down") and action:equals("press") then
 		if(state2selected < maxfile - 1) then state2selected = state2selected + 1; playSoundAtPlayer(MB, "MENUSELECT"); end

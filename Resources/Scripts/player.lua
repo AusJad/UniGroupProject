@@ -106,8 +106,14 @@ local function init(this)
 	this:setHealth(15000);
 end
 
+local bulletcooldown = .75;
+
 function playerMsgRcvr(this, msgbus)
 	if(this:getAmmo() == -20) then init(this); end
+
+	if(time ~= nil and bulletcooldown > 0) then
+		bulletcooldown = bulletcooldown - time;
+	end
 
 	if(this:getPos():y() < 310 and this:getPos():y() > 280) then
 		this:setHealth(0);
@@ -139,11 +145,12 @@ function playerMsgRcvr(this, msgbus)
 		if(checkDamage(tocheck) > -1) then
 			this:setHealth(this:getHealth() - checkDamage(tocheck));
 		elseif (tocheck:getInstruction() == "FIRE") then 
-			if(this:getAmmo() > 0) then
+			if(this:getAmmo() > 0 and bulletcooldown <= 0) then
 				fireProjectile(this:getPos(), this:getFront(), "bullet", msgbus);
 				playSoundAtPlayer(msgbus,"gunshot");
 				playAnimationOnce(msgbus, this:getIdentifiers(), "attack");
 				this:setAmmo(this:getAmmo() - 1);
+				bulletcooldown = .75;
 			end
 		elseif this:playerDefaultMessageHandler(tocheck) == false then 
 			this:defaultMessageHandler(tocheck) 

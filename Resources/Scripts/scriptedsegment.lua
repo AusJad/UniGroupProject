@@ -248,8 +248,9 @@ function S_Seg:Render_Objective()
 		self.waittime = self.waittime - time;
 		if(self.waittime <= 0) then self.wait = false; self.curtext = ""; self.objective = ""; end
 	end
-
-	MenuTools.renderText(vec2(-0.4, 0.65), -2, 0.1, self.curtext);
+	
+	MenuTools.renderTextF(vec2(-0.4, 0.65), -2, 0.1, self.curtext, "CONSOLEFONTBLUE");
+	MenuTools.renderTextF(vec2(-10,-10), 0, 0.005, "", "CONSOLEFONT");
 end
 
 function S_Seg:Render()

@@ -153,7 +153,15 @@ local function reset(this, msgbus)
 end
 
 function level1Update(this, msgbus)
-	if(this:getLoaded()) then setEvents(true); end
+	if(this:getLoaded()) then 
+		msgbus:postMessage(Message("STP_ALL_S"), Identifiers("", "AE")); 
+		setEvents(true); 
+		if(this:getState() ~= 0) then
+			tmp = A_Conv:create(nil, nil, "S1MUSIC", true);
+			tmp:Do(msgbus);
+		end
+	end
+
 	if(this:getState() == -3) then reset(this, msgbus); end
 	if(this:getState() == -2) then return; end
 	if(this:getState() == -1) then init(this, msgbus); end
