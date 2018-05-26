@@ -6,17 +6,17 @@ level1 = 2;
 local segments = {};
 local maxsegment = 3;
 
-local poda = {"E1", "E2", "E3", "E4", "E5", "E6", "E7", "E8", "E9", "E10"};
+poda = {"E1", "E2", "E3", "E4", "E5", "E6", "E7", "E8", "E9", "E10"};
 podapos = {};
-local podasize = 10;
+podasize = 10;
 
-local podb = {"E11", "E12", "E13", "E14", "E15", "E16", "E17", "E18", "E19", "E20"};
+podb = {"E11", "E12", "E13", "E14", "E15", "E16", "E17", "E18", "E19", "E20"};
 podbpos = {};
-local podbsize = 10;
+podbsize = 10;
 
-local podc = {"E21", "E22", "E23", "E24", "E25", "E26", "E27", "E28", "E29", "E30"};
+podc = {"E21", "E22", "E23", "E24", "E25", "E26", "E27", "E28", "E29", "E30"};
 podcpos = {};
-local podcsize = 10;
+podcsize = 10;
 
 function loadLvl1Res(AMAN)
 	AMAN:addModel("./Resources/Models/skybox.obj", "IM", "SKYBOX", vec3(1000,750,1000));
