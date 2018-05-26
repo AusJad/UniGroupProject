@@ -45,6 +45,7 @@ local function loadResources(AMAN)
 
 
 	AMAN:addModel("./Resources/Models/Rock.obj", "IM", "ROCK", vec3(15,15,15));
+	AMAN:addModel("./Resources/Models/lava.obj", "IM", "LAVA", vec3(1,1,1));
 	AMAN:addModel("./Resources/Models/bullet.obj", "IM", "bullet", vec3(1,1,1));
 	AMAN:addModel("./Resources/Models/robotgreen.obj", "IM", "ROBOT", vec3(0.5,0.5,0.5));
 	AMAN:addModel("./Resources/Models/robotgreen.obj", "IM", "Robot2", vec3(0.3,0.3,0.3));
@@ -100,6 +101,7 @@ function initGame(SM, LSM, AMAN, AE)
 	--Initalise Level 1
 	SM:addScene();
 	SM:setCurrScene(level1);
+
 	initLvl1(SM, AE);
 
 	--Initalise Level 2
@@ -118,7 +120,6 @@ function initGame(SM, LSM, AMAN, AE)
 		SM:addObject(Identifiers("SE"), level2, vec3(math.random (-128*40, 128*40), 0, math.random(-128*40, 128*40)), ResourceList("model", "ROCK")); 
 		SM:addObject(Identifiers("NPC"), level2, vec3(math.random(-128*40, 128*40), 0, math.random(-128*40, 128*40)), ResourceList("model", "PLAYERW"));
 	end
-
 	SM:addObject(Identifiers("CAM","Camera"), level2, vec3(0, 0, 0), ResourceList());
 	SM:addObject(Identifiers("PLYR", "Player"), level2, vec3(0, 0, 0), ResourceList("camera", "Camera", "projmodel", "bullet", "projsnd", "gunshot"));
 
