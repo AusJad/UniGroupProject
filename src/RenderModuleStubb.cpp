@@ -265,6 +265,9 @@ void RenderModuleStubb::init(int argc, char** argv) {
 	glLoadIdentity();
 	// Assign created components to GL_LIGHT0
 	configureLights();
+
+	startRenderCycle();
+	endRenderCycle();
 }
 
 bool RenderModuleStubb::shouldContinue() {
