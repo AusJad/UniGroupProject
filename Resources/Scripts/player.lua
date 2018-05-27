@@ -146,6 +146,9 @@ function playerMsgRcvr(this, msgbus)
 		
 		if(checkDamage(tocheck) > -1) then
 			this:setHealth(this:getHealth() - checkDamage(tocheck));
+		elseif (tocheck:getInstruction() == "RESET_PLYR") then 
+			this:setHealth(30000);
+			this:setAmmo(200);
 		elseif (tocheck:getInstruction() == "FIRE") then 
 			if(this:getAmmo() > 0 and bulletcooldown <= 0) then
 				fireProjectile(this:getPos(), this:getFront(), "bullet", msgbus);

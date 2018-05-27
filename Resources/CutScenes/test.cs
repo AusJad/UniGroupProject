@@ -5,6 +5,7 @@ HEADER
 		BOTTOM,2,-1
 		DISTANCE,-2.3
 		TEXTURE,./Resources/Textures/CutScenes/background0.tga,TGA
+		CHANGESCENE,1
 	ENDDEF
 	DEFINEOBJ
 		NAME,ROBOSLAVE
@@ -176,7 +177,7 @@ HEADER
 	DEFINEAUDIO
 		NAME,X2
 		LOOP,FALSE #Must come before SOUNDHANDLE! Otherwise will be ignored.
-		SOUNDHANDLE,./Resources/Audio/cs1/end.wav,cutscenemusic2
+		SOUNDHANDLE,./Resources/Audio/cs1/end.wav,cutscenemusic21
 	ENDDEF
 	DEFINEAUDIO
 		NAME,MP1

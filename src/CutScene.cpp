@@ -7,6 +7,7 @@ CutScene::CutScene(){
 	currentAnimation = 0;
 	finishedflag = false;
 	maxy = 30;
+	nextscene = -1;
 }
 
 CutScene::~CutScene() {
@@ -27,6 +28,7 @@ CutScene::CutScene(const CutScene & tocpy){
 	this->scenes = tocpy.scenes;
 	this->finishedflag = tocpy.finishedflag;
 	this->maxy = tocpy.maxy;
+	this->nextscene = tocpy.nextscene;
 }
 
 CutScene * CutScene::create() const {
@@ -116,8 +118,12 @@ bool CutScene::getHeader(std::ifstream & toread) {
 				if (linehead == ACTOR_ALPHA) {
 					tmpSO.alphaflag = true;
 				}
+				else
+				if (linehead == SCENE_TO_CHANGE) {
+					nextscene = atoi(curline.substr(curline.find(',') + 1).c_str());
+				}
 			}
-
+			
 			if (!tmpSO.name.empty()) cutsceneObjects[tmpSO.name] = tmpSO;
 
 			tmpSO.clear();
@@ -504,10 +510,15 @@ void CutScene::onDone() {
 		}
 	}
 
+	AE->destroyActiveChannels();
+
 	currentAnimation = 0;
 	culmtime = 0;
-	Message tmp(CHNG_SCENE_REQUEST_INC);
-	tmp.setIData(1);
+	Message tmp(CHNG_SCENE_REQUEST);
+
+	if (nextscene == -1) tmp.setIData(1);
+	else tmp.setIData(nextscene);
+
 	MSGBS->postMessage(tmp, Identifiers("", "SM"));
 	finishedflag = false;
 }

@@ -45,7 +45,7 @@ bool Scene::addObject(Identifiers & id, vec3 pos, ResourceList & list){
 
 void Scene::update(float time) {
 	if (resources.hasResource("updatefunc")) {
-		LSM->callFunction<Scene, MessagingBus>(resources.getResource("updatefunc"), *this, *(Singleton<MessagingBus>::getInstance()));
+		LSM->callFunction<Scene, MessagingBus>(resources.getResource("updatefunc"), *this, *(MSGBS));
 	}
 
 	objects.refreshTree();

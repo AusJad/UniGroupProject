@@ -82,12 +82,6 @@ function mouse(x, y, MB)
 	MB:postMessage(topost, Identifiers("", "Camera"));
 end
 
-function exitGameControls(button, action, MB)
-	if button:equals("left") and action:equals("press") then
-		MB:postMessage(Message("KILL"), Identifiers("", "RM"));
-	end
-end
-
 function playerAttack(button, action, MB)
 	if button:equals("left") and action:equals("press") then
 		MB:postMessage(Message("FIRE"), Identifiers("", "Player"));
@@ -97,5 +91,17 @@ end
 function skipCutScene(key, action, MB)
 	if key:equals("enter") and action:equals("press") then
 		MB:postMessage(Message("END_CUT"), Identifiers("", cutsceneid));
+	end
+end
+
+function skipCutScene2(key, action, MB)
+	if key:equals("enter") and action:equals("press") then
+		MB:postMessage(Message("END_CUT"), Identifiers("", cutscene2id));
+	end
+end
+
+function skipCutScene3(key, action, MB)
+	if key:equals("enter") and action:equals("press") then
+		MB:postMessage(Message("END_CUT"), Identifiers("", cutscene3id));
 	end
 end

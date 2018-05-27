@@ -15,8 +15,8 @@ function loadDeathMenuRes(AMAN)
 end
 
 local function init(this, msgbus)
-	playSoundAtPlayer(msgbus, "MENUMUSIC");
-
+	playSoundAtPlayer(msgbus, "DEATHMUSIC");
+	print("here");
 	this:setState(0);
 end
 

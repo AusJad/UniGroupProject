@@ -137,7 +137,7 @@ function A_Conv:create(image, text, sound, instant)
 end
 
 function A_Conv:init(msgbus)
-	playSoundAtPlayer(msgbus, self.sound);
+	if(self.sound ~= nil) then playSoundAtPlayer(msgbus, self.sound); end
 	self.started = 0;
 	if(self.instant) then self.done = true; end
 end

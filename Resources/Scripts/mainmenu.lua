@@ -263,7 +263,8 @@ local loadind = 1;
 local function doSelected(MB)
 	if (selected == 0) then
 		tmpm = Message("CS");
-		tmpm:setiData(level1);
+		if(cansave == false) then tmpm:setiData(level1cutscene);
+		else tmpm:setiData(level1); end
 		MB:postMessage(tmpm, Identifiers("", "SM"));
 	elseif(selected == loadind) then
 		menustate = MENU_STATE_FILE_DISPLAY;

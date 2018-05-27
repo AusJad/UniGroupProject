@@ -10,13 +10,15 @@ require "./Resources/Scripts/harmlessnpc";
 
 
 cutsceneid = "";
+cutscene2id = "";
+cutscene3id = ""
 
 local cs1 = 0;
 mainmenu = 1;
 level2 = 3;
 deathscreen = 4;
 victorycutscene = 5;
-local endscreen = 6;
+level1cutscene = 6
 
 local function loadResources(AMAN)
 	--Load height maps
@@ -41,12 +43,11 @@ local function loadResources(AMAN)
 
 	--Load models
 	AMAN:addResource("./Resources/Models/lvl1popup.tsqr", "TX", "POPUP");
-	AMAN:addResource("./Resources/Models/lvl2popup.tsqr", "TX", "popup2");
-	AMAN:addResource("./Resources/Models/endscreen.tsqr", "TX", "endscrn");
 
 	--Cutscene test
-	if(AMAN:addResource("./Resources/CutScenes/test.cs", "CUT_S", "CUTSCENE1")) then print("Loaded resource 'test.cs'!"); 
-	else print("Failed to load resource 'test.cs'!"); end 
+	AMAN:addResource("./Resources/CutScenes/test.cs", "CUT_S", "CUTSCENE1");
+	AMAN:addResource("./Resources/CutScenes/csvictory.cs", "CUT_S", "CUTSCENEVICTORY"); 
+	AMAN:addResource("./Resources/CutScenes/cslevel1.cs", "CUT_S", "CUTSCENELEVEL1"); 
 
 	AMAN:addModel("./Resources/Models/skybox2.obj", "IM", "SKYBOX2", vec3(1000,1000,1000));
 
@@ -62,6 +63,8 @@ local function loadResources(AMAN)
 	print("Bad") end
 	if AMAN:addModel("./Resources/Models/tris.md2", "MD2", "DOOMGUY", vec3(0.6,0.6,0.6)) == false then
 	print("Bad") end
+
+	AMAN:addSound("./Resources/Audio/deathm.wav", "WAV", "DEATHMUSIC", true);
 
 	loadMenuRes(AMAN);
 	loadDeathMenuRes(AMAN);
@@ -151,26 +154,36 @@ function initGame(SM, LSM, AMAN, AE)
 
 	SM:addObject(Identifiers("CAM","Camera"), deathscreen, vec3(0, 0, 0), ResourceList());
 	SM:addObject(Identifiers("MO","DEATHMENU"), deathscreen, vec3(0, 0, 0), ResourceList("renderfunc", "deathMenuRender", "updatefunc", "deathMenuUpdate"));
+	
+	AE:setListenerSource(SM:GetGameObjectID("Camera"), vec3(0, 0, 0));
 
 	--Initalise victory cut scene
 	SM:addScene();
 
 	SM:setCurrScene(victorycutscene);
 
-	SM:attachControls(victorycutscene, ResourceList("keyCallback", "deathMenuControls"));
+	SM:attachControls(victorycutscene, ResourceList("keyCallback", "skipCutScene2"));
 
 	SM:addObject(Identifiers("CAM","Camera"), victorycutscene, vec3(0, 0, 0), ResourceList());
-	SM:addObject(Identifiers("MO","VICTORYCUTSCENE"), victorycutscene, vec3(0, 0, 0), ResourceList());
+	SM:addObject(Identifiers("MO","VICTORYCUTSCENE"), victorycutscene, vec3(0, 0, 0), ResourceList("model", "CUTSCENEVICTORY"));
 
-	--Initalise end screen scene
+	AE:setListenerSource(SM:GetGameObjectID("Camera"), vec3(0, 0, 0));
+
+	cutscene2id = tostring(SM:GetGameObjectID("VICTORYCUTSCENE"));
+
+	--Initalise level 1 cut scene
 	SM:addScene();
 
-	SM:setCurrScene(endscreen);
+	SM:setCurrScene(level1cutscene);
+
+	SM:attachControls(level1cutscene, ResourceList("keyCallback", "skipCutScene3"));
+
+	SM:addObject(Identifiers("CAM","Camera"), level1cutscene, vec3(0, 0, 0), ResourceList());
+	SM:addObject(Identifiers("MO","LEVEL1CUT"), level1cutscene, vec3(0, 0, 0), ResourceList("model", "CUTSCENELEVEL1"));
 	
-	SM:attachControls(endscreen, ResourceList("mouseButtonCallback", "exitGameControls"));
-	
-	SM:addObject(Identifiers("CAM","Camera"), endscreen, vec3(0, 0, 0), ResourceList());
-	SM:addObject(Identifiers("MO","Guide"), endscreen, vec3(0, 0, 0), ResourceList("model", "endscrn"));
+	AE:setListenerSource(SM:GetGameObjectID("Camera"), vec3(0, 0, 0));
+
+	cutscene3id = tostring(SM:GetGameObjectID("LEVEL1CUT"));
 
 	--Set Starting Scene
 	SM:setCurrScene(cs1);

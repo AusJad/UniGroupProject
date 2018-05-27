@@ -126,7 +126,7 @@ void NPC::checkUpdateRndrChange() {
 }
 
 void NPC::onCollide(vec3 & prevloc, const Identifiers & colgoid) {
-	if(colgoid.getType() != "BLT") state = -2;
+	if(colgoid.getType() != "BLT" && state != 2) state = -2;
 }
 
 void NPC::update(float time) {
@@ -235,9 +235,11 @@ std::string NPC::toString()
 	towrite += "HEALTH," + std::to_string(health) + ",";
 	towrite += "SPEED," + std::to_string(speed) + ",";
 	towrite += "CANUPDATE,";
-	towrite += (canUpdate == true) ? "1," : "0,";
+	if(canUpdate == true && health > 0) towrite += "1,";
+	else towrite += "0,";
 	towrite += "CANRENDER,";
-	towrite += (canUpdate == true) ? "1," : "0,";
+	if (canUpdate == true && health > 0) towrite += "1,";
+	else towrite += "0,";
 	towrite += "CANATTACK,";
 	towrite += (canAttack) ? "1," : "0,";
 	towrite += "LOOKANGLE," + std::to_string(lookangle);

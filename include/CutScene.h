@@ -9,6 +9,7 @@
 #include <stack>
 
 //animation file keywords
+#define SCENE_TO_CHANGE				"CHANGESCENE"
 #define FILE_HEAD					"HEADER"
 #define FILE_HEAD_END				"ENDHEADER"
 #define OBJECT_START				"DEFINEOBJ"
@@ -313,6 +314,8 @@ private:
 	float culmtime;
 	/// If the cut scene is finished or not.
 	bool finishedflag;
+
+	int nextscene;
 
 	/**
 	* @brief A method to draw text on the screen.

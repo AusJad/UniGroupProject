@@ -33,6 +33,8 @@ end
 local function setEvents(loaded)
 	segments[0] = S_Seg:create("Objective: Communicate with Allies");
 	
+	segments[0]:Add_Event(A_Conv:create(nil, nil, nil, true));
+	segments[0]:Add_Event(A_Conv:create(nil, nil, nil, true));
 	segments[0]:Add_Event(A_Conv:create("BGIMG1", "Prime-Tron, They're in The Valley!", "lvl1_1"));
 	segments[0]:Add_Event(A_Conv:create("BGIMG2", "Don't worry, I can't Lose.$I have the High Ground.", "lvl1_2"));
 	segments[0]:Add_Event(A_Conv:create("BGIMG2", "Just Give Me a moment to activate my$battle music.", "lvl1_3"));
@@ -57,6 +59,7 @@ local function setEvents(loaded)
 end
 
 function initLvl1(SM, AE)
+	
 	SM:setSceneResources(ResourceList("updatefunc", "level1Update", "renderfunc", "level1Render"), level1);
 
 	SM:attachControls(level1, ResourceList("keyCallback", "keys", "mouseCallback", "mouse", "mouseButtonCallback", "playerAttack"));
@@ -145,6 +148,7 @@ local function reset(this, msgbus)
 
 	msgbus:postMessage(Message("STP_ALL_S"), Identifiers("", "AE"));
 	msgbus:postMessage(Message("RESET_CAM"), Identifiers("", "Camera"));
+	msgbus:postMessage(Message("RESET_PLYR"), Identifiers("", "Player"));
 
 	pushChanges(msgbus);
 
@@ -157,6 +161,12 @@ function level1Update(this, msgbus)
 	if(this:getLoaded()) then 
 		msgbus:postMessage(Message("STP_ALL_S"), Identifiers("", "AE")); 
 		setEvents(true); 
+		msgbus:postMessage(Message("SMF"), Identifiers("", "Camera"));
+		msgbus:postMessage(Message("SML"), Identifiers("", "Camera"));
+		msgbus:postMessage(Message("SMR"), Identifiers("", "Camera"));
+		msgbus:postMessage(Message("SMB"), Identifiers("", "Camera"));
+		msgbus:postMessage(Message("SLD"), Identifiers("", "Camera"));
+		msgbus:postMessage(Message("SLU"), Identifiers("", "Camera"));
 		if(this:getState() ~= 0) then
 			tmp = A_Conv:create(nil, nil, "S1MUSIC", true);
 			tmp:Do(msgbus);
@@ -180,10 +190,9 @@ function level1Update(this, msgbus)
 	if(segments[this:getState()]:Check_Done()) then 
 		this:setState(this:getState() + 1); 
 		if(this:getState() > maxsegment) then 
-			this:setState(-2); 
+			reset(this, msgbus); 
 			tmpm = Message("CS");
 			tmpm:setiData(victorycutscene);
-			reset = true;
 			msgbus:postMessage(tmpm, Identifiers("", "SM"));
 		end
 	end

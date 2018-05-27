@@ -56,7 +56,7 @@ void Bullet::onCollide(vec3 & prevloc, const Identifiers & colgoid) {
 	tmpm.setInstruction(DAMAGE);
 	tmpm.setIData(500);
 
-	if(colgoid.getType() != "NAN") MSGBS->postMessage(tmpm, colgoid);
+	if(colgoid.getType() != "NAN" && colgoid.getName() != "") MSGBS->postMessage(tmpm, colgoid);
 
 	this->inUse = false;
 }
