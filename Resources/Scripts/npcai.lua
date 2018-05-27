@@ -145,8 +145,6 @@ local function initEntity(this, msgbus)
 end
 
 local function collideResolve(this, msgbus)
-	print("follow A* path here");
-
 	--psuedo code for path resolution:
 		
 	--if(path empty)
@@ -162,10 +160,6 @@ end
 
 local function onCollide(this, msgbus)
 	--get path from this function
-	Path.findPath(this:getPos(), this:getTarget());
-
-	--add to npc object - each npc will need a private instance of your stack facade
-	--this:setPath(path);
 
 	this:setState(STATE_COLLIDED_RESOLVE);
 end
