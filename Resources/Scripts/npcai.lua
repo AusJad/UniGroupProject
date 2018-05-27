@@ -7,6 +7,8 @@ local plyr_targ = vec3();
 
 local culmtime = 0;
 
+local STATE_COLLIDED_RESOLVE = -3;
+local STATE_COLLIDED = -2;
 local STATE_CHASE = 1;
 local STATE_WAIT = 0;
 local STATE_DEAD = 2;
@@ -142,11 +144,41 @@ local function initEntity(this, msgbus)
 	this:setTarget(vec3());
 end
 
+local function collideResolve(this, msgbus)
+	print("follow A* path here");
+
+	--psuedo code for path resolution:
+		
+	--if(path empty)
+	--	state = Chase
+	--else 
+	--	go to next node
+	--	if at node
+	--		path pop node
+
+	--remove when pathfinding implemented
+	this:setState(STATE_CHASE);
+end
+
+local function onCollide(this, msgbus)
+	--get path from this function
+	Path.findPath(this:getPos(), this:getTarget());
+
+	--add to npc object - each npc will need a private instance of your stack facade
+	--this:setPath(path);
+
+	this:setState(STATE_COLLIDED_RESOLVE);
+end
+
 function isnan(x) return x ~= x end
 
 --Entry Point
 function start(this, msgbus)
-	if this:getState() == -1 then
+	if this:getState() == STATE_COLLIDED_RESOLVE then
+		collideResolve(this, msgbus);
+	elseif this:getState() == STATE_COLLIDED then
+		onCollide(this, msgbus);
+	elseif this:getState() == -1 then
 		initEntity(this, msgbus);
 	elseif this:getState() == 1 then
 		stateSeek(this, msgbus);
@@ -157,7 +189,7 @@ function start(this, msgbus)
 	elseif this:getState() == STATE_FLEE then
 		stateFlee(this, msgbus);
 	end
-		
+
 	if(this:getPos():y() < 310 and this:getPos():y() ~= 0) then
 		this:setHealth(0);
 	end

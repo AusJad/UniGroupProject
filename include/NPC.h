@@ -144,6 +144,14 @@ public:
 
 	void setCanAttack(bool nval);
 
+	/**
+	* @brief A virtual method to determine what to do with the object apon collision.
+	*
+	* @param prevloc - The objects previous location.
+	* @param colgoid - The ID of the object collided with.
+	*/
+	void onCollide(vec3 & prevloc, const Identifiers & colgoid);
+
 private:
 	/// Velocity of the NPC.
 	vec3 velocity;

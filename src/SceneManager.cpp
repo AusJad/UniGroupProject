@@ -200,3 +200,12 @@ bool SceneManager::setSceneResources(ResourceList & toset, unsigned sceneno) {
 	scenes.at(sceneno).addResources(toset);
 	return true;
 }
+
+//return stack, not void
+void SceneManager::findPath(const vec3 & pos, const vec3 & target) {
+	std::cout << "in path finder" << std::endl;
+
+	//Your pathfinding function - calls findpath for current scene with arguments to thei function.
+	//Have to use SM singleton here, as function is static
+	//return SM->findPath();
+}

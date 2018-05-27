@@ -141,6 +141,8 @@ public:
 	*/
 	bool setSceneResources(ResourceList & toset, unsigned sceneno);
 
+	static void findPath(const vec3 & pos, const vec3 & target);
+
 private:
 	/// The scene vector.
 	std::vector<Scene> scenes;

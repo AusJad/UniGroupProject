@@ -266,11 +266,15 @@ void CtoLUABinder::bindClasses(lua_State* lstate) {
 	luabind::module(lstate, "Math")[
 		luabind::def("normalize", &Maths::normalize)
 	];
-
+	
 	// mm
 	luabind::module(lstate, "File")[
 		luabind::def("readFileNames", &fileNameReader::getFileNames),
 		luabind::def("hasFiles", &fileNameReader::hasFiles),
 		luabind::def("getFile", &fileNameReader::getFile)
+	];
+
+	luabind::module(lstate, "Path")[
+		luabind::def("findPath", &SceneManager::findPath)
 	];
 }
