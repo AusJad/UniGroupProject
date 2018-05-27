@@ -328,6 +328,18 @@ void NPC::setEvadeTime(float toset) {
 	evadetime = toset;
 }
 
+void NPC::onCollide2(vec3 & prevloc, const vec3 & colpos) {
+	evadetarget = colpos;
+}
+
 float NPC::getEvadeTime() {
 	return evadetime;
+}
+
+const vec3 & NPC::getEvadeTarget() {
+	return evadetarget;
+}
+
+void NPC::setEvadeTarget(const vec3 & toset) {
+	evadetarget = toset;
 }

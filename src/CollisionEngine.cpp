@@ -74,6 +74,7 @@ void CollisionEngine::update(GameObject* toupdate, std::vector<GameObject*> coll
 				&& updateb.zmax >= compb.zmin && updateb.zmin <= compb.zmax
 				&& updateb.ymax >= compb.ymin && updateb.ymin <= compb.ymax) {
 				toupdate->onCollide(tmpos, collGO.at(i)->getIdentifiers());
+				toupdate->onCollide2(tmpos, collGO.at(i)->getPos());
 			}
 		}
 	}

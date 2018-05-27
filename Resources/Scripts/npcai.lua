@@ -149,6 +149,12 @@ local function collideResolve(this, msgbus)
 	
 	if(time == nil) then return; end
 	
+	playAnimationLoop(msgbus, this:getIdentifiers(), "run");
+
+	heading = AIMvmnt.Flee(this:getPos(), this:getEvadeTarget(), this:getSpeed()/3);
+	heading = AIMvmnt.capSpeed(heading, this:getSpeed());
+	this:setVelocity(heading);
+
 	if(this:getEvadeTime() <= 0) then	
 		this:setState(STATE_CHASE);
 	else
@@ -157,11 +163,10 @@ local function collideResolve(this, msgbus)
 end
 
 local function onCollide(this, msgbus)
-	this:setEvadeTime(0.2);
+	this:setEvadeTime(0.02);
 
-	heading = AIMvmnt.Flee(this:getPos(), this:getTarget(), this:getSpeed());
+	heading = AIMvmnt.Flee(this:getPos(), this:getEvadeTarget(), this:getSpeed()/3);
 	heading = AIMvmnt.capSpeed(heading, this:getSpeed());
-
 	this:setVelocity(heading);
 
 	this:setState(STATE_COLLIDED_RESOLVE);
@@ -201,7 +206,7 @@ function start(this, msgbus)
 	end
 
 	if isnan(AIMvmnt.faceTarget(this:getPos(), this:getTarget())) == false then
-		if(this:getState() ~= STATE_FLEE and this:getState() ~= STATE_COLLIDED_RESOLVE) then
+		if(this:getState() ~= STATE_FLEE) then
 			this:setLAngle(math.abs(AIMvmnt.faceTarget(this:getPos(), this:getTarget())));
 		else
 			this:setLAngle(AIMvmnt.faceTarget(this:getPos(), AIMvmnt.Flee(this:getPos(), this:getTarget(), this:getSpeed()*10)));

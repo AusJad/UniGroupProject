@@ -156,7 +156,13 @@ public:
 
 	float getEvadeTime();
 
+	void onCollide2(vec3 & prevloc, const vec3 & colpos);
+
+	const vec3 & getEvadeTarget();
+	void setEvadeTarget(const vec3 & toset);
+
 private:
+	vec3 evadetarget;
 	/// Velocity of the NPC.
 	vec3 velocity;
 	/// The heading of the NPC.

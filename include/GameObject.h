@@ -172,6 +172,9 @@ public:
 	*/
 	virtual void onCollide(vec3 & prevloc, const Identifiers & colgoid);
 
+
+	virtual void onCollide2(vec3 & prevloc, const vec3 & colpos) {};
+
 	/**
 	* @brief A virtual method to determine if the object has gravity or not.
 	*
