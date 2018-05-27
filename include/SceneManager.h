@@ -142,7 +142,9 @@ public:
 	*/
 	bool setSceneResources(ResourceList & toset, unsigned sceneno);
 
-	SimpleStack<vec3> findPath(const vec3 & pos, const vec3 & target);
+	SimpleStack<vec3> findPathL(const vec3 & pos, const vec3 & target);
+
+	static SimpleStack<vec3> findPath(const vec3 & pos, const vec3 & target);
 
 	void gridGreyOut(vec2 pos);
 
