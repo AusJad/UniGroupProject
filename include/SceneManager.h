@@ -3,9 +3,12 @@
 #include "AudioEngine.h"
 #include "Controls.h"
 #include "Console.h"
+#include "Singleton.h"
 
 //mm
 #include "saveFileIO.h"
+
+#define SM Singleton<SceneManager>::getInstance() 
 
 /**
 * @class SceneManager

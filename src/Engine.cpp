@@ -7,7 +7,7 @@ bool Engine::Initalise(std::string initscript){
 
 	if(!LSM->doScriptFromFile(initscript)) return false;
 
-	LSM->callFunction<SceneManager, LUAScriptManager, AssetManager, AudioEngine>("initGame", SM, *LSM, *Singleton<AssetManager>::getInstance(), *Singleton<AudioEngine>::getInstance());
+	LSM->callFunction<SceneManager, LUAScriptManager, AssetManager, AudioEngine>("initGame", *SM, *LSM, *Singleton<AssetManager>::getInstance(), *Singleton<AudioEngine>::getInstance());
 
 	return true;
 }
@@ -16,9 +16,9 @@ void Engine::Run() {
 	while (RNDR->shouldContinue()) {
 		RNDR->startRenderCycle();
 
-		SM.update(RNDR->getTimeSinceUpdate());
+		SM->update(RNDR->getTimeSinceUpdate());
 
-		SM.render();
+		SM->render();
 
 		Singleton<AudioEngine>::getInstance()->update();
 		
@@ -43,8 +43,6 @@ bool Engine::initaliseRenderer() {
 
 
 bool Engine::initaliseAudioEngine() {
-	AudioEngine* AE = Singleton<AudioEngine>::getInstance();
-
 	AE->initalise(Singleton<RenderModuleStubb>::getInstance()->getWinWindow());
 	
 	return true;

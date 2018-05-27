@@ -231,9 +231,9 @@ std::string NPC::toString()
 	towrite += "HEALTH," + std::to_string(health) + ",";
 	towrite += "SPEED," + std::to_string(speed) + ",";
 	towrite += "CANUPDATE,";
-	towrite += (canUpdate == true && health > 0) ? "1," : "0,";
+	towrite += (canUpdate == true) ? "1," : "0,";
 	towrite += "CANRENDER,";
-	towrite += (canUpdate == true && health > 0) ? "1," : "0,";
+	towrite += (canUpdate == true) ? "1," : "0,";
 	towrite += "CANATTACK,";
 	towrite += (canAttack) ? "1," : "0,";
 	towrite += "LOOKANGLE," + std::to_string(lookangle);

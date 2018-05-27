@@ -37,8 +37,6 @@ public:
 	void Run();
 
 private:
-	/// Scene manager object.
-	SceneManager SM;
 
 	/**
 	* @brief Initalise the scripting interface.
