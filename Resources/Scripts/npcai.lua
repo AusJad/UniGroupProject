@@ -142,24 +142,27 @@ local function initEntity(this, msgbus)
 	this:setHealth(1000);
 	this:setState(0);
 	this:setTarget(vec3());
+	this:setEvadeTime(0);
 end
 
 local function collideResolve(this, msgbus)
-	--psuedo code for path resolution:
-		
-	--if(path empty)
-	--	state = Chase
-	--else 
-	--	go to next node
-	--	if at node
-	--		path pop node
-
-	--remove when pathfinding implemented
-	this:setState(STATE_CHASE);
+	
+	if(time == nil) then return; end
+	
+	if(this:getEvadeTime() <= 0) then	
+		this:setState(STATE_CHASE);
+	else
+		this:setEvadeTime(this:getEvadeTime() - time);
+	end
 end
 
 local function onCollide(this, msgbus)
-	--get path from this function
+	this:setEvadeTime(0.2);
+
+	heading = AIMvmnt.Flee(this:getPos(), this:getTarget(), this:getSpeed());
+	heading = AIMvmnt.capSpeed(heading, this:getSpeed());
+
+	this:setVelocity(heading);
 
 	this:setState(STATE_COLLIDED_RESOLVE);
 end
@@ -198,7 +201,7 @@ function start(this, msgbus)
 	end
 
 	if isnan(AIMvmnt.faceTarget(this:getPos(), this:getTarget())) == false then
-		if(this:getState() ~= STATE_FLEE) then
+		if(this:getState() ~= STATE_FLEE and this:getState() ~= STATE_COLLIDED_RESOLVE) then
 			this:setLAngle(math.abs(AIMvmnt.faceTarget(this:getPos(), this:getTarget())));
 		else
 			this:setLAngle(AIMvmnt.faceTarget(this:getPos(), AIMvmnt.Flee(this:getPos(), this:getTarget(), this:getSpeed()*10)));

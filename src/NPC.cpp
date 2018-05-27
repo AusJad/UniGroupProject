@@ -6,6 +6,7 @@ NPC::NPC(Identifiers & id, vec3 pos, ResourceList & list) : GameObject( id, pos,
 	health = 0;
 	speed = 0;
 	lookangle = 0;
+	evadetime = 0;
 	canUpdate = false;
 	canRender = false;
 	canAttack = false;
@@ -15,6 +16,7 @@ NPC::NPC() : GameObject(){
 	health = 0;
 	speed = 0;
 	lookangle = 0;
+	evadetime = 0;
 	canUpdate = false;
 	canRender = false;
 	canAttack = false;
@@ -320,4 +322,12 @@ bool NPC::getCanAttack() {
 
 void NPC::setCanAttack(bool nval) {
 	canAttack = nval;
+}
+
+void NPC::setEvadeTime(float toset) {
+	evadetime = toset;
+}
+
+float NPC::getEvadeTime() {
+	return evadetime;
 }

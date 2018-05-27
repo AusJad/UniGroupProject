@@ -100,6 +100,8 @@ void CtoLUABinder::bindClasses(lua_State* lstate) {
 			.def("setUpdateable", &NPC::setUpdatable)
 			.def("getCanAttack", &NPC::getCanAttack)
 			.def("setCanAttack", &NPC::setCanAttack)
+			.def("getEvadeTime", &NPC::getEvadeTime)
+			.def("setEvadeTime", &NPC::setEvadeTime)
 	];
 	luabind::module(lstate)[
 		luabind::class_<StaticEntity>("StaticEntity")

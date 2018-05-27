@@ -152,6 +152,10 @@ public:
 	*/
 	void onCollide(vec3 & prevloc, const Identifiers & colgoid);
 
+	void setEvadeTime(float toset);
+
+	float getEvadeTime();
+
 private:
 	/// Velocity of the NPC.
 	vec3 velocity;
@@ -169,5 +173,7 @@ private:
 	bool canRender = false;
 	///can attack
 	bool canAttack;
+
+	float evadetime;
 };
 
