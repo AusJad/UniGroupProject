@@ -9,7 +9,7 @@ public:
 	bool push(const T &stuff);
 	void pop();
 	T top();
-	bool empty() const { return internalStack.empty() };
+	bool empty() const { return internalStack.empty(); };
 	int size();
 
 

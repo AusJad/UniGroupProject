@@ -162,8 +162,9 @@ end
 
 local function onCollide(this, msgbus)
 	--get path from this function
-	Path.findPath(this:getPos(), this:getTarget());
+	path = Path.findPath(this:getPos(), this:getTarget());
 
+	print(path:top():x());
 	--add to npc object - each npc will need a private instance of your stack facade
 	--this:setPath(path);
 

@@ -100,6 +100,8 @@ void CtoLUABinder::bindClasses(lua_State* lstate) {
 			.def("setUpdateable", &NPC::setUpdatable)
 			.def("getCanAttack", &NPC::getCanAttack)
 			.def("setCanAttack", &NPC::setCanAttack)
+			.def("getPath", &NPC::getPath)
+			.def("setPath", &NPC::setPath)
 	];
 	luabind::module(lstate)[
 		luabind::class_<StaticEntity>("StaticEntity")
@@ -242,6 +244,15 @@ void CtoLUABinder::bindClasses(lua_State* lstate) {
 			.def("toDouble", &SimpleString::toDouble)
 			.def("getData", &SimpleString::getData)
 			.def("setData", &SimpleString::setData)
+	];
+	luabind::module(lstate)[
+		luabind::class_<SimpleStack<vec3>>("SimpleStack")
+			.def(luabind::constructor<>())
+			.def("push", &SimpleStack<vec3>::push)
+			.def("pop", &SimpleStack<vec3>::pop)
+			.def("top", &SimpleStack<vec3>::top)
+			.def("empty", &SimpleStack<vec3>::empty)
+			.def("size", &SimpleStack<vec3>::size)
 	];
 	luabind::module(lstate, "AIMvmnt")[
 		luabind::def("Seek", &AIMovementBehaviours::Seek),

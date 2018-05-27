@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include <iostream>
 #include "AudioEngine.h"
+#include "SimpleStack.h"
 
 /**
 * @class NPC
@@ -152,6 +153,9 @@ public:
 	*/
 	void onCollide(vec3 & prevloc, const Identifiers & colgoid);
 
+	void setPath(const SimpleStack<vec3> & toset);
+	const SimpleStack<vec3> & getPath();
+
 private:
 	/// Velocity of the NPC.
 	vec3 velocity;
@@ -169,5 +173,7 @@ private:
 	bool canRender = false;
 	///can attack
 	bool canAttack;
+
+	SimpleStack<vec3> path;
 };
 
