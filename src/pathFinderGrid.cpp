@@ -29,6 +29,8 @@ bool pathFinderGrid::setGridScale(int xmin, int xmax, int ymin, int ymax) {
 	nodeMutliX = 1 / (float)((xmax - xmin) / 100.0f);
 	nodeMultiZ = 1 / (float)((ymax - ymin) / 100.0f);
 	scaleisSet = true;
+	std::cout << "xmax: " << xmax << " xmin " << xmin << "\n"<< std::endl;
+	std::cout << "Grid Multipliers are: " << nodeMutliX << " and " << nodeMultiZ << std::endl;
 	return true;
 }
 

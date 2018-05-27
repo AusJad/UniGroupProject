@@ -1,6 +1,8 @@
 #pragma once
 #include <map>
 #include "vec2.h"
+#include <iostream>
+
 class pathFinderGrid
 {
 public:

@@ -3,7 +3,6 @@
 #include "QuadTree.h"
 #include "pathFinder.h"
 #include "SimpleStack.h"
-#include "SceneManager.h"
 
 /**
 * @struct GameObjectWrapper
