@@ -144,7 +144,7 @@ public:
 
 	static void findPath(const vec3 & pos, const vec3 & target);
 
-	//SimpleStack<vec2> getPath(GameObject * & pathfor, vec2 target);
+	SimpleStack<vec2> getPath(GameObject * & pathfor, vec2 target);
 
 private:
 	/// The scene vector.

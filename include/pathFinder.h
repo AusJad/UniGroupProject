@@ -3,6 +3,7 @@
 #include <vector>
 #include <vec2.h>
 #include <GameObject.h>
+
 class pathFinder
 {
 public:

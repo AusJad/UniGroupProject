@@ -214,3 +214,8 @@ void SceneManager::findPath(const vec3 & pos, const vec3 & target) {
 	//Have to use SM singleton here, as function is static
 	//return SM->findPath();
 }
+
+SimpleStack<vec2> SceneManager::getPath(GameObject * & pathfor, vec2 target) {
+	SimpleStack<vec2> tmp;
+	return tmp;
+};
