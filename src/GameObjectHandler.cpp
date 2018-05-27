@@ -104,7 +104,7 @@ void GameObjectHandler::msgrcvr() {
 	while (MSGBS->hasMessage(id)) {
 		tmpmsg = MSGBS->getMessage(id);
 		if (tmpmsg.getInstruction() == ADD_TMP_OBJ) {
-			addTmpObj(Identifiers("BLT"), tmpmsg.getData().mvdata.at(0), tmpmsg.getData().mvdata.at(1), ResourceList("model", tmpmsg.getData().sdata));
+			addTmpObj(Identifiers("BLT", tmpmsg.getFrom().getType()), tmpmsg.getData().mvdata.at(0), tmpmsg.getData().mvdata.at(1), ResourceList("model", tmpmsg.getData().sdata));
 		}
 		if (tmpmsg.getInstruction() == GET_OBJECT_LIST) {
 			tmpmsg.setInstruction(OBJECT_LIST_RESPONSE);
@@ -196,6 +196,7 @@ bool GameObjectHandler::addTmpObj(Identifiers id, vec3 pos, vec3 target, Resourc
 	for (unsigned i = 0; i < tmpobjects.size() && !found; i++) {
 		if (tmpobjects.at(i)->isVisible() == false ) {
 			found = true;
+			tmpobjects.at(i)->setIdentifiers(id);
 			tmpobjects.at(i)->setPos(pos);
 			tmpobjects.at(i)->setTarget(target);
 			if(Singleton<ModelManger>::getInstance()->getModelRefrence(model.getResource("model")) != NULL)

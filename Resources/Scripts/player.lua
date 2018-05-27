@@ -151,7 +151,7 @@ function playerMsgRcvr(this, msgbus)
 			this:setAmmo(200);
 		elseif (tocheck:getInstruction() == "FIRE") then 
 			if(this:getAmmo() > 0 and bulletcooldown <= 0) then
-				fireProjectile(this:getPos(), this:getFront(), "bullet", msgbus);
+				fireProjectile(this:getPos(), this:getFront(), "bullet", this:getIdentifiers(), msgbus);
 				playSoundAtPlayer(msgbus,"gunshot");
 				playAnimationOnce(msgbus, this:getIdentifiers(), "attack");
 				this:setAmmo(this:getAmmo() - 1);

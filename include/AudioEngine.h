@@ -9,7 +9,7 @@
 #include "MessagingBus.h"
 #include "Identifiers.h"
 
-#define DEBUGMODE true
+#define DEBUGMODE false
 #define AE Singleton<AudioEngine>::getInstance()
 
 /**

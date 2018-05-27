@@ -35,11 +35,12 @@ function checkDamage(message)
 	end
 end
 
-function fireProjectile(start, velocity, model, msgbus)
+function fireProjectile(start, velocity, model, id, msgbus)
 	tmpm = Message("ATO");
 	tmpm:addmvData(start); 
 	tmpm:addmvData(velocity);
 	tmpm:setsData(model);
+	tmpm:setFrom(id);
 	msgbus:postMessage(tmpm, Identifiers("", "GOH"));
 end
 

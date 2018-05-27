@@ -111,7 +111,7 @@ local function stateWait(this, msgbus)
 		playAnimationOnce(msgbus, this:getIdentifiers(), "attack");
 
 		velocity = AIMvmnt.Seek(this:getPos(), this:getTarget(), this:getSpeed());
-		fireProjectile(this:getPos(), Math.normalize(velocity), "bullet", msgbus);
+		fireProjectile(this:getPos(), Math.normalize(velocity), "bullet", this:getIdentifiers(), msgbus);
 
 		playSoundatSource(msgbus, this:getIdentifiers(), "gunshot");
 		

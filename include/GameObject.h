@@ -172,6 +172,7 @@ public:
 	*/
 	virtual void onCollide(vec3 & prevloc, const Identifiers & colgoid);
 
+	void setIdentifiers(const Identifiers & toset) { this->id = toset; };
 
 	virtual void onCollide2(vec3 & prevloc, const vec3 & colpos) {};
 
