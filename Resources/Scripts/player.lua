@@ -69,13 +69,13 @@ local swayup = true;
 
 local function calcSway()
 	if(swayup) then
-		if(sway < 0.1) then
+		if(sway < 0.2) then
 			sway = sway + 0.2 * time;
 		else
 			swayup = false;
 		end
 	else
-		if(sway > -0.1) then
+		if(sway > -0.2) then
 			sway = sway - 0.2 * time;
 		else
 			swayup = true;
@@ -87,8 +87,6 @@ function playerHUDRenderer(this, msgbus)
 	if(time ~= nil) then culmtime = culmtime + time; end
 
 	if(time ~= nil) then calcSway(); end
-
-	--playAnimationOnce(msgbus, this:getIdentifiers(), "idle");
 	
 	this:drawModel(vec3(8,2 + sway,-10), 90);
 
@@ -107,20 +105,26 @@ local function init(this)
 end
 
 local bulletcooldown = .75;
+local graceperiod = 1;
 
 function playerMsgRcvr(this, msgbus)
 	if(this:getAmmo() == -20) then init(this); end
+
+	if(time ~= nil and graceperiod > 0) then
+		graceperiod = graceperiod - time;
+	end
 
 	if(time ~= nil and bulletcooldown > 0) then
 		bulletcooldown = bulletcooldown - time;
 	end
 
-	if(this:getPos():y() < 310 and this:getPos():y() > 280) then
+	if(this:getPos():y() < 310 and this:getPos():y() > 280 and graceperiod <= 0) then
 		this:setHealth(0);
 	end
 
 	if this:getHealth() <= 0 then
-		print(this:getHealth());
+		graceperiod = 1;
+
 		msgbus:postMessage(Message("RESET_S"), Identifiers("", "level1"));
 		this:setHealth(30000);
 		this:setAmmo(200);

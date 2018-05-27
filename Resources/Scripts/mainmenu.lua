@@ -5,6 +5,7 @@ local menustate = 0;
 
 local MENU_STATE_START			=			0
 local MENU_STATE_FILE_DISPLAY	=			1
+local MENU_STATE_SAVE_ALERT		=			2
 
 --X axis button params
 local buttonstartx = -0.15; local buttonwidth = .3;
@@ -54,6 +55,8 @@ local function genFileList()
 	end
 end
 
+local filename = "";
+
 function loadMenuRes(AMAN)
 	AMAN:addResource("./Resources/Textures/MainMenu/banner.tga", "TGA", "BANNER");
 	AMAN:addResource("./Resources/Textures/MainMenu/skull.tga", "TGA", "BGIMG1");
@@ -67,7 +70,8 @@ function loadMenuRes(AMAN)
 	AMAN:addResource("./Resources/Textures/MainMenu/buttonexitplain.tga", "TGA", "BEXITP");
 	AMAN:addResource("./Resources/Textures/MainMenu/buttonexithighlight.tga", "TGA", "BEXITH");
 	AMAN:addResource("./Resources/Textures/MainMenu/return.tga", "TGA", "RETURN");
-
+	AMAN:addResource("./Resources/Textures/MainMenu/promptsaved.tga", "TGA", "SAVED");
+	
 	--todo: move to player.lua
 	AMAN:addResource("./Resources/Textures/scanline.tga", "TGA", "SCAN");
 	AMAN:addResource("./Resources/Textures/target.tga", "TGA", "TARGET");
@@ -209,6 +213,13 @@ local function listFiles()
 
 end
 
+local function drawSaveAlert()
+	MenuTools.drawTSquare(vec2(-.6, .1), vec2(.6, -.5), front + .3, "SAVED", false);
+	if filename ~= "" then	
+		MenuTools.renderText(vec2(-.3, -.215), front + .3, 0.06, filename);
+	end
+end
+
 function mainMenuRender(this, msgbus)
 	--Draw backdrop
 	MenuTools.drawSquare(vec2(bminx, bminy + byheight), vec2(bminx + bxwidth, bminy), back, vec4(0,0,0,1));
@@ -229,6 +240,9 @@ function mainMenuRender(this, msgbus)
 		drawButtons();
 	elseif (menustate == MENU_STATE_FILE_DISPLAY) then
 		listFiles();
+	elseif (menustate == MENU_STATE_SAVE_ALERT) then
+		drawButtons();
+		drawSaveAlert();
 	end
 
 	--draw button underlay
@@ -254,8 +268,9 @@ local function doSelected(MB)
 	elseif(selected == loadind) then
 		menustate = MENU_STATE_FILE_DISPLAY;
 	elseif(selected == 2 and cansave) then
-		print("here");
-		saveGame(MB, "Save_" .. tostring(os.date("%m-%d-%Y-") .. tostring(os.time())), level1); 
+		filename = "Save_" .. tostring(os.date("%m-%d-%Y-") .. tostring(os.time()));
+		saveGame(MB, filename, level1); 
+		menustate = MENU_STATE_SAVE_ALERT;
 	elseif(selected == exitind) then
 		MB:postMessage(Message("KILL"), Identifiers("", "RM"));
 	end
@@ -296,5 +311,9 @@ function MenuControls(key, action, MB)
 		MainControls(key, action, MB)
 	elseif menustate == MENU_STATE_FILE_DISPLAY then
 		fileBrowseControls(key, action, MB);
+	elseif menustate == MENU_STATE_SAVE_ALERT then
+		if(key:equals("enter") and action:equals("press")) then
+			menustate = MENU_STATE_START;
+		end
 	end
 end

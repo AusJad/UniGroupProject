@@ -41,6 +41,7 @@ local function setEvents(loaded)
 
 	segments[1] = S_Seg:create("Objective: Defeat Enemies in the$valley.");
 
+	segments[1]:Add_Event(A_Conv:create("BGIMG2", "Oh Yeah!", "lvl1_4"));
 	segments[1]:Add_Event(A_Battle:create(poda, podasize, loaded));
 	segments[1]:Add_Event(A_Conv:create("BGIMG2", "Oh Yeah!", "lvl1_4"));
 	
