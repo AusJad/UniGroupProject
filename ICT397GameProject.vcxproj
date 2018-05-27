@@ -137,6 +137,8 @@
     <ClInclude Include="include\ModelManger.h" />
     <ClInclude Include="include\ModelMesh.h" />
     <ClInclude Include="include\NPC.h" />
+    <ClInclude Include="include\pathFinder.h" />
+    <ClInclude Include="include\pathFinderGrid.h" />
     <ClInclude Include="include\Player.h" />
     <ClInclude Include="include\QuadTree.h" />
     <ClInclude Include="include\RawTerrain.h" />
@@ -146,6 +148,7 @@
     <ClInclude Include="include\Scene.h" />
     <ClInclude Include="include\SceneManager.h" />
     <ClInclude Include="include\Scenery.h" />
+    <ClInclude Include="include\SimpleStack.h" />
     <ClInclude Include="include\SimpleString.h" />
     <ClInclude Include="include\Singleton.h" />
     <ClInclude Include="include\Singletons.h" />
@@ -197,6 +200,8 @@
     <ClCompile Include="src\ModelManger.cpp" />
     <ClCompile Include="src\ModelMesh.cpp" />
     <ClCompile Include="src\NPC.cpp" />
+    <ClCompile Include="src\pathFinder.cpp" />
+    <ClCompile Include="src\pathFinderGrid.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\RawTerrain.cpp" />
     <ClCompile Include="src\RenderModuleStubb.cpp" />

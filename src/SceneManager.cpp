@@ -149,6 +149,11 @@ bool SceneManager::setSceneHeightMap(unsigned sceneno, GameObject* hmObj) {
 		Singleton<LUAScriptManager>::getInstance()->setGlobal<float>(hmObj->getModel()->getMaxX(), "worldmaxx" + std::to_string(sceneno));
 		Singleton<LUAScriptManager>::getInstance()->setGlobal<float>(hmObj->getModel()->getMaxZ(), "worldmaxz" + std::to_string(sceneno));
 		Singleton<LUAScriptManager>::getInstance()->setGlobal<float>(hmObj->getModel()->getMinZ(), "worldminz" + std::to_string(sceneno));
+
+		//set pGrid scale
+		scenes.at(sceneno).setGridScale((int)hmObj->getModel()->getMinX(), (int)hmObj->getModel()->getMaxX(), (int)hmObj->getModel()->getMinZ(), (int)hmObj->getModel()->getMaxZ());
+
+		
 		return true;
 	}
 

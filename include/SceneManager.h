@@ -3,6 +3,7 @@
 #include "AudioEngine.h"
 #include "Controls.h"
 #include "Console.h"
+#include "SimpleStack.h"
 #include "Singleton.h"
 
 //mm
@@ -142,6 +143,8 @@ public:
 	bool setSceneResources(ResourceList & toset, unsigned sceneno);
 
 	static void findPath(const vec3 & pos, const vec3 & target);
+
+	//SimpleStack<vec2> getPath(GameObject * & pathfor, vec2 target);
 
 private:
 	/// The scene vector.

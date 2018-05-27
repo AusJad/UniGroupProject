@@ -1,6 +1,9 @@
 #pragma once
 #include "GameObjectHandler.h"
 #include "CollisionEngine.h"
+#include "pathFinderGrid.h"
+#include "SimpleStack.h"
+#include <vector>
 
 //mm
 #include "saveFileIO.h"
@@ -108,6 +111,14 @@ public:
 
 	bool getLoaded();
 
+	SimpleStack<vec2> getPath(GameObject * & pathfor, vec2 target);
+
+	bool setGridScale(int xmin, int xmax, int zmin, int zmax);
+
+	void gridGreyOut(vec2 pos);
+	
+	bool gridIsGrey(vec2 pos);
+
 private:
 	/// The game object handler.
 	GameObjectHandler objects;
@@ -115,6 +126,8 @@ private:
 	CollisionEngine collision;
 	/// The resource list.
 	ResourceList resources;
+
+	pathFinderGrid pGrid;
 
 	int state;
 

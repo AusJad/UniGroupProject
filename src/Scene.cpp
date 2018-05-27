@@ -133,3 +133,20 @@ bool Scene::getLoaded() {
 
 	return loaded;
 }
+
+SimpleStack<vec2> Scene::getPath(GameObject * & pathfor, vec2 target) {
+	return objects.getPath(pathfor, target);
+}
+
+bool Scene::setGridScale(int xmin, int xmax, int zmin, int zmax) {
+	pGrid.setGridScale(xmin, xmax, zmin, zmax);
+	return true;
+}
+
+void Scene::gridGreyOut(vec2 pos) {
+	pGrid.greyOut(pos);
+}
+
+bool Scene::gridIsGrey(vec2 pos) {
+	return pGrid.isGrey(pos);
+};
