@@ -142,9 +142,16 @@ public:
 	*/
 	bool setSceneResources(ResourceList & toset, unsigned sceneno);
 
-	static void findPath(const vec3 & pos, const vec3 & target);
+	SimpleStack<vec3> findPath(const vec3 & pos, const vec3 & target);
 
-	SimpleStack<vec2> getPath(GameObject * & pathfor, vec2 target);
+	void gridGreyOut(vec2 pos);
+
+	bool gridIsGrey(vec2 pos);
+
+	float getGridMultiX();
+
+	float getGridMultiZ();
+
 
 private:
 	/// The scene vector.

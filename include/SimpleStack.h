@@ -7,9 +7,11 @@ class SimpleStack
 public:
 	SimpleStack() {};
 	bool push(const T &stuff);
-	bool pop(T &stuff);
+	void pop();
+	T top();
 	bool empty() const { return internalStack.empty() };
 	int size();
+
 
 private:
 	std::stack<T> internalStack;
@@ -28,14 +30,9 @@ bool SimpleStack<T>::push(const T &stuff) {
 }
 
 template <class T>
-bool SimpleStack<T>::pop(T &stuff) {
-	if (internalStack.size() > 0 ){
-		stuff = internalStack.top();
+void SimpleStack<T>::pop() {
+	if (internalStack.size() > 0) {
 		internalStack.pop();
-		return true;
-	}
-	else{
-		return false;
 	}
 }
 
@@ -44,4 +41,10 @@ int SimpleStack<T>::size() {
 	return internalStack.size();
 }
 
+template <class T>
+T SimpleStack<T>::top() {
+	if (internalStack.size() > 0) {
+		return internalStack.top();
+	}
+}
 

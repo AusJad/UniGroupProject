@@ -206,6 +206,7 @@ bool SceneManager::setSceneResources(ResourceList & toset, unsigned sceneno) {
 	return true;
 }
 
+/*
 //return stack, not void
 void SceneManager::findPath(const vec3 & pos, const vec3 & target) {
 	std::cout << "in path finder" << std::endl;
@@ -215,7 +216,28 @@ void SceneManager::findPath(const vec3 & pos, const vec3 & target) {
 	//return SM->findPath();
 }
 
-SimpleStack<vec2> SceneManager::getPath(GameObject * & pathfor, vec2 target) {
-	SimpleStack<vec2> tmp;
-	return tmp;
+SimpleStack<vec2> SceneManager::findPath(GameObject * & pathfor, vec2 target) {
+return scenes.at(currscene).getPath(pathfor, target);
+}
+
+
+*/
+SimpleStack<vec3> SceneManager::findPath(const vec3 & pos, const vec3 & target) {
+	return scenes.at(currscene).getPath(pos, target);
+}
+
+void SceneManager::gridGreyOut(vec2 pos) {
+	scenes.at(currscene).gridGreyOut(pos);
+}
+
+bool SceneManager::gridIsGrey(vec2 pos) {
+	return scenes.at(currscene).gridIsGrey(pos);
+};
+
+float SceneManager::getGridMultiX() {
+	return scenes.at(currscene).getGridMultiX();
+};
+
+float SceneManager::getGridMultiZ() {
+	return scenes.at(currscene).getGridMultiZ();
 };

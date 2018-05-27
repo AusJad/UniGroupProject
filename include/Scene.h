@@ -110,13 +110,17 @@ public:
 
 	bool getLoaded();
 
-	SimpleStack<vec2> getPath(GameObject * & pathfor, vec2 target);
+	SimpleStack<vec3> getPath(vec3 pos, vec3 target);
 
 	bool setGridScale(int xmin, int xmax, int zmin, int zmax);
 
 	void gridGreyOut(vec2 pos);
 	
 	bool gridIsGrey(vec2 pos);
+
+	float getGridMultiX();
+
+	float getGridMultiZ();
 
 private:
 	/// The game object handler.
