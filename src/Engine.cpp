@@ -2,14 +2,26 @@
 	
 bool Engine::Initalise(std::string initscript){
 	if (!initaliseScriptingInterface()) return false;
+	
 	if (!initaliseRenderer()) return false;
 	if (!initaliseAudioEngine()) return false;
+	if (!LSM->doScriptFromFile(initscript)) return false;
 
-	if(!LSM->doScriptFromFile(initscript)) return false;
+	if (LSM->callFunction<AssetManager>("loadLoadRes", *Singleton<AssetManager>::getInstance())) {
+		renderLoad();
+	}
 
 	LSM->callFunction<SceneManager, LUAScriptManager, AssetManager, AudioEngine>("initGame", *SM, *LSM, *Singleton<AssetManager>::getInstance(), *Singleton<AudioEngine>::getInstance());
 
 	return true;
+}
+
+void Engine::renderLoad() {
+	RNDR->startRenderCycle();
+	RNDR->RenderFacingCamera();
+	LSM->callFunction<AssetManager>("renderLoad", *Singleton<AssetManager>::getInstance());
+	RNDR->StopRenderFacingCamera();
+	RNDR->endRenderCycle();
 }
 
 void Engine::Run() {

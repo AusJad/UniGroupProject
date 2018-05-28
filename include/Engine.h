@@ -58,5 +58,7 @@ private:
 	* @return bool - If it was initalised.
 	*/
 	bool initaliseAudioEngine();
+
+	void renderLoad();
 };
 

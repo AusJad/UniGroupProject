@@ -116,14 +116,16 @@ public:
 	* @param arg - The first arguement.
 	*/
 	template <class T>
-	inline void callFunction(std::string func, T & arg) {
+	inline bool callFunction(std::string func, T & arg) {
 		try {
 			luabind::call_function<void>(lstate, func.c_str(), boost::ref<T>(arg));
+			return true;
 		}
 		catch (LUAERROR)
 		{
 			std::string error = getErrorMSG(LUAERRORMSG);
 			if(DEBUGMODE) std::cerr << error << std::endl;
+			return false;
 		}
 	};
 

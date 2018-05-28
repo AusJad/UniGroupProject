@@ -71,6 +71,15 @@ local function loadResources(AMAN)
 	loadLvl1Res(AMAN);
 end
 
+function loadLoadRes(AMAN)
+	if(AMAN:addResource("./Resources/Textures/startup.tga", "TGA", "LOADICON")) then print("awesome"); end
+end
+
+
+function renderLoad(AMAN)
+	MenuTools.drawTSquare(vec2(.3, -.1), vec2(.7, -0.5), -1, "LOADICON", false);
+end
+
 function initGame(SM, LSM, AMAN, AE)
 
 	--Load resources
