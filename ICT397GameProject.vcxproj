@@ -210,6 +210,7 @@
     <ClCompile Include="src\Scene.cpp" />
     <ClCompile Include="src\SceneManager.cpp" />
     <ClCompile Include="src\Scenery.cpp" />
+    <ClCompile Include="src\simplestack.cpp" />
     <ClCompile Include="src\SimpleString.cpp" />
     <ClCompile Include="src\StaticEntity.cpp" />
     <ClCompile Include="src\Terrain.cpp" />

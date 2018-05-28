@@ -383,6 +383,9 @@
     <ClCompile Include="src\pathFinderGrid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\simplestack.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Scripts\controls.lua">

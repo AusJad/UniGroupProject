@@ -320,10 +320,10 @@ void NPC::setCanAttack(bool nval) {
 	canAttack = nval;
 }
 
-void NPC::setPath(const SimpleStack<vec3> & toset) {
+void NPC::setPath(const SimpleStack & toset) {
 	path = toset;
 }
 
-const SimpleStack<vec3> & NPC::getPath() {
+const SimpleStack & NPC::getPath() {
 	return path;
 }

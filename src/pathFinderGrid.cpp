@@ -8,18 +8,25 @@ pathFinderGrid::pathFinderGrid()
 void pathFinderGrid::greyOut(vec2 pos) {
 	float tmpx = pos.x() * nodeMutliX;
 	float tmpy = pos.y() * nodeMultiZ;
-	grid[(int)tmpx][(int)tmpy] = true;
+	int tmpxi = (int)tmpx;
+	int tmpyi = (int)tmpy;
+	//std::cout << "Greying out x: " << tmpxi << " z: " << tmpyi << std::endl;
+	grid[tmpxi][tmpyi] = 2;
 };
 
 bool pathFinderGrid::isGrey(vec2 pos) {
 	float tmpx = (float)pos.x() * nodeMutliX;
 	float tmpy = (float)pos.y() * nodeMultiZ;
+	int tmpxi = (int)tmpx;
+	int tmpyi = (int)tmpy;
 	
-	if (grid[(int)tmpx][(int)tmpy] = true) {
+	if (grid[tmpxi][tmpyi] == 2) {
+		//std::cout << "Retured isGrey true for x: " << tmpxi << " z: " << tmpyi << std::endl;
 		return true;
 	}
 	else
 	{
+		//std::cout << "Retured isGrey false for x: " << tmpxi << " z: " << tmpyi << std::endl;
 		return false;
 	}
 }

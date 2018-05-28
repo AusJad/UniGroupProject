@@ -126,7 +126,7 @@ public:
 
 	const GameObjectHandler & operator = (const GameObjectHandler & rhs);
 
-	SimpleStack<vec3> getPath(vec3 pos, vec3 target);
+	SimpleStack getPath(vec3 pos, vec3 target);
 	
 private:
 	/// Terrain.

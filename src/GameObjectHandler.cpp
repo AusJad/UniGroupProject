@@ -269,6 +269,6 @@ void  GameObjectHandler::onFind(const std::vector<std::list<GameObjectWrapper> >
 	}
 }
 
-SimpleStack<vec3> GameObjectHandler::getPath(vec3 pos, vec3 target) {
+SimpleStack GameObjectHandler::getPath(vec3 pos, vec3 target) {
 	return pfinder.findpath(gameobjects, pos, target);
 };

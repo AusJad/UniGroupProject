@@ -144,9 +144,28 @@ local function initEntity(this, msgbus)
 	this:setTarget(vec3());
 end
 
+local function onCollide(this, msgbus)
+	--get path from this function
+	path = Path.findPath(this:getPos(), this:getTarget());
+
+	--print(path:top():x());
+	--add to npc object - each npc will need a private instance of your stack facade
+	this:setPath(path);
+
+	this:setState(STATE_COLLIDED_RESOLVE);
+end
+
 local function collideResolve(this, msgbus)
 	print("follow A* path here");
 
+	if(this:getPath():empty() == true)then
+		print("stack is empty");
+	else
+		print("Stack not empty..");
+		print(this:getPath():top():x());
+		print(this:getPath():top():z());
+		this:getPath():pop();
+	end
 	--psuedo code for path resolution:
 		
 	--if(path empty)
@@ -160,16 +179,7 @@ local function collideResolve(this, msgbus)
 	this:setState(STATE_CHASE);
 end
 
-local function onCollide(this, msgbus)
-	--get path from this function
-	path = Path.findPath(this:getPos(), this:getTarget());
 
-	print(path:top():x());
-	--add to npc object - each npc will need a private instance of your stack facade
-	--this:setPath(path);
-
-	this:setState(STATE_COLLIDED_RESOLVE);
-end
 
 function isnan(x) return x ~= x end
 

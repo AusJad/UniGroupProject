@@ -153,8 +153,8 @@ public:
 	*/
 	void onCollide(vec3 & prevloc, const Identifiers & colgoid);
 
-	void setPath(const SimpleStack<vec3> & toset);
-	const SimpleStack<vec3> & getPath();
+	void setPath(const SimpleStack & toset);
+	const SimpleStack & getPath();
 
 private:
 	/// Velocity of the NPC.
@@ -174,6 +174,6 @@ private:
 	///can attack
 	bool canAttack;
 
-	SimpleStack<vec3> path;
+	SimpleStack path;
 };
 

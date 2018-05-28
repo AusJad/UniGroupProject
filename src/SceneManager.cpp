@@ -223,11 +223,11 @@ return scenes.at(currscene).getPath(pathfor, target);
 
 */
 
-SimpleStack<vec3> SceneManager::findPathL(const vec3 & pos, const vec3 & target) {
+SimpleStack SceneManager::findPathL(const vec3 & pos, const vec3 & target) {
 	return scenes.at(currscene).getPath(pos, target);
 }
 
-SimpleStack<vec3> SceneManager::findPath(const vec3 & pos, const vec3 & target) {
+SimpleStack SceneManager::findPath(const vec3 & pos, const vec3 & target) {
 	return SM->findPathL(pos, target);
 }
 

@@ -134,7 +134,7 @@ bool Scene::getLoaded() {
 	return loaded;
 }
 
-SimpleStack<vec3> Scene::getPath(vec3 pos, vec3 target) {
+SimpleStack Scene::getPath(vec3 pos, vec3 target) {
 	return objects.getPath(pos, target);
 }
 

@@ -110,7 +110,7 @@ public:
 
 	bool getLoaded();
 
-	SimpleStack<vec3> getPath(vec3 pos, vec3 target);
+	SimpleStack getPath(vec3 pos, vec3 target);
 
 	bool setGridScale(int xmin, int xmax, int zmin, int zmax);
 

@@ -14,7 +14,7 @@ public:
 	bool isGrey(vec2 pos);
 	bool scaleSet() { return scaleisSet; };
 private:
-	std::map<int, std::map<int, bool>> grid;
+	std::map<int, std::map<int, int>> grid;
 	int xmin;
 	int zmin;
 	int xmax;

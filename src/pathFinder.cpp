@@ -34,7 +34,7 @@ int pathFinder::calcH(AsNode & start, AsNode & target) {
 	return ((distancex * distancex) + (distancez * distancez));
 }
 
-SimpleStack<vec3> pathFinder::findpath(std::vector<GameObject*> & objects, vec3 pos, vec3 target){
+SimpleStack pathFinder::findpath(std::vector<GameObject*> & objects, vec3 pos, vec3 target){
 	
 	// SEEN 0
 	// OPEN 1
@@ -47,6 +47,7 @@ SimpleStack<vec3> pathFinder::findpath(std::vector<GameObject*> & objects, vec3 
 	for (int i = 0; i < objects.size(); i++) {
 		SM->gridGreyOut(vec2(objects.at(i)->getPos().x(), objects.at(i)->getPos().z()));
 	}
+
 
 	AsNode cSquare;
 	AsNode dSquare;
@@ -62,6 +63,12 @@ SimpleStack<vec3> pathFinder::findpath(std::vector<GameObject*> & objects, vec3 
 
 	dSquare.x = (int)(target.x() * multiX);
 	dSquare.z = (int)(target.z() * multiZ);
+	std::cout << "dSquare.x: " << dSquare.x << " dSquare.z: " << dSquare.z << std::endl;
+	
+	if (SM->gridIsGrey(vec2(((dSquare.x) * invMultiX), (dSquare.z) * invMultiZ))) {
+		std::cout << "Destination is greyed out!!" << std::endl;
+	}
+
 
 	cSquare.parent = { -1,-1 };
 	cSquare.g = 0;
@@ -96,89 +103,114 @@ SimpleStack<vec3> pathFinder::findpath(std::vector<GameObject*> & objects, vec3 
 		seennodes[cSquare.z][cSquare.x].status = CLOSED;
 
 		openlist.erase(openlist.begin() + currind);
-		
+
 		AsNode temp;
-		if (SM->gridIsGrey(vec2(((cSquare.x + 1) * invMultiX),(cSquare.z) * invMultiZ)) == false) {
-				temp.x = cSquare.x + 1;
-				temp.z = cSquare.z;
-				temp.g = cSquare.g + 1;
-				temp.h = calcH(temp, dSquare);
-				temp.f = temp.g + temp.h;
-				temp.parent = { cSquare.z, cSquare.x };
-				adjacentsquares.push(temp);
+		//std::cout << "Reaching Here" << std::endl;
+		bool isGrey = SM->gridIsGrey(vec2(((cSquare.x + 1) * invMultiX), (cSquare.z) * invMultiZ));
+		//std::cout << "isGrey returned " << SM->gridIsGrey(vec2(((cSquare.x + 1) * invMultiX), (cSquare.z) * invMultiZ)) << " in the 8th test for x: " << (cSquare.x + 1) << " z: " << (cSquare.z) << std::endl;
+		if (!isGrey && (-100 < cSquare.x + 1 < 100) && (-100 < cSquare.z < 100) || ((cSquare.x + 1 == dSquare.x) && (cSquare.z == dSquare.z))) {
+			temp.x = cSquare.x + 1;
+			temp.z = cSquare.z;
+			temp.g = cSquare.g + 1;
+			temp.h = calcH(temp, dSquare);
+			temp.f = temp.g + temp.h;
+			temp.parent = { cSquare.z, cSquare.x };
+			adjacentsquares.push(temp);
+			//std::cout << "1st temp.x" << temp.x << " 1st temp.z: " << temp.z << std::endl;
 		}
-					
-		if (SM->gridIsGrey(vec2(((cSquare.x - 1) * invMultiX), ((cSquare.z) * invMultiZ))) == false) {
+
+		isGrey = SM->gridIsGrey(vec2(((cSquare.x - 1) * invMultiX), ((cSquare.z) * invMultiZ)));
+		//std::cout << "isGrey returned " << SM->gridIsGrey(vec2(((cSquare.x - 1) * invMultiX), ((cSquare.z) * invMultiZ))) << " in the 8th test for x: " << (cSquare.x - 1) << " z: " << (cSquare.z) << std::endl;
+		if (!isGrey && (-100 < cSquare.x - 1 < 100) && (-100 < cSquare.z < 100) || ((cSquare.x - 1 == dSquare.x) && (cSquare.z == dSquare.z))) {
+			temp.x = cSquare.x - 1;
+			temp.z = cSquare.z;
+			temp.g = cSquare.g + 1;
+			temp.h = calcH(temp, dSquare);
+			temp.f = temp.g + temp.h;
+			temp.parent = { cSquare.z, cSquare.x };
+			adjacentsquares.push(temp);
+			//std::cout << "2nd temp.x" << temp.x << " 2nd temp.z: " << temp.z << std::endl;
+		}
+
+		isGrey = SM->gridIsGrey(vec2(((cSquare.x) * invMultiX), ((cSquare.z + 1) * invMultiZ)));
+		//std::cout << "isGrey returned " << SM->gridIsGrey(vec2(((cSquare.x) * invMultiX), ((cSquare.z + 1) * invMultiZ))) << " in the 8th test for x: " << (cSquare.x) << " z: " << (cSquare.z + 1) << std::endl;
+		if (!isGrey && (-100 < cSquare.x < 100) && (-100 < cSquare.z + 1 < 100) || ((cSquare.x == dSquare.x) && (cSquare.z + 1 == dSquare.z))) {
+			temp.x = cSquare.x;
+			temp.z = cSquare.z + 1;
+			temp.g = cSquare.g + 1;
+			temp.h = calcH(temp, dSquare);
+			temp.f = temp.g + temp.h;
+			temp.parent = { cSquare.z, cSquare.x };
+			adjacentsquares.push(temp);
+			//std::cout << "3rd temp.x" << temp.x << " 3rd temp.z: " << temp.z << std::endl;
+		}
+
+		isGrey = SM->gridIsGrey(vec2((cSquare.x * invMultiX), ((cSquare.z - 1)*invMultiZ)));
+		//std::cout << "isGrey returned " << SM->gridIsGrey(vec2((cSquare.x * invMultiX), ((cSquare.z - 1)*invMultiZ))) << " in the 8th test for x: " << (cSquare.x) << " z: " << (cSquare.z - 1) << std::endl;
+		if (!isGrey && (-100 < cSquare.x < 100) && (-100 < cSquare.z - 1 < 100) || ((cSquare.x == dSquare.x) && (cSquare.z - 1 == dSquare.z))) {
+			temp.x = cSquare.x;
+			temp.z = cSquare.z - 1;
+			temp.g = cSquare.g + 1;
+			temp.h = calcH(temp, dSquare);
+			temp.f = temp.g + temp.h;
+			temp.parent = { cSquare.z, cSquare.x };
+			adjacentsquares.push(temp);
+			//std::cout << "4th temp.x" << temp.x << " 4th temp.z: " << temp.z << std::endl;
+
+		}
+
+		isGrey = SM->gridIsGrey(vec2(((cSquare.x + 1)*invMultiX), ((cSquare.z - 1)*invMultiZ)));
+		//std::cout << "isGrey returned " << SM->gridIsGrey(vec2(((cSquare.x + 1)*invMultiX), ((cSquare.z - 1)*invMultiZ))) << " in the 8th test for x: " << (cSquare.x + 1) << " z: " << (cSquare.z - 1) << std::endl;
+		if (!isGrey && (-100 < cSquare.x + 1 < 100) && (-100 < cSquare.z - 1 < 100) || ((cSquare.x + 1 == dSquare.x) && (cSquare.z - 1 == dSquare.z))) {
+			temp.x = cSquare.x + 1;
+			temp.z = cSquare.z - 1;
+			temp.g = cSquare.g + 1;
+			temp.h = calcH(temp, dSquare);
+			temp.f = temp.g + temp.h;
+			temp.parent = { cSquare.z, cSquare.x };
+			adjacentsquares.push(temp);
+			//std::cout << "5th temp.x" << temp.x << " 5th temp.z: " << temp.z << std::endl;
+		}
+
+		isGrey = SM->gridIsGrey(vec2(((cSquare.x - 1)*invMultiX), ((cSquare.z - 1)*invMultiZ)));
+		//std::cout << "isGrey returned " << SM->gridIsGrey(vec2(((cSquare.x - 1)*invMultiX), ((cSquare.z - 1)*invMultiZ))) << " in the 8th test for x: " << (cSquare.x - 1) << " z: " << (cSquare.z - 1) << std::endl;
+		if (!isGrey && (-100 < cSquare.x - 1 < 100) && (-100 < cSquare.z - 1 < 100) || ((cSquare.x - 1 == dSquare.x) && (cSquare.z - 1 == dSquare.z))) {
+			temp.x = cSquare.x - 1;
+			temp.z = cSquare.z - 1;
+			temp.g = cSquare.g + 1;
+			temp.h = calcH(temp, dSquare);
+			temp.f = temp.g + temp.h;
+			temp.parent = { cSquare.z, cSquare.x };
+			adjacentsquares.push(temp);
+			//std::cout << "6th temp.x" << temp.x << " 6th temp.z: " << temp.z << std::endl;
+
+		}
+
+		isGrey = SM->gridIsGrey(vec2(((cSquare.x + 1)*invMultiX), ((cSquare.z + 1)*invMultiZ)));
+		//std::cout << "isGrey returned " << SM->gridIsGrey(vec2(((cSquare.x + 1)*invMultiX), ((cSquare.z + 1)*invMultiZ))) << " in the 8th test for x: " << (cSquare.x + 1) << " z: " << (cSquare.z + 1) << std::endl;
+		if (!isGrey && (-100 < cSquare.x + 1 < 100) && (-100 < cSquare.z + 1 < 100) || ((cSquare.x + 1 == dSquare.x) && (cSquare.z + 1 == dSquare.z))) {
+			temp.x = cSquare.x + 1;
+			temp.z = cSquare.z + 1;
+			temp.g = cSquare.g + 1;
+			temp.h = calcH(temp, dSquare);
+			temp.f = temp.g + temp.h;
+			temp.parent = { cSquare.z, cSquare.x };
+			adjacentsquares.push(temp);
+			//std::cout << "7th temp.x" << temp.x << " 7th temp.z: " << temp.z << std::endl;
+		}
+
+		isGrey = SM->gridIsGrey(vec2(((cSquare.x - 1)*invMultiX), ((cSquare.z + 1)*invMultiZ)));
+		//isGrey = SM->gridIsGrey(tmpvec2);
+		//std::cout << "isGrey returned " << SM->gridIsGrey(vec2(((cSquare.x - 1)*invMultiX), ((cSquare.z + 1)*invMultiZ))) << " in the 8th test for x: " << (cSquare.x - 1) << " z: " << (cSquare.z + 1) << std::endl;
+		if (!isGrey && (-100 < cSquare.x - 1 < 100) && (-100 < cSquare.z + 1 < 100) || ((cSquare.x - 1 == dSquare.x) && (cSquare.z + 1 == dSquare.z))){
 				temp.x = cSquare.x - 1;
-				temp.z = cSquare.z;
-				temp.g = cSquare.g + 1;
-				temp.h = calcH(temp, dSquare);
-				temp.f = temp.g + temp.h;
-				temp.parent = { cSquare.z, cSquare.x };
-				adjacentsquares.push(temp);
-		}
-				
-		if (SM->gridIsGrey(vec2(((cSquare.x) * invMultiX), ((cSquare.z + 1) * invMultiZ))) == false) {
-				temp.x = cSquare.x;
 				temp.z = cSquare.z + 1;
 				temp.g = cSquare.g + 1;
 				temp.h = calcH(temp, dSquare);
 				temp.f = temp.g + temp.h;
 				temp.parent = { cSquare.z, cSquare.x };
 				adjacentsquares.push(temp);
-		}
-	
-		if (SM->gridIsGrey(vec2((cSquare.x * invMultiX), ((cSquare.z - 1)*invMultiZ))) == false) {
-				temp.x = cSquare.x;
-				temp.z = cSquare.z - 1;
-				temp.g = cSquare.g + 1;
-				temp.h = calcH(temp, dSquare);
-				temp.f = temp.g + temp.h;
-				temp.status = SEEN;
-				temp.parent = { cSquare.z, cSquare.x };
-				adjacentsquares.push(temp);
-			
-		}
-
-		if (SM->gridIsGrey(vec2(((cSquare.x + 1)*invMultiX), ((cSquare.z - 1)*invMultiZ))) == false) {
-				temp.x = cSquare.x + 1;
-				temp.z = cSquare.z - 1;
-				temp.g = cSquare.g + 1;
-				temp.h = calcH(temp, dSquare);
-				temp.f = temp.g + temp.h;
-				temp.parent = { cSquare.z, cSquare.x };
-				adjacentsquares.push(temp);
-		}
-
-		if (SM->gridIsGrey(vec2(((cSquare.x - 1)*invMultiX), ((cSquare.z - 1)*invMultiZ))) == false) {
-				temp.x = cSquare.x - 1;
-				temp.z = cSquare.z - 1;
-				temp.g = cSquare.g + 1;
-				temp.h = calcH(temp, dSquare);
-				temp.f = temp.g + temp.h;
-				temp.parent = { cSquare.z, cSquare.x };
-				adjacentsquares.push(temp);
-			
-		}
-		
-		if (SM->gridIsGrey(vec2(((cSquare.x + 1)*invMultiX), ((cSquare.z + 1)*invMultiZ))) == false) {
-				temp.x = cSquare.x + 1;
-				temp.z = cSquare.z + 1;
-				temp.g = cSquare.g + 1;
-				temp.h = calcH(temp, dSquare);
-				temp.f = temp.g + temp.h;
-				temp.parent = { cSquare.z, cSquare.x };
-				adjacentsquares.push(temp);
-		}
-
-		if (SM->gridIsGrey(vec2(((cSquare.x - 1)*invMultiX), ((cSquare.z + 1)*invMultiZ))) == false) {
-				temp.x = cSquare.x - 1;
-				temp.z = cSquare.z + 1;
-				temp.g = cSquare.g + 1;
-				temp.h = calcH(temp, dSquare);
-				temp.f = temp.g + temp.h;
-				temp.parent = { cSquare.z, cSquare.x };
-				adjacentsquares.push(temp);
+				//std::cout << "8th temp.x" << temp.x << " 8th temp.z: " << temp.z << std::endl;
 		}
 
 		while (!adjacentsquares.empty()) {
@@ -186,7 +218,7 @@ SimpleStack<vec3> pathFinder::findpath(std::vector<GameObject*> & objects, vec3 
 				if (seennodes.at(adjacentsquares.top().z).find(adjacentsquares.top().x) != seennodes.at(adjacentsquares.top().z).end()) {
 					if (seennodes.at(adjacentsquares.top().z).at(adjacentsquares.top().x).status == OPEN && seennodes.at(adjacentsquares.top().z).at(adjacentsquares.top().x).g > adjacentsquares.top().g) {
 						seennodes.at(adjacentsquares.top().z).at(adjacentsquares.top().x).parent = adjacentsquares.top().parent;
-						seennodes.at(adjacentsquares.top().z).at(adjacentsquares.top().x).g = cSquare.g + 10;
+						seennodes.at(adjacentsquares.top().z).at(adjacentsquares.top().x).g = cSquare.g + 1;
 						seennodes.at(adjacentsquares.top().z).at(adjacentsquares.top().x).h = calcH(seennodes.at(adjacentsquares.top().z).at(adjacentsquares.top().x), dSquare);
 						seennodes.at(adjacentsquares.top().z).at(adjacentsquares.top().x).f = seennodes.at(adjacentsquares.top().z).at(adjacentsquares.top().x).g + seennodes.at(adjacentsquares.top().z).at(adjacentsquares.top().x).h;
 						openlist.push_back({ adjacentsquares.top().z, adjacentsquares.top().x });
@@ -212,35 +244,42 @@ SimpleStack<vec3> pathFinder::findpath(std::vector<GameObject*> & objects, vec3 
 		if (seennodes.find(dSquare.z) != seennodes.end()) {
 			if (seennodes.at(dSquare.z).find(dSquare.x) != seennodes.at(dSquare.z).end()) {
 				pathfound = true;
+				std::cout << "Path found" << std::endl;
 			}
 		}
 
 	} while (!pathfound && !openlist.empty());
 
+	if (!pathfound) { std::cout << "path not found " << std::endl; };
+	if (openlist.empty()) { std::cout << "openlist empty " << std::endl; };
 	if (!openlist.empty()) {
+		
 		indexpair parent = seennodes.at(dSquare.z).at(dSquare.x).parent;
 
 		while (parent.z != -1)
 		{
 			path.push(seennodes.at(parent.z).at(parent.x));
 			parent = path.top().parent;
-			path.top().x *= invMultiX;
-			path.top().z *= invMultiZ;
+			path.top().x = path.top().x * invMultiX;
+			path.top().z = path.top().z * invMultiZ;
 		}
 
 		if (!path.empty()) path.pop();
 	}
 
-	SimpleStack<vec3> vec3pathtmp;
-	SimpleStack<vec3> vec3path;
+	SimpleStack vec3pathtmp;
+	SimpleStack vec3path;
 
 	while(!path.empty()) {
+		std::cout << "path not empty" << std::endl;
+		std::cout << path.top().x << " " << path.top().z << std::endl;
 		vec3pathtmp.push(vec3(path.top().x, 0, path.top().z));
 		path.pop();
 		vec3path.push(vec3pathtmp.top());
 		vec3pathtmp.pop();
 	}
 
+	
 	return vec3path;
 
 };

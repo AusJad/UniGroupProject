@@ -31,7 +31,7 @@ class pathFinder
 {
 public:
 	pathFinder();
-	SimpleStack<vec3> findpath(std::vector<GameObject*> & objects, vec3 pos, vec3 target);
+	SimpleStack findpath(std::vector<GameObject*> & objects, vec3 pos, vec3 target);
 
 private:
 	static int calcH(AsNode & start, AsNode & target);

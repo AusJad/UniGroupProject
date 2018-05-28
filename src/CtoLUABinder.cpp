@@ -246,13 +246,13 @@ void CtoLUABinder::bindClasses(lua_State* lstate) {
 			.def("setData", &SimpleString::setData)
 	];
 	luabind::module(lstate)[
-		luabind::class_<SimpleStack<vec3>>("SimpleStack")
+		luabind::class_<SimpleStack>("SimpleStack")
 			.def(luabind::constructor<>())
-			.def("push", &SimpleStack<vec3>::push)
-			.def("pop", &SimpleStack<vec3>::pop)
-			.def("top", &SimpleStack<vec3>::top)
-			.def("empty", &SimpleStack<vec3>::empty)
-			.def("size", &SimpleStack<vec3>::size)
+			.def("push", &SimpleStack::push)
+			.def("pop", &SimpleStack::pop)
+			.def("top", &SimpleStack::top)
+			.def("empty", &SimpleStack::empty)
+			.def("size", &SimpleStack::size)
 	];
 	luabind::module(lstate, "AIMvmnt")[
 		luabind::def("Seek", &AIMovementBehaviours::Seek),
