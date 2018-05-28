@@ -324,6 +324,6 @@ void NPC::setPath(const SimpleStack & toset) {
 	path = toset;
 }
 
-const SimpleStack & NPC::getPath() {
+SimpleStack & NPC::getPath() {
 	return path;
 }
