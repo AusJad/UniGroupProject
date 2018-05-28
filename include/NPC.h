@@ -154,7 +154,11 @@ public:
 	void onCollide(vec3 & prevloc, const Identifiers & colgoid);
 
 	void setPath(const SimpleStack & toset);
-	const SimpleStack & getPath();
+	
+	//old
+	//const SimpleStack & getPath();
+	//new
+	SimpleStack & getPath();
 
 private:
 	/// Velocity of the NPC.
