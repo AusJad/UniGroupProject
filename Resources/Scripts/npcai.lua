@@ -151,7 +151,7 @@ local function collideResolve(this, msgbus)
 	
 	playAnimationLoop(msgbus, this:getIdentifiers(), "run");
 
-	heading = AIMvmnt.Flee(this:getPos(), this:getEvadeTarget(), this:getSpeed()/5);
+	heading = AIMvmnt.Flee(this:getPos(), this:getEvadeTarget(), this:getSpeed()/6);
 	heading = AIMvmnt.capSpeed(heading, this:getSpeed());
 	this:setVelocity(heading);
 
@@ -165,7 +165,7 @@ end
 local function onCollide(this, msgbus)
 	this:setEvadeTime(0.02);
 
-	heading = AIMvmnt.Flee(this:getPos(), this:getEvadeTarget(), this:getSpeed()/5);
+	heading = AIMvmnt.Flee(this:getPos(), this:getEvadeTarget(), this:getSpeed()/6);
 	heading = AIMvmnt.capSpeed(heading, this:getSpeed());
 	this:setVelocity(heading);
 
