@@ -69,14 +69,14 @@ local swayup = true;
 
 local function calcSway()
 	if(swayup) then
-		if(sway < 0.1) then
-			sway = sway + 0.2 * time;
+		if(sway < 0.05) then
+			sway = sway + 0.1 * time;
 		else
 			swayup = false;
 		end
 	else
-		if(sway > -0.1) then
-			sway = sway - 0.2 * time;
+		if(sway > -0.05) then
+			sway = sway - 0.1 * time;
 		else
 			swayup = true;
 		end

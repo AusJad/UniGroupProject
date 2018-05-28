@@ -52,7 +52,6 @@ bool Bullet::isVisible() {
 
 void Bullet::onCollide(vec3 & prevloc, const Identifiers & colgoid) {
 	if (colgoid.getType() == id.getName()) return;
-	
 	Message tmpm;
 
 	tmpm.setInstruction(DAMAGE);
