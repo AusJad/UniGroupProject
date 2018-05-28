@@ -145,41 +145,28 @@ local function initEntity(this, msgbus)
 end
 
 local function onCollide(this, msgbus)
-	--get path from this function
 	path = Path.findPath(this:getPos(), this:getTarget());
-
-	--print(path:top():x());
-	--add to npc object - each npc will need a private instance of your stack facade
 	this:setPath(path);
-
 	this:setState(STATE_COLLIDED_RESOLVE);
 end
 
 local function collideResolve(this, msgbus)
-	print("follow A* path here");
-
+	--print("follow A* path here");
 	if(this:getPath():empty() == true)then
 		this:setState(STATE_CHASE);
+		--print("Path empty");
 	else
 		if(math.abs(this:getPos():x() -this:getPath():top():x()) < 100 and math.abs(this:getPos():z() -this:getPath():top():z()) < 100) then
 			this:getPath():pop();
+		--	print("path popped");
+			print(this:getPath():size());
 		else
+		--	print("Setting heading");
 			heading = AIMvmnt.Seek(this:getPos(), this:getPath():top(), this:getSpeed());
 			heading = AIMvmnt.capSpeed(heading, this:getSpeed());
 			this:setVelocity(heading);
 		end
 	end
-	--psuedo code for path resolution:
-		
-	--if(path empty)
-	--	state = Chase
-	--else 
-	--	go to next node
-	--	if at node
-	--		path pop node
-
-	--remove when pathfinding implemented
-	--this:setState(STATE_CHASE);
 end
 
 
