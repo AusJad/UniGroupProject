@@ -72,7 +72,7 @@ local function loadResources(AMAN)
 end
 
 function loadLoadRes(AMAN)
-	if(AMAN:addResource("./Resources/Textures/startup.tga", "TGA", "LOADICON")) then print("awesome"); end
+	AMAN:addResource("./Resources/Textures/startup.tga", "TGA", "LOADICON"); 
 end
 
 

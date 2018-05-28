@@ -538,8 +538,6 @@ void CutScene::drawActor(SceneObject & todraw) {
 }
 
 void CutScene::RenderFade(float alpha) {
-	glEnable(GL_BLEND); glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
 	GeoStream << ENABLE_TRANSPARENCY << START_ATTRIB << color_4(0, 0, 0, alpha);
 
 	RNDR->DrawQuad(point(-1.5, 1), point(1.5, -1), -1);
