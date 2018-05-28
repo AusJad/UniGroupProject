@@ -59,7 +59,7 @@ local function loadResources(AMAN)
 	AMAN:addModel("./Resources/Models/corvet.obj", "IM", "SHIP", vec3(0.5,0.5,0.5));
 	if AMAN:addModel("./Resources/Models/guard.md2", "MD2", "PLAYERW", vec3(0.6,0.6,0.6)) == false then
 	print("Bad") end
-	if AMAN:addModel("./Resources/Models/playerweapon.md2", "MD2", "PWEAPON", vec3(0.6,0.6,0.6)) == false then
+	if AMAN:addModel("./Resources/Models/playerweapon.md2", "MD2", "PWEAPON", vec3(0.2,0.2,0.2)) == false then
 	print("Bad") end
 	if AMAN:addModel("./Resources/Models/tris.md2", "MD2", "DOOMGUY", vec3(0.6,0.6,0.6)) == false then
 	print("Bad") end

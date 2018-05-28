@@ -69,13 +69,13 @@ local swayup = true;
 
 local function calcSway()
 	if(swayup) then
-		if(sway < 0.2) then
+		if(sway < 0.1) then
 			sway = sway + 0.2 * time;
 		else
 			swayup = false;
 		end
 	else
-		if(sway > -0.2) then
+		if(sway > -0.1) then
 			sway = sway - 0.2 * time;
 		else
 			swayup = true;
@@ -88,7 +88,7 @@ function playerHUDRenderer(this, msgbus)
 
 	if(time ~= nil) then calcSway(); end
 	
-	this:drawModel(vec3(8,2 + sway,-10), 90);
+	this:drawModel(vec3(3,0.5 + sway,-3.5), 90);
 
 	renderScan();
 
