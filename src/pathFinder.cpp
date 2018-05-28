@@ -63,11 +63,11 @@ SimpleStack pathFinder::findpath(std::vector<GameObject*> & objects, vec3 pos, v
 
 	dSquare.x = (int)(target.x() * multiX);
 	dSquare.z = (int)(target.z() * multiZ);
-	std::cout << "dSquare.x: " << dSquare.x << " dSquare.z: " << dSquare.z << std::endl;
+	//std::cout << "dSquare.x: " << dSquare.x << " dSquare.z: " << dSquare.z << std::endl;
 	
-	if (SM->gridIsGrey(vec2(((dSquare.x) * invMultiX), (dSquare.z) * invMultiZ))) {
-		std::cout << "Destination is greyed out!!" << std::endl;
-	}
+	//if (SM->gridIsGrey(vec2(((dSquare.x) * invMultiX), (dSquare.z) * invMultiZ))) {
+		//std::cout << "Destination is greyed out!!" << std::endl;
+	//}
 
 
 	cSquare.parent = { -1,-1 };
@@ -244,7 +244,7 @@ SimpleStack pathFinder::findpath(std::vector<GameObject*> & objects, vec3 pos, v
 		if (seennodes.find(dSquare.z) != seennodes.end()) {
 			if (seennodes.at(dSquare.z).find(dSquare.x) != seennodes.at(dSquare.z).end()) {
 				pathfound = true;
-				std::cout << "Path found" << std::endl;
+				//std::cout << "Path found" << std::endl;
 			}
 		}
 
@@ -271,8 +271,8 @@ SimpleStack pathFinder::findpath(std::vector<GameObject*> & objects, vec3 pos, v
 	SimpleStack vec3path;
 
 	while(!path.empty()) {
-		std::cout << "path not empty" << std::endl;
-		std::cout << path.top().x << " " << path.top().z << std::endl;
+		//std::cout << "path not empty" << std::endl;
+		//std::cout << path.top().x << " " << path.top().z << std::endl;
 		vec3pathtmp.push(vec3(path.top().x, 0, path.top().z));
 		path.pop();
 		vec3path.push(vec3pathtmp.top());

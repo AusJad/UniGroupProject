@@ -159,12 +159,15 @@ local function collideResolve(this, msgbus)
 	print("follow A* path here");
 
 	if(this:getPath():empty() == true)then
-		print("stack is empty");
+		this:setState(STATE_CHASE);
 	else
-		print("Stack not empty..");
-		print(this:getPath():top():x());
-		print(this:getPath():top():z());
-		this:getPath():pop();
+		if(math.abs(this:getPos():x() -this:getPath():top():x()) < 100 and math.abs(this:getPos():z() -this:getPath():top():z()) < 100) then
+			this:getPath():pop();
+		else
+			heading = AIMvmnt.Seek(this:getPos(), this:getPath():top(), this:getSpeed());
+			heading = AIMvmnt.capSpeed(heading, this:getSpeed());
+			this:setVelocity(heading);
+		end
 	end
 	--psuedo code for path resolution:
 		
@@ -176,7 +179,7 @@ local function collideResolve(this, msgbus)
 	--		path pop node
 
 	--remove when pathfinding implemented
-	this:setState(STATE_CHASE);
+	--this:setState(STATE_CHASE);
 end
 
 

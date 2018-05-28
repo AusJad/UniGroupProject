@@ -154,10 +154,6 @@ public:
 	void onCollide(vec3 & prevloc, const Identifiers & colgoid);
 
 	void setPath(const SimpleStack & toset);
-	
-	//old
-	//const SimpleStack & getPath();
-	//new
 	SimpleStack & getPath();
 
 private:
