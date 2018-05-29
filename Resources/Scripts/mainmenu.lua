@@ -61,6 +61,7 @@ function loadMenuRes(AMAN)
 	AMAN:addResource("./Resources/Textures/MainMenu/banner.tga", "TGA", "BANNER");
 	AMAN:addResource("./Resources/Textures/MainMenu/skull.tga", "TGA", "BGIMG1");
 	AMAN:addResource("./Resources/Textures/MainMenu/robot.tga", "TGA", "BGIMG2");
+	AMAN:addResource("./Resources/Textures/MainMenu/robot2.tga", "TGA", "ROBOT2");
 	AMAN:addResource("./Resources/Textures/MainMenu/buttonplayplain.tga", "TGA", "BPLAYP");
 	AMAN:addResource("./Resources/Textures/MainMenu/buttonplayhighlight.tga", "TGA", "BPLAYH");
 	AMAN:addResource("./Resources/Textures/MainMenu/buttonloadplain.tga", "TGA", "BLOADP");

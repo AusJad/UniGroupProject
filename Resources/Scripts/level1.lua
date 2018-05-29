@@ -35,7 +35,7 @@ local function setEvents(loaded)
 	
 	segments[0]:Add_Event(A_Conv:create(nil, nil, nil, true));
 	segments[0]:Add_Event(A_Conv:create(nil, nil, nil, true));
-	segments[0]:Add_Event(A_Conv:create("BGIMG1", "Prime-Tron, They're in The Valley!", "lvl1_1"));
+	segments[0]:Add_Event(A_Conv:create("ROBOT2", "Prime-Tron, They're in The Valley!", "lvl1_1"));
 	segments[0]:Add_Event(A_Conv:create("BGIMG2", "Don't worry, I can't Lose.$I have the High Ground.", "lvl1_2"));
 	segments[0]:Add_Event(A_Conv:create("BGIMG2", "Just Give Me a moment to activate my$battle music.", "lvl1_3"));
 	segments[0]:Add_Event(A_Conv:create(nil, nil, "S1MUSIC", true));
