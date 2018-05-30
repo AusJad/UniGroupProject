@@ -35,6 +35,7 @@ int pathFinder::calcH(AsNode & start, AsNode & target) {
 }
 
 SimpleStack pathFinder::findpath(std::vector<GameObject*> & objects, vec3 pos, vec3 target){
+	//enable and disable the flags for diagnostics	
 	bool consoleOutput = false;
 	bool consoleOutputCells = false;
 	bool consoleOutputWarning = true;
@@ -75,6 +76,7 @@ SimpleStack pathFinder::findpath(std::vector<GameObject*> & objects, vec3 pos, v
 	cSquare.z = (int)(pos.z() * multiZ);
 
 	//calculate a closer target
+	//these rangex and rangey values tune the randomised short throw comparison points
 	int rangex = rand() % 5 + 2;
 	int rangez = rand() % 5 + 2;
 	AsNode closest;
