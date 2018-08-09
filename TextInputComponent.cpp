@@ -15,7 +15,7 @@ void TextInputComponent::render() {
 	RNDR->DrawQuadOrtho(pos, vec2(pos.x() + width, pos.y() + 3));
 	RNDR->DrawQuadOrtho(pos, vec2(pos.x() + 3, pos.y() + height));
 	RNDR->DrawQuadOrtho(vec2(pos.x() + width -3, pos.y()), vec2(pos.x() + width, pos.y() + height));
-	RNDR->DrawQuadOrtho(vec2(pos.x(), pos.y() + height - 3), vec2(pos.x() + width, pos.y() + height + 3));
+	RNDR->DrawQuadOrtho(vec2(pos.x(), pos.y() + height - 3), vec2(pos.x() + width, pos.y() + height));
 
 	//backdrop
 	GeoStream << color_3(.30, .30, .30);

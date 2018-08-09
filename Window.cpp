@@ -11,7 +11,7 @@ Window::Window(vec2 & stpos, float width, float height, std::string title){
 	visible = true;
 	closebutton = new ButtonComponent(32, 32, vec2(brscreen.x() - 32, tlscreen.y()));
 	components.push_back(new SelectionComponent(480, 64, vec2(tlscreen.x() + 10, tlscreen.y() + 64)));
-	components.push_back(new TextInputComponent(480, 64, vec2(tlscreen.x() + 10, tlscreen.y() + 140)));
+	components.push_back(new TextInputComponent(480, FNT_SIZE_MEDIUM_O + 6, vec2(tlscreen.x() + 10, tlscreen.y() + 140)));
 }
 
 void Window::setCloseButtonCallBack(onClick callback) {

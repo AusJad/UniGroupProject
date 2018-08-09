@@ -80,6 +80,22 @@ void FontEngine::RenderStringO(std::string torender, float fontsize, float start
 	GeoStream << DISABLE_ALPHA;
 }
 
+float FontEngine::precomputeStringWidth(std::string torender, float fontsize) {
+	char curchar;
+
+	float startx = 0;
+
+	for (unsigned i = 0; i < torender.size(); i++) {
+		curchar = toupper(torender.at(i));
+
+		if (fonts.at(activefont).useChar(curchar)) {
+			startx += ((float)fonts.at(activefont).getCharOffset(curchar) / (float)fonts.at(activefont).getCharWidth()) * fontsize;
+		}
+	}
+
+	return startx;
+}
+
 bool FontEngine::hasFont(std::string font) {
 	return fonts.count(font) == 1;
 }

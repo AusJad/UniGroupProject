@@ -97,6 +97,8 @@ public:
 	*/
 	void update();
 
+	float precomputeStringWidth(std::string torender, float fontsize);
+
 private:
 	/// A map of fonts.
 	std::map<std::string, Font> fonts;
