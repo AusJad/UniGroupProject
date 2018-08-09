@@ -98,6 +98,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ButtonComponent.h" />
     <ClInclude Include="include\AIMovementBehaviours.h" />
     <ClInclude Include="include\AssetManager.h" />
     <ClInclude Include="include\AudioEngine.h" />
@@ -158,9 +159,16 @@
     <ClInclude Include="include\vec2.h" />
     <ClInclude Include="include\vec3.h" />
     <ClInclude Include="include\vec4.h" />
+    <ClInclude Include="SelectionComponent.h" />
+    <ClInclude Include="TextInputComponent.h" />
+    <ClInclude Include="Window.h" />
+    <ClInclude Include="WindowFactory.h" />
+    <ClInclude Include="WndComponent.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ButtonComponent.cpp" />
     <ClCompile Include="ICT397GameProject.cpp" />
+    <ClCompile Include="SelectionComponent.cpp" />
     <ClCompile Include="src\AIMovementBehaviours.cpp" />
     <ClCompile Include="src\AssetManager.cpp" />
     <ClCompile Include="src\AudioEngine.cpp" />
@@ -215,19 +223,13 @@
     <ClCompile Include="src\vec2.cpp" />
     <ClCompile Include="src\vec3.cpp" />
     <ClCompile Include="src\vec4.cpp" />
+    <ClCompile Include="TextInputComponent.cpp" />
+    <ClCompile Include="Window.cpp" />
+    <ClCompile Include="WindowFactory.cpp" />
+    <ClCompile Include="WndComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Scripts\console.lua" />
-    <None Include="Resources\Scripts\consolehelperfunctions.lua" />
     <None Include="Resources\Scripts\controls.lua" />
-    <None Include="Resources\Scripts\deathmenu.lua" />
-    <None Include="Resources\Scripts\helperfunctions.lua" />
-    <None Include="Resources\Scripts\level1.lua" />
-    <None Include="Resources\Scripts\mainmenu.lua" />
-    <None Include="Resources\Scripts\npcai.lua" />
-    <None Include="Resources\Scripts\harmlessnpc.lua" />
-    <None Include="Resources\Scripts\player.lua" />
-    <None Include="Resources\Scripts\scriptedsegment.lua" />
     <None Include="Resources\Scripts\startup.lua" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

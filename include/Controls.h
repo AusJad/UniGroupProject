@@ -110,6 +110,8 @@ class Controls
 		*/
 		static void mouseCallback(GLFWwindow* window, double x, double y);
 
+		static void mouseCallbackMenu(GLFWwindow* window, double x, double y);
+
 		/**
 		* @brief The mouse button callback function.
 		*

@@ -209,3 +209,7 @@ void SceneManager::findPath(const vec3 & pos, const vec3 & target) {
 	//Have to use SM singleton here, as function is static
 	//return SM->findPath();
 }
+
+void SceneManager::interpretClick(int x, int y) {
+	scenes.at(currscene).interpretClick(x, y);
+}

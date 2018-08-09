@@ -1,4 +1,4 @@
 s 45 10 45
 m ./Resources/Textures/grass.tga TGA ./Resources/Textures/rocks.tga TGA ./Resources/Textures/sky.tga TGA
-f ./Resources/Models/hm4.raw
+f ./Resources/Models/flat.raw
 t ./Resources/Textures/detailMap.tga TGA

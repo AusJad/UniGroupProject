@@ -49,7 +49,7 @@ bool Controls::changeControlGroup(unsigned groupno, RenderModuleStubb* render, C
 void Controls::bindControls(unsigned groupno, RenderModuleStubb* render, Controls* tochange) {
 	if (tochange->controls.at(groupno).hasResource("keyCallback")) glfwSetKeyCallback(render->getWindow(), keyCallback);
 	if (tochange->controls.at(groupno).hasResource("mouseButtonCallback")) glfwSetMouseButtonCallback(render->getWindow(), mouseButtonCallback);
-	if (tochange->controls.at(groupno).hasResource("mouseCallback")) glfwSetCursorPosCallback(render->getWindow(), mouseCallback);
+	if (tochange->controls.at(groupno).hasResource("mouseCallback")) { glfwSetCursorPosCallback(render->getWindow(), mouseCallbackMenu); glfwSetInputMode(render->getWindow(), GLFW_CURSOR, GLFW_CURSOR_NORMAL); }
 }
 
 void Controls::unbindControls(unsigned groupno, RenderModuleStubb* render, Controls* tochange) {
@@ -137,6 +137,23 @@ void Controls::mouseButtonCallback(GLFWwindow* window, int button, int action, i
 	MessagingBus* tmpmb = Singleton<MessagingBus>::getInstance();
 
 	tmpl->callFunction<SimpleString, SimpleString, MessagingBus>(tmpc->controls.at(tmpc->curgroup).getResource("mouseButtonCallback"), SimpleString(sbutton), SimpleString(saction), *tmpmb);
+}
+
+void Controls::mouseCallbackMenu(GLFWwindow* window, double x, double y) {
+	std::string sx = std::to_string(x);
+	std::string sy = std::to_string(y);
+
+	prevx = x;
+	prevy = y;
+
+	LSM->setGlobal<double>(prevx, "prevx");
+	LSM->setGlobal<double>(prevy, "prevy");
+
+	Controls* tmpc = Singleton<Controls>::getInstance();
+	LUAScriptManager* tmpl = Singleton<LUAScriptManager>::getInstance();
+	MessagingBus* tmpmb = Singleton<MessagingBus>::getInstance();
+
+	tmpl->callFunction<SimpleString, SimpleString, MessagingBus>(tmpc->controls.at(tmpc->curgroup).getResource("mouseCallback"), SimpleString(sx), SimpleString(sy), *tmpmb);
 }
 
 void Controls::ConsoleCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {

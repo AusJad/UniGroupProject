@@ -83,25 +83,10 @@ function mouse(x, y, MB)
 end
 
 function playerAttack(button, action, MB)
-	if button:equals("left") and action:equals("press") then
-		MB:postMessage(Message("FIRE"), Identifiers("", "Player"));
-	end
+	if(action:equals("press")) then MenuTools.interpretClick(prevx, prevy); end
 end
 
-function skipCutScene(key, action, MB)
-	if key:equals("enter") and action:equals("press") then
-		MB:postMessage(Message("END_CUT"), Identifiers("", cutsceneid));
-	end
-end
-
-function skipCutScene2(key, action, MB)
-	if key:equals("enter") and action:equals("press") then
-		MB:postMessage(Message("END_CUT"), Identifiers("", cutscene2id));
-	end
-end
-
-function skipCutScene3(key, action, MB)
-	if key:equals("enter") and action:equals("press") then
-		MB:postMessage(Message("END_CUT"), Identifiers("", cutscene3id));
-	end
+function mouse2(x, y, MB)
+	--print(x:getData());
+	--print(y:getData());
 end

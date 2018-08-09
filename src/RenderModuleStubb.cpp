@@ -6,6 +6,38 @@ RenderModuleStubb::RenderModuleStubb() {
 	id.setName("RM");
 }
 
+void RenderModuleStubb::RenderModeOrtho() {
+	glMatrixMode(GL_PROJECTION);
+	glPushMatrix();
+	glLoadIdentity();
+	glOrtho(0, winwidth, winheight, 0, 0, 1);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+}
+
+void RenderModuleStubb::RenderModePerspective() {
+	glPopMatrix();
+	glMatrixMode(GL_PROJECTION);
+	glPopMatrix();
+	glMatrixMode(GL_MODELVIEW);
+}
+
+void RenderModuleStubb::DrawQuadOrtho(vec2 & tl, vec2 & br) {
+	glDisable(GL_LIGHTING);
+	glBegin(GL_QUADS);
+	glTexCoord2f(0, 0);
+	glVertex2f(tl.x(), tl.y());
+	glTexCoord2f(0, 1);
+	glVertex2f(tl.x(), br.y());
+	glTexCoord2f(1, 1);
+	glVertex2f(br.x(), br.y());
+	glTexCoord2f(1, 0);
+	glVertex2f(br.x(), tl.y());
+	glEnd();
+	glEnable(GL_LIGHTING);
+
+}
+
 void RenderModuleStubb::DrawQuad(point tl, point br, float y) {
 	glDisable(GL_LIGHTING);
 	glBegin(GL_QUADS);
@@ -218,6 +250,10 @@ void RenderModuleStubb::init(int argc, char** argv) {
 	glfwWindowHint(GLFW_DEPTH_BITS, GL_TRUE);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_COMPAT_PROFILE);
 	window = glfwCreateWindow(1280, 720, "Game Engine", NULL, NULL);
+
+	winwidth = 1280;
+	winheight = 720;
+
 	glfwMakeContextCurrent(window);
 	glfwSwapInterval(1);
 	glfwSetFramebufferSizeCallback(window, reshape);
@@ -235,10 +271,10 @@ void RenderModuleStubb::init(int argc, char** argv) {
 		glfwTerminate();
 	}
 
-	glfwSetWindowSizeLimits(window, 1280, 720, 1280, 720);
+	//glfwSetWindowSizeLimits(window, 1280, 720, 1280, 720);
 
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
-	::ShowWindow(::GetConsoleWindow(), SW_HIDE);
+	//::ShowWindow(::GetConsoleWindow(), SW_HIDE);
 	reshape(window, 1280, 720);
 	glClearColor(0.0f, 0.0f, 0.0f, 0.92f);
 	glClearDepth(1.0f);
@@ -266,6 +302,7 @@ void RenderModuleStubb::init(int argc, char** argv) {
 	glLoadIdentity();
 	// Assign created components to GL_LIGHT0
 	configureLights();
+	commitLights();
 
 	startRenderCycle();
 	endRenderCycle();
@@ -285,7 +322,6 @@ void RenderModuleStubb::startRenderCycle() {
 		camlook.x(), camlook.y(), camlook.z(),
 		0.0f, 1.0f, 0.0f);
 	glPushMatrix();
-	commitLights();
 }
 
 void RenderModuleStubb::RenderFacingCamera() {
@@ -308,6 +344,9 @@ void RenderModuleStubb::endRenderCycle() {
 void RenderModuleStubb::reshape(GLFWwindow* window, int width, int height) {
 	if (height == 0) height = 1;
 	GLfloat aspect = (GLfloat)width / (GLfloat)height;
+
+	RNDR->winwidth = width;
+	RNDR->winheight = height;
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();

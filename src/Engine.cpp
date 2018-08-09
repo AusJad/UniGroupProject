@@ -25,6 +25,7 @@ void Engine::renderLoad() {
 }
 
 void Engine::Run() {
+
 	while (RNDR->shouldContinue()) {
 		RNDR->startRenderCycle();
 

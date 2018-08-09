@@ -61,6 +61,11 @@ public:
 	*/
 	void init(int argc, char** argv);
 
+	void RenderModeOrtho();
+	void RenderModePerspective();
+
+	void DrawQuadOrtho(vec2 & tl, vec2 & br);
+
 	/**
 	* @brief Draw a quad.
 	*
@@ -299,6 +304,8 @@ private:
 	Identifiers id;
 	/// If the renderer should be rendering in wireframe mode.
 	bool wireframe;
+
+	int winwidth, winheight;
 
 	/**
 	* @brief Message receiver method.

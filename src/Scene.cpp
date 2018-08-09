@@ -6,6 +6,8 @@ Scene::Scene()
 	objects.setWorldDimensions(-100, 100, 100, -100);
 	state = -1;
 	loaded = false;
+
+	tstwnd = WindowFactory::getWindow(WINDOW_SMALL, "GENERIC");
 }
 
 
@@ -28,11 +30,16 @@ void Scene::addResources(ResourceList & toadd) {
 
 void Scene::render() {
 	objects.render();
+	tstwnd->render();
 	if (resources.hasResource("renderfunc")) {
 		RNDR->RenderFacingCamera();
 		LSM->callFunction<Scene, MessagingBus>(resources.getResource("renderfunc"), *this, *(Singleton<MessagingBus>::getInstance()));
 		RNDR->StopRenderFacingCamera();
 	}
+}
+
+void Scene::interpretClick(int x, int y) {
+	tstwnd->testClick(x, y);
 }
 
 bool Scene::attachTerrain(Identifiers & id, vec3 pos, ResourceList & list) {

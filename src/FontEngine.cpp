@@ -63,6 +63,23 @@ bool FontEngine::RenderString(std::string torender, float fontsize, unsigned num
 	return errorflagnotset;
 }
 
+void FontEngine::RenderStringO(std::string torender, float fontsize, float startx, float starty) {
+	char curchar;
+	GeoStream << ENABLE_ALPHA;
+	for (unsigned i = 0; i < torender.size(); i++) {
+		curchar = toupper(torender.at(i));
+
+		if (fonts.at(activefont).useChar(curchar)) {
+			RNDR->DrawQuadOrtho(vec2(startx, starty + fontsize), vec2(startx + fontsize, starty));
+
+			RNDR->bindTexture(NULL);
+
+			startx += ((float)fonts.at(activefont).getCharOffset(curchar) / (float)fonts.at(activefont).getCharWidth()) * fontsize;
+		}
+	}
+	GeoStream << DISABLE_ALPHA;
+}
+
 bool FontEngine::hasFont(std::string font) {
 	return fonts.count(font) == 1;
 }

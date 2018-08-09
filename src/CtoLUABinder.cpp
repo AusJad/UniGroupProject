@@ -35,10 +35,12 @@ void CtoLUABinder::bindClasses(lua_State* lstate) {
 			.def("x", &vec3::x)
 			.def("y", &vec3::y)
 			.def("z", &vec3::z)
+			.def("normalise", &vec3::normailse)
 			.def(luabind::self + vec3())
 			.def(luabind::self - vec3())
 			.def(luabind::self / vec3())
 			.def(luabind::self * vec3())
+			.def(luabind::self * float())
 	];
 	luabind::module(lstate)[
 		luabind::class_<vec2>("vec2")
@@ -265,7 +267,8 @@ void CtoLUABinder::bindClasses(lua_State* lstate) {
 		luabind::def("fadeOut", &MenuTools::fadeOut),
 		luabind::def("drawModel", &MenuTools::drawModel),
 		luabind::def("drawRotTSquare", &MenuTools::drawRotTSquare),
-		luabind::def("renderTextF", &MenuTools::renderTextF)
+		luabind::def("renderTextF", &MenuTools::renderTextF),
+		luabind::def("interpretClick", &MenuTools::interpretClick)
 	];
 	luabind::module(lstate, "Math")[
 		luabind::def("normalize", &Maths::normalize)
@@ -280,5 +283,9 @@ void CtoLUABinder::bindClasses(lua_State* lstate) {
 
 	luabind::module(lstate, "Path")[
 		luabind::def("findPath", &SceneManager::findPath)
+	];
+
+	luabind::module(lstate, "Math")[
+		luabind::def("normalise", &Maths::normalize)
 	];
 }

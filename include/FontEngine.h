@@ -10,6 +10,11 @@
 #define FNT_SIZE_MEDIUM 0.1f
 #define FNT_SIZE_LRGE 0.25f
 
+#define FNT_SIZE_SMALL_O 19
+#define FNT_SIZE_MEDIUM_O 26
+#define FNT_SIZE_LRGE_O 32
+
+
 /**
 * @class FontEngine
 * @brief Provides an interface for creating fonts.
@@ -75,6 +80,8 @@ public:
 	* @return bool - If the string was rendered.
 	*/
 	bool RenderString(std::string torender, float fontsize, unsigned numrow, unsigned maxwidth, float startx, float starty, float depth);
+
+	void RenderStringO(std::string torender, float fontsize, float startx, float starty);
 
 	/**
 	* @brief Find if the font has a specific character defined.

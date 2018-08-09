@@ -4,6 +4,7 @@
 #include "RenderModuleStubb.h"
 #include "TextureManager.h"
 #include "FontEngine.h"
+#include "SceneManager.h"
 
 /**
 * @class MenuTools
@@ -114,5 +115,7 @@ public:
 	* @param model - The model data.
 	*/
 	static void drawModel(vec3 loc, std::string model);
+
+	static void interpretClick(int x, int y);
 };
 

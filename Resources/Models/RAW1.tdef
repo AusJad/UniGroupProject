@@ -1,4 +1,0 @@
-s 45 8 45
-m ./Resources/Textures/metal.tga TGA ./Resources/Textures/metal.tga TGA ./Resources/Textures/blue.tga TGA ./Resources/Textures/blue.tga TGA
-f ./Resources/Models/hmsmall.raw
-t ./Resources/Textures/detailMap.tga TGA
