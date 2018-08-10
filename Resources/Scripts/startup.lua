@@ -19,6 +19,10 @@ local function loadResources(AMAN)
 	else print("failed to load button_left") end
 	if AMAN:addResource("./Resources/Textures/Menu/Window/button_right.tga", "TGA", "button_right") then print("loaded res: button_right")
 	else print("failed to load button_right") end
+	if AMAN:addResource("./Resources/Textures/Menu/Window/walltoolicon.tga", "TGA", "walltoolicon") then print("loaded res: walltoolicon")
+	else print("failed to load walltoolicon") end
+	if AMAN:addResource("./Resources/Textures/Menu/Window/objecttoolicon.tga", "TGA", "objecttoolicon") then print("loaded res: objecttoolicon")
+	else print("failed to load objecttoolicon") end
 end
 
 function loadLoadRes(AMAN)

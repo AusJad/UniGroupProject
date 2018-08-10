@@ -21,8 +21,8 @@ public:
 
 private:
 	Window * toolbar;
-	Window * walltool;
-	Window * objecttool;
+	static Window * walltool;
+	static Window * objecttool;
 	static bool active;
 
 	void initWallTool();
@@ -30,5 +30,7 @@ private:
 	void initObjectTool();
 
 	static void toolbarClose(int code);
+	static void walltoolclick(int code);
+	static void objecttoolclick(int code);
 };
 

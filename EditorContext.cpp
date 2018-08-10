@@ -2,6 +2,9 @@
 
 bool EditorContext::active = false;
 
+Window * EditorContext::walltool = NULL;
+Window * EditorContext::objecttool = NULL;
+
 EditorContext::EditorContext()
 {
 
@@ -14,9 +17,13 @@ EditorContext::~EditorContext()
 
 bool EditorContext::initalise() {
 	toolbar = WindowFactory::getWindow(WINDOW_SMALL_WIDE, "GENERIC", vec2(500, 500), "Editor Toolbar - Close to Exit Editor");
+	
 	walltool = WindowFactory::getWindow(WINDOW_MEDIUM_TALL, "GENERIC", vec2(800, 0), "Wall Tool");
-	objecttool = WindowFactory::getWindow(WINDOW_MEDIUM_TALL, "GENERIC", vec2(), "Object Tool");
+	walltool->hide();
 
+	objecttool = WindowFactory::getWindow(WINDOW_MEDIUM_TALL, "GENERIC", vec2(), "Object Tool");
+	objecttool->hide();
+	
 	initToolBar();
 	initWallTool();
 	initObjectTool();
@@ -61,9 +68,21 @@ void EditorContext::initObjectTool() {
 
 void EditorContext::initToolBar() {
 	toolbar->setPadding(0);
-	toolbar->addComponent(new ButtonComponent(), 25, 100);
-	toolbar->addComponent(new ButtonComponent(), 25, 100);
-	toolbar->addComponent(new ButtonComponent(), 25, 100);
+
+	ButtonComponent * b = new ButtonComponent();
+	b->setWidth(96);
+	b->setHeight(96);
+	b->setTex(WALL_TOOL_ICON);
+	b->setCallback(walltoolclick);
+	toolbar->addComponent(b);
+
+	b = new ButtonComponent();
+	b->setWidth(96);
+	b->setHeight(96);
+	b->setTex(OBJECT_TOOL_ICON);
+	b->setCallback(objecttoolclick);
+	toolbar->addComponent(b);
+
 	toolbar->setCloseButtonCallBack(toolbarClose);
 }
 
@@ -73,4 +92,12 @@ bool EditorContext::testClick(int x, int y) {
 	else if (toolbar->testClick(x, y)) return true;
 
 	return false;
+}
+
+void EditorContext::walltoolclick(int code) {
+	walltool->tglVis();
+}
+
+void EditorContext::objecttoolclick(int code) {
+	objecttool->tglVis();
 }
