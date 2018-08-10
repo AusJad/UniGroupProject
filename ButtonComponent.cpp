@@ -10,7 +10,7 @@ ButtonComponent::ButtonComponent(int width, int height, vec2 pos) : WndComponent
 void ButtonComponent::render() {
 	if (!buttontex.empty()) TXMAN->useTexture(buttontex, RNDR);
 	else GeoStream << START_ATTRIB << color_3(.24, .24, .24);
-	RNDR->DrawQuadOrtho(vec2(pos), vec2(pos.x() + width, pos.y() + height));
+	RNDR->DrawQuadOrtho(pos, vec2(pos.x() + width, pos.y() + height));
 	if (!buttontex.empty()) TXMAN->disableTexture(RNDR);
 	else GeoStream << END_ATTRIB;
 
@@ -29,17 +29,17 @@ bool ButtonComponent::testClick(int x, int y) {
 
 void ButtonComponent::setWidth(int toset) {
 	width = toset;
-	recalcDimensions();
+	if (!text.empty()) recalcDimensions();
 }
 
 void ButtonComponent::setHeight(int toset) {
 	height = toset;
-	recalcDimensions();
+	if (!text.empty()) recalcDimensions();
 }
 
 void ButtonComponent::setPos(vec2 toset) {
 	pos = toset;
-	recalcDimensions();
+	if(!text.empty()) recalcDimensions();
 }
 
 void ButtonComponent::recalcDimensions() {

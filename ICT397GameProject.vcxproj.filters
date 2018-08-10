@@ -22,6 +22,12 @@
     <Filter Include="Source Files\UI">
       <UniqueIdentifier>{e24b6554-dfce-48ad-be29-6893497ba07c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Controls">
+      <UniqueIdentifier>{bffbfb9b-b5e9-4d2f-a265-805e3c32fc5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Controls">
+      <UniqueIdentifier>{bce67689-2c2e-46a0-ba88-a184395cd29b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -138,9 +144,6 @@
     <ClInclude Include="include\vec4.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Controls.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\SimpleString.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -207,9 +210,6 @@
     <ClInclude Include="include\ModelMesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ControlContext.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ButtonComponent.h">
       <Filter>Header Files\UI</Filter>
     </ClInclude>
@@ -233,6 +233,33 @@
     </ClInclude>
     <ClInclude Include="UITextures.h">
       <Filter>Header Files\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="movementInfo.h">
+      <Filter>Header Files\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI.h">
+      <Filter>Header Files\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="EditorContext.h">
+      <Filter>Header Files\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Controls.h">
+      <Filter>Header Files\Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaControlContext.h">
+      <Filter>Header Files\Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="ControlContext.h">
+      <Filter>Header Files\Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="TextInputContext.h">
+      <Filter>Header Files\Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowMoveContext.h">
+      <Filter>Header Files\Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIInteractContext.h">
+      <Filter>Header Files\Controls</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -335,9 +362,6 @@
     <ClCompile Include="src\vec4.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Controls.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\SimpleString.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -401,9 +425,6 @@
     <ClCompile Include="src\ModelMesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ControlContext.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ButtonComponent.cpp">
       <Filter>Source Files\UI</Filter>
     </ClCompile>
@@ -424,6 +445,27 @@
     </ClCompile>
     <ClCompile Include="Window.cpp">
       <Filter>Source Files\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="EditorContext.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="TextInputContext.cpp">
+      <Filter>Source Files\Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Controls.cpp">
+      <Filter>Source Files\Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowMoveContext.cpp">
+      <Filter>Source Files\Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIInteractContext.cpp">
+      <Filter>Source Files\Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaControlContext.cpp">
+      <Filter>Source Files\Controls</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

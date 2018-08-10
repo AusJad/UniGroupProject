@@ -130,5 +130,10 @@ void MenuTools::drawModel(vec3 loc, std::string model) {
 }
 
 void MenuTools::interpretClick(int x, int y) {
-	SM->interpretClick(x, y);
+	GI->testClick(x, y);
+}
+
+void MenuTools::switchMenuMode() {
+	CONT->switchContextGUIInteract();
+	GI->enableEditor();
 }

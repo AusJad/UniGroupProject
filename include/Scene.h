@@ -1,9 +1,6 @@
 #pragma once
 #include "GameObjectHandler.h"
 #include "CollisionEngine.h"
-
-#include "../WindowFactory.h"
-
 //mm
 #include "saveFileIO.h"
 
@@ -110,8 +107,6 @@ public:
 
 	bool getLoaded();
 
-	void interpretClick(int x, int y);
-
 private:
 	/// The game object handler.
 	GameObjectHandler objects;
@@ -123,7 +118,5 @@ private:
 	int state;
 
 	bool loaded;
-
-	Window * tstwnd;
 };
 

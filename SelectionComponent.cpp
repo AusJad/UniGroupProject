@@ -11,6 +11,7 @@ left(), right(), enter(), selection()
 	options.push_back("Option 1"); options.push_back("Option 2"); options.push_back("Option 3");
 	curoption = 0;
 	selection.setLabel(options.at(curoption));
+	selection.setPadding(6);
 }
 
 SelectionComponent::SelectionComponent(int width, int height, vec2 pos) : WndComponent(width, height, pos), 
@@ -22,6 +23,7 @@ left(), right(), enter(), selection()
 	options.push_back("Option 1"); options.push_back("Option 2"); options.push_back("Option 3");
 	curoption = 0;
 	selection.setLabel(options.at(curoption));
+	selection.setPadding(6);
 
 	recalcDimensions();
 }
@@ -38,6 +40,11 @@ void SelectionComponent::setHeight(int toset) {
 
 void SelectionComponent::setPos(vec2 toset) {
 	pos = toset;
+	recalcDimensions();
+}
+
+void SelectionComponent::move(float x, float y) {
+	pos = vec2(pos.x() + x, pos.y() + y);
 	recalcDimensions();
 }
 
@@ -60,20 +67,14 @@ void SelectionComponent::recalcDimensions() {
 }
 
 void SelectionComponent::render() {
+	GeoStream << START_ATTRIB << UI_DARK_COLOR;
+	RNDR->DrawQuadOrtho(pos, vec2(pos.x() + width, pos.y() + height / 2));
+	GeoStream << END_ATTRIB;
+
 	left.render();
 	right.render();
 	enter.render();
 	selection.render();
-
-	//render text background
-	/*	
-	GeoStream << START_ATTRIB << color_3(.44, .44, .44);
-	RNDR->DrawQuadOrtho(pos, vec2(pos.x() + width, pos.y() + height/2));
-	GeoStream << END_ATTRIB;
-	*/
-	//render cur selection text
-	//if(options.size() != 0) FNT_ENG->RenderStringO(options.at(curoption), FNT_SIZE_MEDIUM_O, pos.x() + height/2 + 10, pos.y() + 3);
-	//else FNT_ENG->RenderStringO("No Options Available!", FNT_SIZE_MEDIUM_O, pos.x() + height + 10, pos.y() + 3);
 }
 
 bool SelectionComponent::testClick(int x, int y) {

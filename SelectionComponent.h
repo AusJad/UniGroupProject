@@ -17,6 +17,8 @@ public:
 	void setHeight(int toset);
 	void setPos(vec2 toset);
 
+	void move(float x, float y);
+
 private:
 	ButtonComponent left;
 	ButtonComponent right;

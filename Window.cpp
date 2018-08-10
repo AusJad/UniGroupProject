@@ -1,7 +1,5 @@
 #include "Window.h"
 
-
-
 Window::Window(vec2 & stpos, float width, float height, std::string title)
 {
 	//bgtex = WINDOW_BG;
@@ -10,7 +8,7 @@ Window::Window(vec2 & stpos, float width, float height, std::string title)
 	brscreen = vec2(tlscreen.x() + width, tlscreen.y() + height);
 	hasHeader = true;
 	visible = true;
-
+	
 	padding = 10;
 
 	if (hasHeader) initHeader(title);
@@ -41,6 +39,12 @@ bool Window::isVis() {
 	return visible;
 }
 
+void Window::update(float time) {
+	if (mvdata.moving) {
+		move(mvdata.offset.x(), mvdata.offset.y());
+	}
+}
+
 void Window::render() {
 	if (!visible) return;
 
@@ -68,15 +72,37 @@ void Window::render() {
 	RNDR->RenderModePerspective();
 }
 
-void Window::move(int x, int y) {
+void Window::move(float x, float y) {
+	tlscreen = vec2(tlscreen.x() + x, tlscreen.y() + y);
+	brscreen = vec2(brscreen.x() + x, brscreen.y() + y);
+	mvdata.offset = vec2();
 
+	if (hasHeader) {
+		header.move(x, y);
+		closebutton.move(x, y);
+	}
+
+	for (unsigned i = 0; i < components.size(); i++) {
+		components.at(i)->move(x, y);
+	}
 }
 
 bool Window::testClick(int x, int y) {
 	if (x > tlscreen.x() && x < brscreen.x() && y < brscreen.y() && y > tlscreen.y()) {
-		if (closebutton.testClick(x, y)) {
-			visible = false;
-			return true;
+		if (hasHeader) {
+			if (header.testClick(x, y)) {
+				mvdata.moving = true;
+				mvdata.inital = vec2(x, y);
+				mvdata.offset = vec2();
+				CONT->switchContextMenuMove(&mvdata);
+
+				return true;
+			}
+
+			if (closebutton.testClick(x, y)) {
+				visible = false;
+				return true;
+			}
 		}
 
 		for (unsigned i = 0; i < components.size(); i++) {
@@ -94,7 +120,11 @@ void Window::calculateSize() {
 void Window::addComponent(WndComponent * toadd, int widthprcnt, int heightprcnt) {
 	int nwidth = (brscreen.x() - tlscreen.x()) * (widthprcnt / 100.0f);
 	nwidth -= 2 * padding;
-	int nheight = (brscreen.y() - tlscreen.y()) * (heightprcnt / 100.0f);
+
+	int nheight;
+	if(hasHeader) nheight = (brscreen.y() - tlscreen.y() - HEAD_BAR_SIZE) * (heightprcnt / 100.0f);
+	else nheight = (brscreen.y() - tlscreen.y()) * (heightprcnt / 100.0f);
+
 	nheight -= 2 * padding;
 	
 	toadd->setWidth(nwidth);

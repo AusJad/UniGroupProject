@@ -143,8 +143,6 @@ public:
 
 	static void findPath(const vec3 & pos, const vec3 & target);
 
-	void interpretClick(int x, int y);
-
 private:
 	/// The scene vector.
 	std::vector<Scene> scenes;

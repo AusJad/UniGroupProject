@@ -100,6 +100,11 @@
   <ItemGroup>
     <ClInclude Include="ButtonComponent.h" />
     <ClInclude Include="ControlContext.h" />
+    <ClInclude Include="EditorContext.h" />
+    <ClInclude Include="GUI.h" />
+    <ClInclude Include="GUIInteractContext.h" />
+    <ClInclude Include="LuaControlContext.h" />
+    <ClInclude Include="movementInfo.h" />
     <ClInclude Include="include\AIMovementBehaviours.h" />
     <ClInclude Include="include\AssetManager.h" />
     <ClInclude Include="include\AudioEngine.h" />
@@ -163,16 +168,21 @@
     <ClInclude Include="LabelComponent.h" />
     <ClInclude Include="SelectionComponent.h" />
     <ClInclude Include="TextInputComponent.h" />
+    <ClInclude Include="TextInputContext.h" />
     <ClInclude Include="UITextures.h" />
     <ClInclude Include="Window.h" />
     <ClInclude Include="WindowFactory.h" />
+    <ClInclude Include="WindowMoveContext.h" />
     <ClInclude Include="WndComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ButtonComponent.cpp" />
-    <ClCompile Include="ControlContext.cpp" />
+    <ClCompile Include="EditorContext.cpp" />
+    <ClCompile Include="GUI.cpp" />
+    <ClCompile Include="GUIInteractContext.cpp" />
     <ClCompile Include="ICT397GameProject.cpp" />
     <ClCompile Include="LabelComponent.cpp" />
+    <ClCompile Include="LuaControlContext.cpp" />
     <ClCompile Include="SelectionComponent.cpp" />
     <ClCompile Include="src\AIMovementBehaviours.cpp" />
     <ClCompile Include="src\AssetManager.cpp" />
@@ -229,8 +239,10 @@
     <ClCompile Include="src\vec3.cpp" />
     <ClCompile Include="src\vec4.cpp" />
     <ClCompile Include="TextInputComponent.cpp" />
+    <ClCompile Include="TextInputContext.cpp" />
     <ClCompile Include="Window.cpp" />
     <ClCompile Include="WindowFactory.cpp" />
+    <ClCompile Include="WindowMoveContext.cpp" />
     <ClCompile Include="WndComponent.cpp" />
   </ItemGroup>
   <ItemGroup>

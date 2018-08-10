@@ -4,7 +4,7 @@
 #include "RenderModuleStubb.h"
 #include "TextureManager.h"
 #include "FontEngine.h"
-#include "SceneManager.h"
+#include "../GUI.h"
 
 /**
 * @class MenuTools
@@ -117,5 +117,7 @@ public:
 	static void drawModel(vec3 loc, std::string model);
 
 	static void interpretClick(int x, int y);
+
+	static void switchMenuMode();
 };
 

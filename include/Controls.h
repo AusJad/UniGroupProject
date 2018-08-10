@@ -5,7 +5,10 @@
 #include "RenderModuleStubb.h"
 #include "LUAScriptManager.h"
 #include "SimpleString.h"
-#include "../WndComponent.h"
+#include "../LuaControlContext.h"
+#include "../GUIInteractContext.h"
+#include "../TextInputContext.h"
+#include "../WindowMoveContext.h"
 
 #define CONT Singleton<Controls>::getInstance()
 
@@ -23,60 +26,37 @@ class Controls
 		Controls();
 		~Controls();
 
-		/**
-		* @brief Add a new control group.
-		*
-		* @param controlgroup - The new control group.
-		*/
-		void addControlGroup(unsigned controlgroup);
-
-		/**
-		* @brief Add a initalised control group.
-		*
-		* @param controlgroup - The new control group.
-		* @param data - The data for the control group.
-		*/
 		void addInitalisedControlGroup(unsigned controlgroup, ResourceList & data);
 
-		/**
-		* @brief Bind the controls to the resources.
-		*
-		* @param group - The group number.
-		* @para toset - The resources being bound.
-		*
-		* @return bool - If resources were bound.
-		*/
 		bool bindControls(unsigned group, ResourceList & toset);
-	
-		/**
-		* @brief Change the controls of one group and update the renderer.
-		*
-		* @param groupno - The control group number.
-		* @param render - The renderer.
-		* @param tochange - The new controls.
-		*
-		* @return bool - If the controls were changed.
-		*/
+
+		void update();
+
 		static bool changeControlGroup(unsigned groupno, RenderModuleStubb* render, Controls* tochange);
 
 		static void switchContextConsole(bool active, RenderModuleStubb* render, Controls* tochange);
 
 		static void switchContextTextInput(std::string * toedit, onClick whenComplete);
 
+		static void switchContextMenuMove(movementInfo * tomove);
+
+		static void switchContextGUIInteract();
+
+		static void switchContextPlay();
+
+		static void restorePreviousControlContext();
+
 	private:
 		/// Map of resource lists with a ID.
-		std::map<int, ResourceList> controls;
+		std::map<int, ControlContext*> controls;
+		GUIInteractContext GIC;
+		TextInputContext TIC;
+		WindowMoveContext WMC;
 
-		/// Current group.
-		unsigned curgroup;
-
-		/// Previous x variable.
-		static double prevx;
-		/// Previous y variable.
-		static double prevy;
-
-		static std::string* textin;
-		static onClick textincomplete;
+		ControlContext * activecontext;
+		ControlContext * prevcontext;
+		//temporary until proper controls sorted
+		ControlContext * lastLUAContext;
 
 		/**
 		* @brief Bind the controls to a control object.
@@ -85,7 +65,7 @@ class Controls
 		* @param render - The renderer.
 		* @param tochange - The controls being changed.
 		*/
-		static void bindControls(unsigned groupno, RenderModuleStubb* render, Controls* tochange);
+		static void bindControls(ControlContext* tobind);
 
 		/**
 		* @brief Unbind the controls of a controller.
@@ -94,41 +74,8 @@ class Controls
 		* @param render - The renderer.
 		* @param tochange - The controller being changed.
 		*/
-		static void unbindControls(unsigned groupno, RenderModuleStubb* render, Controls* tochange);
+		static void unbindControls(ControlContext* tobind);
 
-		/**
-		* @brief Keyboard key callback function
-		*
-		* @param window - The window being rendered.
-		* @param key - The key being called.
-		* @param scanecode - The scan code of the key.
-		* @param action - ID for the action to be taken.
-		* @param mods - ID for any special actions.
-		*/
-		static void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
-
-		static void keyInputCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
-
-		/**
-		* @brief Mouse cursor callback funtion.
-		*
-		* @param window - The window being rendered.
-		* @param x - The x coord.
-		* @param y - The y coord.
-		*/
-		static void mouseCallback(GLFWwindow* window, double x, double y);
-
-		static void mouseCallbackMenu(GLFWwindow* window, double x, double y);
-
-		/**
-		* @brief The mouse button callback function.
-		*
-		* @param window - The window being rendered.
-		* @param button - The button being pressed.
-		* @param action - ID for the action to be taken.
-		* @param mods - ID for any special action to be taken.
-		*/
-		static void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
 
 		//Coded in C++ for enhanced speed
 		static void Controls::ConsoleCallback(GLFWwindow* window, int key, int scancode, int action, int mods);

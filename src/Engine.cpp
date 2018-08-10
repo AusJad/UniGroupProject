@@ -13,29 +13,31 @@ bool Engine::Initalise(std::string initscript){
 
 	LSM->callFunction<SceneManager, LUAScriptManager, AssetManager, AudioEngine>("initGame", *SM, *LSM, *Singleton<AssetManager>::getInstance(), *Singleton<AudioEngine>::getInstance());
 
+	if (!GI->initalise()) return false;
+
 	return true;
 }
 
 void Engine::renderLoad() {
 	RNDR->startRenderCycle();
 	RNDR->RenderFacingCamera();
-	LSM->callFunction<AssetManager>("renderLoad", *Singleton<AssetManager>::getInstance());
+	LSM->callFunction<AudioEngine>("renderLoad", *AE);
 	RNDR->StopRenderFacingCamera();
 	RNDR->endRenderCycle();
 }
 
 void Engine::Run() {
-
 	while (RNDR->shouldContinue()) {
 		RNDR->startRenderCycle();
 
 		SM->update(RNDR->getTimeSinceUpdate());
+		GI->update(0);
+		AE->update();
+		FNT_ENG->update();
+		CONT->update();
 
 		SM->render();
-
-		Singleton<AudioEngine>::getInstance()->update();
-		
-		FNT_ENG->update();
+		GI->render();
 
 		RNDR->endRenderCycle();
 	}

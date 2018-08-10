@@ -9,6 +9,7 @@
 #include "AudioEngine.h"
 #include "windows.h"
 #include "Controls.h"
+#include "../GUI.h"
 
 /**
 * @class Engine

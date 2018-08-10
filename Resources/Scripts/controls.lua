@@ -49,9 +49,7 @@ function keys(key, action, MB)
 			MB:postMessage(Message("SLU"), Identifiers("", "Camera"));
 		end 
 	elseif key:equals("m") or key:equals("M") then
-		if action:equals("press") then
-			MB:postMessage(Message("TG"), Identifiers("", "Guide"));
-		end
+		MenuTools.switchMenuMode();
 	elseif key:equals("X") then
 		if action:equals("press") then
 			tmpm = Message("CS");
@@ -83,10 +81,5 @@ function mouse(x, y, MB)
 end
 
 function playerAttack(button, action, MB)
-	if(action:equals("press")) then MenuTools.interpretClick(prevx, prevy); end
-end
-
-function mouse2(x, y, MB)
-	--print(x:getData());
-	--print(y:getData());
+	
 end

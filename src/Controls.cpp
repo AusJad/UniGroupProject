@@ -1,199 +1,143 @@
 #include "Controls.h"
 
-double Controls::prevx = -1;
-double Controls::prevy = -1;
-std::string* Controls::textin = NULL;
-onClick Controls::textincomplete = NULL;
-
 Controls::Controls() {
-	curgroup = 0;
+	activecontext = NULL;
+	prevcontext = NULL;
+	lastLUAContext = NULL;
 }
 
 Controls::~Controls() {
 
 }
 
-void Controls::addControlGroup(unsigned controlgroup) {
-	controls[controlgroup] = ResourceList();
-}
-
 void Controls::addInitalisedControlGroup(unsigned controlgroup, ResourceList & data) {
-	controls[controlgroup] = data;
+	LuaControlContext * tmp = new LuaControlContext;
+	tmp->bindControls(data);
+	controls[controlgroup] = tmp;
 }
 
 void Controls::switchContextConsole(bool active, RenderModuleStubb* render, Controls* tochange) {
 	if (active) {
-		unbindControls(tochange->curgroup, render, tochange);
+		unbindControls(CONT->activecontext);
+		CONT->prevcontext = CONT->activecontext;
 		glfwSetKeyCallback(render->getWindow(), ConsoleCallback);
 	}
 	else {
 		glfwSetKeyCallback(render->getWindow(), NULL);
-		bindControls(tochange->curgroup, render, tochange);
+		bindControls(CONT->prevcontext);
+		CONT->activecontext = CONT->prevcontext;
+	}
+}
+
+void Controls::restorePreviousControlContext() {
+	if (CONT->prevcontext != NULL) {
+		unbindControls(CONT->activecontext);
+		CONT->activecontext->setInActive();
+
+		bindControls(CONT->prevcontext);
+		CONT->prevcontext->setActive();
+
+		ControlContext * tmp = CONT->activecontext;
+
+		CONT->activecontext = CONT->prevcontext;
+		CONT->prevcontext = tmp;
 	}
 }
 
 bool Controls::bindControls(unsigned group, ResourceList & toset) {
-	if (controls.count(group) == 0) return false;
-
-	controls.at(group) = toset;
+	LuaControlContext * tmp = new LuaControlContext;
+	tmp->bindControls(toset);
+	controls[group] = tmp;
 
 	return true;
+}
+
+void Controls::update() {
+	if (activecontext != NULL) {
+		if (activecontext->shouldRevert()) restorePreviousControlContext();
+	}
 }
 
 bool Controls::changeControlGroup(unsigned groupno, RenderModuleStubb* render, Controls* tochange) {
 	if (tochange->controls.count(groupno) == 0) return false;
-	unbindControls(tochange->curgroup, render, tochange);
-	tochange->curgroup = groupno;
-	bindControls(tochange->curgroup, render, tochange);
+	
+	if (CONT->activecontext != NULL) {
+		unbindControls(CONT->activecontext);
+		tochange->controls.at(groupno)->setInActive();
+		CONT->prevcontext = CONT->activecontext;
+	}
+
+	CONT->activecontext = CONT->controls.at(groupno);
+	bindControls(CONT->activecontext);
+	CONT->activecontext->setActive();
+
 	return true;
 }
 
-void Controls::bindControls(unsigned groupno, RenderModuleStubb* render, Controls* tochange) {
-	if (tochange->controls.at(groupno).hasResource("keyCallback")) glfwSetKeyCallback(render->getWindow(), keyCallback);
-	if (tochange->controls.at(groupno).hasResource("mouseButtonCallback")) glfwSetMouseButtonCallback(render->getWindow(), mouseButtonCallback);
-	if (tochange->controls.at(groupno).hasResource("mouseCallback")) { glfwSetCursorPosCallback(render->getWindow(), mouseCallbackMenu); glfwSetInputMode(render->getWindow(), GLFW_CURSOR, GLFW_CURSOR_NORMAL); }
+void Controls::bindControls(ControlContext* tobind) {
+	if (tobind->getKeyCallback() != NULL) glfwSetKeyCallback(RNDR->getWindow(), tobind->getKeyCallback());
+	if (tobind->getMouseButtonCallback() != NULL) glfwSetMouseButtonCallback(RNDR->getWindow(), tobind->getMouseButtonCallback());
+	if (tobind->getMouseMoveCallback() != NULL) glfwSetCursorPosCallback(RNDR->getWindow(), tobind->getMouseMoveCallback());
 }
 
-void Controls::unbindControls(unsigned groupno, RenderModuleStubb* render, Controls* tochange) {
-	if (tochange->controls.at(groupno).hasResource("keyCallback")) glfwSetKeyCallback(render->getWindow(), NULL);
-	if (tochange->controls.at(groupno).hasResource("mouseButtonCallback")) glfwSetMouseButtonCallback(render->getWindow(), NULL);
-	if (tochange->controls.at(groupno).hasResource("mouseCallback")) glfwSetCursorPosCallback(render->getWindow(), NULL);
+void Controls::unbindControls(ControlContext* tobind) {
+	if (tobind->getKeyCallback() != NULL) glfwSetKeyCallback(RNDR->getWindow(), NULL);
+	if (tobind->getMouseButtonCallback() != NULL) glfwSetMouseButtonCallback(RNDR->getWindow(), NULL);
+	if (tobind->getMouseMoveCallback() != NULL) glfwSetCursorPosCallback(RNDR->getWindow(), NULL);
+}
+
+void Controls::switchContextMenuMove(movementInfo * tomove) {
+	if (CONT->activecontext != NULL) {
+		unbindControls(CONT->activecontext);
+		CONT->prevcontext = CONT->activecontext;
+	}
+
+	bindControls(&CONT->WMC);
+	CONT->WMC.setActive(tomove);
+	CONT->activecontext = &CONT->WMC;
 }
 
 void Controls::switchContextTextInput(std::string * toedit, onClick whenComplete) {
-	unbindControls(CONT->curgroup, RNDR, CONT);
-	textin = toedit;
-	textincomplete = whenComplete;
-	glfwSetKeyCallback(RNDR->getWindow(), keyInputCallback);
+	if (CONT->activecontext != NULL) {
+		unbindControls(CONT->activecontext);
+		CONT->prevcontext = CONT->activecontext;
+	}
+
+	bindControls(&CONT->TIC);
+	CONT->TIC.setActive(toedit, whenComplete);
+	CONT->activecontext = &CONT->TIC;
 }
 
-void Controls::keyInputCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
-	if (key == GLFW_KEY_ENTER) {
-		//call callback if registered
-		if (textincomplete != NULL) textincomplete(TEXT_INPUT);
+void Controls::switchContextGUIInteract() {
+	if (CONT->activecontext != NULL) {
+		unbindControls(CONT->activecontext);
+		CONT->prevcontext = CONT->activecontext;
+		//todo - revise after lua removed from engine
+		CONT->lastLUAContext = CONT->activecontext;
+	}
 
-		//reset input pointers
-		textincomplete = NULL;
-		textin = NULL;
-		
-		//restore old controls
-		glfwSetKeyCallback(RNDR->getWindow(), NULL);
-		bindControls(CONT->curgroup, RNDR, CONT);
-	}
-	else {
-		if (textin != NULL) {
-			if (action == GLFW_PRESS) {
-				if (key == GLFW_KEY_BACKSPACE) {
-					if (!textin->empty()) textin->pop_back();
-				}
-				else textin->push_back((char)key);
-			}
-		}
-	}
+	bindControls(&CONT->GIC);
+	CONT->GIC.setActive();
+	CONT->activecontext = &CONT->GIC;
 }
 
-void Controls::keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
-	Controls* tmpc = Singleton<Controls>::getInstance();
-	LUAScriptManager* tmpl = Singleton<LUAScriptManager>::getInstance();
-	MessagingBus* tmpmb = Singleton<MessagingBus>::getInstance();
+void Controls::switchContextPlay() {
+	if (CONT->lastLUAContext == NULL) return;
 
-	std::string actions;
-	std::string keys;
-	keys = (char) key;
-
-	if (key == 32) keys = "space";
-	if (key == 257) keys = "enter";
-	if (key == 259) keys = "backspace"; 
-	if (key == 265) keys = "up";
-	if (key == 264) keys = "down";
-	if (key == 263) keys = "left";
-	if (key == 262) keys = "right";
-	if (key == GLFW_KEY_ESCAPE) keys = "esc";
-
-	if (action == GLFW_REPEAT) {
-		actions = "repeat";
-	}
-	else if (action == GLFW_PRESS) {
-		actions = "press";
-	}
-	else {
-		actions = "release";
+	if (CONT->activecontext != NULL) {
+		unbindControls(CONT->activecontext);
+		CONT->prevcontext = CONT->activecontext;
 	}
 
-	tmpl->callFunction<SimpleString, SimpleString, MessagingBus>(tmpc->controls.at(tmpc->curgroup).getResource("keyCallback"), SimpleString(keys), SimpleString(actions), *tmpmb);	
-}
-
-void Controls::mouseCallback(GLFWwindow* window, double x, double y) {
-	std::string sx = std::to_string(x);
-	std::string sy = std::to_string(y);
-
-	Controls* tmpc = Singleton<Controls>::getInstance();
-	LUAScriptManager* tmpl = Singleton<LUAScriptManager>::getInstance();
-	MessagingBus* tmpmb = Singleton<MessagingBus>::getInstance();
-
-	if (prevx == -1) prevx = x;
-	if (prevy == -1) prevy = y;
-
-	tmpl->setGlobal<double>(prevx, "prevx");
-	tmpl->setGlobal<double>(prevy, "prevy");
-
-	tmpl->callFunction<SimpleString, SimpleString, MessagingBus>(tmpc->controls.at(tmpc->curgroup).getResource("mouseCallback"), SimpleString(sx), SimpleString(sy), *tmpmb);
-
-	int w; int h;
-	glfwGetWindowSize(window, &w, &h);
-
-	prevx = (float)w / 2;
-	prevy = (float)h / 2;
-
-	glfwSetCursorPos(window, (double)w / 2, (double)h / 2);
-}
-
-void Controls::mouseButtonCallback(GLFWwindow* window, int button, int action, int mods) {
-	std::string sbutton;
-	std::string saction;
-
-	if (button == GLFW_MOUSE_BUTTON_RIGHT) {
-		sbutton = "right";
-	}
-	else if (button == GLFW_MOUSE_BUTTON_LEFT) {
-		sbutton = "left";
-	}
-
-	if (action == GLFW_PRESS) {
-		saction = "press";
-	}
-	else {
-		saction = "release";
-	}
-
-	Controls* tmpc = Singleton<Controls>::getInstance();
-	LUAScriptManager* tmpl = Singleton<LUAScriptManager>::getInstance();
-	MessagingBus* tmpmb = Singleton<MessagingBus>::getInstance();
-
-	tmpl->callFunction<SimpleString, SimpleString, MessagingBus>(tmpc->controls.at(tmpc->curgroup).getResource("mouseButtonCallback"), SimpleString(sbutton), SimpleString(saction), *tmpmb);
-}
-
-void Controls::mouseCallbackMenu(GLFWwindow* window, double x, double y) {
-	std::string sx = std::to_string(x);
-	std::string sy = std::to_string(y);
-
-	prevx = x;
-	prevy = y;
-
-	LSM->setGlobal<double>(prevx, "prevx");
-	LSM->setGlobal<double>(prevy, "prevy");
-
-	Controls* tmpc = Singleton<Controls>::getInstance();
-	LUAScriptManager* tmpl = Singleton<LUAScriptManager>::getInstance();
-	MessagingBus* tmpmb = Singleton<MessagingBus>::getInstance();
-
-	tmpl->callFunction<SimpleString, SimpleString, MessagingBus>(tmpc->controls.at(tmpc->curgroup).getResource("mouseCallback"), SimpleString(sx), SimpleString(sy), *tmpmb);
+	bindControls(CONT->lastLUAContext);
+	CONT->lastLUAContext->setActive();
+	CONT->activecontext = CONT->lastLUAContext;
 }
 
 void Controls::ConsoleCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
 	int flags;
 	std::string keys;
-	keys = (char) key;
+	keys = (char)key;
 
 	if (key == 32) keys = "space";
 	if (key == 257) keys = "enter";
@@ -213,7 +157,7 @@ void Controls::ConsoleCallback(GLFWwindow* window, int key, int scancode, int ac
 	else {
 		flags = RELEASE;
 	}
-	
+
 	Message tmp(C_INPUT);
 
 	tmp.setsData(keys);

@@ -23,17 +23,17 @@ bool LabelComponent::testClick(int x, int y) {
 
 void LabelComponent::setWidth(int toset) {
 	width = toset;
-	recalcDimensions();
+	if(!label.empty()) recalcDimensions();
 }
 
 void LabelComponent::setHeight(int toset){
 	height = toset;
-	recalcDimensions();
+	if (!label.empty()) recalcDimensions();
 }
 
 void LabelComponent::setPos(vec2 toset) {
 	pos = toset;
-	recalcDimensions();
+	if (!label.empty()) recalcDimensions();
 }
 
 void LabelComponent::recalcDimensions() {
@@ -50,5 +50,5 @@ void LabelComponent::recalcDimensions() {
 
 void LabelComponent::setLabel(std::string toset) {
 	label = toset;
-	recalcDimensions();
+	if (!label.empty()) recalcDimensions();
 }

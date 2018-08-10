@@ -6,6 +6,8 @@
 #include "Controls.h"
 #include <string>
 
+#define INPUT_BORDER 1
+
 class TextInputComponent : public WndComponent
 {
 public:

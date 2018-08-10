@@ -20,6 +20,7 @@ public:
 	virtual void setWidth(int toset);
 	virtual void setHeight(int toset);
 	virtual void setPos(vec2 toset);
+	virtual void move(float x, float y);
 
 	int getWidth() { return width; }
 	int getHeight() { return height; }

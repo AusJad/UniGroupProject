@@ -29,3 +29,7 @@ void WndComponent::setHeight(int toset) {
 void WndComponent::setPos(vec2 toset) {
 	pos = toset;
 }
+
+void WndComponent::move(float x, float y) {
+	pos = vec2(pos.x() + x, pos.y() + y);
+}

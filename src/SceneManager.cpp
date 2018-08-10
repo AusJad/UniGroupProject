@@ -34,7 +34,7 @@ void SceneManager::addScene(void ) {
 	Scene tmp;
 	scenes.push_back(tmp);
 	Singleton<AudioEngine>::getInstance()->addChannelSubgroup(scenes.size()-1);
-	Singleton<Controls>::getInstance()->addControlGroup(scenes.size() - 1);
+	//Singleton<Controls>::getInstance()->addControlGroup(scenes.size() - 1);
 }
 
 bool SceneManager::attachControls(unsigned sceneno, ResourceList toset) {
@@ -208,8 +208,4 @@ void SceneManager::findPath(const vec3 & pos, const vec3 & target) {
 	//Your pathfinding function - calls findpath for current scene with arguments to thei function.
 	//Have to use SM singleton here, as function is static
 	//return SM->findPath();
-}
-
-void SceneManager::interpretClick(int x, int y) {
-	scenes.at(currscene).interpretClick(x, y);
 }

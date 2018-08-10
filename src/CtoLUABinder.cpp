@@ -268,7 +268,7 @@ void CtoLUABinder::bindClasses(lua_State* lstate) {
 		luabind::def("drawModel", &MenuTools::drawModel),
 		luabind::def("drawRotTSquare", &MenuTools::drawRotTSquare),
 		luabind::def("renderTextF", &MenuTools::renderTextF),
-		luabind::def("interpretClick", &MenuTools::interpretClick)
+		luabind::def("switchMenuMode", &MenuTools::switchMenuMode)
 	];
 	luabind::module(lstate, "Math")[
 		luabind::def("normalize", &Maths::normalize)

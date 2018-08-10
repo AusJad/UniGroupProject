@@ -48,7 +48,7 @@ function initGame(SM, LSM, AMAN, AE)
 	SM:addScene();
 	SM:setCurrScene(level1);
 
-	SM:attachControls(level1, ResourceList("keyCallback", "keys", "mouseCallback", "mouse2", "mouseButtonCallback", "playerAttack"));
+	SM:attachControls(level1, ResourceList("keyCallback", "keys", "mouseCallback", "mouse", "mouseButtonCallback", "playerAttack"));
 	SM:attachTerrain(Identifiers("TO", "Terrain"), level1, vec3(0,0,0), ResourceList("model", "Terrain"));
 
 	SM:addObject(Identifiers("CAM","Camera"), level1, vec3(0, 0, 0), ResourceList("player", "Player"));
