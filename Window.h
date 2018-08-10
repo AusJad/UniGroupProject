@@ -2,12 +2,15 @@
 #include <vector>
 #include "WndComponent.h"
 #include "ButtonComponent.h"
+#include "LabelComponent.h"
 #include "SelectionComponent.h"
 #include "RenderModuleStubb.h"
 #include "vec2.h"
 #include "TextureManager.h"
 #include "FontEngine.h"
 #include "TextInputComponent.h"
+
+#define HEAD_BAR_SIZE 32
 
 class Window
 {
@@ -22,6 +25,8 @@ public:
 	bool isVis();
 
 	void setCloseButtonCallBack(onClick callback);
+	void addComponent(WndComponent * toadd, int widthprcnt, int heightprcnt);
+	void addComponent(WndComponent * toadd);
 
 private:
 	std::string hdtex;
@@ -32,12 +37,15 @@ private:
 
 	vec2 tlscreen;
 	vec2 brscreen;
+	int padding;
 	
-	WndComponent * closebutton;
+	ButtonComponent closebutton;
 	std::vector<WndComponent*> components;
 
 	void calculateSize();
 
 	static onClick closebuttoncallback;
+
+	vec2 calcComponentPlacement(WndComponent * toplace);
 };
 

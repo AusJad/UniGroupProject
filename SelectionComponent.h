@@ -12,9 +12,9 @@ public:
 	bool testClick(int x, int y);
 
 private:
-	ButtonComponent * left;
-	ButtonComponent * right;
-	ButtonComponent * enter;
+	ButtonComponent left;
+	ButtonComponent right;
+	ButtonComponent enter;
 
 	std::vector<std::string> options;
 	int curoption;

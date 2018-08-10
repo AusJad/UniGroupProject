@@ -2,11 +2,14 @@
 
 
 
-SelectionComponent::SelectionComponent(int width, int height, vec2 pos) : WndComponent(width, height, pos){
-
-	left = new ButtonComponent(height / 2, height / 2, pos);
-	right = new ButtonComponent(height / 2, height / 2, vec2(pos.x() + width - height / 2, pos.y()));
-	enter = new ButtonComponent(width, height/2, vec2(pos.x(), pos.y() + height/2));
+SelectionComponent::SelectionComponent(int width, int height, vec2 pos) : WndComponent(width, height, pos),
+left(height / 2, height / 2, pos),
+right(height / 2, height / 2, vec2(pos.x() + width - height / 2, pos.y())),
+enter(width, height / 2, vec2(pos.x(), pos.y() + height / 2))
+{
+	left.setTex("button_left");
+	right.setTex("button_right");
+	enter.setTitle("Enter");
 	pos = vec2(pos.x() + height / 2, pos.y());
 	width -= height / 2;
 	options.push_back("Option 1"); options.push_back("Option 2"); options.push_back("Option 3");
@@ -14,9 +17,9 @@ SelectionComponent::SelectionComponent(int width, int height, vec2 pos) : WndCom
 }
 
 void SelectionComponent::render() {
-	left->render();
-	right->render();
-	enter->render();
+	left.render();
+	right.render();
+	enter.render();
 
 	//render text background
 	/*	
@@ -31,16 +34,16 @@ void SelectionComponent::render() {
 
 bool SelectionComponent::testClick(int x, int y) {
 	if (x > pos.x() && x < pos.x() + width && y > pos.y() && y < pos.y() + height*2) {
-		if (left->testClick(x, y)) {
+		if (left.testClick(x, y)) {
 			decOpt();
 			return true;
 		}
 		else
-		if (right->testClick(x, y)) {
+		if (right.testClick(x, y)) {
 			incOpt();
 		}
 		else
-		if(enter->testClick(x,y)){
+		if(enter.testClick(x,y)){
 			if (callback != NULL) callback(curoption);
 		}
 		

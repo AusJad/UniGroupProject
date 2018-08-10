@@ -21,12 +21,16 @@ void TextInputComponent::render() {
 	GeoStream << color_3(.30, .30, .30);
 	RNDR->DrawQuadOrtho(vec2(pos.x() + 3, pos.y() + 3), vec2(pos.x() + width - 3, pos.y() + height - 3));
 	GeoStream << END_ATTRIB;
+
+	//entered text
+	if (!value.empty()) {
+		FNT_ENG->RenderStringO(value, FNT_SIZE_MEDIUM_O, pos.x() + 3, pos.y() + 3);
+	}
 }
 
 bool TextInputComponent::testClick(int x, int y) {
 	if (x > pos.x() && x < pos.x() + width && y > pos.y() && y < pos.y() + height) {
-		if (callback != NULL) callback(id);
-		std::cout << "hit text box" << std::endl;
+		CONT->switchContextTextInput(&value, callback);
 		return true;
 	}
 

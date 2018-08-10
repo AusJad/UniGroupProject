@@ -5,6 +5,7 @@
 #include "RenderModuleStubb.h"
 #include "LUAScriptManager.h"
 #include "SimpleString.h"
+#include "../WndComponent.h"
 
 #define CONT Singleton<Controls>::getInstance()
 
@@ -60,6 +61,8 @@ class Controls
 
 		static void switchContextConsole(bool active, RenderModuleStubb* render, Controls* tochange);
 
+		static void switchContextTextInput(std::string * toedit, onClick whenComplete);
+
 	private:
 		/// Map of resource lists with a ID.
 		std::map<int, ResourceList> controls;
@@ -71,6 +74,9 @@ class Controls
 		static double prevx;
 		/// Previous y variable.
 		static double prevy;
+
+		static std::string* textin;
+		static onClick textincomplete;
 
 		/**
 		* @brief Bind the controls to a control object.
@@ -100,6 +106,8 @@ class Controls
 		* @param mods - ID for any special actions.
 		*/
 		static void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
+
+		static void keyInputCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 
 		/**
 		* @brief Mouse cursor callback funtion.

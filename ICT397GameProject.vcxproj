@@ -99,6 +99,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ButtonComponent.h" />
+    <ClInclude Include="ControlContext.h" />
     <ClInclude Include="include\AIMovementBehaviours.h" />
     <ClInclude Include="include\AssetManager.h" />
     <ClInclude Include="include\AudioEngine.h" />
@@ -159,6 +160,7 @@
     <ClInclude Include="include\vec2.h" />
     <ClInclude Include="include\vec3.h" />
     <ClInclude Include="include\vec4.h" />
+    <ClInclude Include="LabelComponent.h" />
     <ClInclude Include="SelectionComponent.h" />
     <ClInclude Include="TextInputComponent.h" />
     <ClInclude Include="Window.h" />
@@ -167,7 +169,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ButtonComponent.cpp" />
+    <ClCompile Include="ControlContext.cpp" />
     <ClCompile Include="ICT397GameProject.cpp" />
+    <ClCompile Include="LabelComponent.cpp" />
     <ClCompile Include="SelectionComponent.cpp" />
     <ClCompile Include="src\AIMovementBehaviours.cpp" />
     <ClCompile Include="src\AssetManager.cpp" />

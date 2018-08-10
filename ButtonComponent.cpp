@@ -4,21 +4,45 @@
 
 ButtonComponent::ButtonComponent(int width, int height, vec2 pos) : WndComponent(width, height, pos)
 {
-	buttontex = "buttontex";
 }
 
 
 void ButtonComponent::render() {
 	if (!buttontex.empty()) TXMAN->useTexture(buttontex, RNDR);
+	else GeoStream << START_ATTRIB << color_3(.24, .24, .24);
 	RNDR->DrawQuadOrtho(vec2(pos), vec2(pos.x() + width, pos.y() + height));
+	if (!buttontex.empty()) TXMAN->disableTexture(RNDR);
+	else GeoStream << END_ATTRIB;
+
+	if (!text.empty()) {
+		FNT_ENG->RenderStringO(text, FNT_SIZE_MEDIUM_O, textpos.x(), textpos.y());
+	}
 }
 
 bool ButtonComponent::testClick(int x, int y) {
 	if (x > pos.x() && x < pos.x() + width && y > pos.y() && y < pos.y() + height) {
 		if(callback != NULL) callback(BUTTON_CLICK);
-		std::cout << "clicked" << std::endl;
 		return true;
 	}
-	std::cout << "not clicked" << std::endl;
 	return false;
+}
+
+void ButtonComponent::setTitle(std::string toset) {
+	text = toset;
+
+	int size = (int) FNT_ENG->precomputeStringWidth(text, FNT_SIZE_MEDIUM_O);
+
+	if (size > width) {
+		while (size > width && !text.empty()) {
+			text.pop_back();
+			size = (int)FNT_ENG->precomputeStringWidth(text, FNT_SIZE_MEDIUM_O);
+		}
+	}
+	
+	textpos.sx(pos.x() + (width - size) / 2);
+	textpos.sy(pos.y() + (height - FNT_SIZE_MEDIUM_O) / 2);
+}
+
+void ButtonComponent::setTex(std::string ntex) {
+	buttontex = ntex;
 }

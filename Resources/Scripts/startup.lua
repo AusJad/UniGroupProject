@@ -10,6 +10,8 @@ local function loadResources(AMAN)
 	AMAN:addResource("./Resources/Textures/Menu/Window/bggrey.tga", "TGA", "bggrey");
 	AMAN:addResource("./Resources/Textures/Menu/Window/header.tga", "TGA", "header");
 	AMAN:addResource("./Resources/Textures/Menu/Window/button.tga", "TGA", "buttontex");
+	AMAN:addResource("./Resources/Textures/Menu/Window/button_left.tga", "TGA", "button_left");
+	AMAN:addResource("./Resources/Textures/Menu/Window/button_right.tga", "TGA", "button_right");
 end
 
 function loadLoadRes(AMAN)

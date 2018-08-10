@@ -7,7 +7,24 @@ Scene::Scene()
 	state = -1;
 	loaded = false;
 
+	/*
+	components.push_back(new SelectionComponent(480, 64, vec2(tlscreen.x() + 10, tlscreen.y() + 64)));
+	components.push_back(new TextInputComponent(480, FNT_SIZE_MEDIUM_O + 6, vec2(tlscreen.x() + 10, tlscreen.y() + 140)));
+	LabelComponent * l = new LabelComponent(480, FNT_SIZE_MEDIUM_O + 6, vec2(tlscreen.x() + 10, tlscreen.y() + 240));
+	l->setLabel("this is a test label");
+	components.push_back(l);*/
+
+	LabelComponent *l = new LabelComponent();
+
 	tstwnd = WindowFactory::getWindow(WINDOW_SMALL, "GENERIC");
+	tstwnd->addComponent(new TextInputComponent(), 60, 10);
+	tstwnd->addComponent(l, 40, 10);
+	tstwnd->addComponent(new ButtonComponent(64, 64, vec2()));
+	tstwnd->addComponent(new ButtonComponent(64, 64, vec2()));
+	tstwnd->addComponent(new ButtonComponent(64, 64, vec2()));
+	tstwnd->addComponent(new ButtonComponent(64, 64, vec2()));
+
+	l->setLabel("This is a label");
 }
 
 

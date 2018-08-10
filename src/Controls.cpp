@@ -2,6 +2,8 @@
 
 double Controls::prevx = -1;
 double Controls::prevy = -1;
+std::string* Controls::textin = NULL;
+onClick Controls::textincomplete = NULL;
 
 Controls::Controls() {
 	curgroup = 0;
@@ -56,6 +58,38 @@ void Controls::unbindControls(unsigned groupno, RenderModuleStubb* render, Contr
 	if (tochange->controls.at(groupno).hasResource("keyCallback")) glfwSetKeyCallback(render->getWindow(), NULL);
 	if (tochange->controls.at(groupno).hasResource("mouseButtonCallback")) glfwSetMouseButtonCallback(render->getWindow(), NULL);
 	if (tochange->controls.at(groupno).hasResource("mouseCallback")) glfwSetCursorPosCallback(render->getWindow(), NULL);
+}
+
+void Controls::switchContextTextInput(std::string * toedit, onClick whenComplete) {
+	unbindControls(CONT->curgroup, RNDR, CONT);
+	textin = toedit;
+	textincomplete = whenComplete;
+	glfwSetKeyCallback(RNDR->getWindow(), keyInputCallback);
+}
+
+void Controls::keyInputCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+	if (key == GLFW_KEY_ENTER) {
+		//call callback if registered
+		if (textincomplete != NULL) textincomplete(TEXT_INPUT);
+
+		//reset input pointers
+		textincomplete = NULL;
+		textin = NULL;
+		
+		//restore old controls
+		glfwSetKeyCallback(RNDR->getWindow(), NULL);
+		bindControls(CONT->curgroup, RNDR, CONT);
+	}
+	else {
+		if (textin != NULL) {
+			if (action == GLFW_PRESS) {
+				if (key == GLFW_KEY_BACKSPACE) {
+					if (!textin->empty()) textin->pop_back();
+				}
+				else textin->push_back((char)key);
+			}
+		}
+	}
 }
 
 void Controls::keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
