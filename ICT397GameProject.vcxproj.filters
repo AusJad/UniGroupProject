@@ -231,6 +231,9 @@
     <ClInclude Include="WndComponent.h">
       <Filter>Header Files\UI</Filter>
     </ClInclude>
+    <ClInclude Include="UITextures.h">
+      <Filter>Header Files\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\CtoLUABinder.cpp">

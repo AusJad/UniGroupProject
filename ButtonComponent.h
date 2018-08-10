@@ -15,9 +15,16 @@ public:
 	bool testClick(int x, int y);
 	void setTex(std::string ntex);
 	void setTitle(std::string toset);
+
+	void setWidth(int toset);
+	void setHeight(int toset);
+	void setPos(vec2 toset);
 private:
+	void recalcDimensions();
+
 	std::string buttontex;
 	std::string text;
+	std::string vistext;
 
 	vec2 textpos;
 };

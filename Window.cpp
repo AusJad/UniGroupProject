@@ -4,17 +4,30 @@
 
 Window::Window(vec2 & stpos, float width, float height, std::string title)
 {
-	bgtex = "bggrey";
-	hdtex = "header";
-	this->title = title;
+	//bgtex = WINDOW_BG;
+
 	tlscreen = stpos;
 	brscreen = vec2(tlscreen.x() + width, tlscreen.y() + height);
+	hasHeader = true;
 	visible = true;
-	closebutton = ButtonComponent(32, 32, vec2(brscreen.x() - 32, tlscreen.y()));
-	closebutton.setTex("buttontex");
 
 	padding = 10;
+
+	if (hasHeader) initHeader(title);
 	
+}
+
+void Window::initHeader(std::string title) {
+	closebutton = ButtonComponent(HEAD_BAR_SIZE, HEAD_BAR_SIZE, vec2(brscreen.x() - HEAD_BAR_SIZE, tlscreen.y()));
+	closebutton.setTex(BUTTON_CLOSE);
+	
+	header.setPos(tlscreen);
+	header.setHeight(HEAD_BAR_SIZE);
+	header.setWidth(brscreen.x() - tlscreen.x() - HEAD_BAR_SIZE);
+	header.setPadding(6);
+	header.setTex(WND_HEADER_BG);
+
+	header.setLabel(title);
 }
 
 void Window::setCloseButtonCallBack(onClick callback) {
@@ -32,21 +45,21 @@ void Window::render() {
 	if (!visible) return;
 
 	RNDR->RenderModeOrtho();
+
+	//render background - either ui base color or texture
+	if (!bgtex.empty()) TXMAN->useTexture(bgtex, RNDR);
+	else GeoStream << START_ATTRIB << UI_BASE_COLOR;
+
+	RNDR->DrawQuadOrtho(tlscreen, brscreen);
+	
+	if (!bgtex.empty()) TXMAN->disableTexture(RNDR);
+	else GeoStream << END_ATTRIB;
 	
 	//render header bar
-	if (!hdtex.empty()) TXMAN->useTexture("header", RNDR);
-	RNDR->DrawQuadOrtho(tlscreen, vec2(brscreen.x(), tlscreen.y() + 32));
-	TXMAN->disableTexture(RNDR);
-
-	//render title text
-	FNT_ENG->RenderStringO(title, FNT_SIZE_MEDIUM_O, tlscreen.x() + 10, tlscreen.y() + 3);
-	
-	//render background
-	if (!bgtex.empty()) TXMAN->useTexture(bgtex, RNDR);
-	RNDR->DrawQuadOrtho(vec2(tlscreen.x(), tlscreen.y() + 32), brscreen);
-	TXMAN->disableTexture(RNDR);
-
-	closebutton.render();
+	if (hasHeader) {
+		header.render();
+		closebutton.render();
+	}
 
 	for (unsigned i = 0; i < components.size(); i++) {
 		components.at(i)->render();
@@ -97,7 +110,10 @@ void Window::addComponent(WndComponent * toadd) {
 }
 
 vec2 Window::calcComponentPlacement(WndComponent * toplace) {
-	vec2 tmp(tlscreen.x() + padding, tlscreen.y() + 32 + padding);
+	vec2 tmp;
+	
+	if(hasHeader) tmp = vec2(tlscreen.x() + padding, tlscreen.y() + HEAD_BAR_SIZE + padding);
+	else tmp = vec2(tlscreen.x() + padding, tlscreen.y() + padding);
 	
 	if (components.size() == 0) return tmp;
 	

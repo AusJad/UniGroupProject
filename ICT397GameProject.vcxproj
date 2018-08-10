@@ -163,6 +163,7 @@
     <ClInclude Include="LabelComponent.h" />
     <ClInclude Include="SelectionComponent.h" />
     <ClInclude Include="TextInputComponent.h" />
+    <ClInclude Include="UITextures.h" />
     <ClInclude Include="Window.h" />
     <ClInclude Include="WindowFactory.h" />
     <ClInclude Include="WndComponent.h" />

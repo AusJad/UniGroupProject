@@ -1,5 +1,6 @@
 #pragma once
 
+#include "UITextures.h"
 #include "vec2.h"
 
 typedef void(*onClick)(int action);

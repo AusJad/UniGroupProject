@@ -17,14 +17,19 @@ Scene::Scene()
 	LabelComponent *l = new LabelComponent();
 
 	tstwnd = WindowFactory::getWindow(WINDOW_SMALL, "GENERIC");
-	tstwnd->addComponent(new TextInputComponent(), 60, 10);
-	tstwnd->addComponent(l, 40, 10);
-	tstwnd->addComponent(new ButtonComponent(64, 64, vec2()));
-	tstwnd->addComponent(new ButtonComponent(64, 64, vec2()));
-	tstwnd->addComponent(new ButtonComponent(64, 64, vec2()));
-	tstwnd->addComponent(new ButtonComponent(64, 64, vec2()));
-
+	tstwnd->addComponent(new TextInputComponent(), 50, 10);
 	l->setLabel("This is a label");
+	tstwnd->addComponent(l, 50, 10);
+
+	tstwnd->addComponent(new TextInputComponent(), 50, 10);
+	l = new LabelComponent();
+	l->setLabel("Label 2");
+	tstwnd->addComponent(l, 50, 10);
+
+	tstwnd->addComponent(new ButtonComponent(64, 64, vec2()));
+	tstwnd->addComponent(new SelectionComponent(), 100, 20);
+
+	
 }
 
 

@@ -14,8 +14,8 @@ void ButtonComponent::render() {
 	if (!buttontex.empty()) TXMAN->disableTexture(RNDR);
 	else GeoStream << END_ATTRIB;
 
-	if (!text.empty()) {
-		FNT_ENG->RenderStringO(text, FNT_SIZE_MEDIUM_O, textpos.x(), textpos.y());
+	if (!vistext.empty()) {
+		FNT_ENG->RenderStringO(vistext, FNT_SIZE_MEDIUM_O, textpos.x(), textpos.y());
 	}
 }
 
@@ -27,20 +27,40 @@ bool ButtonComponent::testClick(int x, int y) {
 	return false;
 }
 
-void ButtonComponent::setTitle(std::string toset) {
-	text = toset;
+void ButtonComponent::setWidth(int toset) {
+	width = toset;
+	recalcDimensions();
+}
 
-	int size = (int) FNT_ENG->precomputeStringWidth(text, FNT_SIZE_MEDIUM_O);
+void ButtonComponent::setHeight(int toset) {
+	height = toset;
+	recalcDimensions();
+}
+
+void ButtonComponent::setPos(vec2 toset) {
+	pos = toset;
+	recalcDimensions();
+}
+
+void ButtonComponent::recalcDimensions() {
+	vistext = text;
+	int size = (int)FNT_ENG->precomputeStringWidth(text, FNT_SIZE_MEDIUM_O);
 
 	if (size > width) {
-		while (size > width && !text.empty()) {
-			text.pop_back();
-			size = (int)FNT_ENG->precomputeStringWidth(text, FNT_SIZE_MEDIUM_O);
+		while (size > width && !vistext.empty()) {
+			vistext.pop_back();
+			size = (int)FNT_ENG->precomputeStringWidth(vistext, FNT_SIZE_MEDIUM_O);
 		}
 	}
-	
+
 	textpos.sx(pos.x() + (width - size) / 2);
 	textpos.sy(pos.y() + (height - FNT_SIZE_MEDIUM_O) / 2);
+}
+
+void ButtonComponent::setTitle(std::string toset) {
+	text = toset;
+	
+	recalcDimensions();
 }
 
 void ButtonComponent::setTex(std::string ntex) {

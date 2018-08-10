@@ -5,13 +5,20 @@ local function loadResources(AMAN)
 	AMAN:addResource("./Resources/Models/RAW2.tdef", "RAWTRN", "Terrain");
 
 	--Load fonts
-	AMAN:addResource("./Resources/Fonts/ConsoleFont.csv", "FNT", "CONSOLEFONT");
-	AMAN:addResource("./Resources/Textures/console.bmp", "BMP", "Console");
-	AMAN:addResource("./Resources/Textures/Menu/Window/bggrey.tga", "TGA", "bggrey");
-	AMAN:addResource("./Resources/Textures/Menu/Window/header.tga", "TGA", "header");
-	AMAN:addResource("./Resources/Textures/Menu/Window/button.tga", "TGA", "buttontex");
-	AMAN:addResource("./Resources/Textures/Menu/Window/button_left.tga", "TGA", "button_left");
-	AMAN:addResource("./Resources/Textures/Menu/Window/button_right.tga", "TGA", "button_right");
+	if AMAN:addResource("./Resources/Fonts/ConsoleFont.csv", "FNT", "CONSOLEFONT") then print("loaded res: ConsoleFont")
+	else print("failed to load ConsoleFont") end
+	if AMAN:addResource("./Resources/Textures/console.bmp", "BMP", "Console") then print("loaded res: Console")
+	else print("failed to load Console") end
+	if AMAN:addResource("./Resources/Textures/Menu/Window/bggrey.tga", "TGA", "windowbg") then print("loaded res: windowbg")
+	else print("failed to load windowbg") end
+	if AMAN:addResource("./Resources/Textures/Menu/Window/header.tga", "TGA", "wndheader") then print("loaded res: wndheader")
+	else print("failed to load wndheader") end
+	if AMAN:addResource("./Resources/Textures/Menu/Window/button.tga", "TGA", "close_button") then print("loaded res: close_button")
+	else print("failed to load close_button") end
+	if AMAN:addResource("./Resources/Textures/Menu/Window/button_left.tga", "TGA", "button_left") then print("loaded res: button_left")
+	else print("failed to load button_left") end
+	if AMAN:addResource("./Resources/Textures/Menu/Window/button_right.tga", "TGA", "button_right") then print("loaded res: button_right")
+	else print("failed to load button_right") end
 end
 
 function loadLoadRes(AMAN)

@@ -9,6 +9,7 @@
 #include "TextureManager.h"
 #include "FontEngine.h"
 #include "TextInputComponent.h"
+#include "UITextures.h"
 
 #define HEAD_BAR_SIZE 32
 
@@ -29,16 +30,18 @@ public:
 	void addComponent(WndComponent * toadd);
 
 private:
-	std::string hdtex;
 	std::string bgtex;
-	std::string title;
 
 	bool visible;
+	bool hasHeader;
+
+	void initHeader(std::string title);
 
 	vec2 tlscreen;
 	vec2 brscreen;
 	int padding;
 	
+	LabelComponent header;
 	ButtonComponent closebutton;
 	std::vector<WndComponent*> components;
 
