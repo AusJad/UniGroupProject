@@ -10,6 +10,15 @@ ResourceList & LuaControlContext::getActiveContext() {
 
 void LuaControlContext::setActive() {
 	glfwSetInputMode(RNDR->getWindow(), GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+
+	int w; int h;
+	glfwGetWindowSize(RNDR->getWindow(), &w, &h);
+
+	prevx = (float)w / 2;
+	prevy = (float)h / 2;
+
+	glfwSetCursorPos(RNDR->getWindow(), (double)w / 2, (double)h / 2);
+
 	LuaControlContext::activecontext = boundcontrols;
 }
 

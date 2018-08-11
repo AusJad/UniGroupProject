@@ -2,7 +2,7 @@
 
 Window::Window(vec2 & stpos, float width, float height, std::string title)
 {
-	//bgtex = WINDOW_BG;
+	//bgtex = WND_HEADER_BG;
 
 	tlscreen = stpos;
 	brscreen = vec2(tlscreen.x() + width, tlscreen.y() + height);
