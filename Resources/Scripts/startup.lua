@@ -55,13 +55,13 @@ function initGame(SM, LSM, AMAN, AE)
 	SM:attachControls(level1, ResourceList("keyCallback", "keys", "mouseCallback", "mouse", "mouseButtonCallback", "playerAttack"));
 	SM:attachTerrain(Identifiers("TO", "Terrain"), level1, vec3(0,0,0), ResourceList("model", "Terrain"));
 
-	SM:addObject(Identifiers("CAM","Camera"), level1, vec3(0, 0, 0), ResourceList("player", "Player"));
+	--SM:addObject(Identifiers("CAM","Camera"), level1, vec3(0, 0, 0), ResourceList("player", "Player"));
 
 	SM:addObject(Identifiers("PLYR", "Player"), level1, vec3(0, 0, 0), ResourceList("camera", "Camera"));
 	
 	SM:setSceneHeightMap(level1, SM:GetGameObject("Terrain"));
 
-	AE:setListenerSource(SM:GetGameObjectID("Camera"), vec3(0, 0, 0));
+	--AE:setListenerSource(SM:GetGameObjectID("Camera"), vec3(0, 0, 0));
 
 	SM:setCurrScene(level1);
 

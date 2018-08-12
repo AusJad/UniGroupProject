@@ -109,10 +109,75 @@ void CollisionEngine::update(GameObject* toupdate, std::vector<GameObject*> coll
 	}
 }
 
+void CollisionEngine::update(GameObject* toupdate, GameObject* collGO, float time) {
+	if (toupdate->isCollidable() == false) {
+		vec3 tmpos = toupdate->getPos();
+		
+		toupdate->update(time);
+
+		float x = toupdate->getPos().x();
+		float z = toupdate->getPos().z();
+
+		if ((x < maxx && x > minx && z > minz && z < maxz) == false) {
+			toupdate->setPos(tmpos);
+			toupdate->stop();
+		}
+
+		return;
+	}
+
+	vec3 tmpos = toupdate->getPos();
+
+	toupdate->update(time);
+
+	AABB updateb = genAABB(toupdate);
+
+	AABB compb;
+
+	if (collGO->getID() != toupdate->getID() && collGO->isCollidable()) {
+		compb = genAABB(collGO);
+		if (updateb.xmax >= compb.xmin && updateb.xmin <= compb.xmax
+			&& updateb.zmax >= compb.zmin && updateb.zmin <= compb.zmax
+			&& updateb.ymax >= compb.ymin && updateb.ymin <= compb.ymax) {
+			toupdate->onCollide(tmpos, collGO->getIdentifiers());
+			toupdate->onCollide2(tmpos, collGO->getPos());
+		}
+	}
+
+	if (hasHMap) {
+		float x = toupdate->getPos().x();
+		float z = toupdate->getPos().z();
+
+		if ((x < maxx && x > minx && z > minz && z < maxz) == false) {
+			toupdate->setPos(tmpos);
+			toupdate->stop();
+			if (toupdate->getIdentifiers().getType() == "BLT") toupdate->onCollide(tmpos, Identifiers("NAN"));
+		}
+
+		if (x < maxx && x > minx && z > minz && z < maxz && hasHMap && toupdate->hasGravity()) {
+			HMPos hmloc = findHMLocation(toupdate->getPos());
+
+			float y = interpolateY(toupdate->getPos(), hmloc);
+
+			toupdate->setPos(vec3(toupdate->getPos().x(), y + toupdate->getCenterOffset().y(), toupdate->getPos().z()));
+			toupdate->setTarget(vec3(toupdate->getTarget().x(), 0, toupdate->getTarget().z()));
+		}
+		else {
+			if (x < maxx && x > minx && z > minz && z < maxz && hasHMap) {
+				HMPos hmloc = findHMLocation(toupdate->getPos());
+
+				float y = interpolateY(toupdate->getPos(), hmloc);
+
+				if (toupdate->getPos().y() < y)  toupdate->onCollide(tmpos, Identifiers("NAN"));
+			}
+		}
+	}
+}
+
 AABB CollisionEngine::genAABB(GameObject* toupdate) {
 	if (toupdate->getModel() == NULL) 
 		return AABB(toupdate->getPos().x() + 7.0f, toupdate->getPos().x() - 7.0f,
-			toupdate->getPos().y() + 7.0f, toupdate->getPos().y() - 17.0f,
+			toupdate->getPos().y() + 7.0f, toupdate->getPos().y() - 30.0f,
 			toupdate->getPos().z() + 7.0f, toupdate->getPos().z() - 7.0f);
 	else 
 		return AABB(toupdate->getModel()->getMaxTX(), toupdate->getModel()->getMinTX(),

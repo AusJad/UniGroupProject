@@ -17,6 +17,9 @@ public:
 	void setHeight(int toset);
 	void setPos(vec2 toset);
 
+	void addSelection(std::string toadd);
+	std::string getActiveSelection() { if (curoption != -1) return options.at(curoption); else return ""; }
+
 	void move(float x, float y);
 
 private:

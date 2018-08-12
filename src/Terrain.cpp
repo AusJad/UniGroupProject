@@ -32,7 +32,7 @@ void terrain::genLightmap() {
 
 	float softness = 0.2f;
 
-	float minBrightness = 0.3f;
+	float minBrightness = 6.0f;
 	float maxBrightness = 8.0f;
 
 	unsigned char * hmdata = new unsigned char[dimensions*dimensions];

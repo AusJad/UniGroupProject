@@ -99,8 +99,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ButtonComponent.h" />
+    <ClInclude Include="CameraManager.h" />
     <ClInclude Include="ControlContext.h" />
     <ClInclude Include="EditorContext.h" />
+    <ClInclude Include="EditorWallTool.h" />
     <ClInclude Include="GUI.h" />
     <ClInclude Include="GUIInteractContext.h" />
     <ClInclude Include="LuaControlContext.h" />
@@ -170,6 +172,7 @@
     <ClInclude Include="TextInputComponent.h" />
     <ClInclude Include="TextInputContext.h" />
     <ClInclude Include="UITextures.h" />
+    <ClInclude Include="Wall.h" />
     <ClInclude Include="Window.h" />
     <ClInclude Include="WindowFactory.h" />
     <ClInclude Include="WindowMoveContext.h" />
@@ -177,7 +180,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ButtonComponent.cpp" />
+    <ClCompile Include="CameraManager.cpp" />
     <ClCompile Include="EditorContext.cpp" />
+    <ClCompile Include="EditorWallTool.cpp" />
     <ClCompile Include="GUI.cpp" />
     <ClCompile Include="GUIInteractContext.cpp" />
     <ClCompile Include="ICT397GameProject.cpp" />
@@ -240,6 +245,7 @@
     <ClCompile Include="src\vec4.cpp" />
     <ClCompile Include="TextInputComponent.cpp" />
     <ClCompile Include="TextInputContext.cpp" />
+    <ClCompile Include="Wall.cpp" />
     <ClCompile Include="Window.cpp" />
     <ClCompile Include="WindowFactory.cpp" />
     <ClCompile Include="WindowMoveContext.cpp" />

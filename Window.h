@@ -34,6 +34,8 @@ public:
 	void addComponent(WndComponent * toadd);
 	void setPadding(int toset) { padding = toset; }
 
+	void FitToContent();
+
 private:
 	std::string bgtex;
 

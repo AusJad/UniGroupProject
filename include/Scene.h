@@ -3,6 +3,7 @@
 #include "CollisionEngine.h"
 //mm
 #include "saveFileIO.h"
+#include "../CameraManager.h"
 
 /**
 * @class Scene
@@ -93,6 +94,8 @@ public:
 	* @return vector<string> - A vector of strings containing GameObject save data.
 	*/
 	std::vector<std::string> saveGame();
+
+	void addObject(GameObject * toadd);
 
 	/**
 	* @brief A method to load a game from file.

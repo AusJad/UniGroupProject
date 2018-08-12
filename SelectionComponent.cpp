@@ -8,9 +8,9 @@ left(), right(), enter(), selection()
 	left.setTex("button_left");
 	right.setTex("button_right");
 	enter.setTitle("Enter");
-	options.push_back("Option 1"); options.push_back("Option 2"); options.push_back("Option 3");
-	curoption = 0;
-	selection.setLabel(options.at(curoption));
+
+	curoption = -1;
+	selection.setLabel("No Options Available");
 	selection.setPadding(6);
 }
 
@@ -20,9 +20,9 @@ left(), right(), enter(), selection()
 	left.setTex("button_left");
 	right.setTex("button_right");
 	enter.setTitle("Enter");
-	options.push_back("Option 1"); options.push_back("Option 2"); options.push_back("Option 3");
-	curoption = 0;
-	selection.setLabel(options.at(curoption));
+
+	curoption = -1;
+	selection.setLabel("No Options Available");
 	selection.setPadding(6);
 
 	recalcDimensions();
@@ -106,5 +106,12 @@ void SelectionComponent::incOpt() {
 void SelectionComponent::decOpt() {
 	curoption--;
 	if (curoption < 0) curoption = options.size() - 1;
+	selection.setLabel(options.at(curoption));
+}
+
+void SelectionComponent::addSelection(std::string toadd) {
+	options.push_back(toadd);
+
+	curoption = options.size() - 1;
 	selection.setLabel(options.at(curoption));
 }

@@ -41,6 +41,8 @@ public:
 	*/
 	bool addObject(Identifiers & id, unsigned sceneno, vec3 pos, ResourceList & list);
 
+	bool addObjectToCurScene(GameObject * toadd);
+
 	/**
 	* @brief Attach a terrain to the scene
 	*

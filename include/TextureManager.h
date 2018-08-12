@@ -2,8 +2,11 @@
 #include "ImageCreationHandler.h"
 #include "Singleton.h"
 #include <map>
+#include "fileNameReader.h"
 
 #define TXMAN Singleton<TextureManager>::getInstance()
+
+#define WALL_TEX_GROUP "WallTex"
 
 /**
 * @class TextureManager
@@ -105,9 +108,18 @@ public:
 
 	bool createSubTexFromTemp(std::string name, unsigned subwidth, unsigned subheight, unsigned x, unsigned y);
 
+	void loadBatch(std::string groupname, std::string path, std::string type);
+
+	bool hasTextureGroup(std::string group);
+
+	const std::vector<std::string> & getTextureGroup(std::string group);
+
 private:
 	/// Map of the images.
 	std::map<std::string, int> images;
+
+	std::map<std::string, std::vector<std::string> > batchfiles;
+
 	/// The image creation handler.
 	ImageCreationHandler ImgCH;
 	/// The next texture id.

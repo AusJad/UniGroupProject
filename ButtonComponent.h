@@ -3,6 +3,7 @@
 #include "RenderModuleStubb.h"
 #include "TextureManager.h"
 #include "FontEngine.h"
+#include "UITextures.h"
 #include <string>
 #include <iostream>
 
@@ -19,6 +20,7 @@ public:
 	void setWidth(int toset);
 	void setHeight(int toset);
 	void setPos(vec2 toset);
+	void move(float x, float y);
 private:
 	void recalcDimensions();
 

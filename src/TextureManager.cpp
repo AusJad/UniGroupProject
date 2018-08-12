@@ -100,3 +100,33 @@ bool TextureManager::createSubTexFromTemp(std::string name, unsigned subwidth, u
 
 	return true;
 }
+
+void TextureManager::loadBatch(std::string groupname, std::string path, std::string type) {
+	fileNameReader::getFileNames(path.c_str(), "tga");
+
+	std::cout << path << std::endl;
+
+	std::string activefile;
+
+	while (fileNameReader::hasFiles()) {
+		activefile = fileNameReader::getFile();
+		std::cout << "Getting: " << activefile << std::endl;
+		if (loadNewTexture(path + activefile, type, activefile, RNDR)) {
+			if (batchfiles.count(groupname) == 0) {
+				batchfiles[groupname] = std::vector<std::string>();
+			}
+			
+			batchfiles.at(groupname).push_back(activefile);
+			std::cout << "Loaded: " << activefile << std::endl;
+		}
+		else std::cout << "Failed to Load: " << activefile << std::endl;
+	}
+}
+
+bool TextureManager::hasTextureGroup(std::string group) {
+	return batchfiles.count(group) == 1;
+}
+
+const std::vector<std::string> & TextureManager::getTextureGroup(std::string group) {
+	return batchfiles.at(group);
+}

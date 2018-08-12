@@ -12,7 +12,8 @@ bool Engine::Initalise(std::string initscript){
 	}
 
 	LSM->callFunction<SceneManager, LUAScriptManager, AssetManager, AudioEngine>("initGame", *SM, *LSM, *Singleton<AssetManager>::getInstance(), *Singleton<AudioEngine>::getInstance());
-
+	
+	TXMAN->loadBatch(WALL_TEX_GROUP, "./Resources/Textures/WallTex/", "TGA");
 	if (!GI->initalise()) return false;
 
 	return true;

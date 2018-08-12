@@ -9,13 +9,22 @@ ButtonComponent::ButtonComponent(int width, int height, vec2 pos) : WndComponent
 
 void ButtonComponent::render() {
 	if (!buttontex.empty()) TXMAN->useTexture(buttontex, RNDR);
-	else GeoStream << START_ATTRIB << color_3(.24, .24, .24);
+	else GeoStream << START_ATTRIB << UI_MID_DARK_COLOR;
 	RNDR->DrawQuadOrtho(pos, vec2(pos.x() + width, pos.y() + height));
 	if (!buttontex.empty()) TXMAN->disableTexture(RNDR);
 	else GeoStream << END_ATTRIB;
 
+	if (buttontex.empty()) {
+		GeoStream << START_ATTRIB << UI_LIGHT_COLOR;
+		RNDR->DrawQuadOrtho(pos, vec2(pos.x() + width, pos.y() + INPUT_BORDER));
+		RNDR->DrawQuadOrtho(pos, vec2(pos.x() + INPUT_BORDER, pos.y() + height));
+		RNDR->DrawQuadOrtho(vec2(pos.x() + width - INPUT_BORDER, pos.y()), vec2(pos.x() + width, pos.y() + height));
+		RNDR->DrawQuadOrtho(vec2(pos.x(), pos.y() + height - INPUT_BORDER), vec2(pos.x() + width, pos.y() + height));
+		GeoStream << END_ATTRIB;
+	}
+
 	if (!vistext.empty()) {
-		FNT_ENG->RenderStringO(vistext, FNT_SIZE_MEDIUM_O, textpos.x(), textpos.y());
+		FNT_ENG->RenderStringO(vistext, FNT_SIZE_MEDIUM_O, textpos.x(), textpos.y() + 3);
 	}
 }
 
@@ -25,6 +34,11 @@ bool ButtonComponent::testClick(int x, int y) {
 		return true;
 	}
 	return false;
+}
+
+void ButtonComponent::move(float x, float y) {
+	pos = vec2(pos.x() + x, pos.y() + y);
+	recalcDimensions();
 }
 
 void ButtonComponent::setWidth(int toset) {

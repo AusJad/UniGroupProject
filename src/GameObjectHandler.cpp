@@ -98,6 +98,10 @@ bool GameObjectHandler::addObject(Identifiers id, vec3 pos, ResourceList & list)
 	return true;
 }
 
+void GameObjectHandler::addGameObject(GameObject* toadd) {
+	gameobjects.push_back(toadd);
+}
+
 void GameObjectHandler::msgrcvr() {
 	Message tmpmsg;
 	

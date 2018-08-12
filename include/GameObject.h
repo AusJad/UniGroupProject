@@ -58,7 +58,7 @@ public:
 	*
 	* @return vec3 - The position of the object.
 	*/
-	const vec3 & getPos() const;
+	virtual const vec3 & getPos() const;
 
 	/**
 	* @brief Get the type of the object.
@@ -120,7 +120,7 @@ public:
 	*
 	* @return Model* - The model of the object.
 	*/
-	Model* getModel();
+	virtual Model* getModel();
 
 	/**
 	* @brief A virtual method for if the GameObject is visible or not.

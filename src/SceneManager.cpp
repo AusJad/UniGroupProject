@@ -30,6 +30,12 @@ bool SceneManager::addObject(Identifiers & id, unsigned sceneno, vec3 pos, Resou
 	else return(scenes.at(sceneno).addObject(id, pos, list));
 }
 
+bool SceneManager::addObjectToCurScene(GameObject * toadd) {
+	if (scenes.empty()) return false;
+	scenes.at(currscene).addObject(toadd);
+	return true;
+}
+
 void SceneManager::addScene(void ) {
 	Scene tmp;
 	scenes.push_back(tmp);

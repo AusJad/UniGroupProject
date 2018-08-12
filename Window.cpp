@@ -160,10 +160,18 @@ vec2 Window::calcComponentPlacement(WndComponent * toplace) {
 	int lasth = components.at(components.size() - 1)->getHeight();
 	
 	if (lastw + toplace->getWidth() > brscreen.x() - tlscreen.x()) {
-		tmp.sy(lasth + lasty);
+		tmp.sy(lasth + lasty + padding);
 	}
 	else {
 		tmp.sx(lastx + components.at(components.size() - 1)->getWidth());
 		tmp.sy(lasty);
 	}
+}
+
+void Window::FitToContent() {
+	if (components.empty()) return;
+
+	float min = components.at(components.size() - 1)->getPos().y() + components.at(components.size() - 1)->getHeight() + padding;
+
+	brscreen.sy(min);
 }

@@ -19,6 +19,9 @@ void GUIInteractContext::menuMoveMouse(GLFWwindow* window, double x, double y) {
 void GUIInteractContext::mouseClickCallback(GLFWwindow* window, int button, int action, int mods) {
 	if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) {
 		clicks.hasClick = true;
-		clicks.clicklocation = mousePos;
+
+		double x, y;
+		glfwGetCursorPos(window, &x, &y);
+		clicks.clicklocation = vec2((float)x, (float)y);
 	}
 }

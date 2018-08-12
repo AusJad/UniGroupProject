@@ -41,6 +41,8 @@ public:
 	*/
 	void setWorldDimensions(float tlx, float tlz, float brx, float brz);
 
+	void addGameObject(GameObject* toadd);
+
 	/**
 	* @brief Add a object to the handler.
 	*

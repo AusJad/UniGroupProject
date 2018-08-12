@@ -38,6 +38,66 @@ void RenderModuleStubb::DrawQuadOrtho(vec2 & tl, vec2 & br) {
 
 }
 
+void RenderModuleStubb::DrawRectangularPrism(vec3 & pos, float width, float height, float depth) {
+	glDisable(GL_LIGHTING);
+	glBegin(GL_QUADS);
+		glTexCoord2f(1, 0);
+		glVertex3f(pos.x(), pos.y() + height, pos.z());
+		glTexCoord2f(0, 0);
+		glVertex3f(pos.x(), pos.y(), pos.z());
+		glTexCoord2f(0, 1);
+		glVertex3f(pos.x() + width, pos.y(), pos.z());
+		glTexCoord2f(1, 1);
+		glVertex3f(pos.x() + width, pos.y() + height, pos.z());
+
+		glTexCoord2f(0, 1);
+		glVertex3f(pos.x(), pos.y() + height, pos.z() + depth);
+		glTexCoord2f(0, 0);
+		glVertex3f(pos.x(), pos.y(), pos.z() + depth);
+		glTexCoord2f(1, 0);
+		glVertex3f(pos.x() + width, pos.y(), pos.z() + depth);
+		glTexCoord2f(1, 1);
+		glVertex3f(pos.x() + width, pos.y() + height, pos.z() + depth);
+
+		glTexCoord2f(0, 1);
+		glVertex3f(pos.x(), pos.y() + height, pos.z());
+		glTexCoord2f(0, 0);
+		glVertex3f(pos.x(), pos.y(), pos.z());
+		glTexCoord2f(1, 0);
+		glVertex3f(pos.x(), pos.y(), pos.z() + depth);
+		glTexCoord2f(1, 1);
+		glVertex3f(pos.x(), pos.y() + height, pos.z() + depth);
+
+		glTexCoord2f(1, 0);
+		glVertex3f(pos.x() + width, pos.y() + height, pos.z());
+		glTexCoord2f(0, 0);
+		glVertex3f(pos.x() + width, pos.y(), pos.z());
+		glTexCoord2f(0, 1);
+		glVertex3f(pos.x() + width, pos.y(), pos.z() + depth);
+		glTexCoord2f(1, 1);
+		glVertex3f(pos.x() + width, pos.y() + height, pos.z() + depth);
+
+		glTexCoord2f(1, 0);
+		glVertex3f(pos.x() + width, pos.y(), pos.z());
+		glTexCoord2f(0, 0);
+		glVertex3f(pos.x(), pos.y(), pos.z());
+		glTexCoord2f(0, 1);
+		glVertex3f(pos.x(), pos.y(), pos.z() + depth);
+		glTexCoord2f(1, 1);
+		glVertex3f(pos.x() + width, pos.y(), pos.z() + depth);
+
+		glTexCoord2f(0, 1);
+		glVertex3f(pos.x() + width, pos.y() + height, pos.z());
+		glTexCoord2f(0, 0);
+		glVertex3f(pos.x(), pos.y() + height, pos.z());
+		glTexCoord2f(1, 0);
+		glVertex3f(pos.x(), pos.y() + height, pos.z() + depth);
+		glTexCoord2f(1, 1);
+		glVertex3f(pos.x() + width, pos.y() + height, pos.z() + depth);
+	glEnd();
+	glEnable(GL_LIGHTING);
+}
+
 void RenderModuleStubb::DrawQuad(point tl, point br, float y) {
 	glDisable(GL_LIGHTING);
 	glBegin(GL_QUADS);

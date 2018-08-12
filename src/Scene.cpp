@@ -28,6 +28,8 @@ void Scene::addResources(ResourceList & toadd) {
 
 void Scene::render() {
 	objects.render();
+	CAM->getActiveCam()->render();
+
 	if (resources.hasResource("renderfunc")) {
 		RNDR->RenderFacingCamera();
 		LSM->callFunction<Scene, MessagingBus>(resources.getResource("renderfunc"), *this, *(Singleton<MessagingBus>::getInstance()));
@@ -43,6 +45,10 @@ bool Scene::addObject(Identifiers & id, vec3 pos, ResourceList & list){
 	return objects.addObject(id, pos, list);
 }
 
+void Scene::addObject(GameObject * toadd) {
+	objects.addGameObject(toadd);
+}
+
 void Scene::update(float time) {
 	if (resources.hasResource("updatefunc")) {
 		LSM->callFunction<Scene, MessagingBus>(resources.getResource("updatefunc"), *this, *(MSGBS));
@@ -54,7 +60,10 @@ void Scene::update(float time) {
 		if(objects.getObject(i) != NULL) collision.update(objects.getObject(i), objects.findSpatiallyGroupedGameObjects(objects.getObject(i)), time);
 	}
 
-	objects.update(time);
+	//Cam collision
+	//todo - fix this retarded system
+	if(objects.getNumObjects() > 0) 
+		collision.update(CAM->getActiveCam(), objects.findSpatiallyGroupedGameObjects(objects.getObject(0)), time);
 }
 
 int Scene::GetGameObjectID(std::string name) {

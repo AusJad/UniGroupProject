@@ -38,6 +38,8 @@ public:
 	*/
 	GameObject* create(Identifiers & id, vec3 pos, ResourceList & list);
 
+	unsigned getNextId() { return nextid++; }
+
 	/// ID for the next object.
 	unsigned nextid;
 private:

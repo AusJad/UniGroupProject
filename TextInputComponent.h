@@ -4,9 +4,8 @@
 #include "RenderModuleStubb.h"
 #include "FontEngine.h"
 #include "Controls.h"
+#include "UITextures.h"
 #include <string>
-
-#define INPUT_BORDER 1
 
 class TextInputComponent : public WndComponent
 {
@@ -15,7 +14,9 @@ public:
 	TextInputComponent(int width, int height, vec2 pos);
 	void render();
 	bool testClick(int x, int y);
-	void onInputComplete();
+	std::string getValue() { return value; }
+	void setValue(std::string toset) { value = toset; }
+
 private:
 	std::string value;
 	int id;

@@ -2,7 +2,7 @@
 
 bool EditorContext::active = false;
 
-Window * EditorContext::walltool = NULL;
+EditorWallTool EditorContext::walltool;
 Window * EditorContext::objecttool = NULL;
 
 EditorContext::EditorContext()
@@ -16,16 +16,16 @@ EditorContext::~EditorContext()
 }
 
 bool EditorContext::initalise() {
-	toolbar = WindowFactory::getWindow(WINDOW_SMALL_WIDE, "GENERIC", vec2(500, 500), "Editor Toolbar - Close to Exit Editor");
-	
-	walltool = WindowFactory::getWindow(WINDOW_MEDIUM_TALL, "GENERIC", vec2(800, 0), "Wall Tool");
-	walltool->hide();
+	toolbar = WindowFactory::getWindow(WINDOW_SMALL_WIDE, "GENERIC", vec2(768, 592), "Editor Toolbar - Close to Exit Editor");
+	if (toolbar == NULL) return false;
+
+	if(!walltool.init()) return false;
+	walltool.hide();
 
 	objecttool = WindowFactory::getWindow(WINDOW_MEDIUM_TALL, "GENERIC", vec2(), "Object Tool");
 	objecttool->hide();
 	
 	initToolBar();
-	initWallTool();
 	initObjectTool();
 
 	return true;
@@ -36,30 +36,15 @@ void EditorContext::toolbarClose(int code){
 }
 
 void EditorContext::render() {
-	walltool->render();
-	objecttool->render();
+	walltool.render();
 	toolbar->render();
+	objecttool->render();
 }
 
 void EditorContext::update(float time) {
-	walltool->update(time);
+	walltool.update(time);
 	objecttool->update(time);
 	toolbar->update(time);
-}
-
-void EditorContext::initWallTool() {
-	LabelComponent * l = new LabelComponent();
-	l->setLabel("Select Texture:");
-	walltool->addComponent(l, 100, 10);
-	walltool->addComponent(new SelectionComponent(), 100, 15);
-	l = new LabelComponent();
-	l->setLabel("Set Width:");
-	walltool->addComponent(l, 60, 10);
-	walltool->addComponent(new TextInputComponent(), 40, 10);
-	l = new LabelComponent();
-	l->setLabel("Set Height:");
-	walltool->addComponent(l, 60, 10);
-	walltool->addComponent(new TextInputComponent(), 40, 10);
 }
 
 void EditorContext::initObjectTool() {
@@ -87,15 +72,15 @@ void EditorContext::initToolBar() {
 }
 
 bool EditorContext::testClick(int x, int y) {
-	if (walltool->testClick(x, y)) return true;
-	else if (objecttool->testClick(x, y)) return true;
+	if (objecttool->testClick(x, y)) return true;
+	else if (walltool.testClick(x, y)) return true;
 	else if (toolbar->testClick(x, y)) return true;
 
 	return false;
 }
 
 void EditorContext::walltoolclick(int code) {
-	walltool->tglVis();
+	walltool.toggle();
 }
 
 void EditorContext::objecttoolclick(int code) {
