@@ -101,6 +101,7 @@
     <ClInclude Include="ButtonComponent.h" />
     <ClInclude Include="CameraManager.h" />
     <ClInclude Include="ControlContext.h" />
+    <ClInclude Include="EditorCameraTool.h" />
     <ClInclude Include="EditorContext.h" />
     <ClInclude Include="EditorWallTool.h" />
     <ClInclude Include="GUI.h" />
@@ -181,6 +182,7 @@
   <ItemGroup>
     <ClCompile Include="ButtonComponent.cpp" />
     <ClCompile Include="CameraManager.cpp" />
+    <ClCompile Include="EditorCameraTool.cpp" />
     <ClCompile Include="EditorContext.cpp" />
     <ClCompile Include="EditorWallTool.cpp" />
     <ClCompile Include="GUI.cpp" />

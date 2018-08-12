@@ -41,3 +41,7 @@ void CameraManager::switchFPSCam() {
 void CameraManager::updateActiveCam(Camera & toset) {
 	*activecam = Camera(toset);
 }
+
+void CameraManager::toggleFreeCam() {
+	activecam->toggleFreeCam();
+}

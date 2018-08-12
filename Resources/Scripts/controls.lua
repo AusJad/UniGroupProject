@@ -49,6 +49,12 @@ function keys(key, action, MB)
 			MB:postMessage(Message("SLU"), Identifiers("", "Camera"));
 		end 
 	elseif key:equals("m") or key:equals("M") then
+		MB:postMessage(Message("SMF"), Identifiers("", "Camera"));
+		MB:postMessage(Message("SML"), Identifiers("", "Camera"));
+		MB:postMessage(Message("SMR"), Identifiers("", "Camera"));
+		MB:postMessage(Message("SMB"), Identifiers("", "Camera"));
+		MB:postMessage(Message("SLD"), Identifiers("", "Camera"));
+		MB:postMessage(Message("SLU"), Identifiers("", "Camera"));
 		MenuTools.switchMenuMode();
 	elseif key:equals("X") then
 		if action:equals("press") then

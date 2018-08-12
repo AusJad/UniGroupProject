@@ -19,6 +19,8 @@ public:
 
 	void updateActiveCam(Camera & toset);
 
+	void toggleFreeCam();
+
 private:
 	Camera fpscam;
 	Camera freecam;

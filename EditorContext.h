@@ -1,6 +1,7 @@
 #pragma once
 
 #include "EditorWallTool.h"
+#include "EditorCameraTool.h"
 #include "CameraManager.h"
 
 class EditorContext
@@ -22,6 +23,7 @@ public:
 
 private:
 	Window * toolbar;
+	static EditorCameraTool cameratool;
 	static EditorWallTool walltool;
 	static Window * objecttool;
 	static bool active;
@@ -32,5 +34,6 @@ private:
 	static void toolbarClose(int code);
 	static void walltoolclick(int code);
 	static void objecttoolclick(int code);
+	static void cameratoolclock(int code);
 };
 

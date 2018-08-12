@@ -39,7 +39,7 @@ void EditorWallTool::render() {
 }
 
 void EditorWallTool::update(float time) {
-	walltool->update(time);
+	if(walltool->isVis()) walltool->update(time);
 }
 
 bool EditorWallTool::testClick(int x, int y) {
@@ -176,12 +176,16 @@ void EditorWallTool::addToGameCallBack(int code) {
 	wall->updateBounds();
 
 	SM->addObjectToCurScene(wall);
+	
+	if (prevwall == NULL) {
+		positionrin->addSelection(PREV_WALL);
+		relativeselection = PREV_WALL;
+	}
+	
 	prevwall = wall;
 	wall = new Wall();
 	wall->setID(GOF->getNextId());
-	positionrin->addSelection(PREV_WALL);
-	relativeselection = PREV_WALL;
-
+	
 	resetWallPos(0);
 }
 

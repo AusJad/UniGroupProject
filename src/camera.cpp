@@ -28,6 +28,10 @@ Camera::Camera(Identifiers & id, vec3 pos, ResourceList & list) : GameObject(id,
 	yoff = 30.0f;
 }
 
+void Camera::toggleFreeCam() {
+	switchViewMode();
+}
+
 void Camera::update(float time) {
 	MessagingBus* tmp = Singleton<MessagingBus>::getInstance();
 	Message tmpm;

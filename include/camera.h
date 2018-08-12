@@ -159,6 +159,7 @@ public:
 	*/
 	mat4 GetViewMatrix() const; //translation and rotation matrix
 
+	void toggleFreeCam();
 
 	/**
 	* @brief Update function for camera.
