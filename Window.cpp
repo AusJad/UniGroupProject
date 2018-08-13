@@ -58,7 +58,16 @@ void Window::render() {
 	
 	if (!bgtex.empty()) TXMAN->disableTexture(RNDR);
 	else GeoStream << END_ATTRIB;
-	
+
+	if (bgtex.empty()) {
+		GeoStream << START_ATTRIB << UI_LIGHT_COLOR;
+		RNDR->DrawQuadOrtho(tlscreen, vec2(brscreen.x(), tlscreen.y() + INPUT_BORDER));
+		RNDR->DrawQuadOrtho(tlscreen, vec2(tlscreen.x() + INPUT_BORDER, brscreen.y()));
+		RNDR->DrawQuadOrtho(vec2(brscreen.x() - INPUT_BORDER, tlscreen.y()), vec2(brscreen.x(), brscreen.y()));
+		RNDR->DrawQuadOrtho(vec2(tlscreen.x(), brscreen.y() - INPUT_BORDER), vec2(brscreen.x(), brscreen.y()));
+		GeoStream << END_ATTRIB;
+	}
+
 	//render header bar
 	if (hasHeader) {
 		header.render();
@@ -68,7 +77,7 @@ void Window::render() {
 	for (unsigned i = 0; i < components.size(); i++) {
 		components.at(i)->render();
 	}
-
+	
 	RNDR->RenderModePerspective();
 }
 
