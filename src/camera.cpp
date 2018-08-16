@@ -124,6 +124,7 @@ void Camera::update(float time) {
 		if (tmpm.getInstruction() == "SLU") {
 			this->lookUp = false;
 		}
+		/*
 		else
 		if (tmpm.getInstruction() == "LX") {
 			horizontalAngle -= tmpm.getData().fdata * time * rotateSpeed;
@@ -133,7 +134,7 @@ void Camera::update(float time) {
 			verticalAngle -= tmpm.getData().fdata * time * rotateSpeed;
 			if (verticalAngle <= maxNangle && tmpm.getData().fdata > 0) verticalAngle = maxNangle;
 			if (verticalAngle >= maxAngle && tmpm.getData().fdata < 0) verticalAngle = maxAngle;
-		}
+		}*/
 		else
 		if (tmpm.getInstruction() == POS_REQUEST) {
 			tmpm.setInstruction(POS_RESPONSE);
@@ -154,6 +155,16 @@ void Camera::update(float time) {
 		if (tmpm.getInstruction() == DAMAGE) {
 			if (resources.hasResource("player")) MSGBS->postMessage(tmpm, Identifiers("", resources.getResource("player")));
 		}
+	}
+
+	if (lk.length() != 0) {
+		horizontalAngle -= lk.x() * time * rotateSpeed;
+
+		verticalAngle -= lk.y() * time * rotateSpeed;
+		if (verticalAngle <= maxNangle && lk.y() > 0) verticalAngle = maxNangle;
+		if (verticalAngle >= maxAngle && lk.y() < 0) verticalAngle = maxAngle;
+
+		lk = vec2();
 	}
 
 	if (this->moveForward) {
@@ -182,6 +193,10 @@ void Camera::update(float time) {
 
 	pos += (target * (time * speedDecay));
 	target -= (target * (time * speedDecay));
+}
+
+void Camera::look(float x, float y) {
+	lk = vec2(x, y);
 }
 
 bool Camera::isCollidable() {

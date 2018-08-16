@@ -39,7 +39,7 @@ void GUI::update(float time) {
 
 	if (GUIInteractContext::hasClick()) {
 		vec2 click = GUIInteractContext::getClick().clicklocation;
-		testClick(click.x(), click.y());
+		testClick((int) click.x(), (int) click.y());
 	}
 
 	if (editor.isActive()) editor.update(time);

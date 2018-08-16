@@ -201,6 +201,22 @@ public:
 	* @return bool - If the load was successful.
 	*/
 	bool fromstring(std::string toread);
+
+	void moveFoward() { moveForward = true; };
+	void stpMvFoward() { moveForward = false; };
+	void moveBackward() { moveBack = true; };
+	void stpMvBackward() { moveBack = false; };
+	void mvLeft() { moveLeft = true; };
+	void stpMvLeft() { moveLeft = false; };
+	void mvRight() { moveRight = true; };
+	void stpMvRight() { moveRight = false; };
+	void moveUp() { lookUp = true; };
+	void stpMvUp() { lookUp = false; }
+	void moveDown() { lookDown = true; };
+	void stpMvDown() { lookDown = false; };
+
+	void look(float x, float y);
+
 private:
 	/// Move speed of camera.
 	float moveSpeed;
@@ -246,6 +262,8 @@ private:
 	bool birdseye;
 	/// The y offset data.
 	float yoff;
+
+	vec2 lk;
 	
 	/**
 	* @brief A method to switch the view mode of the camera.

@@ -104,6 +104,7 @@
     <ClInclude Include="EditorCameraTool.h" />
     <ClInclude Include="EditorContext.h" />
     <ClInclude Include="EditorWallTool.h" />
+    <ClInclude Include="FPSControlsContext.h" />
     <ClInclude Include="GUI.h" />
     <ClInclude Include="GUIInteractContext.h" />
     <ClInclude Include="LuaControlContext.h" />
@@ -185,6 +186,7 @@
     <ClCompile Include="EditorCameraTool.cpp" />
     <ClCompile Include="EditorContext.cpp" />
     <ClCompile Include="EditorWallTool.cpp" />
+    <ClCompile Include="FPSControlsContext.cpp" />
     <ClCompile Include="GUI.cpp" />
     <ClCompile Include="GUIInteractContext.cpp" />
     <ClCompile Include="ICT397GameProject.cpp" />
@@ -254,7 +256,6 @@
     <ClCompile Include="WndComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Scripts\controls.lua" />
     <None Include="Resources\Scripts\startup.lua" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

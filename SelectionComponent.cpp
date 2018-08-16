@@ -99,7 +99,7 @@ bool SelectionComponent::testClick(int x, int y) {
 
 void SelectionComponent::incOpt() {
 	curoption++;
-	if (curoption >= options.size()) curoption = 0;
+	if (curoption >= (int) options.size()) curoption = 0;
 	selection.setLabel(options.at(curoption));
 }
 

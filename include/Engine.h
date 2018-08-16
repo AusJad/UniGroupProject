@@ -61,5 +61,8 @@ private:
 	bool initaliseAudioEngine();
 
 	void renderLoad();
+
+	static void SwitchInterfaceContext();
+	static void SwitchPlayContext();
 };
 

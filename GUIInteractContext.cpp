@@ -1,5 +1,6 @@
 #include "GUIInteractContext.h"
 
+engineCallback GUIInteractContext::callback = NULL;
 clickData GUIInteractContext::clicks;
 vec2  GUIInteractContext::mousePos;
 
@@ -13,7 +14,7 @@ clickData & GUIInteractContext::getClick() {
 }
 
 void GUIInteractContext::menuMoveMouse(GLFWwindow* window, double x, double y) {
-	mousePos = vec2(x, y);
+	mousePos = vec2((float) x, (float) y);
 }
 
 void GUIInteractContext::mouseClickCallback(GLFWwindow* window, int button, int action, int mods) {
@@ -23,5 +24,11 @@ void GUIInteractContext::mouseClickCallback(GLFWwindow* window, int button, int 
 		double x, y;
 		glfwGetCursorPos(window, &x, &y);
 		clicks.clicklocation = vec2((float)x, (float)y);
+	}
+}
+
+void GUIInteractContext::keys(GLFWwindow* window, int key, int scancode, int action, int mods) {
+	if (action == GLFW_PRESS && (char)key == 'M') {
+		if (callback != NULL) callback();
 	}
 }

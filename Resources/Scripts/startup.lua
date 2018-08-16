@@ -1,4 +1,4 @@
-require "./Resources/Scripts/controls";
+
 
 local function loadResources(AMAN)
 	--Load height maps
@@ -44,9 +44,6 @@ function initGame(SM, LSM, AMAN, AE)
 	--Load resources
 	loadResources(AMAN);
 
-	--Seed random for deterministic object placement
-	math.randomseed(5);
-
 	--Set Console Resources
 	SM:attachConsoleTex("Console");
 
@@ -54,10 +51,7 @@ function initGame(SM, LSM, AMAN, AE)
 	SM:addScene();
 	SM:setCurrScene(level1);
 
-	SM:attachControls(level1, ResourceList("keyCallback", "keys", "mouseCallback", "mouse", "mouseButtonCallback", "playerAttack"));
 	SM:attachTerrain(Identifiers("TO", "Terrain"), level1, vec3(0,0,0), ResourceList("model", "Terrain"));
-
-	--SM:addObject(Identifiers("CAM","Camera"), level1, vec3(0, 0, 0), ResourceList("player", "Player"));
 
 	SM:addObject(Identifiers("PLYR", "Player"), level1, vec3(0, 0, 0), ResourceList("camera", "Camera"));
 	

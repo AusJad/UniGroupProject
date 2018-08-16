@@ -9,6 +9,7 @@
 #include "../GUIInteractContext.h"
 #include "../TextInputContext.h"
 #include "../WindowMoveContext.h"
+#include "../FPSControlsContext.h"
 
 #define CONT Singleton<Controls>::getInstance()
 
@@ -46,12 +47,16 @@ class Controls
 
 		static void restorePreviousControlContext();
 
+		void registerCallbacks(engineCallback toset);
+		void registerGUICallback(engineCallback toset);
+
 	private:
 		/// Map of resource lists with a ID.
 		std::map<int, ControlContext*> controls;
 		GUIInteractContext GIC;
 		TextInputContext TIC;
 		WindowMoveContext WMC;
+		FPSControlsContext FPS;
 
 		ControlContext * activecontext;
 		ControlContext * prevcontext;

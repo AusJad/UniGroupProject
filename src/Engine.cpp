@@ -1,5 +1,5 @@
 #include "Engine.h"
-	
+
 bool Engine::Initalise(std::string initscript){
 	if (!initaliseScriptingInterface()) return false;
 	
@@ -13,6 +13,9 @@ bool Engine::Initalise(std::string initscript){
 
 	LSM->callFunction<SceneManager, LUAScriptManager, AssetManager, AudioEngine>("initGame", *SM, *LSM, *Singleton<AssetManager>::getInstance(), *Singleton<AudioEngine>::getInstance());
 	
+	CONT->registerCallbacks(SwitchInterfaceContext);
+	CONT->registerGUICallback(SwitchPlayContext);
+	CONT->switchContextPlay();
 	TXMAN->loadBatch(WALL_TEX_GROUP, "./Resources/Textures/WallTex/", "TGA");
 	if (!GI->initalise()) return false;
 
@@ -62,4 +65,14 @@ bool Engine::initaliseAudioEngine() {
 	AE->initalise(Singleton<RenderModuleStubb>::getInstance()->getWinWindow());
 	
 	return true;
+}
+
+void Engine::SwitchInterfaceContext() {
+	CONT->switchContextGUIInteract();
+	GI->enableEditor();
+}
+
+void Engine::SwitchPlayContext() {
+	CONT->switchContextPlay();
+	GI->disableEditor();
 }

@@ -275,6 +275,8 @@ public:
 	*/
 	vec2 operator / (const float f);
 
+	float length() { return (float) vector.length(); }
+
 private:
 	glm::vec2 vector; /// GLM type vec2.
 };

@@ -148,7 +148,7 @@ bool Player::fromstring(std::string toread)
 		else if (linehead == "AMMO")
 		{
 			tmpf = stof(toread.substr(0, toread.find(',')));
-			ammo = tmpf;
+			ammo = (int) tmpf;
 			toread.erase(0, toread.find(',') + delimlen);
 		}
 		else if (linehead == "FRONT")

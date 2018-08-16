@@ -122,16 +122,14 @@ void Controls::switchContextGUIInteract() {
 }
 
 void Controls::switchContextPlay() {
-	if (CONT->lastLUAContext == NULL) return;
-
 	if (CONT->activecontext != NULL) {
 		unbindControls(CONT->activecontext);
 		CONT->prevcontext = CONT->activecontext;
 	}
 
-	bindControls(CONT->lastLUAContext);
-	CONT->lastLUAContext->setActive();
-	CONT->activecontext = CONT->lastLUAContext;
+	bindControls(&CONT->FPS);
+	CONT->FPS.setActive();
+	CONT->activecontext = &CONT->FPS;
 }
 
 void Controls::ConsoleCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
@@ -164,4 +162,12 @@ void Controls::ConsoleCallback(GLFWwindow* window, int key, int scancode, int ac
 	tmp.setIData(flags);
 
 	MSGBS->postIMessage(tmp, CONSOLE_ID);
+}
+
+void Controls::registerCallbacks(engineCallback toset) {
+	FPS.setEngCallBack(toset);
+}
+
+void Controls::registerGUICallback(engineCallback toset) {
+	GIC.setCallback(toset);
 }
