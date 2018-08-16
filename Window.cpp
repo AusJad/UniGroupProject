@@ -15,6 +15,14 @@ Window::Window(vec2 & stpos, float width, float height, std::string title)
 	
 }
 
+float Window::getHeight() {
+	return brscreen.y() - tlscreen.y();
+}
+
+float Window::getWidth() {
+	return brscreen.x() - tlscreen.x();
+}
+
 void Window::initHeader(std::string title) {
 	closebutton = ButtonComponent(HEAD_BAR_SIZE, HEAD_BAR_SIZE, vec2(brscreen.x() - HEAD_BAR_SIZE, tlscreen.y()));
 	closebutton.setTex(BUTTON_CLOSE);
@@ -79,6 +87,13 @@ void Window::render() {
 	}
 	
 	RNDR->RenderModePerspective();
+}
+
+void Window::placeAt(float x, float y) {
+	float diffx = x - tlscreen.x();
+	float diffy = y - tlscreen.y();
+
+	move(diffx, diffy);
 }
 
 void Window::move(float x, float y) {
@@ -175,6 +190,8 @@ vec2 Window::calcComponentPlacement(WndComponent * toplace) {
 		tmp.sx(lastx + components.at(components.size() - 1)->getWidth());
 		tmp.sy(lasty);
 	}
+
+	return tmp;
 }
 
 void Window::FitToContent() {

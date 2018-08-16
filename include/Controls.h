@@ -10,6 +10,7 @@
 #include "../TextInputContext.h"
 #include "../WindowMoveContext.h"
 #include "../FPSControlsContext.h"
+#include "../ItemPlaceContext.h"
 
 #define CONT Singleton<Controls>::getInstance()
 
@@ -37,9 +38,11 @@ class Controls
 
 		static void switchContextConsole(bool active, RenderModuleStubb* render, Controls* tochange);
 
-		static void switchContextTextInput(std::string * toedit, onClick whenComplete);
+		static void switchContextTextInput(std::string * toedit, onClick whenComplete, bool * active);
 
 		static void switchContextMenuMove(movementInfo * tomove);
+
+		static void switchContextItemPlace(placementCompleteCallback oncomplete, itemScroll scrollcb);
 
 		static void switchContextGUIInteract();
 
@@ -57,6 +60,7 @@ class Controls
 		TextInputContext TIC;
 		WindowMoveContext WMC;
 		FPSControlsContext FPS;
+		ItemPlaceContext IPC;
 
 		ControlContext * activecontext;
 		ControlContext * prevcontext;

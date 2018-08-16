@@ -2,12 +2,14 @@
 
 std::string* TextInputContext::textin = NULL;
 onClick TextInputContext::textincomplete = NULL;
+bool* TextInputContext::inputactive = NULL;
 bool TextInputContext::done = false;
 
-void TextInputContext::setActive(std::string* text, onClick oncomplete) {
+void TextInputContext::setActive(std::string* text, onClick oncomplete, bool * active) {
 	TextInputContext::textin = text;
 	textincomplete = oncomplete;
 	done = false;
+	inputactive = active;
 }
 
 void TextInputContext::setInActive() {
@@ -23,6 +25,8 @@ void TextInputContext::keyInputCallback(GLFWwindow* window, int key, int scancod
 
 		// set finished flag
 		done = true;
+		//signal input complete
+		*inputactive = false;
 	}
 	else {
 		if (textin != NULL) {
@@ -33,5 +37,17 @@ void TextInputContext::keyInputCallback(GLFWwindow* window, int key, int scancod
 				else textin->push_back((char)key);
 			}
 		}
+	}
+}
+
+void TextInputContext::buttonCallback(GLFWwindow* window, int button, int action, int mods) {
+	if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) {
+		//call callback if registered
+		if (textincomplete != NULL) textincomplete(TEXT_INPUT);
+
+		// set finished flag
+		done = true;
+		//signal input complete
+		*inputactive = false;
 	}
 }

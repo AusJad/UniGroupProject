@@ -15,6 +15,7 @@ class Bounds : public Model {
 		std::vector<vec3>& getVerticies() { return std::vector<vec3>(); }
 		void setScale(vec3 & toset) {};
 		void updateBounds(vec3 & pos, float width, float depth, float height) {
+			
 			if (pos.x() < pos.x() + width) {
 				minx = pos.x();
 				maxx = pos.x() + width;
@@ -59,12 +60,17 @@ public:
 	void setAngleX(float nx) { anglex = nx; }
 	void setAngleY(float ny) { angley = ny; }
 	void setAngleZ(float nz) { anglez = nz; }
+	float getAngleX() { return anglex; }
+	float getAngleY() { return angley; }
+	float getAngleZ() { return anglez; }
 	float getWidth() { return width; }
 	float getHeight() { return height; }
 	float getDepth() { return depth; }
 	const vec3 & getPos() const { return trans; }
+	const std::string getTex() { return tex; }
 
 	//tmp while still GO
+	std::string toString();
 	Model* getModel() { return &aabb; }
 	void updateBounds() { aabb.updateBounds(trans, width, depth, height); }
 	void update(float time) {}

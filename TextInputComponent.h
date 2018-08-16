@@ -10,7 +10,7 @@
 class TextInputComponent : public WndComponent
 {
 public:
-	TextInputComponent() : WndComponent() {};
+	TextInputComponent() : WndComponent() { inputactive = false; };
 	TextInputComponent(int width, int height, vec2 pos);
 	void render();
 	bool testClick(int x, int y);
@@ -20,5 +20,6 @@ public:
 private:
 	std::string value;
 	int id;
+	bool inputactive;
 };
 

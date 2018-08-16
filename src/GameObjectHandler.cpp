@@ -148,6 +148,26 @@ GameObject* GameObjectHandler::getObject(unsigned index) {
 	return gameobjects.at(index);
 }
 
+void GameObjectHandler::removeGameObject(GameObject * toremove) {
+	bool found = false;
+	
+	for (unsigned i = 0; i < tmpobjects.size() && !found; i++) {
+		if (toremove->getID() == tmpobjects.at(i)->getID()) {
+			tmpobjects.erase(tmpobjects.begin() + i);
+			found = true;
+		}
+	}
+
+	if (found) return;
+
+	for (unsigned i = 0; i < gameobjects.size() && !found; i++) {
+		if (toremove->getID() == gameobjects.at(i)->getID()) {
+			gameobjects.erase(gameobjects.begin() + i);
+			found = true;
+		}
+	}
+}
+
 int GameObjectHandler::GetGameObjectID(std::string name) {
 	int tmpid = -1;
 	

@@ -4,7 +4,7 @@
 
 TextInputComponent::TextInputComponent(int width, int height, vec2 pos) : WndComponent(width, height, pos)
 {
-
+	inputactive = false;
 }
 
 
@@ -24,13 +24,17 @@ void TextInputComponent::render() {
 
 	//entered text
 	if (!value.empty()) {
-		FNT_ENG->RenderStringO(value, FNT_SIZE_MEDIUM_O, pos.x() + INPUT_BORDER, pos.y() + INPUT_BORDER);
+		if(inputactive) FNT_ENG->RenderStringO(value + "_", FNT_SIZE_MEDIUM_O, pos.x() + INPUT_BORDER, pos.y() + INPUT_BORDER);
+		else FNT_ENG->RenderStringO(value, FNT_SIZE_MEDIUM_O, pos.x() + INPUT_BORDER, pos.y() + INPUT_BORDER);
 	}
+	else
+	if (inputactive) FNT_ENG->RenderStringO("_", FNT_SIZE_MEDIUM_O, pos.x() + INPUT_BORDER, pos.y() + INPUT_BORDER);
 }
 
 bool TextInputComponent::testClick(int x, int y) {
 	if (x > pos.x() && x < pos.x() + width && y > pos.y() && y < pos.y() + height) {
-		CONT->switchContextTextInput(&value, callback);
+		CONT->switchContextTextInput(&value, callback, &inputactive);
+		inputactive = true;
 		return true;
 	}
 

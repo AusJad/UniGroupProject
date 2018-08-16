@@ -216,3 +216,63 @@ float CollisionEngine::interpolateY(const vec3 & ppos, HMPos & pos) {
 
 	return fy;
 }
+
+/*
+	Adapted from algorithm found at this url:
+	https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-box-intersection
+*/
+bool CollisionEngine::rayAABBTest(Ray & r, GameObject* collGO, vec3 & collpoint) {
+	float tmp;
+
+	AABB bounds = genAABB(collGO);
+
+	float tmin = (bounds.xmin - r.origin.x()) / r.direction.x();
+	float tmax = (bounds.xmax - r.origin.x()) / r.direction.x();
+
+	if (tmin > tmax) {
+		tmp = tmin;
+		tmin = tmax;
+		tmax = tmp;
+	}
+
+	float tymin = (bounds.ymin - r.origin.y()) / r.direction.y();
+	float tymax = (bounds.ymax - r.origin.y()) / r.direction.y();
+
+	if (tymin > tymax) {
+		tmp = tymax;
+		tymax = tymin;
+		tymin = tmp;
+	}
+
+	if ((tmin > tymax) || (tymin > tmax))
+		return false;
+
+	if (tymin > tmin)
+		tmin = tymin;
+
+	if (tymax < tmax)
+		tmax = tymax;
+
+	float tzmin = (bounds.zmin - r.origin.z()) / r.direction.z();
+	float tzmax = (bounds.zmax - r.origin.z()) / r.direction.z();
+
+	if (tzmin > tzmax) {
+		tmp = tzmin;
+		tzmin = tzmax;
+		tzmax = tmp;
+	}
+
+	if ((tmin > tzmax) || (tzmin > tmax))
+		return false;
+
+	if (tzmin > tmin)
+		tmin = tzmin;
+
+	if (tzmax < tmax)
+		tmax = tzmax;
+	
+	collpoint = r.direction * tmin;
+	
+	return true;
+
+}

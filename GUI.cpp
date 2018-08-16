@@ -17,6 +17,8 @@ bool GUI::initalise() {
 	instructions.setHeight(25);
 	instructions.setTex(WND_HEADER_BG);
 
+	if (!ALERT->init()) return false;
+
 	return editor.initalise();
 }
 
@@ -43,6 +45,8 @@ void GUI::update(float time) {
 	}
 
 	if (editor.isActive()) editor.update(time);
+
+	if (ALERT->isVis()) ALERT->update(time);
 }
 
 void GUI::render() {
@@ -52,9 +56,12 @@ void GUI::render() {
 		instructions.render();
 		RNDR->RenderModePerspective();
 	}	
+
+	if (ALERT->isVis()) ALERT->render();
 }
 
 bool GUI::testClick(int x, int y) {
+	if (ALERT->isVis()) return ALERT->testClick(x, y);
 	if (editor.isActive()) return editor.testClick(x, y);
 
 	return false;

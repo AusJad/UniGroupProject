@@ -60,82 +60,7 @@ void Camera::update(float time) {
 	while (tmp->hasMessage(id)) {
 
 		tmpm = tmp->getMessage(id);
-		if (defaultMessageHandler(tmpm)) {
-			//no action -- handled automatically.
-		}
-		else
-		if (tmpm.getInstruction() == "RESET_CAM") {
-			this->pos = vec3(0, 0, -4000);
-			this->target = vec3(0, 0, 0);
-			horizontalAngle = 180.0f;
-			verticalAngle = 0.0f;
-			moveForward = false;
-			moveBack = false;
-			moveRight = false;
-			moveLeft = false;
-			lookDown = false;
-			lookUp = false;
-		}
-		else
-		if (tmpm.getInstruction() == "MVF") {
-			this->moveForward = true;
-		}
-		else
-		if (tmpm.getInstruction() == "SMF") {
-			this->moveForward = false;
-		}
-		else
-		if (tmpm.getInstruction() == "MVB") {
-			this->moveBack = true;
-		}
-		else
-		if (tmpm.getInstruction() == "SMB") {
-			this->moveBack = false;
-		}
-		else
-		if (tmpm.getInstruction() == "MVR") {
-			this->moveRight = true;
-		}
-		else
-		if (tmpm.getInstruction() == "SMR") {
-			this->moveRight = false;
-		}
-		else
-		if (tmpm.getInstruction() == "MVL") {
-			this->moveLeft = true;
-		}
-		else
-		if (tmpm.getInstruction() == "SML") {
-			this->moveLeft = false;
-		}
-		else
-		if (tmpm.getInstruction() == "LD") {
-			this->lookDown = true;
-		}
-		else
-		if (tmpm.getInstruction() == "SLD") {
-			this->lookDown = false;
-		}
-		else
-		if (tmpm.getInstruction() == "LU") {
-			this->lookUp = true;
-		}
-		else
-		if (tmpm.getInstruction() == "SLU") {
-			this->lookUp = false;
-		}
-		/*
-		else
-		if (tmpm.getInstruction() == "LX") {
-			horizontalAngle -= tmpm.getData().fdata * time * rotateSpeed;
-		}
-		else
-		if (tmpm.getInstruction() == "LY") {
-			verticalAngle -= tmpm.getData().fdata * time * rotateSpeed;
-			if (verticalAngle <= maxNangle && tmpm.getData().fdata > 0) verticalAngle = maxNangle;
-			if (verticalAngle >= maxAngle && tmpm.getData().fdata < 0) verticalAngle = maxAngle;
-		}*/
-		else
+
 		if (tmpm.getInstruction() == POS_REQUEST) {
 			tmpm.setInstruction(POS_RESPONSE);
 			tmpm.getData().vdata = pos;
@@ -146,14 +71,6 @@ void Camera::update(float time) {
 			tmpm.setInstruction(GET_FRONT_RESPONSE);
 			tmpm.getData().vdata = GetCamZ();
 			tmp->postMessage(tmpm, tmpm.getFrom());
-		}
-		else
-		if (tmpm.getInstruction() == SWITCH_VIEW_MODE) {
-			switchViewMode();
-		}
-		else
-		if (tmpm.getInstruction() == DAMAGE) {
-			if (resources.hasResource("player")) MSGBS->postMessage(tmpm, Identifiers("", resources.getResource("player")));
 		}
 	}
 

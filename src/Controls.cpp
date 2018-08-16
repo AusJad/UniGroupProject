@@ -78,12 +78,14 @@ void Controls::bindControls(ControlContext* tobind) {
 	if (tobind->getKeyCallback() != NULL) glfwSetKeyCallback(RNDR->getWindow(), tobind->getKeyCallback());
 	if (tobind->getMouseButtonCallback() != NULL) glfwSetMouseButtonCallback(RNDR->getWindow(), tobind->getMouseButtonCallback());
 	if (tobind->getMouseMoveCallback() != NULL) glfwSetCursorPosCallback(RNDR->getWindow(), tobind->getMouseMoveCallback());
+	if (tobind->getScrollCallback() != NULL) glfwSetScrollCallback(RNDR->getWindow(), tobind->getScrollCallback());
 }
 
 void Controls::unbindControls(ControlContext* tobind) {
 	if (tobind->getKeyCallback() != NULL) glfwSetKeyCallback(RNDR->getWindow(), NULL);
 	if (tobind->getMouseButtonCallback() != NULL) glfwSetMouseButtonCallback(RNDR->getWindow(), NULL);
 	if (tobind->getMouseMoveCallback() != NULL) glfwSetCursorPosCallback(RNDR->getWindow(), NULL);
+	if (tobind->getScrollCallback() != NULL) glfwSetScrollCallback(RNDR->getWindow(), NULL);
 }
 
 void Controls::switchContextMenuMove(movementInfo * tomove) {
@@ -97,14 +99,14 @@ void Controls::switchContextMenuMove(movementInfo * tomove) {
 	CONT->activecontext = &CONT->WMC;
 }
 
-void Controls::switchContextTextInput(std::string * toedit, onClick whenComplete) {
+void Controls::switchContextTextInput(std::string * toedit, onClick whenComplete, bool * active) {
 	if (CONT->activecontext != NULL) {
 		unbindControls(CONT->activecontext);
 		CONT->prevcontext = CONT->activecontext;
 	}
 
 	bindControls(&CONT->TIC);
-	CONT->TIC.setActive(toedit, whenComplete);
+	CONT->TIC.setActive(toedit, whenComplete, active);
 	CONT->activecontext = &CONT->TIC;
 }
 
@@ -130,6 +132,19 @@ void Controls::switchContextPlay() {
 	bindControls(&CONT->FPS);
 	CONT->FPS.setActive();
 	CONT->activecontext = &CONT->FPS;
+}
+
+void Controls::switchContextItemPlace(placementCompleteCallback oncomplete, itemScroll scrollcb) {
+	if (CONT->activecontext != NULL) {
+		unbindControls(CONT->activecontext);
+		CONT->prevcontext = CONT->activecontext;
+	}
+
+	bindControls(&CONT->IPC);
+	CONT->IPC.setActive();
+	CONT->IPC.setPlacementCallback(oncomplete);
+	CONT->IPC.setScrollCB(scrollcb);
+	CONT->activecontext = &CONT->IPC;
 }
 
 void Controls::ConsoleCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {

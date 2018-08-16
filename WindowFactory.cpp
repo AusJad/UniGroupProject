@@ -18,6 +18,9 @@ Window* WindowFactory::getWindow(int size, std::string type, vec2 stpos, std::st
 			case WINDOW_MEDIUM_TALL:
 				ret = new Window(stpos, 256, 512, title);
 				break;
+			case WINDOW_MEDIUM_WIDE:
+				ret = new Window(stpos, 512, 700, title);
+				break;
 		}
 	}
 

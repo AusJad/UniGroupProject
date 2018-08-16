@@ -10,6 +10,7 @@
 #define WALL_TOOL_ICON		"walltoolicon"
 #define OBJECT_TOOL_ICON	"objecttoolicon"
 #define CAM_TOOL_ICON		"camtoolicon"
+#define SAVE_TOOL_ICON		"savetoolicon"
 
 #define UI_BASE_COLOR		color_3(0.2f, 0.2f, 0.2f)
 #define UI_LIGHT_COLOR		color_3(0.3f, 0.3f, 0.3f)

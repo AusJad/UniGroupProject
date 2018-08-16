@@ -98,15 +98,18 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Alert.h" />
     <ClInclude Include="ButtonComponent.h" />
     <ClInclude Include="CameraManager.h" />
     <ClInclude Include="ControlContext.h" />
     <ClInclude Include="EditorCameraTool.h" />
     <ClInclude Include="EditorContext.h" />
     <ClInclude Include="EditorWallTool.h" />
+    <ClInclude Include="EngineStateWriter.h" />
     <ClInclude Include="FPSControlsContext.h" />
     <ClInclude Include="GUI.h" />
     <ClInclude Include="GUIInteractContext.h" />
+    <ClInclude Include="ItemPlaceContext.h" />
     <ClInclude Include="LuaControlContext.h" />
     <ClInclude Include="movementInfo.h" />
     <ClInclude Include="include\AIMovementBehaviours.h" />
@@ -170,6 +173,7 @@
     <ClInclude Include="include\vec3.h" />
     <ClInclude Include="include\vec4.h" />
     <ClInclude Include="LabelComponent.h" />
+    <ClInclude Include="SaveTool.h" />
     <ClInclude Include="SelectionComponent.h" />
     <ClInclude Include="TextInputComponent.h" />
     <ClInclude Include="TextInputContext.h" />
@@ -181,17 +185,21 @@
     <ClInclude Include="WndComponent.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Alert.cpp" />
     <ClCompile Include="ButtonComponent.cpp" />
     <ClCompile Include="CameraManager.cpp" />
     <ClCompile Include="EditorCameraTool.cpp" />
     <ClCompile Include="EditorContext.cpp" />
     <ClCompile Include="EditorWallTool.cpp" />
+    <ClCompile Include="EngineStateWriter.cpp" />
     <ClCompile Include="FPSControlsContext.cpp" />
     <ClCompile Include="GUI.cpp" />
     <ClCompile Include="GUIInteractContext.cpp" />
     <ClCompile Include="ICT397GameProject.cpp" />
+    <ClCompile Include="ItemPlaceContext.cpp" />
     <ClCompile Include="LabelComponent.cpp" />
     <ClCompile Include="LuaControlContext.cpp" />
+    <ClCompile Include="SaveTool.cpp" />
     <ClCompile Include="SelectionComponent.cpp" />
     <ClCompile Include="src\AIMovementBehaviours.cpp" />
     <ClCompile Include="src\AssetManager.cpp" />

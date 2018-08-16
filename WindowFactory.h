@@ -4,8 +4,9 @@
 
 #define WINDOW_SMALL_SQUARE		0
 #define WINDOW_MEDIUM_SQUARE	1
-#define WINDOW_SMALL_WIDE		2
-#define WINDOW_MEDIUM_TALL		3
+#define WINDOW_MEDIUM_WIDE		2
+#define WINDOW_SMALL_WIDE		3
+#define WINDOW_MEDIUM_TALL		4
 
 class WindowFactory
 {

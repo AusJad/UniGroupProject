@@ -18,6 +18,7 @@ bool Engine::Initalise(std::string initscript){
 	CONT->switchContextPlay();
 	TXMAN->loadBatch(WALL_TEX_GROUP, "./Resources/Textures/WallTex/", "TGA");
 	if (!GI->initalise()) return false;
+	EngineStateWriter::readState("./Resources/Levels/start.lvl");
 
 	return true;
 }
@@ -31,11 +32,15 @@ void Engine::renderLoad() {
 }
 
 void Engine::Run() {
+	float time;
+
 	while (RNDR->shouldContinue()) {
 		RNDR->startRenderCycle();
 
-		SM->update(RNDR->getTimeSinceUpdate());
-		GI->update(0);
+		time = RNDR->getTimeSinceUpdate();
+
+		SM->update(time);
+		GI->update(time);
 		AE->update();
 		FNT_ENG->update();
 		CONT->update();

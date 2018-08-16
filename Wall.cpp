@@ -9,7 +9,20 @@ Wall::Wall(){
 	angley = 0;
 	anglex = 0;
 	anglez = 0;
-	id.setId(1000);
+	id.setType("WALL");
+}
+
+std::string Wall::toString() {
+	std::string out;
+
+	out += "WALL_START\n";
+	out += "POS," + std::to_string(trans.x()) + "," + std::to_string(trans.y()) +"," + std::to_string(trans.z()) + "\n";
+	out += "DIMENSIONS," + std::to_string(width) + "," + std::to_string(height) + "," + std::to_string(depth) + "\n";
+	out += "ANGLE," + std::to_string(anglex) + "," + std::to_string(angley) + "," + std::to_string(anglez) + "\n";
+	if (!tex.empty()) out += "TEX," + tex + "\n";
+	out += "WALL_END\n";
+
+	return out;
 }
 
 void Wall::render() {

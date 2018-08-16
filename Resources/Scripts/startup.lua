@@ -25,6 +25,8 @@ local function loadResources(AMAN)
 	else print("failed to load objecttoolicon") end
 	if AMAN:addResource("./Resources/Textures/Menu/Window/camtoolicon.tga", "TGA", "camtoolicon") then print("loaded res: camtoolicon")
 	else print("failed to load camtoolicon") end
+	if AMAN:addResource("./Resources/Textures/Menu/Window/savetoolicon.tga", "TGA", "savetoolicon") then print("loaded res: savetoolicon")
+	else print("failed to load savetoolicon") end
 end
 
 function loadLoadRes(AMAN)

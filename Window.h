@@ -21,8 +21,12 @@ public:
 
 	void update(float time);
 	void render();
+	void placeAt(float x, float y);
 	void move(float x, float y);
 	bool testClick(int x, int y);
+
+	float getHeight();
+	float getWidth();
 
 	void tglVis();
 	bool isVis();

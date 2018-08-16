@@ -291,6 +291,18 @@
     <ClInclude Include="FPSControlsContext.h">
       <Filter>Header Files\Controls</Filter>
     </ClInclude>
+    <ClInclude Include="ItemPlaceContext.h">
+      <Filter>Header Files\Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineStateWriter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SaveTool.h">
+      <Filter>Header Files\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Alert.h">
+      <Filter>Header Files\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\CtoLUABinder.cpp">
@@ -511,6 +523,18 @@
     </ClCompile>
     <ClCompile Include="FPSControlsContext.cpp">
       <Filter>Source Files\Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemPlaceContext.cpp">
+      <Filter>Source Files\Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineStateWriter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SaveTool.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Alert.cpp">
+      <Filter>Source Files\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

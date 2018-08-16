@@ -22,6 +22,8 @@ public:
 	void setPos(vec2 toset);
 	void move(float x, float y);
 	std::string getTitle() { return text; };
+	onClick getCallback() { return callback; }
+
 private:
 	void recalcDimensions();
 

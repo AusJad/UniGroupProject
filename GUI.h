@@ -1,6 +1,7 @@
 #pragma once
 #include "Singleton.h"
 #include "EditorContext.h"
+#include "Alert.h"
 
 #define GI Singleton<GUI>::getInstance()
 

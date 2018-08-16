@@ -55,6 +55,8 @@ public:
 	*/
 	bool attachTerrain(Identifiers & id, unsigned sceneno, vec3 pos, ResourceList & lists);
 
+	GameObjectHandler & getGOH() { return scenes.at(currscene).getGOH(); };
+
 	/**
 	* @brief Get the game object id.
 	* 

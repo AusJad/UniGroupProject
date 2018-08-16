@@ -97,6 +97,8 @@ public:
 
 	void addObject(GameObject * toadd);
 
+	GameObjectHandler & getGOH() { return objects; };
+
 	/**
 	* @brief A method to load a game from file.
 	*

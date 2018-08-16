@@ -3,6 +3,8 @@
 #include "EditorWallTool.h"
 #include "EditorCameraTool.h"
 #include "CameraManager.h"
+#include "EngineStateWriter.h"
+#include "SaveTool.h"
 
 class EditorContext
 {
@@ -25,15 +27,18 @@ private:
 	Window * toolbar;
 	static EditorCameraTool cameratool;
 	static EditorWallTool walltool;
+	static SaveTool savetool;
+	
 	static Window * objecttool;
 	static bool active;
 
-	void initToolBar();
+	bool initToolBar();
 	void initObjectTool();
 
 	static void toolbarClose(int code);
 	static void walltoolclick(int code);
 	static void objecttoolclick(int code);
 	static void cameratoolclock(int code);
+	static void savetoolclick(int code);
 };
 

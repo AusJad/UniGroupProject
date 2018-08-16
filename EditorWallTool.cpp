@@ -18,6 +18,15 @@ TextInputComponent * EditorWallTool::rotxin = NULL;
 TextInputComponent * EditorWallTool::rotyin = NULL;
 TextInputComponent * EditorWallTool::rotzin = NULL;
 
+std::string EditorWallTool::selectionwalltex;
+Wall* EditorWallTool::selectionWall = NULL;
+bool EditorWallTool::inselectmode = false;
+
+int EditorWallTool::camnearoffset = 100;
+
+vec3 EditorWallTool::wallposref;
+bool EditorWallTool::inplacemode = false;
+
 void EditorWallTool::toggle() {
 	if (walltool->isVis()) hide();
 	else show();
@@ -32,18 +41,24 @@ void EditorWallTool::hide() {
 }
 
 void EditorWallTool::render() {
-	if (walltool->isVis()) {
-		walltool->render();		
-		wall->render();
+	if (!inplacemode && !inselectmode) {
+		if (walltool->isVis()) {
+			walltool->render();
+			wall->render();
+		}
 	}
+	if(inplacemode) wall->render();
 }
 
 void EditorWallTool::update(float time) {
 	if(walltool->isVis()) walltool->update(time);
+	if (inplacemode) wall->setPos(vec3(wall->getPos()) + (vec3(CAM->getActiveCam()->getPos()) + CAM->getActiveCam()->GetCamZ() * (float) camnearoffset - vec3(wall->getPos())) * time * 10);
+	if(inselectmode) selectItem(0);
 }
 
 bool EditorWallTool::testClick(int x, int y) {
-	return walltool->testClick(x, y);
+	if(walltool->isVis()) return walltool->testClick(x, y);
+	else return false;
 }
 
 bool EditorWallTool::init() {
@@ -79,7 +94,7 @@ bool EditorWallTool::init() {
 		l->setPadding(LABEL_PADDING);
 		walltool->addComponent(l, 100, 15);
 		l = new LabelComponent();
-		l->setLabel("Textureing Disabled.");
+		l->setLabel("Texturing Disabled.");
 		l->setPadding(LABEL_PADDING);
 		walltool->addComponent(l, 100, 15);
 	}
@@ -94,6 +109,7 @@ bool EditorWallTool::init() {
 	positionrin->setCallback(updateRelativeSelection);
 	positionrin->addSelection(CAMERA);
 	positionrin->addSelection(ORIGIN);
+	positionrin->addSelection(PLACE);
 
 	walltool->addComponent(positionrin, 55, 15);
 
@@ -160,16 +176,50 @@ bool EditorWallTool::init() {
 	b->setCallback(resetWallPos);
 	walltool->addComponent(b, 100, 10);
 
+	//select item button
+	b = new ButtonComponent();
+	b->setTitle("Select Wall to Edit");
+	b->setCallback(confirmSelectItem);
+	walltool->addComponent(b, 100, 10);
+	walltool->FitToContent();
+
+
 	//create button
 	b = new ButtonComponent();
-	b->setTitle("Add to Game");
+	b->setTitle("Place Wall");
 	b->setCallback(addToGameCallBack);
-	walltool->addComponent(b, 100, 10);
+	walltool->addComponent(b, 100, 14);
 	walltool->FitToContent();
 
 	resetWallPos(0);
 
 	return true;
+}
+
+void EditorWallTool::placeWall(int code) {
+	vec3 wallpos;
+	
+	if (relativeselection == CAMERA) {
+		wallpos = vec3(CAM->getActiveCam()->getPos()) + CAM->getActiveCam()->GetCamZ() * 100;
+		wallpos.sy(CAM->getActiveCam()->getPos().y() - CAM->getActiveCam()->getCenterOffset().y());
+	}
+	else
+	if (relativeselection == ORIGIN) {
+		wallpos = vec3();
+	}
+	else
+	if (relativeselection == PREV_WALL) {
+		if(prevwall != NULL) wallpos = prevwall->getPos();
+		else wallpos = vec3();
+	}
+	else
+	if (relativeselection == PLACE) {
+		CONT->switchContextItemPlace(onWallPlace, mouseScroll);
+		wallpos = vec3(CAM->getActiveCam()->getPos()) + CAM->getActiveCam()->GetCamZ() * (float) camnearoffset;
+		inplacemode = true;
+	}
+
+	wall->setPos(wallpos);
 }
 
 void EditorWallTool::addToGameCallBack(int code) {
@@ -179,13 +229,16 @@ void EditorWallTool::addToGameCallBack(int code) {
 	
 	if (prevwall == NULL) {
 		positionrin->addSelection(PREV_WALL);
-		relativeselection = PREV_WALL;
 	}
+
+	relativeselection = CAMERA;
 	
 	prevwall = wall;
 	wall = new Wall();
 	wall->setID(GOF->getNextId());
 	
+	camnearoffset = 100;
+
 	resetWallPos(0);
 }
 
@@ -228,27 +281,11 @@ void EditorWallTool::updateTextureCallback(int code) {
 void EditorWallTool::updateRelativeSelection(int code) {
 	relativeselection = positionrin->getActiveSelection();
 
-	resetWallPos(0);
+	placeWall(0);
 }
 
 void EditorWallTool::resetWallPos(int code) {
-	vec3 wallpos;
-
-	if (relativeselection == CAMERA) {
-		wallpos = vec3(CAM->getActiveCam()->getPos()) + CAM->getActiveCam()->GetCamZ() * 100;
-		wallpos.sy(CAM->getActiveCam()->getPos().y() - CAM->getActiveCam()->getCenterOffset().y());
-	}
-	else
-	if (relativeselection == ORIGIN) {
-		wallpos = vec3();
-	}
-	else
-	if (relativeselection == PREV_WALL) {
-		if(prevwall != NULL) wallpos = prevwall->getPos();
-		else wallpos = vec3();
-	}
-
-	wall->setPos(wallpos);
+	placeWall(0);
 
 	wall->setWidth(10);
 	wall->setHeight(10);
@@ -258,9 +295,9 @@ void EditorWallTool::resetWallPos(int code) {
 	wall->setAngleY(0);
 	wall->setAngleZ(0);
 
-	posxin->setValue(std::to_string((int)wallpos.x()));
-	posyin->setValue(std::to_string((int)wallpos.y()));
-	poszin->setValue(std::to_string((int)wallpos.z()));
+	posxin->setValue(std::to_string((int)wall->getPos().x()));
+	posyin->setValue(std::to_string((int)wall->getPos().y()));
+	poszin->setValue(std::to_string((int)wall->getPos().z()));
 
 	rotxin->setValue("0");
 	rotyin->setValue("0");
@@ -269,6 +306,15 @@ void EditorWallTool::resetWallPos(int code) {
 	widthin->setValue("10");
 	depthin->setValue("10");
 	heightin->setValue("10");
+}
+
+void EditorWallTool::onWallPlace() {
+	CONT->switchContextGUIInteract();
+	wall->setPos(vec3(CAM->getActiveCam()->getPos()) + CAM->getActiveCam()->GetCamZ() *  (float) camnearoffset);
+	posxin->setValue(std::to_string((int)wall->getPos().x()));
+	posyin->setValue(std::to_string((int)wall->getPos().y()));
+	poszin->setValue(std::to_string((int)wall->getPos().z()));
+	inplacemode = false;
 }
 
 vec3 EditorWallTool::calcOffset(int off, int axis) {
@@ -349,4 +395,101 @@ void EditorWallTool::setRotZCallBack(int code) {
 	wall->setAngleZ((float) valnum);
 
 	rotzin->setValue(std::to_string(valnum));
+}
+
+void EditorWallTool::mouseScroll(float offset) {
+	if (offset < 0) {
+		if (camnearoffset > ITEM_NEAR) {
+			camnearoffset += (int) (offset * SCROLL_OFFSET_MODIFIER);
+		}
+	}
+	else {
+		if (camnearoffset < ITEM_FAR) {
+			camnearoffset += (int) (offset * SCROLL_OFFSET_MODIFIER);
+		}
+	}
+}
+
+void EditorWallTool::selectItemStart(int code) {
+	ALERT->done();
+	CONT->switchContextItemPlace(onWallSelect, NULL);
+	inselectmode = true;
+}
+
+void EditorWallTool::confirmSelectItem(int code) {
+	ALERT->doAlert("This will delete active wall. Continue?", selectItemStart, NULL);
+}
+
+void EditorWallTool::setInputsFromWall() {
+	posxin->setValue(std::to_string((int)wall->getPos().x()));
+	posyin->setValue(std::to_string((int)wall->getPos().y()));
+	poszin->setValue(std::to_string((int)wall->getPos().z()));
+
+	rotxin->setValue(std::to_string((int)wall->getAngleX()));
+	rotyin->setValue(std::to_string((int)wall->getAngleY()));
+	rotzin->setValue(std::to_string((int)wall->getAngleZ()));
+
+	widthin->setValue(std::to_string((int)wall->getWidth()));
+	depthin->setValue(std::to_string((int)wall->getDepth()));
+	heightin->setValue(std::to_string((int)wall->getHeight()));
+}
+
+void EditorWallTool::onWallSelect() {
+	if (selectionWall != NULL) {
+		if (!selectionwalltex.empty()) {
+			selectionWall->setTex(selectionwalltex);
+		}
+
+		if (wall != NULL) delete wall;
+
+		wall = selectionWall;
+
+		selectionWall = NULL;
+
+		prevwall = NULL;
+		
+		SM->getGOH().removeGameObject(wall);
+
+		inselectmode = false;
+
+		setInputsFromWall();
+
+		CONT->switchContextGUIInteract();
+	}
+}
+
+void EditorWallTool::selectItem(int code) {
+	Ray tstray(CAM->getActiveCam()->getPos(), CAM->getActiveCam()->GetCamZ());
+
+	if (selectionWall != NULL) {
+		if (!selectionwalltex.empty()) selectionWall->setTex(selectionwalltex);
+	}
+
+	float mindist = -1;
+	float curdist;
+	vec3 dist;
+	bool found = false;
+
+	for (unsigned i = 0; i < SM->getGOH().getNumObjects(); i++) {
+		if (SM->getGOH().getObject(i) != NULL) {
+			if (SM->getGOH().getObject(i)->getType() == "WALL") {
+				if (CollisionEngine::rayAABBTest(tstray, SM->getGOH().getObject(i), dist)) {
+					curdist = (vec3(CAM->getActiveCam()->getPos()) - dist).getLength();
+
+					found = true;
+
+					if ((mindist == -1 || curdist < mindist) && curdist > 0) {
+						selectionWall = (Wall*)SM->getGOH().getObject(i);
+						mindist = curdist;
+					}
+				}
+			}
+		}
+	}
+
+	if (!found) selectionWall = NULL;
+	else {
+		selectionwalltex = selectionWall->getTex();
+		selectionWall->setTex("sky.tga");
+	}
 }

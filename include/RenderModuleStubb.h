@@ -295,6 +295,9 @@ public:
 	*/
 	void genSubTex(const int & texID, unsigned pixelsize, unsigned width, unsigned height, unsigned subx, unsigned suby, unsigned subwidth, unsigned subheight, const unsigned char* data);
 
+	int getWinWidth() { return winwidth; }
+	int getWinHeight() { return winheight; }
+
 private:
 	/// The window.
 	GLFWwindow* window;

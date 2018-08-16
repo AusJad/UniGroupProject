@@ -33,6 +33,13 @@ struct AABB {
 	AABB() {};
 };
 
+struct Ray {
+	vec3 origin;
+	vec3 direction;
+	Ray(vec3 o, vec3 d) : origin(o), direction(d) {};
+	Ray() {};
+};
+
 /**
 * @class CollisionEngine
 * @brief Class for handling collision
@@ -64,6 +71,9 @@ public:
 	void update(GameObject* toupdate, std::vector<GameObject*> collGO, float time);
 
 	void update(GameObject* toupdate, GameObject* collGO, float time);
+
+	static bool rayAABBTest(Ray & r, GameObject* collGO, vec3 & collpoint);
+
 private:
 	/// The height map data.
 	std::map<float, std::map<float, float>> heightmap;
@@ -84,7 +94,7 @@ private:
 	*
 	* @return AABB - The collider.
 	*/
-	AABB genAABB(GameObject* toupdate);
+	static AABB genAABB(GameObject* toupdate);
 
 	/**
 	* @brief Interpolate the y axis

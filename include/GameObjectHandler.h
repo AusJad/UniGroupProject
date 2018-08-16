@@ -43,6 +43,8 @@ public:
 
 	void addGameObject(GameObject* toadd);
 
+	void removeGameObject(GameObject * toremove);
+
 	/**
 	* @brief Add a object to the handler.
 	*
