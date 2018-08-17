@@ -17,7 +17,7 @@ void WindowMoveContext::setInActive() {
 
 void WindowMoveContext::menuMoveMouse(GLFWwindow* window, double x, double y) {
 	if (moveData != NULL) {
-		moveData->offset = vec2(x - moveData->inital.x(), y - moveData->inital.y());
+		moveData->offset = vec2((float)(x) - moveData->inital.x(), (float)(y) - moveData->inital.y());
 		moveData->inital = moveData->inital + moveData->offset;
 	}
 }

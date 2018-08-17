@@ -116,7 +116,7 @@ void SceneManager::msgrcvr() {
 		}
 		else 
 		if (tmpmsg.getInstruction() == SAVE_GAME) {
-			if (scenes.size() > tmpmsg.getiData()) {
+			if (scenes.size() > (unsigned) tmpmsg.getiData()) {
 				unsigned tmpc = currscene;
 				currscene = tmpmsg.getiData();
 				saveGame(tmpmsg.getData().sdata);

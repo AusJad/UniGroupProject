@@ -104,6 +104,8 @@ bool EditorContext::initToolBar() {
 	toolbar->addComponent(b);
 
 	toolbar->setCloseButtonCallBack(toolbarClose);
+
+	return true;
 }
 
 bool EditorContext::testClick(int x, int y) {

@@ -438,7 +438,7 @@ void CutScene::doAnimation(Animation & todo, std::string name, float time) {
 		if (cutsceneText.at(name).curstring.size() < ((unsigned) (time / todo.time * cutsceneText.at(name).value.size())) % 1 == 0) {
 			if (cutsceneText.at(name).curstring.size() < cutsceneText.at(name).value.size()) {
 				int numpersec = (int) (cutsceneText.at(name).value.size() / todo.time);
-				if (cutsceneText.at(name).curstring.size() > culmtime < numpersec) {
+				if (cutsceneText.at(name).curstring.size() > culmtime && culmtime < numpersec) {
 					cutsceneText.at(name).curstring += cutsceneText.at(name).value.at(cutsceneText.at(name).nextchar);
 					cutsceneText.at(name).nextchar++;
 				}

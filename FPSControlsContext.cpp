@@ -72,7 +72,7 @@ void FPSControlsContext::moveMouse(GLFWwindow* window, double x, double y) {
 	if (prevx == -1) prevx = x;
 	if (prevy == -1) prevy = y;
 
-	CAM->getActiveCam()->look(-x + prevx, -y + prevy);
+	CAM->getActiveCam()->look((float) (-x + prevx), (float) (-y + prevy));
 
 	int w; int h;
 	glfwGetWindowSize(window, &w, &h);

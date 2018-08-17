@@ -29,7 +29,7 @@ void Window::initHeader(std::string title) {
 	
 	header.setPos(tlscreen);
 	header.setHeight(HEAD_BAR_SIZE);
-	header.setWidth(brscreen.x() - tlscreen.x() - HEAD_BAR_SIZE);
+	header.setWidth((int) (brscreen.x() - tlscreen.x() - HEAD_BAR_SIZE));
 	header.setPadding(6);
 	header.setTex(WND_HEADER_BG);
 
@@ -116,7 +116,7 @@ bool Window::testClick(int x, int y) {
 		if (hasHeader) {
 			if (header.testClick(x, y)) {
 				mvdata.moving = true;
-				mvdata.inital = vec2(x, y);
+				mvdata.inital = vec2((float) x, (float) y);
 				mvdata.offset = vec2();
 				CONT->switchContextMenuMove(&mvdata);
 
@@ -142,12 +142,12 @@ void Window::calculateSize() {
 }
 
 void Window::addComponent(WndComponent * toadd, int widthprcnt, int heightprcnt) {
-	int nwidth = (brscreen.x() - tlscreen.x()) * (widthprcnt / 100.0f);
+	int nwidth = (int) ((brscreen.x() - tlscreen.x()) * (widthprcnt / 100.0f));
 	nwidth -= 2 * padding;
 
 	int nheight;
-	if(hasHeader) nheight = (brscreen.y() - tlscreen.y() - HEAD_BAR_SIZE) * (heightprcnt / 100.0f);
-	else nheight = (brscreen.y() - tlscreen.y()) * (heightprcnt / 100.0f);
+	if(hasHeader) nheight = (int) ((brscreen.y() - tlscreen.y() - HEAD_BAR_SIZE) * (heightprcnt / 100.0f));
+	else nheight = (int) ((brscreen.y() - tlscreen.y()) * (heightprcnt / 100.0f));
 
 	nheight -= 2 * padding;
 	
@@ -171,8 +171,8 @@ vec2 Window::calcComponentPlacement(WndComponent * toplace) {
 	
 	if (components.size() == 0) return tmp;
 	
-	int lasty = components.at(components.size() - 1)->getPos().y();
-	int lastx = components.at(components.size() - 1)->getPos().x();
+	int lasty = (int) components.at(components.size() - 1)->getPos().y();
+	int lastx = (int) components.at(components.size() - 1)->getPos().x();
 	
 	int lastw = 0;
 
@@ -184,11 +184,11 @@ vec2 Window::calcComponentPlacement(WndComponent * toplace) {
 	int lasth = components.at(components.size() - 1)->getHeight();
 	
 	if (lastw + toplace->getWidth() > brscreen.x() - tlscreen.x()) {
-		tmp.sy(lasth + lasty + padding);
+		tmp.sy((float) lasth + lasty + padding);
 	}
 	else {
-		tmp.sx(lastx + components.at(components.size() - 1)->getWidth());
-		tmp.sy(lasty);
+		tmp.sx((float) lastx + components.at(components.size() - 1)->getWidth());
+		tmp.sy((float) lasty);
 	}
 
 	return tmp;
