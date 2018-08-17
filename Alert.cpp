@@ -7,27 +7,34 @@ Alert::Alert()
 	yes = NULL;
 	no = NULL;
 	prompt = NULL;
+	notification = NULL;
+	ok = NULL;
+	notificationtxt = NULL;
 }
 
 
 Alert::~Alert(){
 	delete alert;
+	delete notification;
 }
 
 void Alert::hide() {
-	alert->hide();
+	if(alert->isVis()) alert->hide();
+	if (notification->isVis()) notification->hide();
 }
 
 void Alert::update(float time) {
-	alert->update(time);
+	if(alert->isVis()) alert->update(time);
+	if (notification->isVis()) notification->update(time);
 }
 
 void Alert::render() {
-	alert->render();
+	if (alert->isVis()) alert->render();
+	if (notification->isVis()) notification->render();
 }
 
 bool Alert::isVis() {
-	return alert->isVis();
+	return alert->isVis() || notification->isVis();
 }
 
 void Alert::setPrompt(std::string toset) {
@@ -62,7 +69,7 @@ void Alert::doAlert(std::string label, onClick yes, onClick no) {
 	else this->no->setCallback(no);
 		
 	this->yes->setCallback(yes);
-	show();
+	alert->show();
 }
 
 void Alert::setNoCallback(onClick toset) {
@@ -75,11 +82,13 @@ void Alert::setYesCallback(onClick toset) {
 
 bool Alert::testClick(int x, int y) {
 	if (alert->isVis()) return alert->testClick(x, y);
+	else if (notification->isVis()) return notification->testClick(x, y);
 	else return false;
 }
 
 bool Alert::init() {
-	alert = WindowFactory::getWindow(WINDOW_SMALL_WIDE, "GENERIC", vec2(768, 592), "Alert!");
+	//init alert
+	alert = WindowFactory::getWindow(WINDOW_SMALL_WIDE, "GENERIC", vec2(0, 0), "Alert!");
 	if (alert == NULL) return false;
 
 	prompt = new LabelComponent();
@@ -97,11 +106,59 @@ bool Alert::init() {
 	no->setTitle("No");
 	alert->addComponent(no, 50, 50);
 
+	alert->FitToContent();
 	alert->hide();
+
+	//init notification
+	notification = WindowFactory::getWindow(WINDOW_SMALL_WIDE, "GENERIC", vec2(0, 0), "Notification");
+	if (notification == NULL) return false;
+
+	notificationtxt = new LabelComponent();
+	if (notificationtxt == NULL) return false;
+	notificationtxt->setLabel("No Label Set");
+	notification->addComponent(notificationtxt, 100, 50);
+
+	ok = new ButtonComponent();
+	if (ok == NULL) return false;
+	ok->setTitle("Ok");
+	notification->addComponent(ok, 100, 50);
+
+	notification->FitToContent();
+	notification->hide();
 
 	return true;
 }
 
+
+void Alert::doNotify(std::string label, onClick callback) {
+	notificationtxt->setLabel(label);
+
+	float centery = (float)RNDR->getWinHeight();
+	centery /= 2;
+	centery -= notification->getHeight() / 2;
+
+	float centerx = (float)RNDR->getWinWidth();
+	centerx /= 2;
+	centerx -= notification->getWidth() / 2;
+
+	notification->placeAt(centerx, centery);
+
+	if (callback == NULL) this->ok->setCallback(defaultOk);
+	else this->ok->setCallback(callback);
+
+	notification->show();
+}
+
+void Alert::notifyDone() {
+	notification->hide();
+	notificationtxt->setLabel("No Label Set");
+	ok->setCallback(NULL);
+}
+
 void Alert::defaultNo(int code) {
 	ALERT->done();
+}
+
+void Alert::defaultOk(int code) {
+	ALERT->notifyDone();
 }

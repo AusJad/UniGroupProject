@@ -111,6 +111,7 @@
     <ClInclude Include="GUIInteractContext.h" />
     <ClInclude Include="ItemPlaceContext.h" />
     <ClInclude Include="LuaControlContext.h" />
+    <ClInclude Include="MainMenu.h" />
     <ClInclude Include="movementInfo.h" />
     <ClInclude Include="include\AIMovementBehaviours.h" />
     <ClInclude Include="include\AssetManager.h" />
@@ -199,6 +200,7 @@
     <ClCompile Include="ItemPlaceContext.cpp" />
     <ClCompile Include="LabelComponent.cpp" />
     <ClCompile Include="LuaControlContext.cpp" />
+    <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="SaveTool.cpp" />
     <ClCompile Include="SelectionComponent.cpp" />
     <ClCompile Include="src\AIMovementBehaviours.cpp" />

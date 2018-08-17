@@ -303,6 +303,9 @@
     <ClInclude Include="Alert.h">
       <Filter>Header Files\UI</Filter>
     </ClInclude>
+    <ClInclude Include="MainMenu.h">
+      <Filter>Header Files\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\CtoLUABinder.cpp">
@@ -534,6 +537,9 @@
       <Filter>Source Files\UI</Filter>
     </ClCompile>
     <ClCompile Include="Alert.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenu.cpp">
       <Filter>Source Files\UI</Filter>
     </ClCompile>
   </ItemGroup>

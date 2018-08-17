@@ -2,6 +2,7 @@
 
 #include "WindowFactory.h"
 #include "EngineStateWriter.h"
+#include "Alert.h"
 
 class SaveTool
 {

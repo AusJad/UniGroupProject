@@ -5,7 +5,7 @@ local function loadResources(AMAN)
 	AMAN:addResource("./Resources/Models/RAW2.tdef", "RAWTRN", "Terrain");
 
 	--Load fonts
-	if AMAN:addResource("./Resources/Fonts/ConsoleFont.csv", "FNT", "CONSOLEFONT") then print("loaded res: ConsoleFont")
+	if AMAN:addResource("./Resources/Fonts/MonoFont.csv", "FNT", "CONSOLEFONT") then print("loaded res: ConsoleFont")
 	else print("failed to load ConsoleFont") end
 	if AMAN:addResource("./Resources/Textures/console.bmp", "BMP", "Console") then print("loaded res: Console")
 	else print("failed to load Console") end

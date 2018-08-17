@@ -26,12 +26,22 @@ public:
 
 	void doAlert(std::string label, onClick yes, onClick no);
 
+	void doNotify(std::string label, onClick callback);
+	void notifyDone();
+
 private:
 	Window * alert;
+	Window * notification;
+
+	ButtonComponent * ok;
 	ButtonComponent * yes;
 	ButtonComponent * no;
+
 	LabelComponent * prompt;
+	LabelComponent * notificationtxt;
 
 	static void defaultNo(int code);
+
+	static void defaultOk(int code);
 };
 

@@ -16,7 +16,6 @@ SaveTool::~SaveTool(){
 void SaveTool::toggle() {
 	savetool->tglVis();
 	if (!savetool->isVis()) {
-		instructions->setLabel("Type Name to Save Level As:");
 		filename->setValue("");
 	}
 }
@@ -27,7 +26,6 @@ void SaveTool::show() {
 
 void SaveTool::hide() {
 	savetool->hide();
-	instructions->setLabel("Type Name to Save Level As:");
 	filename->setValue("");
 }
 
@@ -75,19 +73,18 @@ void SaveTool::render() {
 
 void SaveTool::save(int code) {
 	if (filename->getValue().empty()) {
-		instructions->setLabel("No Filename Given!");
+		ALERT->doNotify("Cannot Save: No File Name Given!", NULL);
 	}
 	else {
 		if (EngineStateWriter::writeState("./Resources/Levels/" + filename->getValue() + ".lvl")) {
-			instructions->setLabel("Level Saved!");
+			ALERT->doNotify("Level Saved: " + filename->getValue() + ".lvl", NULL);
 		}
 		else {
-			instructions->setLabel("Save Failed: Unkown Error!");
+			ALERT->doNotify("Save Failed: Unkown Error!", NULL);
 		}
 	}
 }
 
 void SaveTool::onWndClose(int code) {
-	instructions->setLabel("Type Name to Save Level As:");
 	filename->setValue("");
 }
