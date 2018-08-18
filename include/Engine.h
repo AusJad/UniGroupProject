@@ -9,7 +9,7 @@
 #include "AudioEngine.h"
 #include "windows.h"
 #include "Controls.h"
-#include "../GUI.h"
+#include "GUI.h"
 
 /**
 * @class Engine
@@ -64,5 +64,6 @@ private:
 
 	static void SwitchInterfaceContext();
 	static void SwitchPlayContext();
+	static void SwitchMainMenuContext();
 };
 

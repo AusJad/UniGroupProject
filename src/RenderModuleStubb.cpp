@@ -413,6 +413,12 @@ void RenderModuleStubb::reshape(GLFWwindow* window, int width, int height) {
 	glViewport(0, 0, width, height);
 	gluPerspective(45.0f, aspect, 1, 20000);
 	glMatrixMode(GL_MODELVIEW);
+
+	for (unsigned i = 0; i < RNDR->onResizeCallBacks.size(); i++) {
+		if (RNDR->onResizeCallBacks.at(i) != NULL) {
+			RNDR->onResizeCallBacks.at(i)(RNDR->winwidth, RNDR->winheight);
+		}
+	}
 }
 
 void RenderModuleStubb::callLookAt(vec3 r1, vec3 r2, vec3 r3) {

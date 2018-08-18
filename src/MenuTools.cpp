@@ -135,5 +135,5 @@ void MenuTools::interpretClick(int x, int y) {
 
 void MenuTools::switchMenuMode() {
 	CONT->switchContextGUIInteract();
-	GI->enableEditor();
+	GI->setState(editorst);
 }

@@ -4,7 +4,7 @@
 #include "RenderModuleStubb.h"
 #include "TextureManager.h"
 #include "FontEngine.h"
-#include "../GUI.h"
+#include "GUI.h"
 
 /**
 * @class MenuTools

@@ -5,12 +5,12 @@
 #include "RenderModuleStubb.h"
 #include "LUAScriptManager.h"
 #include "SimpleString.h"
-#include "../LuaControlContext.h"
-#include "../GUIInteractContext.h"
-#include "../TextInputContext.h"
-#include "../WindowMoveContext.h"
-#include "../FPSControlsContext.h"
-#include "../ItemPlaceContext.h"
+#include "LuaControlContext.h"
+#include "GUIInteractContext.h"
+#include "TextInputContext.h"
+#include "WindowMoveContext.h"
+#include "FPSControlsContext.h"
+#include "ItemPlaceContext.h"
 
 #define CONT Singleton<Controls>::getInstance()
 
@@ -52,6 +52,7 @@ class Controls
 
 		void registerCallbacks(engineCallback toset);
 		void registerGUICallback(engineCallback toset);
+		void registerGUIMMCallback(engineCallback toset);
 
 	private:
 		/// Map of resource lists with a ID.

@@ -36,6 +36,8 @@ struct light {
 	bool enabled = false;
 };
 
+typedef void(*resizeCallback)(int nwidth, int nheight);
+
 #define GeoStream Singleton<RenderModuleStubb>::getInstance()->getGeoStream()
 #define RNDR Singleton<RenderModuleStubb>::getInstance()
 
@@ -298,6 +300,14 @@ public:
 	int getWinWidth() { return winwidth; }
 	int getWinHeight() { return winheight; }
 
+	void addResizeCallBack(resizeCallback toadd) { onResizeCallBacks.push_back(toadd); };
+
+	void killProgram() { running = false; }
+
+	void enableWireframe() { glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); }
+
+	void disableWireFrame() { glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); }
+
 private:
 	/// The window.
 	GLFWwindow* window;
@@ -311,6 +321,8 @@ private:
 	bool wireframe;
 
 	int winwidth, winheight;
+
+	std::vector<resizeCallback> onResizeCallBacks;
 
 	/**
 	* @brief Message receiver method.

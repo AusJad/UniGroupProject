@@ -2,7 +2,13 @@
 
 #include "Model.h"
 #include "ModelFactory.h"
+#include "fileNameReader.h"
+#include "Singleton.h"
 #include <map>
+
+#define MMAN Singleton<ModelManger>::getInstance()
+
+#define MODEL_MAIN_GROUP "ModelsMain"
 
 /**
 * @class ModelManger
@@ -59,10 +65,18 @@ public:
 	*/
 	bool loadModel(std::string path, std::string type, std::string name, vec3 & scale);
 
+	void loadBatch(std::string groupname, std::string path, std::string type);
+
+	bool hasTextureGroup(std::string group);
+
+	const std::vector<std::string> & getTextureGroup(std::string group);
+
 private:
 	/// The model creation object.
 	ModelFactory modelfactory;
 	/// A map of models.
 	std::map<std::string, Model*> models;
+
+	std::map<std::string, std::vector<std::string> > batchfiles;
 };
 

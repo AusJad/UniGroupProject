@@ -3,7 +3,7 @@
 #include "CollisionEngine.h"
 //mm
 #include "saveFileIO.h"
-#include "../CameraManager.h"
+#include "CameraManager.h"
 
 /**
 * @class Scene

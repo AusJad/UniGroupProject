@@ -183,6 +183,10 @@ void Controls::registerCallbacks(engineCallback toset) {
 	FPS.setEngCallBack(toset);
 }
 
+void Controls::registerGUIMMCallback(engineCallback toset) {
+	FPS.setMainMenuCallback(toset);
+}
+
 void Controls::registerGUICallback(engineCallback toset) {
 	GIC.setCallback(toset);
 }

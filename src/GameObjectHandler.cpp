@@ -21,8 +21,6 @@ GameObjectHandler::~GameObjectHandler(){
 		delete tmpobjects.at(i);
 		tmpobjects.at(i) = NULL;
 	}
-
-	gameobjectQT.clear();
 }
 
 GameObjectHandler::GameObjectHandler(const GameObjectHandler & tocpy) {
@@ -53,8 +51,6 @@ const GameObjectHandler & GameObjectHandler::operator = (const GameObjectHandler
 		delete tmpobjects.at(i);
 		tmpobjects.at(i) = NULL;
 	}
-
-	gameobjectQT.clear();
 
 	if (rhs.terrain != NULL) terrain = rhs.terrain->create();
 	else terrain = NULL;
@@ -204,8 +200,7 @@ GameObject* GameObjectHandler::GetGameObject(std::string name) {
 
 void GameObjectHandler::render() {
 	if (terrain != NULL) terrain->render();
-	searchres.clear();
-	gameobjectQT.traverse(travfunc);
+
 	for (unsigned i = 0; i < tmpobjects.size(); i++) {
 		tmpobjects.at(i)->render();
 	}
@@ -245,19 +240,14 @@ bool GameObjectHandler::addTmpObj(Identifiers id, vec3 pos, vec3 target, Resourc
 }
 
 void GameObjectHandler::setWorldDimensions(float tlx, float tlz, float brx, float brz) {
-	gameobjectQT.setDimensions(pair(tlx, tlz), pair(brx, brz));
+
 }
 
 void  GameObjectHandler::refreshTree() {
-	gameobjectQT.clear();
-	for (unsigned i = 0; i < gameobjects.size(); i++) {
-		gameobjectQT.insert(GameObjectWrapper(gameobjects.at(i)), getposfunc);
-	}
+
 }
 
 std::vector<GameObject*> GameObjectHandler::findSpatiallyGroupedGameObjects(GameObject* tofind) {
-	searchres.clear();
-	gameobjectQT.search(comparisonfunc, onFind, getposfunc, GameObjectWrapper(tofind));
 	return gameobjects;
 }
 
@@ -292,4 +282,20 @@ void  GameObjectHandler::onFind(const std::vector<std::list<GameObjectWrapper> >
 			searchres.push_back(listit->pointer);
 		}
 	}
+}
+
+void GameObjectHandler::clear() {
+	for (unsigned i = 0; i < gameobjects.size(); i++) {
+		delete gameobjects.at(i);
+		gameobjects.at(i) = NULL;
+	}
+	
+	gameobjects.clear();
+
+	for (unsigned i = 0; i < tmpobjects.size(); i++) {
+		delete tmpobjects.at(i);
+		tmpobjects.at(i) = NULL;
+	}
+
+	tmpobjects.clear();
 }

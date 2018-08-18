@@ -128,13 +128,13 @@ public:
 
 	const GameObjectHandler & operator = (const GameObjectHandler & rhs);
 
+	void clear();
+
 private:
 	/// Terrain.
 	GameObject* terrain;
 	/// Game object vector.
 	std::vector<GameObject*> gameobjects;
-	/// Quadtree for game objects.
-	QuadTree<GameObjectWrapper> gameobjectQT;
 	/// The identifier object.
 	Identifiers id;
 	/// Vector of game objects for temporary useage.

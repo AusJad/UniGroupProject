@@ -54,16 +54,16 @@ void Scene::update(float time) {
 		LSM->callFunction<Scene, MessagingBus>(resources.getResource("updatefunc"), *this, *(MSGBS));
 	}
 
-	objects.refreshTree();
-
 	for (unsigned i = 0; i < objects.getNumObjects(); i++) {
 		if(objects.getObject(i) != NULL) collision.update(objects.getObject(i), objects.findSpatiallyGroupedGameObjects(objects.getObject(i)), time);
 	}
 
 	//Cam collision
 	//todo - fix this retarded system
-	if(objects.getNumObjects() > 0) 
+	if (objects.getNumObjects() > 0)
 		collision.update(CAM->getActiveCam(), objects.findSpatiallyGroupedGameObjects(objects.getObject(0)), time);
+	else
+		CAM->getActiveCam()->update(time);
 }
 
 int Scene::GetGameObjectID(std::string name) {

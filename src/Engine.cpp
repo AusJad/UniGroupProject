@@ -15,9 +15,13 @@ bool Engine::Initalise(std::string initscript){
 	
 	CONT->registerCallbacks(SwitchInterfaceContext);
 	CONT->registerGUICallback(SwitchPlayContext);
+	CONT->registerGUIMMCallback(SwitchMainMenuContext);
 	CONT->switchContextPlay();
 	TXMAN->loadBatch(WALL_TEX_GROUP, "./Resources/Textures/WallTex/", "TGA");
+	MMAN->loadBatch(MODEL_MAIN_GROUP, "./Resources/Models/", "IM");
 	if (!GI->initalise()) return false;
+	GI->setState(mainmenu);
+
 	EngineStateWriter::readState("./Resources/Levels/start.lvl");
 
 	return true;
@@ -39,14 +43,24 @@ void Engine::Run() {
 
 		time = RNDR->getTimeSinceUpdate();
 
-		SM->update(time);
-		GI->update(time);
-		AE->update();
-		FNT_ENG->update();
-		CONT->update();
+		if (GI->getState() != mainmenu) {
+			SM->update(time);
+			GI->update(time);
+			AE->update();
+			FNT_ENG->update();
+			CONT->update();
 
-		SM->render();
-		GI->render();
+			SM->render();
+			GI->render();
+		}
+		else {
+			CAM->getActiveCam()->update(time);
+			GI->update(time);
+			CONT->update();
+
+			CAM->getActiveCam()->render();
+			GI->render();
+		}
 
 		RNDR->endRenderCycle();
 	}
@@ -74,10 +88,15 @@ bool Engine::initaliseAudioEngine() {
 
 void Engine::SwitchInterfaceContext() {
 	CONT->switchContextGUIInteract();
-	GI->enableEditor();
+	GI->setState(editorst);
 }
 
 void Engine::SwitchPlayContext() {
 	CONT->switchContextPlay();
-	GI->disableEditor();
+	GI->setState(inactive);
+}
+
+void Engine::SwitchMainMenuContext() {
+	CONT->switchContextGUIInteract();
+	GI->setState(mainmenu);
 }
