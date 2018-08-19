@@ -5,7 +5,7 @@ bool EditorContext::active = false;
 EditorCameraTool EditorContext::cameratool;
 EditorWallTool EditorContext::walltool;
 SaveTool EditorContext::savetool;
-Window * EditorContext::objecttool = NULL;
+EditorObjectTool EditorContext::objecttool;
 
 EditorContext::EditorContext()
 {
@@ -31,9 +31,8 @@ bool EditorContext::initalise() {
 	if (!savetool.initalise()) return false;
 	savetool.hide();
 
-	objecttool = WindowFactory::getWindow(WINDOW_MEDIUM_TALL, "GENERIC", vec2(), "Object Tool");
-	if (objecttool == NULL) return false;
-	objecttool->hide();
+	if (!objecttool.init()) return false;
+	objecttool.hide();
 	
 	initToolBar();
 	initObjectTool();
@@ -48,14 +47,14 @@ void EditorContext::toolbarClose(int code){
 void EditorContext::render() {
 	walltool.render();
 	savetool.render();
-	objecttool->render();
+	objecttool.render();
 	cameratool.render();
 	toolbar->render();
 }
 
 void EditorContext::update(float time) {
 	walltool.update(time);
-	objecttool->update(time);
+	objecttool.update(time);
 	toolbar->update(time);
 	cameratool.update(time);
 	savetool.update(time);
@@ -112,7 +111,7 @@ bool EditorContext::initToolBar() {
 bool EditorContext::testClick(int x, int y) {
 	if (toolbar->isVis()) if (toolbar->testClick(x, y)) return true;
 	if (cameratool.testClick(x, y)) return true;
-	if (objecttool->isVis()) if(objecttool->testClick(x, y)) return true;
+	if (objecttool.isVis()) if(objecttool.testClick(x, y)) return true;
 	if (savetool.testClick(x, y)) return true;
 	if (walltool.testClick(x, y)) return true;
 
@@ -124,7 +123,7 @@ void EditorContext::walltoolclick(int code) {
 }
 
 void EditorContext::objecttoolclick(int code) {
-	objecttool->tglVis();
+	objecttool.toggle();
 }
 
 void EditorContext::cameratoolclock(int code) {

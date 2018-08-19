@@ -315,9 +315,6 @@
     <ClInclude Include="include\EngineStateWriter.h">
       <Filter>Header Files\File Handling</Filter>
     </ClInclude>
-    <ClInclude Include="include\Wall.h">
-      <Filter>Header Files\Models</Filter>
-    </ClInclude>
     <ClInclude Include="include\WndComponent.h">
       <Filter>Header Files\Rendering\UI\Low Level</Filter>
     </ClInclude>
@@ -372,11 +369,20 @@
     <ClInclude Include="include\ItemScrollComponent.h">
       <Filter>Header Files\Rendering\UI\Low Level</Filter>
     </ClInclude>
+    <ClInclude Include="include\EditorObjectTool.h">
+      <Filter>Header Files\Rendering\UI\High Level</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GenericObject.h">
+      <Filter>Header Files\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Wall.h">
+      <Filter>Header Files\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AxisDefs.h">
+      <Filter>Header Files\Rendering\UI\High Level</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ICT397GameProject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Controls.cpp">
       <Filter>Source Files\Controls</Filter>
     </ClCompile>
@@ -557,9 +563,6 @@
     <ClCompile Include="src\EngineStateWriter.cpp">
       <Filter>Source Files\File Handling</Filter>
     </ClCompile>
-    <ClCompile Include="src\Wall.cpp">
-      <Filter>Source Files\Models</Filter>
-    </ClCompile>
     <ClCompile Include="src\WndComponent.cpp">
       <Filter>Source Files\Rendering\UI\Low Level</Filter>
     </ClCompile>
@@ -610,6 +613,18 @@
     </ClCompile>
     <ClCompile Include="src\ItemScrollComponent.cpp">
       <Filter>Source Files\Rendering\UI\Low Level</Filter>
+    </ClCompile>
+    <ClCompile Include="ICT397GameProject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\EditorObjectTool.cpp">
+      <Filter>Source Files\Rendering\UI\High Level</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GenericObject.cpp">
+      <Filter>Source Files\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Wall.cpp">
+      <Filter>Source Files\GameObjects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -17,8 +17,8 @@ std::string MainMenu::selectedlevelraw;
 onClick MainMenu::playcallback = NULL;
 
 MainMenu::MainMenu(){
-	modelrot = 0;
-	modelrotz = 0;
+	modelrot = 90;
+	modelrotz = 45;
 	menubackmodel = NULL;
 }
 
@@ -103,14 +103,6 @@ void MainMenu::render() {
 	GeoStream << END_STREAM;
 	RNDR->disableWireFrame();
 	RNDR->StopRenderFacingCamera();
-
-	RNDR->RenderModeOrtho();
-	GeoStream << ENABLE_ALPHA;
-	TXMAN->useTexture("G1Logo.tga", RNDR);
-	RNDR->DrawQuadOrtho(vec2(0, 0), vec2(256, 128));
-	TXMAN->disableTexture(RNDR);
-	GeoStream << DISABLE_ALPHA;
-	RNDR->RenderModePerspective();
 }
 
 void MainMenu::update(float time) {

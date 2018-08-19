@@ -25,6 +25,12 @@ const GeometeryStream & GeometeryStream::operator << (const trans_3 & rhs) const
 	return *this;
 }
 
+const GeometeryStream & GeometeryStream::operator << (const scale_3 & rhs) const {
+	glScalef(rhs.x, rhs.y, rhs.z);
+
+	return *this;
+}
+
 const GeometeryStream & GeometeryStream::operator << (const rot_4 & rhs) const {
 	glRotatef(rhs.x, rhs.y, rhs.z, rhs.w);
 

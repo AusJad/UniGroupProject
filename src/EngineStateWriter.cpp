@@ -9,7 +9,7 @@ bool EngineStateWriter::writeState(std::string filename) {
 
 	for (unsigned i = 0; i < SM->getGOH().getNumObjects(); i++) {
 		if (SM->getGOH().getObject(i) != NULL) {
-			if (SM->getGOH().getObject(i)->getType() == "WALL") {
+			if (SM->getGOH().getObject(i)->getType() == "WALL" || SM->getGOH().getObject(i)->getType() == "GENERIC_OBJ") {
 				out += SM->getGOH().getObject(i)->toString();
 			}
 		}

@@ -236,6 +236,12 @@ void EditorWallTool::addToGameCallBack(int code) {
 	
 	prevwall = wall;
 	wall = new Wall();
+
+	if (wall == NULL) {
+		std::cerr << "Memory Depleted, Closing Gracefully." << std::endl;
+		RNDR->killProgram();
+	}
+
 	wall->setID(GOF->getNextId());
 	
 	camnearoffset = 100;

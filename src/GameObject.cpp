@@ -119,7 +119,10 @@ bool GameObject::isVisible() {
 }
 
 void GameObject::setModel(Model* M) {
-	if (model != NULL) delete model;
+	if (model != NULL) {
+		std::cout << "Here" << std::endl;
+		delete model;
+	}
 
 	model = M;
 

@@ -33,6 +33,14 @@ struct trans_3 {
 	trans_3(const vec3 & tocpy) : x(tocpy.x()), y(tocpy.y()), z(tocpy.z()) {};
 };
 
+struct scale_3 {
+	float x, y, z;
+	scale_3() : x(0), y(0), z(0) {};
+	scale_3(float nx, float ny, float nz) : x(nx), y(ny), z(nz) {};
+	scale_3(const vec3 & tocpy) : x(tocpy.x()), y(tocpy.y()), z(tocpy.z()) {};
+};
+
+
 struct rot_4 {
 	float x, y, z, w;
 	rot_4() : x(0), y(0), z(0), w(0) {};
@@ -123,6 +131,15 @@ public:
 	* @return GeometeryStream - The output type.
 	*/
 	const GeometeryStream & operator << (const rot_4 & rhs) const;
+
+	/**
+	* @brief A overload method for outputing rot_4 type data.
+	*
+	* @param rhs - The output data.
+	*
+	* @return GeometeryStream - The output type.
+	*/
+	const GeometeryStream & operator << (const scale_3 & rhs) const;
 
 	/**
 	* @brief A overload method for outputing color_3 type data.

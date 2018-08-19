@@ -67,9 +67,9 @@ public:
 
 	void loadBatch(std::string groupname, std::string path, std::string type);
 
-	bool hasTextureGroup(std::string group);
+	bool hasModelGroup(std::string group);
 
-	const std::vector<std::string> & getTextureGroup(std::string group);
+	const std::vector<std::string> & getModelGroup(std::string group);
 
 private:
 	/// The model creation object.

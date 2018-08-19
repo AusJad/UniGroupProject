@@ -5,6 +5,7 @@
 #include "SceneManager.h"
 #include "CollisionEngine.h"
 #include "Alert.h"
+#include "AxisDefs.h"
 
 #define LABEL_PADDING 10
 
@@ -12,14 +13,6 @@
 #define CAMERA "Camera"
 #define PLACE "Place With Look"
 #define PREV_WALL "Last Wall"
-
-#define X_AXIS 0
-#define Y_AXIS 1
-#define Z_AXIS 2
-
-#define ITEM_NEAR 30.0f
-#define ITEM_FAR 300.0f
-#define SCROLL_OFFSET_MODIFIER 6.0f
 
 class EditorWallTool
 {

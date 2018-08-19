@@ -1,7 +1,7 @@
 #include "ImportModel.h"
 
-ImportModel::ImportModel()
-{
+ImportModel::ImportModel() : scale(1,1,1){
+	model = NULL;
 }
 
 ImportModel::ImportModel(const ImportModel & tocpy)
@@ -12,6 +12,8 @@ ImportModel::ImportModel(const ImportModel & tocpy)
 	maxz = tocpy.maxz;
 	miny = tocpy.miny;
 	maxy = tocpy.maxy;
+
+	scale = tocpy.scale;
 
 	modelDetails = tocpy.modelDetails;
 	allVerticies = tocpy.allVerticies;
@@ -85,6 +87,8 @@ bool ImportModel::loadModel(std::string filename)
 
 	setMinsAndMaxs();
 
+	importer.FreeScene();
+
 	return(true);
 }
 
@@ -130,6 +134,13 @@ void ImportModel::setMinsAndMaxs()
 
 	}
 
+	minx *= scale.x();
+	minz *= scale.z();
+	maxx *= scale.x();
+	maxz *= scale.z();
+	maxy *= scale.y();
+	miny *= scale.y();
+
 }
 
 ImportModel* ImportModel::create() const
@@ -166,15 +177,7 @@ void ImportModel::centerOnPoint(vec3 & point)
 }
 
 void ImportModel::setScale(vec3 & toset) {
-	for (unsigned j = 0; j < modelDetails.size(); j++)
-	{
-		for (unsigned i = 0; i < modelDetails[j].Verticies.size(); i++)
-		{
-			modelDetails[j].Verticies.at(i).sx(modelDetails[j].Verticies.at(i).x() * toset.x());
-			modelDetails[j].Verticies.at(i).sy(modelDetails[j].Verticies.at(i).y() * toset.y());
-			modelDetails[j].Verticies.at(i).sz(modelDetails[j].Verticies.at(i).z() * toset.z());
-		}
-	}
+	scale = toset;
 
 	setMinsAndMaxs();
 }

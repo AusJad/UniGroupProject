@@ -66,6 +66,8 @@ private:
 	/// The model data.
 	const aiScene *model;
 
+	vec3 scale;
+
 	/**
 	* @brief Set the max and min values.
 	*/

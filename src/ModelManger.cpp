@@ -88,10 +88,10 @@ void ModelManger::loadBatch(std::string groupname, std::string path, std::string
 	}
 }
 
-bool ModelManger::hasTextureGroup(std::string group) {
+bool ModelManger::hasModelGroup(std::string group) {
 	return batchfiles.count(group) == 1;
 }
 
-const std::vector<std::string> & ModelManger::getTextureGroup(std::string group) {
+const std::vector<std::string> & ModelManger::getModelGroup(std::string group) {
 	return batchfiles.at(group);
 }

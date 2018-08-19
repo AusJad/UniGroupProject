@@ -5,6 +5,7 @@
 #include "CameraManager.h"
 #include "EngineStateWriter.h"
 #include "SaveTool.h"
+#include "EditorObjectTool.h"
 
 class EditorContext
 {
@@ -28,8 +29,8 @@ private:
 	static EditorCameraTool cameratool;
 	static EditorWallTool walltool;
 	static SaveTool savetool;
-	
-	static Window * objecttool;
+	static EditorObjectTool objecttool;
+
 	static bool active;
 
 	bool initToolBar();

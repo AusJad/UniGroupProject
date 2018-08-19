@@ -6,7 +6,7 @@
 
 Camera::Camera(Identifiers & id, vec3 pos, ResourceList & list) : GameObject(id, pos, list)
 {
-	rotateSpeed = 6.0f;
+	rotateSpeed = 3.0f;
 	moveSpeed = 3.0f;
 	speedDecay = 7.0f;
 	fov = 50.0f;

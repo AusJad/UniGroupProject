@@ -103,6 +103,7 @@
     <ClInclude Include="include\Alert.h" />
     <ClInclude Include="include\AssetManager.h" />
     <ClInclude Include="include\AudioEngine.h" />
+    <ClInclude Include="include\AxisDefs.h" />
     <ClInclude Include="include\BMPLoader.h" />
     <ClInclude Include="include\Bullet.h" />
     <ClInclude Include="include\ButtonComponent.h" />
@@ -114,6 +115,7 @@
     <ClInclude Include="include\CutScene.h" />
     <ClInclude Include="include\EditorCameraTool.h" />
     <ClInclude Include="include\EditorContext.h" />
+    <ClInclude Include="include\EditorObjectTool.h" />
     <ClInclude Include="include\EditorWallTool.h" />
     <ClInclude Include="include\Engine.h" />
     <ClInclude Include="include\EngineStateWriter.h" />
@@ -125,6 +127,7 @@
     <ClInclude Include="include\GameObject.h" />
     <ClInclude Include="include\GameObjectFactory.h" />
     <ClInclude Include="include\GameObjectHandler.h" />
+    <ClInclude Include="include\GenericObject.h" />
     <ClInclude Include="include\GeometeryStream.h" />
     <ClInclude Include="include\GUI.h" />
     <ClInclude Include="include\GUIInteractContext.h" />
@@ -202,6 +205,7 @@
     <ClCompile Include="src\CutScene.cpp" />
     <ClCompile Include="src\EditorCameraTool.cpp" />
     <ClCompile Include="src\EditorContext.cpp" />
+    <ClCompile Include="src\EditorObjectTool.cpp" />
     <ClCompile Include="src\EditorWallTool.cpp" />
     <ClCompile Include="src\Engine.cpp" />
     <ClCompile Include="src\EngineStateWriter.cpp" />
@@ -213,6 +217,7 @@
     <ClCompile Include="src\GameObject.cpp" />
     <ClCompile Include="src\GameObjectFactory.cpp" />
     <ClCompile Include="src\GameObjectHandler.cpp" />
+    <ClCompile Include="src\GenericObject.cpp" />
     <ClCompile Include="src\GeometeryStream.cpp" />
     <ClCompile Include="src\GUI.cpp" />
     <ClCompile Include="src\GUIInteractContext.cpp" />
