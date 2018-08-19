@@ -1,16 +1,16 @@
 #pragma once
 
-#define WINDOW_BG			"windowbg"
-#define WND_HEADER_BG		"wndheader"	
+#define WINDOW_BG			"bggrey.tga"
+#define WND_HEADER_BG		"header.tga"	
 
-#define	LEFT_BUTTON			"button_left"
-#define	RIGHT_BUTTON		"button_right"
-#define BUTTON_CLOSE		"close_button"
+#define	LEFT_BUTTON			"button_left.tga"
+#define	RIGHT_BUTTON		"button_right.tga"
+#define BUTTON_CLOSE		"button.tga"
 
-#define WALL_TOOL_ICON		"walltoolicon"
-#define OBJECT_TOOL_ICON	"objecttoolicon"
-#define CAM_TOOL_ICON		"camtoolicon"
-#define SAVE_TOOL_ICON		"savetoolicon"
+#define WALL_TOOL_ICON		"walltoolicon.tga"
+#define OBJECT_TOOL_ICON	"objecttoolicon.tga"
+#define CAM_TOOL_ICON		"camtoolicon.tga"
+#define SAVE_TOOL_ICON		"savetoolicon.tga"
 
 #define UI_BASE_COLOR		color_3(0.2f, 0.2f, 0.2f)
 #define UI_LIGHT_COLOR		color_3(0.3f, 0.3f, 0.3f)

@@ -5,8 +5,8 @@
 SelectionComponent::SelectionComponent() : WndComponent(),
 left(), right(), enter(), selection()
 {
-	left.setTex("button_left");
-	right.setTex("button_right");
+	left.setTex(LEFT_BUTTON);
+	right.setTex(RIGHT_BUTTON);
 	enter.setTitle("Enter");
 
 	curoption = -1;
@@ -17,8 +17,8 @@ left(), right(), enter(), selection()
 SelectionComponent::SelectionComponent(int width, int height, vec2 pos) : WndComponent(width, height, pos), 
 left(), right(), enter(), selection()
 {
-	left.setTex("button_left");
-	right.setTex("button_right");
+	left.setTex(LEFT_BUTTON);
+	right.setTex(RIGHT_BUTTON);
 	enter.setTitle("Enter");
 
 	curoption = -1;

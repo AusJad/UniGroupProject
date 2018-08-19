@@ -278,6 +278,8 @@ void  MainMenu::loadLevelPlayCallback(int code) {
 
 	SM->getGOH().clear();
 
+	CAM->getActiveCam()->reset();
+
 	if (!EngineStateWriter::readState("./Resources/Levels/" + selectedlevelraw)) {
 		ALERT->doNotify("Failed to Load Level: Invalid Data", NULL);
 	}
@@ -293,6 +295,8 @@ void  MainMenu::loadLevelEditCallback(int code) {
 	}
 
 	SM->getGOH().clear();
+
+	CAM->getActiveCam()->reset();
 
 	if (!EngineStateWriter::readState("./Resources/Levels/" + selectedlevelraw)) {
 		ALERT->doNotify("Failed to Load Level: Invalid Data", NULL);

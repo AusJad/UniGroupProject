@@ -220,6 +220,8 @@ void EditorWallTool::placeWall(int code) {
 	}
 
 	wall->setPos(wallpos);
+
+	setInputsFromWall();
 }
 
 void EditorWallTool::addToGameCallBack(int code) {

@@ -17,6 +17,7 @@ bool Engine::Initalise(std::string initscript){
 	CONT->registerGUICallback(SwitchPlayContext);
 	CONT->registerGUIMMCallback(SwitchMainMenuContext);
 	CONT->switchContextPlay();
+	TXMAN->loadBatch(WALL_TEX_GROUP, "./Resources/Textures/UI/", "TGA");
 	TXMAN->loadBatch(WALL_TEX_GROUP, "./Resources/Textures/WallTex/", "TGA");
 	MMAN->loadBatch(MODEL_MAIN_GROUP, "./Resources/Models/", "IM");
 	if (!GI->initalise()) return false;

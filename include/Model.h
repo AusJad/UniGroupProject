@@ -167,6 +167,8 @@ class Model
 		*/
 		unsigned getId() { return id.getId(); };
 
+		std::string getName() { return id.getName(); }
+
 		/**
 		* @brief Set the name.
 		*

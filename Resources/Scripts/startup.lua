@@ -7,26 +7,6 @@ local function loadResources(AMAN)
 	--Load fonts
 	if AMAN:addResource("./Resources/Fonts/MonoFont.csv", "FNT", "CONSOLEFONT") then print("loaded res: ConsoleFont")
 	else print("failed to load ConsoleFont") end
-	if AMAN:addResource("./Resources/Textures/console.bmp", "BMP", "Console") then print("loaded res: Console")
-	else print("failed to load Console") end
-	if AMAN:addResource("./Resources/Textures/Menu/Window/bggrey.tga", "TGA", "windowbg") then print("loaded res: windowbg")
-	else print("failed to load windowbg") end
-	if AMAN:addResource("./Resources/Textures/Menu/Window/header.tga", "TGA", "wndheader") then print("loaded res: wndheader")
-	else print("failed to load wndheader") end
-	if AMAN:addResource("./Resources/Textures/Menu/Window/button.tga", "TGA", "close_button") then print("loaded res: close_button")
-	else print("failed to load close_button") end
-	if AMAN:addResource("./Resources/Textures/Menu/Window/button_left.tga", "TGA", "button_left") then print("loaded res: button_left")
-	else print("failed to load button_left") end
-	if AMAN:addResource("./Resources/Textures/Menu/Window/button_right.tga", "TGA", "button_right") then print("loaded res: button_right")
-	else print("failed to load button_right") end
-	if AMAN:addResource("./Resources/Textures/Menu/Window/walltoolicon.tga", "TGA", "walltoolicon") then print("loaded res: walltoolicon")
-	else print("failed to load walltoolicon") end
-	if AMAN:addResource("./Resources/Textures/Menu/Window/objecttoolicon.tga", "TGA", "objecttoolicon") then print("loaded res: objecttoolicon")
-	else print("failed to load objecttoolicon") end
-	if AMAN:addResource("./Resources/Textures/Menu/Window/camtoolicon.tga", "TGA", "camtoolicon") then print("loaded res: camtoolicon")
-	else print("failed to load camtoolicon") end
-	if AMAN:addResource("./Resources/Textures/Menu/Window/savetoolicon.tga", "TGA", "savetoolicon") then print("loaded res: savetoolicon")
-	else print("failed to load savetoolicon") end
 end
 
 function loadLoadRes(AMAN)

@@ -12,7 +12,6 @@ public:
 	void setScaleY(float nscaley);
 	void setScaleZ(float nscalez);
 	void setPos(vec3 & npos) { trans = npos; }
-	void setTex(std::string ntex) { tex = ntex; };
 	void setAngleX(float nx) { anglex = nx; }
 	void setAngleY(float ny) { angley = ny; }
 	void setAngleZ(float nz) { anglez = nz; }
@@ -24,7 +23,6 @@ public:
 	float getScaleZ() { return scalez; }
 	void updateBounds();
 	const vec3 & getPos() const { return trans; }
-	const std::string getTex() { return tex; }
 
 	//tmp while still GO
 	std::string toString();
@@ -37,8 +35,6 @@ private:
 	float scalez;
 
 	vec3 trans;
-
-	std::string tex;
 
 	float angley;
 	float anglex;

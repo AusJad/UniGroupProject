@@ -28,6 +28,30 @@ Camera::Camera(Identifiers & id, vec3 pos, ResourceList & list) : GameObject(id,
 	yoff = 30.0f;
 }
 
+
+void Camera::reset() {
+	rotateSpeed = 3.0f;
+	moveSpeed = 3.0f;
+	speedDecay = 7.0f;
+	fov = 50.0f;
+	nearPlane = 0.01f;
+	farPlane = 100.0f;
+	aspectRatio = (4.0f / 3.0f);
+	horizontalAngle = 180.0f;
+	verticalAngle = 0.0f;
+	maxlspeed = 100.0f;
+	moveForward = false;
+	moveBack = false;
+	moveRight = false;
+	moveLeft = false;
+	lookDown = false;
+	lookUp = false;
+	maxAngle = 80.0f;
+	maxNangle = -80.0f;
+	birdseye = false;
+	yoff = 30.0f;
+}
+
 void Camera::toggleFreeCam() {
 	switchViewMode();
 }

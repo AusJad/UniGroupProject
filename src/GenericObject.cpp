@@ -17,7 +17,7 @@ std::string GenericObject::toString() {
 	out += "POS," + std::to_string(trans.x()) + "," + std::to_string(trans.y()) + "," + std::to_string(trans.z()) + "\n";
 	out += "SCALE," + std::to_string(scalex) + "," + std::to_string(scaley) + "," + std::to_string(scalez) + "\n";
 	out += "ANGLE," + std::to_string(anglex) + "," + std::to_string(angley) + "," + std::to_string(anglez) + "\n";
-	if (!tex.empty()) out += "TEX," + tex + "\n";
+	if (model != NULL) out += "MODEL," + model->getName() + "\n";
 	out += "GO_END\n";
 
 	return out;
@@ -54,7 +54,6 @@ GenericObject::GenericObject(const GenericObject & tocpy) : GameObject(*this) {
 	scaley = tocpy.scaley;
 	scalez = tocpy.scalez;
 	trans = tocpy.trans;
-	tex = tocpy.tex;
 	angley = tocpy.angley;
 	anglex = tocpy.anglex;
 	anglez = tocpy.anglez;

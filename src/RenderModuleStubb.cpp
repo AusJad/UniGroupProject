@@ -3,6 +3,7 @@
 RenderModuleStubb::RenderModuleStubb() {
 	running = true;
 	wireframe = false;
+	timeLastUpdate = 0;
 	id.setName("RM");
 }
 
@@ -247,7 +248,7 @@ void RenderModuleStubb::msgrcvr() {
 }
 
 void RenderModuleStubb::renderArrayTri(std::vector<unsigned>& indicies, std::vector<vec3>& vertices, std::vector<vec3> normals, std::vector<vec2> & texcoords, const vec3 & trans) {
-	glDisable(GL_LIGHTING);
+	//glDisable(GL_LIGHTING);
 	glPushMatrix();
 	glTranslatef(trans.x(), trans.y(), trans.z());
 	glBegin(GL_TRIANGLES);
@@ -259,11 +260,11 @@ void RenderModuleStubb::renderArrayTri(std::vector<unsigned>& indicies, std::vec
 	}
 	glEnd();
 	glPopMatrix();
-	glEnable(GL_LIGHTING);
+	//glEnable(GL_LIGHTING);
 }
 
 void RenderModuleStubb::renderMultiTexturedArrayTriStrip(std::vector<unsigned> & indicies, std::vector<vec3> & vertices, std::vector<vec2> & texcoords, std::vector<float> lights, const vec3 & trans) {
-	glDisable(GL_LIGHTING);
+	//glDisable(GL_LIGHTING);
 	glPushMatrix();
 	glTranslatef(trans.x(), trans.y(), trans.z());
 	glBegin(GL_TRIANGLE_STRIP);
@@ -277,7 +278,7 @@ void RenderModuleStubb::renderMultiTexturedArrayTriStrip(std::vector<unsigned> &
 	glPopMatrix();
 
 	glColor4ub(255, 255, 255, 255);
-	glEnable(GL_LIGHTING);
+	//glEnable(GL_LIGHTING);
 }
 
 void RenderModuleStubb::renderTexturedArrayTriStrip(std::vector<unsigned> & indicies, std::vector<vec3> & vertices, std::vector<vec2> & texcoords) {
@@ -443,6 +444,8 @@ float RenderModuleStubb::getTimeSinceUpdate() {
 	float currentTime = (float)glfwGetTime();
 	float returnTime = (currentTime - timeLastUpdate);
 	timeLastUpdate = currentTime;
+	if (returnTime > 0.018f) returnTime = 0.018f;
+
 	return returnTime;
 }
 

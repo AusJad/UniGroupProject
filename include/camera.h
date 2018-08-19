@@ -202,6 +202,8 @@ public:
 	*/
 	bool fromstring(std::string toread);
 
+	void reset();
+
 	void moveFoward() { moveForward = true; };
 	void stpMvFoward() { moveForward = false; };
 	void moveBackward() { moveBack = true; };

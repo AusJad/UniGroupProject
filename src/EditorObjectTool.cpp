@@ -222,6 +222,7 @@ void EditorObjectTool::switchPlaceMode(int code) {
 	}
 
 	CONT->switchContextItemPlace(onObjectPlace, mouseScroll);
+	object->setPos(vec3(CAM->getActiveCam()->getPos()) + CAM->getActiveCam()->GetCamZ() * (float)camnearoffset);
 	inplacemode = true;
 }
 
@@ -373,6 +374,6 @@ void EditorObjectTool::setRotZCallBack(int code) {
 
 void EditorObjectTool::updateModel(int code) {
 	if (object != NULL) {
-		object->setModel(MMAN->useModel(modelin->getActiveSelection(), ""));
+		object->setModel(MMAN->useModel(modelin->getActiveSelection(), modelin->getActiveSelection()));
 	}
 }

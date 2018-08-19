@@ -33,6 +33,10 @@ bool EngineStateWriter::readState(std::string filename) {
 			if (in == "WALL_START") {
 				addWall(infile);
 			}
+			else
+			if (in == "GO_START") {
+				addGenericObj(infile);
+			}
 		}
 	}
 	catch (...) {
@@ -40,6 +44,74 @@ bool EngineStateWriter::readState(std::string filename) {
 	}
 
 	return true;
+}
+
+void EngineStateWriter::addGenericObj(std::ifstream & toparse) {
+	std::string in;
+	std::string linehead;
+	vec3 tmpv;
+	float tmpf;
+
+	GenericObject * tmpw;
+	tmpw = new GenericObject();
+	if (tmpw == NULL) return;
+
+	while (in != "GO_END" && toparse.peek() != EOF) {
+		getline(toparse, in);
+		
+		if (in.find(',') != std::string::npos) {
+			linehead = in.substr(0, in.find(','));
+			in = in.substr(in.find(',') + 1);
+		}
+		else {
+			linehead = "";
+		}
+
+		if (linehead == "POS") {
+			tmpv.sx((float)atof(in.substr(0, in.find(',') + 1).c_str()));
+			in = in.substr(in.find(',') + 1);
+			tmpv.sy((float)atof(in.substr(0, in.find(',') + 1).c_str()));
+			in = in.substr(in.find(',') + 1);
+			tmpv.sz((float)atof(in.c_str()));
+			tmpw->setPos(tmpv);
+		}
+		else
+		if (linehead == "SCALE") {
+			tmpf = (float)atof(in.substr(0, in.find(',') + 1).c_str());
+			in = in.substr(in.find(',') + 1);
+			tmpw->setScaleX(tmpf);
+			tmpf = (float)atof(in.substr(0, in.find(',') + 1).c_str());
+			in = in.substr(in.find(',') + 1);
+			tmpw->setScaleY(tmpf);
+			tmpf = (float)atof(in.c_str());
+			tmpw->setScaleZ(tmpf);
+		}
+		else
+		if (linehead == "ANGLE") {
+			tmpf = (float)atof(in.substr(0, in.find(',') + 1).c_str());
+			in = in.substr(in.find(',') + 1);
+			tmpw->setAngleX(tmpf);
+			tmpf = (float)atof(in.substr(0, in.find(',') + 1).c_str());
+			in = in.substr(in.find(',') + 1);
+			tmpw->setAngleY(tmpf);
+			tmpf = (float)atof(in.c_str());
+			tmpw->setAngleZ(tmpf);
+		}
+		else
+		if (linehead == "MODEL") {
+			Model * M = NULL;
+			M = MMAN->useModel(in, in);
+			if (M == NULL) {
+				delete tmpw;
+				return;
+			}
+			tmpw->setModel(M);
+		}
+	}
+
+	tmpw->updateBounds();
+	tmpw->setID(GOF->getNextId());
+	SM->getGOH().addGameObject(tmpw);
 }
 
 void EngineStateWriter::addWall(std::ifstream & toparse) {
@@ -52,7 +124,7 @@ void EngineStateWriter::addWall(std::ifstream & toparse) {
 	tmpw = new Wall();
 	if (tmpw == NULL) return;
 
-	while (in != "WALL_END") {
+	while (in != "WALL_END" && toparse.peek() != EOF) {
 		getline(toparse, in);
 		
 		if (in.find(',') != std::string::npos) {

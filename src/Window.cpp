@@ -15,6 +15,12 @@ Window::Window(vec2 & stpos, float width, float height, std::string title)
 	
 }
 
+Window::~Window() {
+	for (unsigned i = 0; i < components.size(); i++) {
+		delete components.at(i);
+	}
+}
+
 void Window::disableHeader() {
 	hasHeader = false;
 }

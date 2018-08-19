@@ -18,6 +18,7 @@ class Window
 {
 public:
 	Window(vec2 & stpos, float width, float height, std::string title);
+	~Window();
 
 	void update(float time);
 	void render();
@@ -67,5 +68,12 @@ private:
 	static onClick closebuttoncallback;
 
 	vec2 calcComponentPlacement(WndComponent * toplace);
+
+	/*
+								 Greetings 
+		No copy construction constructor or assignment operator for you!
+	*/
+	Window(const Window & tocpy) {};
+	Window & operator = (const Window & tocpy) {};
 };
 
