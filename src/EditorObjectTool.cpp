@@ -1,5 +1,7 @@
 #include "EditorObjectTool.h"
 
+Window * EditorObjectTool::objecttool = NULL;
+
 SelectionComponent * EditorObjectTool::modelin = NULL;
 
 TextInputComponent * EditorObjectTool::scalexin = NULL;
@@ -21,7 +23,6 @@ bool EditorObjectTool::inplacemode = false;
 float EditorObjectTool::camnearoffset = 100;
 
 EditorObjectTool::EditorObjectTool() {
-	objecttool = NULL;
 }
 
 EditorObjectTool::~EditorObjectTool() {
@@ -31,7 +32,10 @@ EditorObjectTool::~EditorObjectTool() {
 
 void EditorObjectTool::toggle() {
 	if (objecttool->isVis()) hide();
-	else show();
+	else {
+		show();
+		objecttool->centerInDisplay();
+	}
 }
 
 void EditorObjectTool::show() {
@@ -221,12 +225,14 @@ void EditorObjectTool::switchPlaceMode(int code) {
 		return;
 	}
 
+	objecttool->hide();
 	CONT->switchContextItemPlace(onObjectPlace, mouseScroll);
 	object->setPos(vec3(CAM->getActiveCam()->getPos()) + CAM->getActiveCam()->GetCamZ() * (float)camnearoffset);
 	inplacemode = true;
 }
 
 void EditorObjectTool::onObjectPlace() {
+	objecttool->show();
 	CONT->switchContextGUIInteract();
 	object->setPos(vec3(CAM->getActiveCam()->getPos()) + CAM->getActiveCam()->GetCamZ() *  (float) camnearoffset);
 	posxin->setValue(std::to_string((int) object->getPos().x()));

@@ -20,12 +20,12 @@ public:
 	bool isActive() { return active; };
 	void tggleActive() { active = !active; }
 	void disable(){ active = false; }
-	void enable() { active = true; toolbar->show(); }
+	void enable() { active = true; toolbar->show(); windowResizeCallback(RNDR->getWinWidth(), RNDR->getWinHeight()); }
 
 	bool testClick(int x, int y);
 
 private:
-	Window * toolbar;
+	static Window * toolbar;
 	static EditorCameraTool cameratool;
 	static EditorWallTool walltool;
 	static SaveTool savetool;
@@ -34,12 +34,13 @@ private:
 	static bool active;
 
 	bool initToolBar();
-	void initObjectTool();
 
 	static void toolbarClose(int code);
 	static void walltoolclick(int code);
 	static void objecttoolclick(int code);
 	static void cameratoolclock(int code);
 	static void savetoolclick(int code);
+
+	static void windowResizeCallback(int nwidth, int nheight);
 };
 

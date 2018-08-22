@@ -29,7 +29,10 @@ bool EditorWallTool::inplacemode = false;
 
 void EditorWallTool::toggle() {
 	if (walltool->isVis()) hide();
-	else show();
+	else {
+		show();
+		walltool->centerInDisplay();
+	}
 }
 
 void EditorWallTool::show() {

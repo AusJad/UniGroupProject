@@ -7,6 +7,7 @@
 #define TXMAN Singleton<TextureManager>::getInstance()
 
 #define WALL_TEX_GROUP "WallTex"
+#define UI_TEX_GROUP "UI"
 
 /**
 * @class TextureManager

@@ -190,6 +190,8 @@ void RenderModuleStubb::bindMultiTexture(const int & texIDcolor, const int & tex
 
 void RenderModuleStubb::bindTexture(const int & texID) {
 	glBindTexture(GL_TEXTURE_2D, texID);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 }
 
 void RenderModuleStubb::disableMultiTexture() {
@@ -248,7 +250,7 @@ void RenderModuleStubb::msgrcvr() {
 }
 
 void RenderModuleStubb::renderArrayTri(std::vector<unsigned>& indicies, std::vector<vec3>& vertices, std::vector<vec3> normals, std::vector<vec2> & texcoords, const vec3 & trans) {
-	//glDisable(GL_LIGHTING);
+	glDisable(GL_LIGHTING);
 	glPushMatrix();
 	glTranslatef(trans.x(), trans.y(), trans.z());
 	glBegin(GL_TRIANGLES);
@@ -260,11 +262,11 @@ void RenderModuleStubb::renderArrayTri(std::vector<unsigned>& indicies, std::vec
 	}
 	glEnd();
 	glPopMatrix();
-	//glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHTING);
 }
 
 void RenderModuleStubb::renderMultiTexturedArrayTriStrip(std::vector<unsigned> & indicies, std::vector<vec3> & vertices, std::vector<vec2> & texcoords, std::vector<float> lights, const vec3 & trans) {
-	//glDisable(GL_LIGHTING);
+	glDisable(GL_LIGHTING);
 	glPushMatrix();
 	glTranslatef(trans.x(), trans.y(), trans.z());
 	glBegin(GL_TRIANGLE_STRIP);
@@ -278,7 +280,7 @@ void RenderModuleStubb::renderMultiTexturedArrayTriStrip(std::vector<unsigned> &
 	glPopMatrix();
 
 	glColor4ub(255, 255, 255, 255);
-	//glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHTING);
 }
 
 void RenderModuleStubb::renderTexturedArrayTriStrip(std::vector<unsigned> & indicies, std::vector<vec3> & vertices, std::vector<vec2> & texcoords) {

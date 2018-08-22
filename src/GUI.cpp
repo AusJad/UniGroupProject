@@ -12,7 +12,7 @@ GUI::~GUI()
 
 bool GUI::initalise() {
 	instructions.setLabel("Editor: Press M");
-	instructions.setPadding(5);
+	instructions.setPadding(3);
 	instructions.setWidth(250);
 	instructions.setHeight(25);
 	instructions.setTex(WND_HEADER_BG);
@@ -114,9 +114,11 @@ void GUI::render() {
 }
 
 void GUI::renderInstructions() {
-	RNDR->RenderModeOrtho();
-	instructions.render();
-	RNDR->RenderModePerspective();
+	if (canEdit()) {
+		RNDR->RenderModeOrtho();
+		instructions.render();
+		RNDR->RenderModePerspective();
+	}
 }
 
 bool GUI::testClick(int x, int y) {

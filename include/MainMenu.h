@@ -28,6 +28,8 @@ public:
 
 	void hide();
 
+	bool canEdit() { return canedit; }
+
 private:
 	enum MenuState {
 		inactive = 0,
@@ -39,6 +41,7 @@ private:
 	float modelrot;
 	Model * menubackmodel;
 
+	static bool canedit;
 	static onClick playcallback;
 
 	static MenuState state;

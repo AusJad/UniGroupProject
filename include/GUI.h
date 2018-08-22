@@ -23,6 +23,7 @@ public:
 	bool testClick(int x, int y);
 	void setState(GUIState toset);
 	GUIState getState() { return state; }
+	bool canEdit() { return mmenu.canEdit(); }
 
 private:
 	GUIState state;

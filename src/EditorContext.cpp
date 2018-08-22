@@ -6,10 +6,10 @@ EditorCameraTool EditorContext::cameratool;
 EditorWallTool EditorContext::walltool;
 SaveTool EditorContext::savetool;
 EditorObjectTool EditorContext::objecttool;
+Window * EditorContext::toolbar = NULL;
 
 EditorContext::EditorContext()
 {
-	toolbar = NULL;
 }
 
 
@@ -34,8 +34,10 @@ bool EditorContext::initalise() {
 	if (!objecttool.init()) return false;
 	objecttool.hide();
 	
-	initToolBar();
-	initObjectTool();
+	if (!initToolBar()) return false;
+
+	RNDR->addResizeCallBack(windowResizeCallback);
+	windowResizeCallback(RNDR->getWinWidth(), RNDR->getWinHeight());
 
 	return true;
 }
@@ -58,10 +60,6 @@ void EditorContext::update(float time) {
 	toolbar->update(time);
 	cameratool.update(time);
 	savetool.update(time);
-}
-
-void EditorContext::initObjectTool() {
-
 }
 
 bool EditorContext::initToolBar() {
@@ -103,6 +101,14 @@ bool EditorContext::initToolBar() {
 	b->setCallback(savetoolclick);
 	toolbar->addComponent(b);
 
+	b = NULL;
+	b = new ButtonComponent();
+	if (b == NULL) return false;
+	b->setWidth(128);
+	b->setHeight(96);
+	b->setTex(TOOLBAR_END_ICON);
+	toolbar->addComponent(b);
+
 	toolbar->setCloseButtonCallBack(toolbarClose);
 
 	return true;
@@ -120,10 +126,12 @@ bool EditorContext::testClick(int x, int y) {
 
 void EditorContext::walltoolclick(int code) {
 	walltool.toggle();
+	if (walltool.isVis()) objecttool.hide();
 }
 
 void EditorContext::objecttoolclick(int code) {
 	objecttool.toggle();
+	if (objecttool.isVis()) walltool.hide();
 }
 
 void EditorContext::cameratoolclock(int code) {
@@ -132,4 +140,8 @@ void EditorContext::cameratoolclock(int code) {
 
 void EditorContext::savetoolclick(int code) {
 	savetool.toggle();
+}
+
+void EditorContext::windowResizeCallback(int nwidth, int nheight){
+	toolbar->placeAt(nwidth - 512.0f, nheight - 128.0f);
 }

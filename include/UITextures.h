@@ -11,6 +11,7 @@
 #define OBJECT_TOOL_ICON	"objecttoolicon.tga"
 #define CAM_TOOL_ICON		"camtoolicon.tga"
 #define SAVE_TOOL_ICON		"savetoolicon.tga"
+#define TOOLBAR_END_ICON	"toolbarend.tga"
 
 #define UI_BASE_COLOR		color_3(0.2f, 0.2f, 0.2f)
 #define UI_LIGHT_COLOR		color_3(0.3f, 0.3f, 0.3f)

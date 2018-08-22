@@ -24,6 +24,7 @@ public:
 	void render();
 	void update(float time);
 	bool testClick(int x, int y);
+	bool isVis() { return walltool->isVis(); }
 private:
 	Window * walltool;
 

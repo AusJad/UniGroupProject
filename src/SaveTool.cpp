@@ -18,10 +18,14 @@ void SaveTool::toggle() {
 	if (!savetool->isVis()) {
 		filename->setValue("");
 	}
+	else{
+		savetool->centerInDisplay();
+	}
 }
 
 void SaveTool::show() {
 	savetool->show();
+	savetool->centerInDisplay();
 }
 
 void SaveTool::hide() {

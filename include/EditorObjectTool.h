@@ -22,7 +22,7 @@ public:
 	void update(float time);
 	bool testClick(int x, int y);
 private:
-	Window * objecttool;
+	static Window * objecttool;
 
 	static GenericObject * object;
 

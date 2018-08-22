@@ -16,6 +16,8 @@ std::string MainMenu::selectedlevelraw;
 
 onClick MainMenu::playcallback = NULL;
 
+bool MainMenu::canedit = true;
+
 MainMenu::MainMenu(){
 	modelrot = 90;
 	modelrotz = 45;
@@ -276,6 +278,8 @@ void  MainMenu::loadLevelPlayCallback(int code) {
 		return;
 	}
 
+	canedit = false;
+
 	SM->getGOH().clear();
 
 	CAM->getActiveCam()->reset();
@@ -293,6 +297,8 @@ void  MainMenu::loadLevelEditCallback(int code) {
 		ALERT->doNotify("Select a Level First!", NULL);
 		return;
 	}
+
+	canedit = true;
 
 	SM->getGOH().clear();
 

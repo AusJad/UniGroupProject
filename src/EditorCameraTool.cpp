@@ -14,6 +14,7 @@ EditorCameraTool::~EditorCameraTool()
 
 void EditorCameraTool::toggle() {
 	cameratool->tglVis();
+	if (cameratool->isVis()) cameratool->centerInDisplay();
 }
 
 void EditorCameraTool::show() {
