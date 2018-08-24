@@ -1,4 +1,4 @@
-s 45 10 45
-m ./Resources/Textures/grass.tga TGA ./Resources/Textures/rocks.tga TGA ./Resources/Textures/sky.tga TGA
-f ./Resources/Models/flat.raw
-t ./Resources/Textures/detailMap.tga TGA
+s 5 1 5
+m ./Resources/Textures/detailMapPlain.tga TGA ./Resources/Textures/detailMapPlain.tga TGA ./Resources/Textures/sky.tga TGA
+f ./Resources/Models/floor5.raw
+t ./Resources/Textures/carpet.tga TGA
