@@ -84,6 +84,8 @@ void Window::render() {
 
 	RNDR->RenderModeOrtho();
 
+	TXMAN->disableTexture(RNDR);
+
 	//render background - either ui base color or texture
 	if (!bgtex.empty()) TXMAN->useTexture(bgtex, RNDR);
 	else GeoStream << START_ATTRIB << UI_BASE_COLOR;

@@ -68,7 +68,7 @@ public:
 
 	void DrawQuadOrtho(vec2 & tl, vec2 & br);
 
-	void DrawRectangularPrism(vec3 & pos, float width, float height, float depth);
+	void DrawRectangularPrism(vec3 & pos, float width, float height, float depth, float texRepX = 1.0f, float texRepy = 1.0f);
 
 	/**
 	* @brief Draw a quad.

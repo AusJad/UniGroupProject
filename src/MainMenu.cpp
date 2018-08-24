@@ -314,6 +314,7 @@ void  MainMenu::loadLevelEditCallback(int code) {
 }
 
 void  MainMenu::createNewLevelCallback(int code) {
+	canedit = true;
 	SM->getGOH().clear();
 	if (playcallback != NULL) playcallback(0);
 }

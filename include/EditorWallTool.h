@@ -14,6 +14,9 @@
 #define PLACE "Place With Look"
 #define PREV_WALL "Last Wall"
 
+#define COL_ON	"Collision: Enabled"
+#define COL_OFF "Collision: Disabled"
+
 class EditorWallTool
 {
 public:
@@ -25,6 +28,7 @@ public:
 	void update(float time);
 	bool testClick(int x, int y);
 	bool isVis() { return walltool->isVis(); }
+
 private:
 	Window * walltool;
 
@@ -54,6 +58,11 @@ private:
 	static TextInputComponent * rotyin;
 	static TextInputComponent * rotzin;
 
+	static ButtonComponent * colEnable;
+
+	static TextInputComponent * texrepeatx;
+	static TextInputComponent * texrepeaty;
+
 	static void setHeightCallback(int code);
 	static void setWidthCallback(int code);
 	static void setDepthCallback(int code);
@@ -68,6 +77,11 @@ private:
 
 	static void updateTextureCallback(int code);
 	static void updateRelativeSelection(int code);
+
+	static void toggleCollisionCallback(int code);
+
+	static void updateTexRepeatXCallBack(int code);
+	static void updateTexRepeatYCallBack(int code);
 
 	static void onWallPlace();
 

@@ -42,24 +42,14 @@ void Engine::Run() {
 
 		time = RNDR->getTimeSinceUpdate();
 
-		if (GI->getState() != mainmenu) {
-			SM->update(time);
-			GI->update(time);
-			AE->update();
-			FNT_ENG->update();
-			CONT->update();
+		if (GI->getState() != mainmenu)	SM->update(time);
+		GI->update(time);
+		AE->update();
+		FNT_ENG->update();
+		CONT->update();
 
-			SM->render();
-			GI->render();
-		}
-		else {
-			CAM->getActiveCam()->update(time);
-			GI->update(time);
-			CONT->update();
-
-			CAM->getActiveCam()->render();
-			GI->render();
-		}
+		if (GI->getState() != mainmenu)	SM->render();
+		GI->render();
 
 		RNDR->endRenderCycle();
 	}

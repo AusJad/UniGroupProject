@@ -28,6 +28,14 @@ left(), right(), enter(), selection()
 	recalcDimensions();
 }
 
+bool SelectionComponent::hasSelection(std::string tocheck) {
+	for (unsigned i = 0; i < options.size(); i++) {
+		if (options.at(i) == tocheck) return true;
+	}
+
+	return false;
+}
+
 void SelectionComponent::setWidth(int toset) {
 	width = toset;
 	recalcDimensions();

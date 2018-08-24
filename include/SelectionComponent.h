@@ -22,6 +22,8 @@ public:
 
 	void move(float x, float y);
 
+	bool hasSelection(std::string tocheck);
+
 private:
 	ButtonComponent left;
 	ButtonComponent right;

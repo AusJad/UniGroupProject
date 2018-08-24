@@ -169,6 +169,18 @@ void EngineStateWriter::addWall(std::ifstream & toparse) {
 		if (linehead == "TEX") {
 			tmpw->setTex(in);
 		}
+		else
+		if (linehead == "TEXCOORD") {
+			tmpf = (float)atof(in.substr(0, in.find(',') + 1).c_str());
+			in = in.substr(in.find(',') + 1);
+			tmpw->setTexRepX(tmpf);
+			tmpf = (float)atof(in.c_str());
+			tmpw->setTexRepY(tmpf);
+		}
+		else
+		if (linehead == "COL") {
+			if (in == "0") tmpw->setHasCol(false);
+		}
 	}
 
 	tmpw->updateBounds();

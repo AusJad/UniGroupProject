@@ -10,6 +10,9 @@ Wall::Wall(){
 	anglex = 0;
 	anglez = 0;
 	id.setType("WALL");
+	texrepx = 1;
+	texrepy = 1;
+	hasCol = true;
 }
 
 std::string Wall::toString() {
@@ -20,6 +23,9 @@ std::string Wall::toString() {
 	out += "DIMENSIONS," + std::to_string(width) + "," + std::to_string(height) + "," + std::to_string(depth) + "\n";
 	out += "ANGLE," + std::to_string(anglex) + "," + std::to_string(angley) + "," + std::to_string(anglez) + "\n";
 	if (!tex.empty()) out += "TEX," + tex + "\n";
+	if (hasCol) out += "COL,1\n";
+	else out += "COL,0\n";
+	out += "TEXCOORD," + std::to_string(texrepx) + "," + std::to_string(texrepy) + "\n";
 	out += "WALL_END\n";
 
 	return out;
@@ -30,7 +36,7 @@ void Wall::render() {
 
 	GeoStream << BEGIN_STREAM << trans_3(trans) << rot_4(anglex, 1, 0, 0) << rot_4(angley, 0, 1, 0) << rot_4(anglez, 0, 0, 1);
 
-	RNDR->DrawRectangularPrism(drawpos, width, height, depth);
+	RNDR->DrawRectangularPrism(drawpos, width, height, depth, texrepx, texrepy);
 
 	GeoStream << END_STREAM;
 
@@ -46,4 +52,7 @@ Wall::Wall(const Wall & tocpy) : GameObject(*this) {
 	angley = tocpy.angley;
 	anglex = tocpy.anglex;
 	anglez = tocpy.anglez;
+	texrepx = tocpy.texrepx;
+	texrepy = tocpy.texrepy;
+	hasCol = tocpy.hasCol;
 }

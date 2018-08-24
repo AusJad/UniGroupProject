@@ -27,6 +27,11 @@ int EditorWallTool::camnearoffset = 100;
 vec3 EditorWallTool::wallposref;
 bool EditorWallTool::inplacemode = false;
 
+ButtonComponent * EditorWallTool::colEnable = NULL;
+
+TextInputComponent * EditorWallTool::texrepeatx = NULL;
+TextInputComponent * EditorWallTool::texrepeaty = NULL;
+
 void EditorWallTool::toggle() {
 	if (walltool->isVis()) hide();
 	else {
@@ -138,7 +143,7 @@ bool EditorWallTool::init() {
 	//begin position editors
 
 	l = new LabelComponent();
-	l->setLabel("Position X/Y/Z: ");
+	l->setLabel("Position    X/Y/Z: ");
 	walltool->addComponent(l, 50, 10);
 
 	posxin = new TextInputComponent();
@@ -157,7 +162,7 @@ bool EditorWallTool::init() {
 	//begin rotation editors
 
 	l = new LabelComponent();
-	l->setLabel("Rotation X/Y/Z: ");
+	l->setLabel("Rotation    X/Y/Z: ");
 	walltool->addComponent(l, 50, 10);
 
 	rotxin = new TextInputComponent();
@@ -173,14 +178,33 @@ bool EditorWallTool::init() {
 	walltool->addComponent(rotzin, 20, 10);
 	//end rotation editors
 
-	//reset button
-	ButtonComponent * b = new ButtonComponent();
-	b->setTitle("Reset");
-	b->setCallback(resetWallPos);
-	walltool->addComponent(b, 100, 10);
+	//texture repeat editor
+	l = new LabelComponent();
+	l->setLabel("Tex Repeat    X/Y: ");
+	walltool->addComponent(l, 50, 10);
+
+	texrepeatx = new TextInputComponent();
+	if (texrepeatx == NULL) return false;
+	texrepeatx->setCallback(updateTexRepeatXCallBack);
+	walltool->addComponent(texrepeatx, 20, 10);
+
+	texrepeaty = new TextInputComponent();
+	if (texrepeaty == NULL) return false;
+	texrepeaty->setCallback(updateTexRepeatYCallBack);
+	walltool->addComponent(texrepeaty, 20, 10);
+	//end tex repeat editor
+
+	//collision toggle button
+	colEnable = new ButtonComponent();
+	if (colEnable == NULL) return false;
+	colEnable->setTitle(COL_ON);
+	colEnable->setCallback(toggleCollisionCallback);
+	walltool->addComponent(colEnable, 100, 10);
+
+	//end col toggle
 
 	//select item button
-	b = new ButtonComponent();
+	ButtonComponent * b = new ButtonComponent();
 	b->setTitle("Select Wall to Edit");
 	b->setCallback(confirmSelectItem);
 	walltool->addComponent(b, 100, 10);
@@ -233,7 +257,7 @@ void EditorWallTool::addToGameCallBack(int code) {
 	SM->addObjectToCurScene(wall);
 	
 	//todo: not the condition we should be checking. Fix!
-	if (prevwall == NULL) {
+	if (!positionrin->hasSelection(PREV_WALL)) {
 		positionrin->addSelection(PREV_WALL);
 	}
 
@@ -318,6 +342,16 @@ void EditorWallTool::resetWallPos(int code) {
 	widthin->setValue("10");
 	depthin->setValue("10");
 	heightin->setValue("10");
+
+	texrepeatx->setValue(std::to_string(wall->getTexRepX()));
+	texrepeaty->setValue(std::to_string(wall->getTexRepY()));
+
+	if (wall->isCollidable()) {
+		colEnable->setTitle(COL_ON);
+	}
+	else {
+		colEnable->setTitle(COL_OFF);
+	}
 }
 
 void EditorWallTool::onWallPlace() {
@@ -444,6 +478,16 @@ void EditorWallTool::setInputsFromWall() {
 	widthin->setValue(std::to_string((int)wall->getWidth()));
 	depthin->setValue(std::to_string((int)wall->getDepth()));
 	heightin->setValue(std::to_string((int)wall->getHeight()));
+
+	texrepeatx->setValue(std::to_string(wall->getTexRepX()));
+	texrepeaty->setValue(std::to_string(wall->getTexRepY()));
+
+	if (wall->isCollidable()) {
+		colEnable->setTitle(COL_ON);
+	}
+	else {
+		colEnable->setTitle(COL_OFF);
+	}
 }
 
 void EditorWallTool::onWallSelect() {
@@ -504,4 +548,36 @@ void EditorWallTool::selectItem(int code) {
 		selectionwalltex = selectionWall->getTex();
 		selectionWall->setTex("sky.tga");
 	}
+}
+
+
+void EditorWallTool::toggleCollisionCallback(int code) {
+	if (colEnable->getTitle() == COL_ON) {
+		colEnable->setTitle(COL_OFF);
+		wall->setHasCol(false);
+	}
+	else {
+		colEnable->setTitle(COL_ON);
+		wall->setHasCol(true);
+	}
+}
+
+void EditorWallTool::updateTexRepeatXCallBack(int code) {
+	std::string val = texrepeatx->getValue();
+
+	float valnum = (float) atof(val.c_str());
+
+	wall->setTexRepX((float)valnum);
+
+	texrepeatx->setValue(std::to_string(valnum));
+}
+
+void EditorWallTool::updateTexRepeatYCallBack(int code) {
+	std::string val = texrepeaty->getValue();
+
+	float valnum = (float) atof(val.c_str());
+
+	wall->setTexRepY((float)valnum);
+
+	texrepeaty->setValue(std::to_string(valnum));
 }

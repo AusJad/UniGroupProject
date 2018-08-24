@@ -68,6 +68,12 @@ public:
 	float getDepth() { return depth; }
 	const vec3 & getPos() const { return trans; }
 	const std::string getTex() { return tex; }
+	void setTexRepX(float toset) { texrepx = toset; };
+	void setTexRepY(float toset) { texrepy = toset; };
+	void setHasCol(bool toset) { hasCol = toset; }
+	float getTexRepX() { return texrepx; }
+	float getTexRepY() { return texrepy; }
+	bool isCollidable() { return hasCol; }
 
 	//tmp while still GO
 	std::string toString();
@@ -90,6 +96,11 @@ private:
 	float angley;
 	float anglex;
 	float anglez;
+
+	float texrepx;
+	float texrepy;
+
+	bool hasCol;
 
 	Bounds aabb;
 };

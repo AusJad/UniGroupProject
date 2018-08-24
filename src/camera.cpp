@@ -50,6 +50,7 @@ void Camera::reset() {
 	maxNangle = -80.0f;
 	birdseye = false;
 	yoff = 30.0f;
+	pos = vec3();
 }
 
 void Camera::toggleFreeCam() {

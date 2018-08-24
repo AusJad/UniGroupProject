@@ -18,7 +18,12 @@ public:
 	void setValue(std::string toset) { value = toset; }
 
 private:
+	void calcVis();
 	std::string value;
+	
+	std::string editvis;
+	std::string staticvis;
+
 	int id;
 	bool inputactive;
 };
