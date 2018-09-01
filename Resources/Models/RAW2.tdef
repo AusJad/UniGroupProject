@@ -1,4 +1,4 @@
-s 5 1 5
+s 10 2 10
 m ./Resources/Textures/detailMapPlain.tga TGA ./Resources/Textures/detailMapPlain.tga TGA ./Resources/Textures/sky.tga TGA
 f ./Resources/Models/floor5.raw
 t ./Resources/Textures/carpet.tga TGA

@@ -25,7 +25,7 @@ Camera::Camera(Identifiers & id, vec3 pos, ResourceList & list) : GameObject(id,
 	maxAngle = 80.0f;
 	maxNangle = -80.0f;
 	birdseye = false;
-	yoff = 30.0f;
+	yoff = 60.0f;
 }
 
 
