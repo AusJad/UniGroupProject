@@ -40,6 +40,8 @@ void Wall::render() {
 
 	GeoStream << END_STREAM;
 
+	aabb.render(vec3());
+
 	if (!tex.empty()) TXMAN->disableTexture(RNDR);
 }
 

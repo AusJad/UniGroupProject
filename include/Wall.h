@@ -10,37 +10,62 @@ class Bounds : public Model {
 		Bounds * create() const { return NULL; }
 		bool loadModel(std::string filename) { return true; }
 		void update(float time) {}
-		void render(const vec3 & transmat) {}
+		void render(const vec3 & transmat) {
+			RNDR->enableWireframe();
+			RNDR->DrawRectangularPrism(vec3(minx, miny, minz), maxx - minx, maxy - miny, maxz - minz);
+			RNDR->disableWireFrame();
+		}
 		void centerOnPoint(vec3 & point) {}
 		std::vector<vec3>& getVerticies() { return std::vector<vec3>(); }
 		void setScale(vec3 & toset) {};
-		void updateBounds(vec3 & pos, float width, float depth, float height) {
+		void updateBounds(vec3 pos, float width, float depth, float height, vec3 anglexyz) {
 			
-			if (pos.x() < pos.x() + width) {
-				minx = pos.x();
-				maxx = pos.x() + width;
-			}
-			else {
-				maxx = pos.x();
-				minx = pos.x() + width;
+			vec3 postmp = pos;
+			pos = vec3();
+
+			vec4 corners[8];
+
+			corners[0] = vec4(pos.x(), pos.y(), pos.z(), 1);
+			corners[1] = vec4(pos.x(), pos.y(), pos.z() + depth, 1);
+			corners[2] = vec4(pos.x(), pos.y() + height, pos.z() + depth, 1);
+			corners[3] = vec4(pos.x() + width, pos.y(), pos.z() + depth, 1);
+			corners[4] = vec4(pos.x(), pos.y() + height, pos.z(), 1);
+			corners[5] = vec4(pos.x() + width, pos.y() + height, pos.z(), 1);
+			corners[6] = vec4(pos.x() + width, pos.y(), pos.z(), 1);
+			corners[7] = vec4(pos.x() + width, pos.y() + height, pos.z() + depth, 1);
+
+			mat4 rot;
+			
+			rot = Maths::setmat4(rot, 1);
+
+			rot = Maths::translate(rot, postmp);
+			rot = Maths::rotate(rot, Maths::radians(anglexyz.x()), vec3(1, 0, 0));
+			rot = Maths::rotate(rot, Maths::radians(anglexyz.y()), vec3(0, 1, 0));
+			rot = Maths::rotate(rot, Maths::radians(anglexyz.z()), vec3(0, 0, 1));
+
+			for (unsigned i = 0; i < 8; i++) {
+				corners[i] = rot * corners[i];
 			}
 
-			if (pos.y() < pos.y() + height) {
-				miny = pos.y();
-				maxy = pos.y() + height;
-			}
-			else {
-				maxy = pos.y();
-				miny = pos.y() + height;
-			}
 
-			if (pos.z() < pos.z() + depth) {
-				minz = pos.z();
-				maxz = pos.z() + depth;
-			}
-			else {
-				maxz = pos.z();
-				minz = pos.z() + depth;
+			minx = corners[0].x();
+			maxx = corners[0].x();
+
+			miny = corners[0].y();
+			maxy = corners[0].y();
+
+			minz = corners[0].z();
+			maxz = corners[0].z();
+
+			for (unsigned i = 1; i < 8; i++) {
+				if (corners[i].x() < minx) minx = corners[i].x();
+				if (corners[i].x() > maxx) maxx = corners[i].x();
+
+				if (corners[i].y() < miny) miny = corners[i].y();
+				if (corners[i].y() > maxy) maxy = corners[i].y();
+
+				if (corners[i].z() < minz) minz = corners[i].z();
+				if (corners[i].z() > maxz) maxz = corners[i].z();
 			}
 
 			lasttrans = vec3();
@@ -78,7 +103,7 @@ public:
 	//tmp while still GO
 	std::string toString();
 	Model* getModel() { return &aabb; }
-	void updateBounds() { aabb.updateBounds(trans, width, depth, height); }
+	void updateBounds() { aabb.updateBounds(trans, width, depth, height, vec3(anglex, angley, anglez)); }
 	void update(float time) {}
 	GameObject* create() { return new Wall(*this); }
 	Wall(const Wall & tocpy);
