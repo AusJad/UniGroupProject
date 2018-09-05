@@ -352,8 +352,8 @@ void EditorWallTool::resetWallPos(int code) {
 	depthin->setValue("10");
 	heightin->setValue("10");
 
-	texrepeatx->setValue(std::to_string(wall->getTexRepX()));
-	texrepeaty->setValue(std::to_string(wall->getTexRepY()));
+	texrepeatx->setValue(ROUNDF(std::to_string(wall->getTexRepX())));
+	texrepeaty->setValue(ROUNDF(std::to_string(wall->getTexRepY())));
 
 	if (wall->isCollidable()) {
 		colEnable->setTitle(COL_ON);
@@ -488,8 +488,8 @@ void EditorWallTool::setInputsFromWall() {
 	depthin->setValue(std::to_string((int)wall->getDepth()));
 	heightin->setValue(std::to_string((int)wall->getHeight()));
 
-	texrepeatx->setValue(std::to_string(wall->getTexRepX()));
-	texrepeaty->setValue(std::to_string(wall->getTexRepY()));
+	texrepeatx->setValue(ROUNDF(std::to_string(wall->getTexRepX())));
+	texrepeaty->setValue(ROUNDF(std::to_string(wall->getTexRepY())));
 
 	if (wall->isCollidable()) {
 		colEnable->setTitle(COL_ON);
@@ -578,7 +578,7 @@ void EditorWallTool::updateTexRepeatXCallBack(int code) {
 
 	wall->setTexRepX((float)valnum);
 
-	texrepeatx->setValue(std::to_string(valnum));
+	texrepeatx->setValue(ROUNDF(std::to_string(valnum)));
 }
 
 void EditorWallTool::updateTexRepeatYCallBack(int code) {
@@ -588,7 +588,7 @@ void EditorWallTool::updateTexRepeatYCallBack(int code) {
 
 	wall->setTexRepY((float)valnum);
 
-	texrepeaty->setValue(std::to_string(valnum));
+	texrepeaty->setValue(ROUNDF(std::to_string(valnum)));
 }
 
 void EditorWallTool::toggleDrawWallBounds(int code) {

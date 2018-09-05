@@ -20,6 +20,8 @@
 #define BOUNDS_ON "Bounding Boxes: Visible"
 #define BOUNDS_OFF "Bounding Boxes: Hidden"
 
+#define ROUNDF(string) string.substr(0, string.find(".") + 3) 
+
 class EditorWallTool
 {
 public:
