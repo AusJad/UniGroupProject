@@ -110,6 +110,7 @@
     <ClInclude Include="include\camera.h" />
     <ClInclude Include="include\CameraManager.h" />
     <ClInclude Include="include\CollisionEngine.h" />
+    <ClInclude Include="include\Compare.h" />
     <ClInclude Include="include\ControlContext.h" />
     <ClInclude Include="include\CtoLUABinder.h" />
     <ClInclude Include="include\CutScene.h" />
@@ -129,6 +130,7 @@
     <ClInclude Include="include\GameObjectHandler.h" />
     <ClInclude Include="include\GenericObject.h" />
     <ClInclude Include="include\GeometeryStream.h" />
+    <ClInclude Include="include\Geometry3D.h" />
     <ClInclude Include="include\GUI.h" />
     <ClInclude Include="include\GUIInteractContext.h" />
     <ClInclude Include="include\Identifiers.h" />
@@ -145,6 +147,7 @@
     <ClInclude Include="include\MainMenu.h" />
     <ClInclude Include="include\mat4.h" />
     <ClInclude Include="include\Maths.h" />
+    <ClInclude Include="include\matrices.h" />
     <ClInclude Include="include\MD2Model.h" />
     <ClInclude Include="include\MenuObject.h" />
     <ClInclude Include="include\MenuTools.h" />
@@ -182,6 +185,7 @@
     <ClInclude Include="include\vec2.h" />
     <ClInclude Include="include\vec3.h" />
     <ClInclude Include="include\vec4.h" />
+    <ClInclude Include="include\vectors.h" />
     <ClInclude Include="include\Wall.h" />
     <ClInclude Include="include\Window.h" />
     <ClInclude Include="include\WindowFactory.h" />
@@ -219,6 +223,7 @@
     <ClCompile Include="src\GameObjectHandler.cpp" />
     <ClCompile Include="src\GenericObject.cpp" />
     <ClCompile Include="src\GeometeryStream.cpp" />
+    <ClCompile Include="src\Geometry3D.cpp" />
     <ClCompile Include="src\GUI.cpp" />
     <ClCompile Include="src\GUIInteractContext.cpp" />
     <ClCompile Include="src\Identifiers.cpp" />
@@ -234,6 +239,7 @@
     <ClCompile Include="src\MainMenu.cpp" />
     <ClCompile Include="src\mat4.cpp" />
     <ClCompile Include="src\Maths.cpp" />
+    <ClCompile Include="src\matrices.cpp" />
     <ClCompile Include="src\MD2Model.cpp" />
     <ClCompile Include="src\MenuObject.cpp" />
     <ClCompile Include="src\MenuTools.cpp" />
@@ -265,6 +271,7 @@
     <ClCompile Include="src\vec2.cpp" />
     <ClCompile Include="src\vec3.cpp" />
     <ClCompile Include="src\vec4.cpp" />
+    <ClCompile Include="src\vectors.cpp" />
     <ClCompile Include="src\Wall.cpp" />
     <ClCompile Include="src\Window.cpp" />
     <ClCompile Include="src\WindowFactory.cpp" />

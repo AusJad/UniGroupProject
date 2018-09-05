@@ -15,7 +15,7 @@ ItemScrollComponent::ItemScrollComponent(){
 ItemScrollComponent::ItemScrollComponent(int width, int height, vec2 pos) {
 	this->width = width;
 	this->height = height;
-	scrollbarheight = height;
+	scrollbarheight =(float) height;
 	this->pos = pos;
 	visiblestart = 0;
 	visibleend = 0;
@@ -55,7 +55,7 @@ void ItemScrollComponent::render() {
 bool ItemScrollComponent::testClick(int x, int y) {
 	if (x > scrollbarpos.x() && x < scrollbarpos.x() + scrollbarwidth && y > scrollbarpos.y() && y < scrollbarpos.y() + scrollbarheight) {
 		scrolldat.moving = true;
-		scrolldat.inital = vec2(x, y);
+		scrolldat.inital = vec2((float) x, (float) y);
 		scrolldat.offset = vec2();
 		CONT->switchContextMenuMove(&scrolldat);
 		return true;
@@ -86,7 +86,7 @@ void ItemScrollComponent::removeOption(std::string toremove) {
 }
 
 std::string ItemScrollComponent::getOptionvalue(int index) {
-	if (index >= options.size()) return "";
+	if (index >= (int) options.size()) return "";
 	else return options.at(index).getTitle();
 }
 
@@ -160,7 +160,7 @@ float ItemScrollComponent::getCulmHeight() {
 }
 
 void ItemScrollComponent::addOption(std::string title, onClick callback) {
-	ButtonComponent toadd(width - padding * 2 - scrollbarwidth, componentheight, vec2(pos.x() + padding, pos.y() + padding));
+	ButtonComponent toadd((int) width - padding * 2 - scrollbarwidth, (int) componentheight, vec2(pos.x() + padding, pos.y() + padding));
 	toadd.setTitle(title);
 
 	callbacks.push_back(callback);
@@ -173,7 +173,7 @@ void ItemScrollComponent::optionsAdded() {
 	float culmheight = getCulmHeight();
 
 	if (culmheight < height - padding * 2) {
-		height = culmheight + padding * 2;
+		height = (int) culmheight + padding * 2;
 	}
 }
 
@@ -184,7 +184,7 @@ void ItemScrollComponent::recalcDimensions() {
 	scrollbarheight = calcScrollbarHeight();
 	
 	for (unsigned i = 0; i < options.size(); i++) {
-		options.at(i).setWidth(width - padding * 2 - scrollbarwidth);
+		options.at(i).setWidth((int) width - padding * 2 - scrollbarwidth);
 	}
 
 	visiblestart = 0;

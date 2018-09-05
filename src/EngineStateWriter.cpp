@@ -46,6 +46,12 @@ bool EngineStateWriter::readState(std::string filename) {
 	return true;
 }
 
+void EngineStateWriter::addTerrain(std::ifstream & toparse) {
+	//AMAN:addResource("./Resources/Models/RAW2.tdef", "RAWTRN", "Terrain");
+	
+
+}
+
 void EngineStateWriter::addGenericObj(std::ifstream & toparse) {
 	std::string in;
 	std::string linehead;

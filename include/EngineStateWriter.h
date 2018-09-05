@@ -13,5 +13,6 @@ public:
 private:
 	static void addGenericObj(std::ifstream & toparse);
 	static void addWall(std::ifstream & toparse);
+	static void addTerrain(std::ifstream & toparse);
 };
 

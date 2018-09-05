@@ -99,6 +99,7 @@ public:
 	float getTexRepX() { return texrepx; }
 	float getTexRepY() { return texrepy; }
 	bool isCollidable() { return hasCol; }
+	bool isStatic() { return true; }
 
 	//tmp while still GO
 	std::string toString();

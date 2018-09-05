@@ -10,9 +10,10 @@
 #include "Model.h"
 #include "Maths.h"
 #include "ModelManger.h"
-
 // mm
 #include "saveFileIO.h"
+
+#include "Geometry3D.h"
 
 /**
 * @class GameObject
@@ -201,6 +202,10 @@ public:
 	* @return bool - If the data was input.
 	*/
 	virtual bool fromstring(std::string linehead, std::string & toread);
+
+	virtual bool hasOBB() { return false; }
+	virtual OBB getOBB() { return OBB(); }
+	virtual bool isStatic() { return false; }
 
 protected:
 	/// The state of the object.
