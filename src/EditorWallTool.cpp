@@ -28,6 +28,7 @@ vec3 EditorWallTool::wallposref;
 bool EditorWallTool::inplacemode = false;
 
 ButtonComponent * EditorWallTool::colEnable = NULL;
+ButtonComponent * EditorWallTool::boundsDraw = NULL;
 
 TextInputComponent * EditorWallTool::texrepeatx = NULL;
 TextInputComponent * EditorWallTool::texrepeaty = NULL;
@@ -208,14 +209,22 @@ bool EditorWallTool::init() {
 	b->setTitle("Select Wall to Edit");
 	b->setCallback(confirmSelectItem);
 	walltool->addComponent(b, 100, 10);
-	walltool->FitToContent();
 
 
 	//create button
 	b = new ButtonComponent();
 	b->setTitle("Place Wall");
 	b->setCallback(addToGameCallBack);
-	walltool->addComponent(b, 100, 14);
+	walltool->addComponent(b, 100, 10);
+	walltool->FitToContent();
+
+
+	boundsDraw = new ButtonComponent();
+	if (boundsDraw == NULL) return false;
+	boundsDraw->setTitle(BOUNDS_OFF);
+	boundsDraw->setCallback(toggleDrawWallBounds);
+	walltool->addComponent(boundsDraw, 100, 14);
+	
 	walltool->FitToContent();
 
 	resetWallPos(0);
@@ -580,4 +589,11 @@ void EditorWallTool::updateTexRepeatYCallBack(int code) {
 	wall->setTexRepY((float)valnum);
 
 	texrepeaty->setValue(std::to_string(valnum));
+}
+
+void EditorWallTool::toggleDrawWallBounds(int code) {
+	if (Wall::boundsVis()) boundsDraw->setTitle(BOUNDS_OFF);
+	else boundsDraw->setTitle(BOUNDS_ON);
+
+	Wall::toggleDrawBounds();
 }

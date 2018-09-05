@@ -7,6 +7,7 @@
 #include "EngineStateWriter.h"
 #include "Alert.h"
 #include "ModelManger.h"
+#include "TitleScreen.h"
 
 class MainMenu
 {
@@ -40,6 +41,8 @@ private:
 	float modelrotz;
 	float modelrot;
 	Model * menubackmodel;
+
+	TitleScreen titlescrn;
 
 	static bool canedit;
 	static onClick playcallback;

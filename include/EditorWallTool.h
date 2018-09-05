@@ -17,6 +17,9 @@
 #define COL_ON	"Collision: Enabled"
 #define COL_OFF "Collision: Disabled"
 
+#define BOUNDS_ON "Bounding Boxes: Visible"
+#define BOUNDS_OFF "Bounding Boxes: Hidden"
+
 class EditorWallTool
 {
 public:
@@ -59,6 +62,7 @@ private:
 	static TextInputComponent * rotzin;
 
 	static ButtonComponent * colEnable;
+	static ButtonComponent * boundsDraw;
 
 	static TextInputComponent * texrepeatx;
 	static TextInputComponent * texrepeaty;
@@ -107,5 +111,7 @@ private:
 	static Wall* selectionWall;
 
 	static void confirmSelectItem(int code);
+
+	static void toggleDrawWallBounds(int code);
 };
 

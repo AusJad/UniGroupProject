@@ -1,5 +1,17 @@
 #include "Wall.h"
 
+bool Wall::drawBounds = false;
+void Wall::toggleDrawBounds() {
+	Wall::drawBounds = !Wall::drawBounds;
+}
+
+void Wall::DisableBB() {
+	Wall::drawBounds = false;
+}
+
+bool Wall::boundsVis() {
+	return Wall::drawBounds;
+}
 
 
 Wall::Wall(){
@@ -40,9 +52,13 @@ void Wall::render() {
 
 	GeoStream << END_STREAM;
 
-	aabb.render(vec3());
-
 	if (!tex.empty()) TXMAN->disableTexture(RNDR);
+
+	if (drawBounds) {
+		GeoStream << START_ATTRIB << color_3(1.0f, 0.5f, 0.0f);
+		aabb.render(vec3());
+		GeoStream << END_ATTRIB;
+	}
 }
 
 Wall::Wall(const Wall & tocpy) : GameObject(*this) {

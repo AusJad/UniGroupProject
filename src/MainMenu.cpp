@@ -37,6 +37,8 @@ bool MainMenu::isActive() {
 bool MainMenu::init(onClick playGameCallBack) {
 	playcallback = playGameCallBack;
 
+	if (!titlescrn.init()) return false;
+
 	options = WindowFactory::getWindow(WINDOW_MEDIUM_WIDE, "NO_HEADER", vec2(0, 0));
 	if (options == NULL) return false;
 	options->setBGTex("menubg.tga");
@@ -94,26 +96,36 @@ void MainMenu::levelSelectCallback(int code) {
 void MainMenu::render() {
 	static Window * active;
 	
-	active = getActiveWindow();
+	if (titlescrn.canRenderMenu()) {
+		RNDR->RenderFacingCamera();
+		RNDR->enableWireframe();
+		GeoStream << BEGIN_STREAM << rot_4(modelrot, 0, 1, 0) << rot_4(modelrotz, 0, 0, 1);
+		menubackmodel->render(vec3());
+		GeoStream << END_STREAM;
+		RNDR->disableWireFrame();
+		RNDR->StopRenderFacingCamera();
 
-	if (active != NULL) active->render();
+		active = getActiveWindow();
 
-	RNDR->RenderFacingCamera();
-	RNDR->enableWireframe();
-	GeoStream << BEGIN_STREAM << rot_4(modelrot, 0, 1, 0) << rot_4(modelrotz, 0, 0, 1);
-	menubackmodel->render(vec3());
-	GeoStream << END_STREAM;
-	RNDR->disableWireFrame();
-	RNDR->StopRenderFacingCamera();
+		if (active != NULL) active->render();
+	}
+
+	if (!titlescrn.done()) {
+		titlescrn.render();
+	}
 }
 
 void MainMenu::update(float time) {
 	static Window * active;
 
-	active = getActiveWindow();
+	if (!titlescrn.done()) {
+		titlescrn.update(time);
+	}
+	else{
+		active = getActiveWindow();
 
-	if (active != NULL) active->update(time);
-
+		if (active != NULL) active->update(time);
+	}
 	modelrot += 1.5f * time;
 	if (modelrot >= 360) modelrot = 0.0f;
 
@@ -124,10 +136,11 @@ void MainMenu::update(float time) {
 bool MainMenu::testClick(int x, int y) {
 	static Window * active;
 
-	active = getActiveWindow();
+	if (titlescrn.canRenderMenu()) {
+		active = getActiveWindow();
 
-	if (active != NULL) return active->testClick(x, y);
-
+		if (active != NULL) return active->testClick(x, y);
+	}
 	return false;
 }
 
@@ -277,6 +290,8 @@ void  MainMenu::loadLevelPlayCallback(int code) {
 		ALERT->doNotify("Select a Level First!", NULL);
 		return;
 	}
+
+	Wall::DisableBB();
 
 	canedit = false;
 

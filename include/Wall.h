@@ -110,6 +110,9 @@ public:
 	Wall(const Wall & tocpy);
 	vec3 getCenterOffset() { return vec3(0, height / 2, 0); };
 
+	static void toggleDrawBounds();
+	static void DisableBB();
+	static bool boundsVis();
 private:
 	float width;
 	float height;
@@ -118,6 +121,8 @@ private:
 	vec3 trans;
 
 	std::string tex;
+	
+	static bool drawBounds;
 
 	float angley;
 	float anglex;
