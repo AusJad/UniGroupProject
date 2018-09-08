@@ -20,6 +20,8 @@ ImportModel::ImportModel(const ImportModel & tocpy)
 
 	model = tocpy.model;
 	id = tocpy.id;
+
+	displayListIDs = tocpy.displayListIDs;
 }
 ImportModel::~ImportModel()
 {
@@ -32,7 +34,7 @@ bool ImportModel::loadModel(std::string filename)
 	model = importer.ReadFile(filename, aiProcessPreset_TargetRealtime_MaxQuality); 
 
 	if (!model)
-	{
+	{	
 		return false;
 	}
 
@@ -88,6 +90,8 @@ bool ImportModel::loadModel(std::string filename)
 	setMinsAndMaxs();
 
 	importer.FreeScene();
+	
+	for(unsigned i = 0; i < modelDetails.size(); i++) displayListIDs.push_back(RandomString(50));
 
 	return(true);
 }
@@ -192,14 +196,22 @@ void ImportModel::render(const vec3 & transmat)
 
 	for (unsigned i = 0; i < modelDetails.size(); i++)
 	{
+		if (!RNDR->hasList(displayListIDs.at(i))) {
+			RNDR->beginCreateDisplayList(displayListIDs.at(i));
+				if (modelDetails[i].Normals.empty())
+					Singleton<RenderModuleStubb>::getInstance()->renderArrayTri(modelDetails[i].vertIndex, modelDetails[i].Verticies, modelDetails[i].texCoords, vec3(0, 0, 0));
+				else
+					Singleton<RenderModuleStubb>::getInstance()->renderArrayTri(modelDetails[i].vertIndex, modelDetails[i].Verticies, modelDetails[i].Normals, modelDetails[i].texCoords, vec3(0, 0, 0));
+			RNDR->endCreateDisplayList();
+		}
+
 		if (modelDetails[i].texture.empty() == false)
-			Singleton<TextureManager>::getInstance()->useTexture(modelDetails[i].texture, Singleton<RenderModuleStubb>::getInstance());
-		if (modelDetails[i].Normals.empty())
-			Singleton<RenderModuleStubb>::getInstance()->renderArrayTri(modelDetails[i].vertIndex, modelDetails[i].Verticies, modelDetails[i].texCoords, vec3(0, 0, 0));
-		else
-			Singleton<RenderModuleStubb>::getInstance()->renderArrayTri(modelDetails[i].vertIndex, modelDetails[i].Verticies, modelDetails[i].Normals, modelDetails[i].texCoords, vec3(0,0,0));
-	}
+				Singleton<TextureManager>::getInstance()->useTexture(modelDetails[i].texture, Singleton<RenderModuleStubb>::getInstance());
+		RNDR->callList(displayListIDs.at(i));
 		Singleton<TextureManager>::getInstance()->disableTexture(Singleton<RenderModuleStubb>::getInstance());
+	}
+
+	Singleton<TextureManager>::getInstance()->disableTexture(Singleton<RenderModuleStubb>::getInstance());
 }
 
 std::string ImportModel::RandomString(unsigned len) {

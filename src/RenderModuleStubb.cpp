@@ -39,6 +39,27 @@ void RenderModuleStubb::DrawQuadOrtho(vec2 & tl, vec2 & br) {
 
 }
 
+void RenderModuleStubb::beginCreateDisplayList(std::string identifier) {
+
+	displayLists[identifier] = glGenLists(1);
+
+	glNewList(displayLists.at(identifier), GL_COMPILE);
+}
+
+void RenderModuleStubb::endCreateDisplayList() {
+	glEndList();
+}
+
+void RenderModuleStubb::callList(std::string identifier) {
+	if (displayLists.count(identifier) == 0) return;
+
+	glCallList(displayLists.at(identifier));
+}
+
+bool RenderModuleStubb::hasList(std::string identifier) {
+	return displayLists.count(identifier) != 0;
+}
+
 void RenderModuleStubb::DrawRectangularPrism(vec3 & pos, float width, float height, float depth, float texRepX, float texRepy) {
 	glDisable(GL_LIGHTING);
 	glBegin(GL_QUADS);

@@ -73,6 +73,8 @@ private:
 	*/
 	void setMinsAndMaxs();
 
+	std::vector<std::string> displayListIDs;
+
 	/**
 	* @brief Create a random string.
 	*

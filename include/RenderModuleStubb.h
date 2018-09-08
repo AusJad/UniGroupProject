@@ -308,6 +308,14 @@ public:
 
 	void disableWireFrame() { glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); }
 
+	void beginCreateDisplayList(std::string identifier);
+
+	void endCreateDisplayList();
+
+	void callList(std::string identifier);
+
+	bool hasList(std::string identifier);
+
 private:
 	/// The window.
 	GLFWwindow* window;
@@ -323,6 +331,8 @@ private:
 	int winwidth, winheight;
 
 	std::vector<resizeCallback> onResizeCallBacks;
+
+	std::map<std::string, GLuint> displayLists;
 
 	/**
 	* @brief Message receiver method.
