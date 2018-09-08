@@ -49,7 +49,7 @@ void Camera::reset() {
 	maxAngle = 80.0f;
 	maxNangle = -80.0f;
 	birdseye = false;
-	yoff = 30.0f;
+	yoff = 60.0f;
 	pos = vec3();
 }
 
