@@ -12,7 +12,8 @@ newmtl 02___Default
 	Kd 0.5882 0.5882 0.5882
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
-
+	map_Kd ./Resources/Textures/WallTex/dark_grey.tga
+	
 newmtl 01___Default
 	Ns 10.0000
 	Ni 1.5000
@@ -24,3 +25,4 @@ newmtl 01___Default
 	Kd 0.5882 0.5882 0.5882
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
+	map_Kd ./Resources/Models/tabletop.tga
