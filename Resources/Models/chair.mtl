@@ -12,8 +12,8 @@ newmtl ChairBlue
 	Kd 0.5880 0.5880 0.5880
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
-	map_Ka ..\Textures\blue.bmp
-	map_Kd ..\Textures\blue.bmp
+	map_Ka ./Resources/Textures/blue.bmp
+	map_Kd ./Resources/Textures/blue.bmp
 
 newmtl Blacklegs
 	Ns 10.0000
@@ -26,5 +26,5 @@ newmtl Blacklegs
 	Kd 0.5882 0.5882 0.5882
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
-	map_Ka ..\Textures\black.bmp
-	map_Kd ..\Textures\black.bmp
+	map_Ka ./Resources/Textures/black.bmp
+	map_Kd ./Resources/Textures/black.bmp
