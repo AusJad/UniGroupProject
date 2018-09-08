@@ -12,8 +12,8 @@ newmtl ChairBlue
 	Kd 0.5880 0.5880 0.5880
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
-	map_Ka ./Resources/Models/blue.tga
-	map_Kd ./Resources/Models/blue.tga
+	map_Ka blue.tga
+	map_Kd blue.tga
 
 newmtl Blacklegs
 	Ns 10.0000
@@ -26,5 +26,5 @@ newmtl Blacklegs
 	Kd 0.5882 0.5882 0.5882
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
-	map_Ka ./Resources/Models/black.tga
-	map_Kd ./Resources/Models/black.tga
+	map_Ka black.tga
+	map_Kd black.tga
