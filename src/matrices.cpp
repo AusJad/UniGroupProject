@@ -488,7 +488,8 @@ physmat4 Rotation(float pitch, float yaw, float roll) {
 }
 
 mat3 Rotation3x3(float pitch, float yaw, float roll) {
-	return ZRotation3x3(roll) * XRotation3x3(pitch) * YRotation3x3(yaw);
+	//fix this you dipshit
+	return XRotation3x3(pitch) * YRotation3x3(yaw) * ZRotation3x3(roll) ;
 }
 
 mat2 Rotation2x2(float angle) {
