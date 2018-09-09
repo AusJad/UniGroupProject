@@ -120,9 +120,6 @@
     <ClInclude Include="include\camera.h">
       <Filter>Header Files\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="CameraManager.h">
-      <Filter>Header Files\Camera</Filter>
-    </ClInclude>
     <ClInclude Include="include\BMPLoader.h">
       <Filter>Header Files\Rendering\Texture Management</Filter>
     </ClInclude>
@@ -291,9 +288,6 @@
     <ClInclude Include="include\Message.h">
       <Filter>Header Files\Engine\Message Bus</Filter>
     </ClInclude>
-    <ClInclude Include="include\CameraManager.h">
-      <Filter>Header Files\Controls</Filter>
-    </ClInclude>
     <ClInclude Include="include\ControlContext.h">
       <Filter>Header Files\Controls</Filter>
     </ClInclude>
@@ -398,6 +392,9 @@
     </ClInclude>
     <ClInclude Include="include\Level.h">
       <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\CameraManager.h">
+      <Filter>Header Files\Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

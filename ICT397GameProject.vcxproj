@@ -98,7 +98,6 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CameraManager.h" />
     <ClInclude Include="include\AIMovementBehaviours.h" />
     <ClInclude Include="include\Alert.h" />
     <ClInclude Include="include\AssetManager.h" />

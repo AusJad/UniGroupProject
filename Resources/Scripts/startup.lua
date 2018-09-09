@@ -25,12 +25,12 @@ function initGame(SM, LSM, AMAN, AE)
 	SM:addScene();
 	SM:setCurrScene(level1);
 
-	SM:addObject(Identifiers("PLYR", "Player"), level1, vec3(0, 0, 0), ResourceList("camera", "Camera"));
+	--SM:addObject(Identifiers("PLYR", "Player"), level1, vec3(0, 0, 0), ResourceList("camera", "Camera"));
 	
 	--SM:setSceneHeightMap(level1, SM:GetGameObject("Terrain"));
 
 	--AE:setListenerSource(SM:GetGameObjectID("Camera"), vec3(0, 0, 0));
 
-	SM:setCurrScene(level1);
+	--SM:setCurrScene(level1);
 
 end

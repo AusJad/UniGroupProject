@@ -7,10 +7,12 @@
 #include "Maths.h"
 #include "Singleton.h"
 #include "MessagingBus.h"
+#include "fileNameReader.h"
 #include "Identifiers.h"
 
 #define DEBUGMODE true
 #define AE Singleton<AudioEngine>::getInstance()
+#define MAIN_SOUND_BANK	"soundsmain"
 
 /**
 * @struct SoundSourceWrapper
@@ -184,7 +186,7 @@ public:
 	/**
 	* @brief Update method for the sound.
 	*/
-	void update();
+	void update(vec3 pos, vec3 top, vec3 front);
 
 	/**
 	* @brief If the data has sound.
@@ -193,6 +195,11 @@ public:
 	*/
 	bool hasSound(std::string sound);
 
+	void loadBatch(std::string groupname, std::string path, std::string type, std::string fstype);
+
+	bool hasSoundGroup(std::string group);
+
+	const std::vector<std::string> & getSoundGroup(std::string group);
 private:
 	/// Identifier for the sound.
 	Identifiers id;
@@ -202,6 +209,8 @@ private:
 	std::map<int, std::map<std::string, std::vector<SoundSourceWrapper> > > activechannels;
 	/// Map of channel listener resources.
 	std::map<int, ListenerSourceWrapper> channellistenersources;
+
+	std::map<std::string, std::vector<std::string> > batchfiles;
 	
 	/**
 	* @brief Work out when a channel has finished playing a sound.

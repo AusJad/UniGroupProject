@@ -38,6 +38,7 @@ void GUI::enableState(GUIState toenable) {
 			break;
 		case mainmenu:
 			mmenu.show();
+			AE->unpauseChannels();
 			CONT->switchContextGUIInteract();
 			break;
 		case editorst:
@@ -55,6 +56,7 @@ void GUI::disableState(GUIState todisable) {
 			break;
 		case mainmenu:
 			mmenu.hide();
+			AE->pauseActiveChannels();
 			CONT->switchContextPlay();
 			break;
 		case editorst:

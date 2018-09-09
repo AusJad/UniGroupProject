@@ -22,4 +22,6 @@
 #define UI_DARK_COLOR		color_3(0.1f, 0.1f, 0.1f)
 #define UI_SPOT_COLOR		color_3(1.0f, 0.5f, 0.0f)
 
+#define MAIN_MENU_MUSIC		"menumusic.wav"
+
 #define INPUT_BORDER 1

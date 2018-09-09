@@ -22,9 +22,11 @@ bool Engine::Initalise(std::string initscript){
 	TXMAN->loadBatch(WALL_TEX_GROUP, "./Resources/Textures/WallTex/", "TGA");
 	MMAN->loadBatch(MODEL_MAIN_GROUP, "./Resources/Models/", "IM", "obj");
 	MMAN->loadBatch(TERRAIN_GROUP, "./Resources/Models/", "RAWTRN", "tdef");
+	AE->loadBatch(MAIN_SOUND_BANK, "./Resources/Audio/", "WAV", "wav");
 
 	if (!GI->initalise()) return false;
 	GI->setState(mainmenu);
+	AE->playSound(MAIN_MENU_MUSIC);
 
 	return true;
 }
@@ -47,7 +49,7 @@ void Engine::Run() {
 
 		if (GI->getState() != mainmenu)	SM->update(time);
 		GI->update(time);
-		AE->update();
+		AE->update(vec3(), vec3(), vec3());
 		FNT_ENG->update();
 		CONT->update();
 

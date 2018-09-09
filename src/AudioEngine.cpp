@@ -295,8 +295,9 @@ bool AudioEngine::getListenerPosition() {
 	return true;
 }
 
-void AudioEngine::update() {
-	msgrcvr();
+void AudioEngine::update(vec3 pos, vec3 top, vec3 front) {
+	setListenerPosition(pos, top, front);
+
 	msgsndr();
 }
 
@@ -430,4 +431,34 @@ void AudioEngine::msgsndr() {
 
 bool AudioEngine::hasSound(std::string sound) {
 	return loadedsounds.count(sound) == 1;
+}
+
+void AudioEngine::loadBatch(std::string groupname, std::string path, std::string type, std::string fstype) {
+	fileNameReader::getFileNames(path.c_str(), fstype);
+
+	std::cout << path << std::endl;
+
+	std::string activefile;
+
+	while (fileNameReader::hasFiles()) {
+		activefile = fileNameReader::getFile();
+		std::cout << "Getting: " << activefile << std::endl;
+		if (loadSound(path + activefile, type, activefile, true)) {
+			if (batchfiles.count(groupname) == 0) {
+				batchfiles[groupname] = std::vector<std::string>();
+			}
+
+			batchfiles.at(groupname).push_back(activefile);
+			std::cout << "Loaded: " << activefile << std::endl;
+		}
+		else std::cout << "Failed to Load: " << activefile << std::endl;
+	}
+}
+
+bool AudioEngine::hasSoundGroup(std::string group) {
+	return batchfiles.count(group) == 1;
+}
+
+const std::vector<std::string> & AudioEngine::getSoundGroup(std::string group) {
+	return batchfiles.at(group);
 }
