@@ -203,6 +203,11 @@ public:
 	bool fromstring(std::string toread);
 
 	void reset();
+	
+	void setHorizontalAngle(float toset) { horizontalAngle = toset; }
+	void setVerticalAngle(float toset) { verticalAngle = toset; }
+	float getHorizontalAngle() { return horizontalAngle; }
+	float getVerticalAngle() { return verticalAngle; }
 
 	void moveFoward() { moveForward = true; };
 	void stpMvFoward() { moveForward = false; };
@@ -218,6 +223,9 @@ public:
 	void stpMvDown() { lookDown = false; };
 
 	void look(float x, float y);
+
+	bool hasOBB() { return true; };
+	OBB getOBB();
 
 private:
 	/// Move speed of camera.

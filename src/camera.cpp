@@ -25,9 +25,18 @@ Camera::Camera(Identifiers & id, vec3 pos, ResourceList & list) : GameObject(id,
 	maxAngle = 80.0f;
 	maxNangle = -80.0f;
 	birdseye = false;
-	yoff = 60.0f;
+	yoff = 65.0f;
 }
 
+OBB Camera::getOBB() {
+	OBB ret;
+
+	ret.position = physvec3(pos.x(), pos.y(), pos.z());
+	ret.size = physvec3(5, 20, 5);
+	ret.orientation = mat3();
+
+	return ret;
+}
 
 void Camera::reset() {
 	rotateSpeed = 3.0f;
@@ -49,7 +58,7 @@ void Camera::reset() {
 	maxAngle = 80.0f;
 	maxNangle = -80.0f;
 	birdseye = false;
-	yoff = 30.0f;
+	yoff = 65.0f;
 	pos = vec3();
 }
 

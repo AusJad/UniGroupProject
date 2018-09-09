@@ -4,6 +4,7 @@
 #include "SceneManager.h"
 #include "Wall.h"
 #include "GenericObject.h"
+#include "Level.h"
 
 class EngineStateWriter
 {
@@ -14,5 +15,6 @@ private:
 	static void addGenericObj(std::ifstream & toparse);
 	static void addWall(std::ifstream & toparse);
 	static void addTerrain(std::ifstream & toparse);
+	static void updateLevelInfo(std::ifstream & toparse);
 };
 

@@ -147,6 +147,10 @@ public:
 
 	static void findPath(const vec3 & pos, const vec3 & target);
 
+	unsigned getCurScene() { return currscene; }
+
+	void clearHMap() { if (!scenes.empty()) scenes.at(currscene).clearHMap(); }
+
 private:
 	/// The scene vector.
 	std::vector<Scene> scenes;

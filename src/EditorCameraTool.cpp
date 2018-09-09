@@ -30,7 +30,7 @@ void EditorCameraTool::update(float time) {
 }
 
 bool EditorCameraTool::initalise() {
-	cameratool = WindowFactory::getWindow(WINDOW_MEDIUM_TALL, "GENERIC", vec2(0,0), "Camera Tool");
+	cameratool = WindowFactory::getWindow(WINDOW_MEDIUM_WIDE, "GENERIC", vec2(0,0), "Camera Tool");
 	if (cameratool == NULL) return false;
 
 
@@ -40,6 +40,14 @@ bool EditorCameraTool::initalise() {
 	colltoggle->setTitle("Free Cam Is: Off");
 	colltoggle->setCallback(cameracollisioncallback);
 	cameratool->addComponent(colltoggle, 100, 10);
+
+	ButtonComponent * b = NULL;
+	b = new ButtonComponent();
+	if (b == NULL) return false;
+
+	b->setTitle("Set Level Start From Cam");
+	b->setCallback(updateStartPosCall);
+	cameratool->addComponent(b, 100, 10);
 
 	cameratool->FitToContent();
 
@@ -60,4 +68,10 @@ void EditorCameraTool::cameracollisioncallback(int code) {
 
 	if(colltoggle->getTitle() == "Free Cam Is: Off") colltoggle->setTitle("Free Cam Is: On");
 	else colltoggle->setTitle("Free Cam Is: Off");
+}
+
+void EditorCameraTool::updateStartPosCall(int code) {
+	LVL->setStartPos(vec3(CAM->getActiveCam()->getPos()));
+	LVL->setStartOreientation(vec2(CAM->getActiveCam()->getHorizontalAngle(), CAM->getActiveCam()->getVerticalAngle()));
+	ALERT->doNotify("Level Start Position Updated!", NULL);
 }

@@ -7,6 +7,8 @@ bool EngineStateWriter::writeState(std::string filename) {
 
 	std::string out;
 
+	out += LVL->toString();
+
 	for (unsigned i = 0; i < SM->getGOH().getNumObjects(); i++) {
 		if (SM->getGOH().getObject(i) != NULL) {
 			if (SM->getGOH().getObject(i)->getType() == "WALL" || SM->getGOH().getObject(i)->getType() == "GENERIC_OBJ") {
@@ -14,6 +16,8 @@ bool EngineStateWriter::writeState(std::string filename) {
 			}
 		}
 	}
+
+	if (SM->getGOH().getTerrain() != NULL) out += SM->getGOH().getTerrain()->toString();
 
 	outfile.write(out.c_str(), out.size());
 
@@ -27,9 +31,22 @@ bool EngineStateWriter::readState(std::string filename) {
 	if (!infile) return false;
 	std::string in;
 	
+	LVL->reset();
+
+	bool hasHead = false;
+
 	try {
 		while (infile.peek() != EOF) {
 			getline(infile, in);
+			if (in == "LEVEL_HEAD") {
+				hasHead = true;
+				updateLevelInfo(infile);
+			}
+			else
+			if (in == "TERRAIN_START") {
+				addTerrain(infile);
+			}
+			else
 			if (in == "WALL_START") {
 				addWall(infile);
 			}
@@ -43,13 +60,94 @@ bool EngineStateWriter::readState(std::string filename) {
 		return false;
 	}
 
+	if (!hasHead) {
+		CAM->getActiveCam()->setPos(LVL->getStartPos());
+		CAM->getActiveCam()->setHorizontalAngle(LVL->getStartOrientation().x());
+		CAM->getActiveCam()->setVerticalAngle(LVL->getStartOrientation().y());
+	}
+
 	return true;
 }
 
-void EngineStateWriter::addTerrain(std::ifstream & toparse) {
-	//AMAN:addResource("./Resources/Models/RAW2.tdef", "RAWTRN", "Terrain");
-	
+void EngineStateWriter::updateLevelInfo(std::ifstream & toparse) {
+	std::string in;
+	std::string linehead;
+	vec3 tmpv;
+	vec2 tmpv2;
+	float tmpf;
 
+	while (in != "LEVEL_TAIL" && toparse.peek() != EOF) {
+		getline(toparse, in);
+		
+		if (in.find(',') != std::string::npos) {
+			linehead = in.substr(0, in.find(','));
+			in = in.substr(in.find(',') + 1);
+		}
+		else {
+			linehead = "";
+		}
+
+		if (linehead == "NAME") {
+			LVL->setName(in);
+		}
+		else
+		if (linehead == "START_POS") {
+			tmpv.sx((float)atof(in.substr(0, in.find(',') + 1).c_str()));
+			in = in.substr(in.find(',') + 1);
+			tmpv.sy((float)atof(in.substr(0, in.find(',') + 1).c_str()));
+			in = in.substr(in.find(',') + 1);
+			tmpv.sz((float)atof(in.c_str()));
+			LVL->setStartPos(tmpv);
+		}
+		else
+		if (linehead == "START_OR") {
+			tmpf = (float)atof(in.substr(0, in.find(',') + 1).c_str());
+			in = in.substr(in.find(',') + 1);
+			tmpv2.sx(tmpf);
+			tmpf = (float)atof(in.c_str());
+			tmpv2.sy(tmpf);
+			LVL->setStartOreientation(tmpv2);
+		}
+	}
+
+	CAM->getActiveCam()->setPos(LVL->getStartPos());
+	CAM->getActiveCam()->setHorizontalAngle(LVL->getStartOrientation().x());
+	CAM->getActiveCam()->setVerticalAngle(LVL->getStartOrientation().y());
+}
+
+void EngineStateWriter::addTerrain(std::ifstream & toparse) {
+	std::string in;
+	std::string linehead;
+
+	TerrainObject * tmpw;
+	tmpw = new TerrainObject();
+	if (tmpw == NULL) return;
+
+	while (in != "TERRAIN_END" && toparse.peek() != EOF) {
+		getline(toparse, in);
+
+		if (in.find(',') != std::string::npos) {
+			linehead = in.substr(0, in.find(','));
+			in = in.substr(in.find(',') + 1);
+		}
+		else {
+			linehead = "";
+		}
+
+		if (linehead == "NAME") {
+			Model * M = NULL;
+			M = MMAN->useModel(in, in);
+			if (M == NULL) {
+				delete tmpw;
+				return;
+			}
+			tmpw->setModel(M);
+		}
+	}
+
+	tmpw->setID(GOF->getNextId());
+	SM->getGOH().addTerrain(tmpw);
+	SM->setSceneHeightMap(SM->getCurScene(), tmpw);
 }
 
 void EngineStateWriter::addGenericObj(std::ifstream & toparse) {

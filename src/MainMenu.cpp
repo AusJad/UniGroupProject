@@ -18,6 +18,8 @@ onClick MainMenu::playcallback = NULL;
 
 bool MainMenu::canedit = true;
 
+Window * MainMenu::exitscreen = NULL;
+
 MainMenu::MainMenu(){
 	modelrot = 90;
 	modelrotz = 45;
@@ -39,11 +41,26 @@ bool MainMenu::init(onClick playGameCallBack) {
 
 	if (!titlescrn.init()) return false;
 
+	exitscreen = WindowFactory::getWindow(WINDOW_MEDIUM_WIDE, "NO_HEADER", vec2(0, 0));
+	if (exitscreen == NULL) return false;
+
+	exitscreen->setPadding(0);
+
+	ButtonComponent * m = NULL;
+	m = new ButtonComponent(512, 512, vec2());
+	if (m == NULL) return false;
+	m->setCallback(quitGameCallback);
+	m->setTex(EXIT_SCRN);
+
+	exitscreen->addComponent(m);
+
+	exitscreen->FitToContent();
+
 	options = WindowFactory::getWindow(WINDOW_MEDIUM_WIDE, "NO_HEADER", vec2(0, 0));
 	if (options == NULL) return false;
 	options->setBGTex("menubg.tga");
 
-	ButtonComponent * m = NULL;
+	m = NULL;
 	m = new ButtonComponent();
 	if (m == NULL) return false;
 	m->setTex("mmlogotx.tga");
@@ -66,7 +83,7 @@ bool MainMenu::init(onClick playGameCallBack) {
 	quit = new ButtonComponent();
 	if (quit == NULL) return false;
 	quit->setTitle("Quit");
-	quit->setCallback(quitGameCallback);
+	quit->setCallback(showExitScreenCallBack);
 	options->addComponent(quit, 100, 10);
 
 	options->FitToContent();
@@ -152,6 +169,9 @@ Window * MainMenu::getActiveWindow() {
 		case selectlvl:
 			return levelselector;
 			break;
+		case exitscrn:
+			return exitscreen;
+			break;
 	}
 
 	return NULL;
@@ -159,6 +179,19 @@ Window * MainMenu::getActiveWindow() {
 
 void MainMenu::show() {
 	state = menu;
+	refeshLevelBar();
+}
+
+void MainMenu::refeshLevelBar() {
+	fileNameReader::getFileNames("./Resources/Levels/", ".lvl");
+
+	lvllist->clear();
+
+	while (fileNameReader::hasFiles()) {
+		lvllist->addOption(fileNameReader::getFile(), lvlSelectCallback);
+	}
+
+	checkItemListSize();
 }
 
 void MainMenu::hide() {
@@ -168,6 +201,7 @@ void MainMenu::hide() {
 void MainMenu::windowResizeCallback(int nwidth, int nheight) {
 	options->centerInDisplay();
 	levelselector->centerInDisplay();
+	exitscreen->centerInDisplay();
 }
 
 bool MainMenu::initLevelBar() {
@@ -251,6 +285,10 @@ void MainMenu::checkItemListSize() {
 	}
 }
 
+void MainMenu::showExitScreenCallBack(int code) {
+	state = exitscrn;
+}
+
 void MainMenu::quitGameCallback(int code) {
 	RNDR->killProgram();
 }
@@ -296,6 +334,7 @@ void  MainMenu::loadLevelPlayCallback(int code) {
 	canedit = false;
 
 	SM->getGOH().clear();
+	SM->clearHMap();
 
 	CAM->getActiveCam()->reset();
 
@@ -316,6 +355,7 @@ void  MainMenu::loadLevelEditCallback(int code) {
 	canedit = true;
 
 	SM->getGOH().clear();
+	SM->clearHMap();
 
 	CAM->getActiveCam()->reset();
 
@@ -331,5 +371,6 @@ void  MainMenu::loadLevelEditCallback(int code) {
 void  MainMenu::createNewLevelCallback(int code) {
 	canedit = true;
 	SM->getGOH().clear();
+	SM->clearHMap();
 	if (playcallback != NULL) playcallback(0);
 }

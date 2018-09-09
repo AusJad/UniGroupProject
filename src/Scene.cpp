@@ -84,6 +84,10 @@ bool Scene::setHeightMap(GameObject* hmObj) {
 	return true;
 }
 
+void Scene::clearHMap() {
+	collision.setHeightMap(std::vector<vec3>());
+}
+
 //mm
 std::vector<std::string> Scene::saveGame()
 {

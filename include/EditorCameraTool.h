@@ -1,6 +1,8 @@
 #pragma once
 #include "WindowFactory.h"
 #include "CameraManager.h"
+#include "Level.h"
+#include "Alert.h"
 
 class EditorCameraTool
 {
@@ -21,5 +23,6 @@ private:
 	static ButtonComponent * colltoggle;
 
 	static void cameracollisioncallback(int code);
+	static void updateStartPosCall(int code);
 };
 

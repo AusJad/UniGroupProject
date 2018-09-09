@@ -66,8 +66,8 @@ Model* ModelManger::getModelRefrence(std::string name) {
 	else return models[name];
 }
 
-void ModelManger::loadBatch(std::string groupname, std::string path, std::string type) {
-	fileNameReader::getFileNames(path.c_str(), "obj");
+void ModelManger::loadBatch(std::string groupname, std::string path, std::string type, std::string fstype) {
+	fileNameReader::getFileNames(path.c_str(), fstype);
 
 	std::cout << path << std::endl;
 

@@ -23,6 +23,10 @@ std::string GenericObject::toString() {
 	return out;
 }
 
+OBB GenericObject::getOBB() {
+	return obb;
+}
+
 void GenericObject::setScaleX(float nscalex) { 
 	scalex = nscalex; 
 }
@@ -38,6 +42,14 @@ void GenericObject::setScaleZ(float nscalez) {
 void GenericObject::updateBounds() {
 	if (model != NULL) {
 		model->setScale(vec3(scalex, scaley, scalez));
+		obb.position = physvec3(trans.x(), trans.y(), trans.z());
+		
+		std::vector<vec3> minmax = model->computeMMax();
+
+		obb.size = physvec3((minmax.at(1).x() -minmax.at(0).x()) / 2,
+			(minmax.at(1).y() - minmax.at(0).y()) / 2,
+			(minmax.at(1).z() - minmax.at(0).z()) / 2);
+		obb.orientation = Rotation3x3(anglex, angley, anglez);
 	}
 }
 
@@ -47,6 +59,20 @@ void GenericObject::render() {
 	if (model != NULL) model->render(trans);
 
 	GeoStream << END_STREAM;
+
+	/*
+		Draw bounds
+
+	GeoStream << START_ATTRIB << color_3(0.0f, 0.0f, 1.0f);
+	RNDR->enableWireframe();
+	physvec3 rot = Decompose(obb.orientation);
+	GeoStream << BEGIN_STREAM << trans_3(obb.position.x, obb.position.y, obb.position.z) << rot_4(RAD2DEG(rot.x), 1, 0, 0) << rot_4(RAD2DEG(rot.y), 0, 1, 0) << rot_4(RAD2DEG(rot.z), 0, 0, 1);
+	RNDR->DrawRectangularPrism(vec3(), obb.size.x, obb.size.y, obb.size.z);
+	GeoStream << END_STREAM;
+	RNDR->disableWireFrame();
+	RNDR->DrawRectangularPrism(vec3(obb.position.x, obb.position.y, obb.position.z), 3, 3, 3);
+	GeoStream << END_ATTRIB;
+	*/
 }
 
 GenericObject::GenericObject(const GenericObject & tocpy) : GameObject(*this) {

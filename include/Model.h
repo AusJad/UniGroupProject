@@ -176,6 +176,8 @@ class Model
 		*/
 		void setName(std::string name) { id.setName(name); };
 
+		virtual std::vector<vec3> computeMMax() { return std::vector<vec3>(); };
+
 	protected:
 		/// The min and max x and z values.
 		float minx, maxx, minz, maxz, miny, maxy;

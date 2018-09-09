@@ -142,6 +142,7 @@
     <ClInclude Include="include\ItemPlaceContext.h" />
     <ClInclude Include="include\ItemScrollComponent.h" />
     <ClInclude Include="include\LabelComponent.h" />
+    <ClInclude Include="include\Level.h" />
     <ClInclude Include="include\LuaControlContext.h" />
     <ClInclude Include="include\LUAScriptManager.h" />
     <ClInclude Include="include\MainMenu.h" />
@@ -235,6 +236,7 @@
     <ClCompile Include="src\ItemPlaceContext.cpp" />
     <ClCompile Include="src\ItemScrollComponent.cpp" />
     <ClCompile Include="src\LabelComponent.cpp" />
+    <ClCompile Include="src\Level.cpp" />
     <ClCompile Include="src\LuaControlContext.cpp" />
     <ClCompile Include="src\LUAScriptManager.cpp" />
     <ClCompile Include="src\MainMenu.cpp" />

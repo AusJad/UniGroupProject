@@ -9,6 +9,7 @@
 #define MMAN Singleton<ModelManger>::getInstance()
 
 #define MODEL_MAIN_GROUP "ModelsMain"
+#define TERRAIN_GROUP "ModelsTerain"
 
 /**
 * @class ModelManger
@@ -65,7 +66,7 @@ public:
 	*/
 	bool loadModel(std::string path, std::string type, std::string name, vec3 & scale);
 
-	void loadBatch(std::string groupname, std::string path, std::string type);
+	void loadBatch(std::string groupname, std::string path, std::string type, std::string fstype);
 
 	bool hasModelGroup(std::string group);
 

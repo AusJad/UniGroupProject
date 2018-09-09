@@ -17,9 +17,12 @@ bool Engine::Initalise(std::string initscript){
 	CONT->registerGUICallback(SwitchPlayContext);
 	CONT->registerGUIMMCallback(SwitchMainMenuContext);
 	CONT->switchContextPlay();
+
 	TXMAN->loadBatch(UI_TEX_GROUP, "./Resources/Textures/UI/", "TGA");
 	TXMAN->loadBatch(WALL_TEX_GROUP, "./Resources/Textures/WallTex/", "TGA");
-	MMAN->loadBatch(MODEL_MAIN_GROUP, "./Resources/Models/", "IM");
+	MMAN->loadBatch(MODEL_MAIN_GROUP, "./Resources/Models/", "IM", "obj");
+	MMAN->loadBatch(TERRAIN_GROUP, "./Resources/Models/", "RAWTRN", "tdef");
+
 	if (!GI->initalise()) return false;
 	GI->setState(mainmenu);
 

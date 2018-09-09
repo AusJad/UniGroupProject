@@ -84,6 +84,12 @@ bool GameObjectHandler::addTerrain(Identifiers id, vec3 pos, ResourceList & list
 	return true;
 }
 
+bool GameObjectHandler::addTerrain(GameObject * toset) {
+	this->terrain = toset;
+
+	return true;
+}
+
 bool GameObjectHandler::addObject(Identifiers id, vec3 pos, ResourceList & list){
 	GameObject* tmp = GOF->create(id, pos, list);
 
@@ -284,6 +290,10 @@ void  GameObjectHandler::onFind(const std::vector<std::list<GameObjectWrapper> >
 	}
 }
 
+GameObject * GameObjectHandler::getTerrain() {
+	return terrain;
+}
+
 void GameObjectHandler::clear() {
 	for (unsigned i = 0; i < gameobjects.size(); i++) {
 		delete gameobjects.at(i);
@@ -298,4 +308,7 @@ void GameObjectHandler::clear() {
 	}
 
 	tmpobjects.clear();
+
+	if (terrain != NULL) delete terrain;
+	terrain = NULL;
 }

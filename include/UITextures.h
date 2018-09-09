@@ -14,6 +14,7 @@
 #define TOOLBAR_END_ICON	"toolbarend.tga"
 
 #define G1_LOGO				"G1Logo.tga"
+#define EXIT_SCRN			"exitscreen.tga"
 
 #define UI_BASE_COLOR		color_3(0.2f, 0.2f, 0.2f)
 #define UI_LIGHT_COLOR		color_3(0.3f, 0.3f, 0.3f)

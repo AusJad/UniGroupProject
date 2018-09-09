@@ -43,5 +43,7 @@ public:
 	* @return vec3 - The vector off set data.
 	*/
 	vec3 getCenterOffset();
+
+	std::string toString();
 };
 

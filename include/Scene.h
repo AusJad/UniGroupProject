@@ -112,6 +112,8 @@ public:
 
 	bool getLoaded();
 
+	void clearHMap();
+
 private:
 	/// The game object handler.
 	GameObjectHandler objects;

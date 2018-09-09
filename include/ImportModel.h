@@ -62,6 +62,8 @@ public:
 	*/
 	std::vector<vec3>& getVerticies();
 
+	std::vector<vec3> computeMMax();
+
 private:
 	/// The model data.
 	const aiScene *model;

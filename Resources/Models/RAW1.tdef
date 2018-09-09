@@ -1,0 +1,4 @@
+s 45 10 45
+m ./Resources/Models/grass.tga TGA ./Resources/Models/rocks.tga TGA
+f ./Resources/Models/flat.raw
+t ./Resources/Models/detailMap.tga TGA

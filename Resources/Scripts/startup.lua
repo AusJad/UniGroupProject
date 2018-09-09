@@ -1,9 +1,5 @@
 
-
 local function loadResources(AMAN)
-	--Load height maps
-	AMAN:addResource("./Resources/Models/RAW2.tdef", "RAWTRN", "Terrain");
-
 	--Load fonts
 	if AMAN:addResource("./Resources/Fonts/MonoFont.csv", "FNT", "CONSOLEFONT") then print("loaded res: ConsoleFont")
 	else print("failed to load ConsoleFont") end
@@ -12,7 +8,6 @@ end
 function loadLoadRes(AMAN)
 	AMAN:addResource("./Resources/Textures/startup.tga", "TGA", "LOADICON"); 
 end
-
 
 function renderLoad(AMAN)
 	MenuTools.drawTSquare(vec2(.3, -.1), vec2(.7, -0.5), -1, "LOADICON", false);
@@ -26,18 +21,13 @@ function initGame(SM, LSM, AMAN, AE)
 	--Load resources
 	loadResources(AMAN);
 
-	--Set Console Resources
-	SM:attachConsoleTex("Console");
-
 	--Initalise Level 1
 	SM:addScene();
 	SM:setCurrScene(level1);
 
-	SM:attachTerrain(Identifiers("TO", "Terrain"), level1, vec3(0,0,0), ResourceList("model", "Terrain"));
-
 	SM:addObject(Identifiers("PLYR", "Player"), level1, vec3(0, 0, 0), ResourceList("camera", "Camera"));
 	
-	SM:setSceneHeightMap(level1, SM:GetGameObject("Terrain"));
+	--SM:setSceneHeightMap(level1, SM:GetGameObject("Terrain"));
 
 	--AE:setListenerSource(SM:GetGameObjectID("Camera"), vec3(0, 0, 0));
 

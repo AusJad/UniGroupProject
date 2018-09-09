@@ -17,8 +17,19 @@ void TerrainObject::update(float time) {
 	msgrcvr();
 }
 
+
+std::string TerrainObject::toString() {
+	std::string ret;
+
+	ret += "TERRAIN_START\n";
+	ret += "NAME," + model->getName() + "\n";
+	ret += "TERRAIN_END\n";
+
+	return ret;
+}
+
 void TerrainObject::render() {
-	if (resources.hasResource("model") && model != NULL) {
+	if (model != NULL) {
 		GameObject::model->render(pos);
 	}
 	else {

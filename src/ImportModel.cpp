@@ -98,6 +98,7 @@ bool ImportModel::loadModel(std::string filename)
 
 void ImportModel::setMinsAndMaxs()
 {
+
 	for (unsigned j = 0; j < modelDetails.size(); j++)
 	{
 		minx = modelDetails[j].Verticies.at(0).x();
@@ -147,6 +148,65 @@ void ImportModel::setMinsAndMaxs()
 
 }
 
+std::vector<vec3> ImportModel::computeMMax() {
+	std::vector<vec3> ret;
+
+	float mminx, mminy, mminz, mmaxx, mmaxy, mmaxz;
+
+	mminx = modelDetails[0].Verticies.at(0).x();
+	mminz = modelDetails[0].Verticies.at(0).z();
+	mmaxx = modelDetails[0].Verticies.at(0).x();
+	mmaxz = modelDetails[0].Verticies.at(0).z();
+	mmaxy = modelDetails[0].Verticies.at(0).y();
+	mminy = modelDetails[0].Verticies.at(0).y();
+
+	for (unsigned j = 0; j < modelDetails.size(); j++)
+	{
+
+		for (unsigned i = 0; i < modelDetails[j].Verticies.size(); i++)
+		{
+			if (mminx > modelDetails[j].Verticies.at(i).x())
+			{
+				mminx = modelDetails[j].Verticies.at(i).x();
+			}
+			if (mminy > modelDetails[j].Verticies.at(i).y())
+			{
+				mminy = modelDetails[j].Verticies.at(i).y();
+			}
+			if (mminz > modelDetails[j].Verticies.at(i).z())
+			{
+				mminz = modelDetails[j].Verticies.at(i).z();
+			}
+			if (mmaxx < modelDetails[j].Verticies.at(i).x())
+			{
+				mmaxx = modelDetails[j].Verticies.at(i).x();
+			}
+
+			if (mmaxy < modelDetails[j].Verticies.at(i).y())
+			{
+				mmaxy = modelDetails[j].Verticies.at(i).y();
+			}
+			if (mmaxz < modelDetails[j].Verticies.at(i).z())
+			{
+				mmaxz = modelDetails[j].Verticies.at(i).z();
+			}
+		}
+
+	}
+
+	mminx *= scale.x();
+	mminz *= scale.z();
+	mmaxx *= scale.x();
+	mmaxz *= scale.z();
+	mmaxy *= scale.y();
+	mminy *= scale.y();
+
+	ret.push_back(vec3(mminx, mminy, mminz));
+	ret.push_back(vec3(mmaxx, mmaxy, mmaxz));
+
+	return ret;
+}
+
 ImportModel* ImportModel::create() const
 {
 	return new ImportModel(*this);
@@ -158,6 +218,7 @@ std::vector<vec3>& ImportModel::getVerticies() {
 
 void ImportModel::centerOnPoint(vec3 & point)
 {
+
 	for (unsigned j = 0; j < modelDetails.size(); j++)
 	{
 		setMinsAndMaxs();

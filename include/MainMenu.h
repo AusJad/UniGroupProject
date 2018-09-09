@@ -35,7 +35,8 @@ private:
 	enum MenuState {
 		inactive = 0,
 		menu = 1,
-		selectlvl = 2
+		selectlvl = 2,
+		exitscrn = 3
 	};
 
 	float modelrotz;
@@ -57,6 +58,8 @@ private:
 
 	static Window * levelselector;
 
+	static Window * exitscreen;
+
 	static ItemScrollComponent * lvllist;
 	static LabelComponent * selectedlevel;
 
@@ -66,7 +69,10 @@ private:
 
 	bool initLevelBar();
 
+	void refeshLevelBar();
+
 	static void levelSelectCallback(int code);
+	static void showExitScreenCallBack(int code);
 	static void quitGameCallback(int code);
 	static void returnToMain(int code);
 	static void lvlSelectCallback(int code);

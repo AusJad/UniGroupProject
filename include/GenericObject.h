@@ -29,12 +29,17 @@ public:
 	GameObject* create() { return new GenericObject(*this); }
 	GenericObject(const GenericObject & tocpy);
 
+	bool isStatic() { return true; }
+	bool hasOBB() { return true; };
+	OBB getOBB();
+
 private:
 	float scalex;
 	float scaley;
 	float scalez;
 
 	vec3 trans;
+	OBB obb;
 
 	float angley;
 	float anglex;

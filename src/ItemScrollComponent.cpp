@@ -223,3 +223,10 @@ int ItemScrollComponent::calcLastVis() {
 
 	return curviable;
 }
+
+void ItemScrollComponent::clear() {
+	callbacks.clear();
+	options.clear();
+
+	recalcDimensions();
+}

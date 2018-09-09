@@ -13,6 +13,13 @@ bool Wall::boundsVis() {
 	return Wall::drawBounds;
 }
 
+bool hasOBB() {
+	return true;
+}
+
+OBB Wall::getOBB() {
+	return obb;
+}
 
 Wall::Wall(){
 	width = 10;
@@ -48,15 +55,25 @@ void Wall::render() {
 
 	GeoStream << BEGIN_STREAM << trans_3(trans) << rot_4(anglex, 1, 0, 0) << rot_4(angley, 0, 1, 0) << rot_4(anglez, 0, 0, 1);
 
-	RNDR->DrawRectangularPrism(drawpos, width, height, depth, texrepx, texrepy);
+	RNDR->DrawRectangularPrism(drawpos, width/2, height/2, depth/2, texrepx, texrepy);
 
 	GeoStream << END_STREAM;
 
 	if (!tex.empty()) TXMAN->disableTexture(RNDR);
 
 	if (drawBounds) {
-		GeoStream << START_ATTRIB << color_3(1.0f, 0.5f, 0.0f);
-		aabb.render(vec3());
+		GeoStream << START_ATTRIB << color_3(0.0f, 0.0f, 1.0f);
+		RNDR->enableWireframe();
+		physvec3 rot = Decompose(obb.orientation);
+
+		GeoStream << BEGIN_STREAM << trans_3(obb.position.x, obb.position.y, obb.position.z) << rot_4(RAD2DEG(rot.x), 1, 0, 0) << rot_4(RAD2DEG(rot.y), 0, 1, 0) << rot_4(RAD2DEG(rot.z), 0, 0, 1);
+
+		RNDR->DrawRectangularPrism(vec3(), obb.size.x, obb.size.y, obb.size.z, texrepx, texrepy);
+		GeoStream << END_STREAM;
+		RNDR->disableWireFrame();
+		
+		RNDR->DrawRectangularPrism(vec3(obb.position.x, obb.position.y, obb.position.z), 10, 10, 10);
+
 		GeoStream << END_ATTRIB;
 	}
 }

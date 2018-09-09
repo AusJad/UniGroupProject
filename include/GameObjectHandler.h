@@ -126,6 +126,10 @@ public:
 	*/
 	bool addTerrain(Identifiers id, vec3 pos, ResourceList & list);
 
+	bool addTerrain(GameObject * toset);
+
+	GameObject * getTerrain();
+
 	const GameObjectHandler & operator = (const GameObjectHandler & rhs);
 
 	void clear();

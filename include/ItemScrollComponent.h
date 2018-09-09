@@ -26,6 +26,8 @@ public:
 
 	unsigned getNumOptions() { return options.size(); };
 
+	void clear();
+
 private:
 	void optionsAdded();
 	void recalcDimensions();

@@ -12,7 +12,7 @@ class Bounds : public Model {
 		void update(float time) {}
 		void render(const vec3 & transmat) {
 			RNDR->enableWireframe();
-			RNDR->DrawRectangularPrism(vec3(minx, miny, minz), maxx - minx, maxy - miny, maxz - minz);
+			RNDR->DrawRectangularPrism(vec3(minx, miny, minz), (maxx - minx)/2, (maxy - miny) / 2, (maxz - minz) / 2);
 			RNDR->disableWireFrame();
 		}
 		void centerOnPoint(vec3 & point) {}
@@ -25,13 +25,13 @@ class Bounds : public Model {
 
 			vec4 corners[8];
 
-			corners[0] = vec4(pos.x(), pos.y(), pos.z(), 1);
-			corners[1] = vec4(pos.x(), pos.y(), pos.z() + depth, 1);
-			corners[2] = vec4(pos.x(), pos.y() + height, pos.z() + depth, 1);
-			corners[3] = vec4(pos.x() + width, pos.y(), pos.z() + depth, 1);
-			corners[4] = vec4(pos.x(), pos.y() + height, pos.z(), 1);
-			corners[5] = vec4(pos.x() + width, pos.y() + height, pos.z(), 1);
-			corners[6] = vec4(pos.x() + width, pos.y(), pos.z(), 1);
+			corners[0] = vec4(pos.x() - width, pos.y() - height, pos.z() - depth, 1);
+			corners[1] = vec4(pos.x() - width, pos.y() - height, pos.z() + depth, 1);
+			corners[2] = vec4(pos.x() - width, pos.y() + height, pos.z() + depth, 1);
+			corners[3] = vec4(pos.x() + width, pos.y() - height, pos.z() + depth, 1);
+			corners[4] = vec4(pos.x() - width, pos.y() + height, pos.z() - depth, 1);
+			corners[5] = vec4(pos.x() + width, pos.y() + height, pos.z() - depth, 1);
+			corners[6] = vec4(pos.x() + width, pos.y() - height, pos.z() - depth, 1);
 			corners[7] = vec4(pos.x() + width, pos.y() + height, pos.z() + depth, 1);
 
 			mat4 rot;
@@ -104,7 +104,14 @@ public:
 	//tmp while still GO
 	std::string toString();
 	Model* getModel() { return &aabb; }
-	void updateBounds() { aabb.updateBounds(trans, width, depth, height, vec3(anglex, angley, anglez)); }
+	void updateBounds() { 
+		aabb.updateBounds(trans, width, depth, height, vec3(anglex, angley, anglez)); 
+
+		obb.position = physvec3(trans.x(), trans.y(), trans.z());
+		obb.size = physvec3(width / 2, height / 2, depth / 2);
+		obb.orientation = Rotation3x3(anglex, angley, anglez);
+	}
+
 	void update(float time) {}
 	GameObject* create() { return new Wall(*this); }
 	Wall(const Wall & tocpy);
@@ -113,6 +120,9 @@ public:
 	static void toggleDrawBounds();
 	static void DisableBB();
 	static bool boundsVis();
+
+	bool hasOBB() { return true; };
+	OBB getOBB();
 private:
 	float width;
 	float height;
@@ -134,5 +144,6 @@ private:
 	bool hasCol;
 
 	Bounds aabb;
+	OBB obb;
 };
 
