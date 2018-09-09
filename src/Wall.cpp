@@ -53,7 +53,7 @@ std::string Wall::toString() {
 void Wall::render() {
 	if (!tex.empty()) TXMAN->useTexture(tex, RNDR);
 
-	GeoStream << BEGIN_STREAM << trans_3(trans) << rot_4(anglez, 0, 0, 1) << rot_4(anglex, 1, 0, 0) << rot_4(angley, 0, 1, 0);
+	GeoStream << BEGIN_STREAM << trans_3(trans) << rot_4(anglex, 1, 0, 0) << rot_4(angley, 0, 1, 0) << rot_4(anglez, 0, 0, 1);
 
 	RNDR->DrawRectangularPrism(drawpos, width/2, height/2, depth/2, texrepx, texrepy);
 
@@ -66,7 +66,7 @@ void Wall::render() {
 		RNDR->enableWireframe();
 		physvec3 rot = Decompose(obb.orientation);
 
-		GeoStream << BEGIN_STREAM << trans_3(obb.position.x, obb.position.y, obb.position.z) << rot_4(RAD2DEG(rot.z), 0, 0, 1) << rot_4(RAD2DEG(rot.x), 1, 0, 0) << rot_4(RAD2DEG(rot.y), 0, 1, 0);
+		GeoStream << BEGIN_STREAM << trans_3(obb.position.x, obb.position.y, obb.position.z) << rot_4(RAD2DEG(rot.x), 1, 0, 0) << rot_4(RAD2DEG(rot.y), 0, 1, 0) << rot_4(RAD2DEG(rot.z), 0, 0, 1);
 
 		RNDR->DrawRectangularPrism(vec3(), obb.size.x, obb.size.y, obb.size.z, texrepx, texrepy);
 		GeoStream << END_STREAM;
