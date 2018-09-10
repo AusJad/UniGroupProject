@@ -8,6 +8,11 @@
 #include "AxisDefs.h"
 #include "SceneManager.h"
 
+/**
+* @class EditorObjectTool
+*
+* @author Morgan Smolder
+*/
 class EditorObjectTool
 {
 public:

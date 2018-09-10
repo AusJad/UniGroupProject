@@ -4,6 +4,11 @@
 #include "movementInfo.h"
 #include "Controls.h"
 
+/**
+* @class ItemScrollComponent
+*
+* @author Morgan Smolder
+*/
 class ItemScrollComponent : public WndComponent
 {
 public:

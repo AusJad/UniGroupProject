@@ -4,6 +4,11 @@
 
 #define ALERT Singleton<Alert>::getInstance()
 
+/**
+* @class Alert
+*
+* @author Morgan Smolder
+*/
 class Alert
 {
 public:

@@ -10,6 +10,11 @@
 
 typedef physvec3 Point;
 
+/**
+* @struct Line
+*
+* @author Morgan Smolder
+*/
 typedef struct Line {
 	Point start;
 	Point end;
@@ -19,6 +24,11 @@ typedef struct Line {
 		start(s), end(e) { }
 } Line;
 
+/**
+* @struct physRay
+*
+* @author Morgan Smolder
+*/
 typedef struct physRay {
 	Point origin;
 	physvec3 direction;
@@ -33,6 +43,11 @@ typedef struct physRay {
 	}
 } physRay;
 
+/**
+* @struct Sphere
+*
+* @author Morgan Smolder
+*/
 typedef struct Sphere {
 	Point position;
 	float radius;
@@ -42,6 +57,11 @@ typedef struct Sphere {
 		position(p), radius(r) { }
 } Sphere;
 
+/**
+* @struct physAABB
+*
+* @author Morgan Smolder
+*/
 typedef struct physAABB {
 	Point position;
 	physvec3 size; // HALF SIZE!
@@ -51,6 +71,11 @@ typedef struct physAABB {
 		position(p), size(s) { }
 } physAABB;
 
+/**
+* @struct OBB
+*
+* @author Morgan Smolder
+*/
 typedef struct OBB {
 	Point position;
 	physvec3 size; // HALF SIZE!
@@ -63,6 +88,11 @@ typedef struct OBB {
 		position(p), size(s), orientation(o) { }
 } OBB;
 
+/**
+* @struct Plane
+*
+* @author Morgan Smolder
+*/
 typedef struct Plane {
 	physvec3 normal;
 	float distance;
@@ -72,6 +102,11 @@ typedef struct Plane {
 		normal(n), distance(d) { }
 } Plane;
 
+/**
+* @struct Triangle
+*
+* @author Morgan Smolder
+*/
 typedef struct Triangle {
 	union {
 		struct {
@@ -94,6 +129,11 @@ typedef struct Triangle {
 		a(_p1), b(_p2), c(_p3) { }
 } Triangle;
 
+/**
+* @struct BVHNode
+*
+* @author Morgan Smolder
+*/
 typedef struct BVHNode {
 	physAABB bounds;
 	BVHNode* children;
@@ -103,6 +143,11 @@ typedef struct BVHNode {
 	BVHNode() : children(0), numTriangles(0), triangles(0) {}
 } BVHNode;
 
+/**
+* @struct physMesh
+*
+* @author Morgan Smolder
+*/
 typedef struct physMesh {
 	int numTriangles;
 	union {
@@ -115,6 +160,11 @@ typedef struct physMesh {
 	physMesh() : numTriangles(0), values(0), accelerator(0) {}
 } physMesh;
 
+/**
+* @class physModel
+*
+* @author Morgan Smolder
+*/
 class physModel {
 protected:
 	physMesh* content;
@@ -136,11 +186,21 @@ public:
 	void SetContent(physMesh* mesh);
 };
 
+/**
+* @struct Interval
+*
+* @author Morgan Smolder
+*/
 typedef struct Interval {
 	float min;
 	float max;
 } Interval;
 
+/**
+* @struct Frustum
+*
+* @author Morgan Smolder
+*/
 typedef struct Frustum {
 	union {
 		struct {
@@ -157,6 +217,11 @@ typedef struct Frustum {
 	inline Frustum() { }
 } Frustum;
 
+/**
+* @struct RaycastResult
+*
+* @author Morgan Smolder
+*/
 typedef struct RaycastResult {
 	physvec3 point;
 	physvec3 normal;
@@ -352,6 +417,11 @@ physRay GetPickRay(const physvec2& viewportPoint, const physvec2& viewportOrigin
 
 // Chapter 15
 
+/**
+* @struct CollisionManifold
+*
+* @author Morgan Smolder
+*/
 typedef struct CollisionManifold {
 	bool colliding;
 	physvec3 normal;

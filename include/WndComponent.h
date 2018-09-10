@@ -9,6 +9,11 @@ typedef void(*onClick)(int action);
 #define TEXT_INPUT 1
 #define LABEL_CLICK 2
 
+/**
+* @class WndComponent
+*
+* @author Morgan Smolder
+*/
 class WndComponent
 {
 public:

@@ -33,6 +33,11 @@ struct AABB {
 	AABB() {};
 };
 
+/**
+* @struct Ray
+*
+* @author Morgan Smolder
+*/
 struct Ray {
 	vec3 origin;
 	vec3 direction;

@@ -3,6 +3,11 @@
 #include "ControlContext.h"
 #include "WndComponent.h"
 
+/**
+* @class TextInputContext
+*
+* @author Morgan Smolder
+*/
 class TextInputContext : public ControlContext
 {
 public:

@@ -5,6 +5,11 @@
 
 #define CAM Singleton<CameraManager>::getInstance()
 
+/**
+* @class CameraManager
+*
+* @author Morgan Smolder
+*/
 class CameraManager
 {
 public:

@@ -5,6 +5,11 @@
 #include "LUAScriptManager.h"
 #include "SimpleString.h"
 
+/**
+* @class LuaControlContext
+*
+* @author Morgan Smolder
+*/
 class LuaControlContext : public ControlContext
 {
 public:

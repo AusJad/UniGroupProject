@@ -4,6 +4,11 @@
 #include "EngineStateWriter.h"
 #include "Alert.h"
 
+/**
+* @class SaveTool
+*
+* @author Morgan Smolder
+*/
 class SaveTool
 {
 public:

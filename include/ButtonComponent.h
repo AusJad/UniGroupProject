@@ -7,6 +7,11 @@
 #include <string>
 #include <iostream>
 
+/**
+* @class ButtonComponent
+*
+* @author Morgan Smolder
+*/
 class ButtonComponent : public WndComponent
 {
 public:

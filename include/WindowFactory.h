@@ -8,6 +8,11 @@
 #define WINDOW_SMALL_WIDE		3
 #define WINDOW_MEDIUM_TALL		4
 
+/**
+* @class WindowFactory
+*
+* @author Morgan Smolder
+*/
 class WindowFactory
 {
 public:

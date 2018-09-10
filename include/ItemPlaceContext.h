@@ -5,6 +5,11 @@
 typedef void(*placementCompleteCallback)();
 typedef void(*itemScroll)(float offsety);
 
+/**
+* @class ItemPlaceContext
+*
+* @author Morgan Smolder
+*/
 class ItemPlaceContext: public ControlContext
 {
 public:

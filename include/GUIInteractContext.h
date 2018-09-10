@@ -2,12 +2,22 @@
 
 #include "ControlContext.h"
 
+/**
+* @struct clickData
+*
+* @author Morgan Smolder
+*/
 struct clickData {
 	bool hasClick;
 	vec2 clicklocation;
 	clickData() { hasClick = false; }
 };
 
+/**
+* @class GUIInteractContext
+*
+* @author Morgan Smolder
+*/
 class GUIInteractContext : public ControlContext
 {
 public:

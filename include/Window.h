@@ -14,6 +14,11 @@
 
 #define HEAD_BAR_SIZE 32
 
+/**
+* @class Window
+*
+* @author Morgan Smolder
+*/
 class Window
 {
 public:

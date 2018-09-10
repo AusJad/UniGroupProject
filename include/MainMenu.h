@@ -9,6 +9,11 @@
 #include "ModelManger.h"
 #include "TitleScreen.h"
 
+/**
+* @class MainMenu
+*
+* @author Morgan Smolder
+*/
 class MainMenu
 {
 public:

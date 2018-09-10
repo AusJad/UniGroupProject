@@ -8,24 +8,44 @@
 #include "GLFW/glfw3native.h"
 #include "vec3.h"
 
+/**
+* @struct vertex_3
+*
+* @author Morgan Smolder
+*/
 struct vertex_3{
 	float x,y,z;
 	vertex_3() : x(0), y(0), z(0) {};
 	vertex_3(float nx, float ny, float nz) : x(nx), y(ny), z(nz) {};
 };
 
+/**
+* @struct texCoord_2
+*
+* @author Morgan Smolder
+*/
 struct texCoord_2{
 	float x, y;
 	texCoord_2() : x(0), y(0) {};
 	texCoord_2(float nx, float ny) : x(nx), y(ny) {};
 };
 
+/**
+* @struct normal_3
+*
+* @author Morgan Smolder
+*/
 struct normal_3 {
 	float x, y, z;
 	normal_3() : x(0), y(0), z(0) {};
 	normal_3(float nx, float ny, float nz) : x(nx), y(ny), z(nz) {};
 };
 
+/**
+* @struct trans_3
+*
+* @author Morgan Smolder
+*/
 struct trans_3 {
 	float x, y, z;
 	trans_3() : x(0), y(0), z(0) {};
@@ -33,6 +53,11 @@ struct trans_3 {
 	trans_3(const vec3 & tocpy) : x(tocpy.x()), y(tocpy.y()), z(tocpy.z()) {};
 };
 
+/**
+* @struct scale_3
+*
+* @author Morgan Smolder
+*/
 struct scale_3 {
 	float x, y, z;
 	scale_3() : x(0), y(0), z(0) {};
@@ -40,19 +65,33 @@ struct scale_3 {
 	scale_3(const vec3 & tocpy) : x(tocpy.x()), y(tocpy.y()), z(tocpy.z()) {};
 };
 
-
+/**
+* @struct rot_4
+*
+* @author Morgan Smolder
+*/
 struct rot_4 {
 	float x, y, z, w;
 	rot_4() : x(0), y(0), z(0), w(0) {};
 	rot_4(float nx, float ny, float nz, float nw) : x(nx), y(ny), z(nz), w(nw) {};
 };
 
+/**
+* @struct color_3
+*
+* @author Morgan Smolder
+*/
 struct color_3{
 	float r, g, b;
 	color_3() : r(0), g(0), b(0) {};
 	color_3(float nx, float ny, float nz) : r(nx), g(ny), b(nz) {};
 };
 
+/**
+* @struct color_4
+*
+* @author Morgan Smolder
+*/
 struct color_4 {
 	float r, g, b, a;
 	color_4() : r(0), g(0), b(0) {};

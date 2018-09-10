@@ -3,6 +3,11 @@
 #include "ControlContext.h"
 #include "CameraManager.h"
 
+/**
+* @class FPSControlsContext
+*
+* @author Morgan Smolder
+*/
 class FPSControlsContext : public ControlContext
 {
 public:
