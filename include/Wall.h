@@ -12,7 +12,7 @@ class Bounds : public Model {
 		void update(float time) {}
 		void render(const vec3 & transmat) {
 			RNDR->enableWireframe();
-			RNDR->DrawRectangularPrism(vec3(minx, miny, minz), (maxx - minx)/2, (maxy - miny) / 2, (maxz - minz) / 2);
+			RNDR->DrawRectangularPrism(vec3(maxx - (maxx - minx) / 2, maxy - (maxy - miny) / 2, maxz - (maxz - minz) / 2), (maxx - minx)/2, (maxy - miny) / 2, (maxz - minz) / 2);
 			RNDR->disableWireFrame();
 		}
 		void centerOnPoint(vec3 & point) {}
@@ -24,6 +24,10 @@ class Bounds : public Model {
 			pos = vec3();
 
 			vec4 corners[8];
+
+			width = width / 2;
+			height = height / 2;
+			depth = depth / 2;
 
 			corners[0] = vec4(pos.x() - width, pos.y() - height, pos.z() - depth, 1);
 			corners[1] = vec4(pos.x() - width, pos.y() - height, pos.z() + depth, 1);

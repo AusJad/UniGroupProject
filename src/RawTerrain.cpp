@@ -38,6 +38,7 @@ RAWTerrain::RAWTerrain(const RAWTerrain & tocpy) {
 	detailmap = tocpy.detailmap;
 	lights = tocpy.lights;
 	id = tocpy.id;
+	diplayListID = tocpy.diplayListID;
 }
 
 RAWTerrain * RAWTerrain::create() const {
@@ -46,14 +47,23 @@ RAWTerrain * RAWTerrain::create() const {
 
 void RAWTerrain::render(const vec3 & transmat) {
 	vec3 trans(0, 0, 0);
+
+	if (!RNDR->hasList(diplayListID)) {
+		RNDR->beginCreateDisplayList(diplayListID);
+		if (!multitexture.empty()) {
+			Singleton<RenderModuleStubb>::getInstance()->renderMultiTexturedArrayTriStrip(planInd, plane, texcoords, lights, trans);
+		}
+		else {
+			Singleton<RenderModuleStubb>::getInstance()->renderArrayTriStrip(planInd, plane, trans);
+		}
+		RNDR->endCreateDisplayList();
+	}
+
 	if (!multitexture.empty()) {
 		Singleton<TextureManager>::getInstance()->useTexture(multitexture, detailmap, Singleton<RenderModuleStubb>::getInstance());
-		Singleton<RenderModuleStubb>::getInstance()->renderMultiTexturedArrayTriStrip(planInd, plane, texcoords, lights, trans);
-		Singleton<TextureManager>::getInstance()->DisableMultiTex(Singleton<RenderModuleStubb>::getInstance());
 	}
-	else {
-		Singleton<RenderModuleStubb>::getInstance()->renderArrayTriStrip(planInd, plane, trans);
-	}
+	RNDR->callList(diplayListID);
+	Singleton<TextureManager>::getInstance()->DisableMultiTex(Singleton<RenderModuleStubb>::getInstance());
 }
 
 bool RAWTerrain::loadData(std::string filename){
@@ -81,6 +91,8 @@ bool RAWTerrain::loadData(std::string filename){
 
 		delete[] data2;
 		data2 = NULL;
+
+		diplayListID = RandomString(50);
 
 		return true;
 	}

@@ -48,6 +48,8 @@ class RAWTerrain : public terrain
 		std::string multitexture;
 		/// The detail map data.
 		std::string detailmap;
+
+		std::string diplayListID;
 		
 		/**
 		* @brief Load the data in from file.

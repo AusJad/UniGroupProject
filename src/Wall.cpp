@@ -62,6 +62,12 @@ void Wall::render() {
 	if (!tex.empty()) TXMAN->disableTexture(RNDR);
 
 	if (drawBounds) {
+		//if (anglex != 0 || angley != 0 || anglez == 0) {
+		//	GeoStream << START_ATTRIB << color_3(1.0f, 0.6f, 0.0f);
+		//	aabb.render(vec3());
+		//	GeoStream << END_ATTRIB;
+		//}
+
 		GeoStream << START_ATTRIB << color_3(0.0f, 0.0f, 1.0f);
 		RNDR->enableWireframe();
 		physvec3 rot = Decompose(obb.orientation);
