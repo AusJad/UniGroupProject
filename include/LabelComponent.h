@@ -5,7 +5,11 @@
 #include "WndComponent.h"
 #include <string>
 
-
+/**
+* @class LabelComponent
+*
+* @author Morgan Smolder
+*/
 class LabelComponent : public WndComponent
 {
 public:

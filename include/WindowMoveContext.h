@@ -3,6 +3,11 @@
 #include "movementInfo.h"
 #include "ControlContext.h"
 
+/**
+* @class WindowMoveContext
+*
+* @author Morgan Smolder
+*/
 class WindowMoveContext : public ControlContext
 {
 public:

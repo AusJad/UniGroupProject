@@ -12,6 +12,11 @@ enum GUIState {
 	editorst = 2
 };
 
+/**
+* @class GUI
+*
+* @author Morgan Smolder
+*/
 class GUI
 {
 public:

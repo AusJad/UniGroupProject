@@ -8,6 +8,11 @@ typedef void(*mouseMoveCallback)(GLFWwindow* window, double x, double y);
 typedef void(*mouseButtonCallback)(GLFWwindow* window, int button, int action, int mods);
 typedef void(*scrollCallback)(GLFWwindow* window, double xoffset, double yoffset);
 
+/**
+* @class ControlContext
+*
+* @author Morgan Smolder
+*/
 class ControlContext
 {
 public:

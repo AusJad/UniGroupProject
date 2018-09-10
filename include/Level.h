@@ -5,6 +5,11 @@
 
 #define LVL Singleton<Level>::getInstance()
 
+/**
+* @class Level
+*
+* @author Morgan Smolder
+*/
 class Level
 {
 public:

@@ -6,6 +6,11 @@
 #include "GenericObject.h"
 #include "Level.h"
 
+/**
+* @class EngineStateWriter
+*
+* @author Morgan Smolder
+*/
 class EngineStateWriter
 {
 public:

@@ -4,6 +4,11 @@
 #include "ButtonComponent.h"
 #include "LabelComponent.h"
 
+/**
+* @class SelectionComponent
+*
+* @author Morgan Smolder
+*/
 class SelectionComponent : public WndComponent
 {
 public:

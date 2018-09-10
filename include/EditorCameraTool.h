@@ -4,6 +4,11 @@
 #include "Level.h"
 #include "Alert.h"
 
+/**
+* @class EditorCameraTool
+*
+* @author Morgan Smolder
+*/
 class EditorCameraTool
 {
 public:

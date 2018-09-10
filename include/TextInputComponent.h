@@ -7,6 +7,11 @@
 #include "UITextures.h"
 #include <string>
 
+/**
+* @class TextInputComponent
+*
+* @author Morgan Smolder
+*/
 class TextInputComponent : public WndComponent
 {
 public:

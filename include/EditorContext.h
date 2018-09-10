@@ -7,6 +7,11 @@
 #include "SaveTool.h"
 #include "EditorObjectTool.h"
 
+/**
+* @class EditorContext
+*
+* @author Morgan Smolder
+*/
 class EditorContext
 {
 public:

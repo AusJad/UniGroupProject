@@ -22,6 +22,11 @@
 
 #define ROUNDF(string) string.substr(0, string.find(".") + 3) 
 
+/**
+* @class EditorWallTool
+*
+* @author Morgan Smolder
+*/
 class EditorWallTool
 {
 public:

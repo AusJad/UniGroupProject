@@ -8,6 +8,11 @@ enum renderstage {
 	showmainmenu = 2
 };
 
+/**
+* @class TitleScreen
+*
+* @author Morgan Smolder
+*/
 class TitleScreen
 {
 public:

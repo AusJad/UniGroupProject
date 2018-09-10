@@ -5,6 +5,11 @@
 #include "TextureManager.h"
 #include "GameObject.h"
 
+/**
+* @class Bounds
+*
+* @author Morgan Smolder
+*/
 class Bounds : public Model {
 	public:
 		Bounds * create() const { return NULL; }
@@ -72,6 +77,11 @@ class Bounds : public Model {
 		}
 };
 
+/**
+* @class Wall
+*
+* @author Morgan Smolder
+*/
 class Wall : public GameObject
 {
 public:
