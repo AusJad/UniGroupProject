@@ -1,6 +1,8 @@
 #ifndef _H_GEOMETRY_3D_
 #define _H_GEOMETRY_3D_
 
+// From Game Physics Cookbook by Gabor Szauer
+
 #include <vector>
 #include <utility>
 //#include <cfloat>
@@ -13,7 +15,7 @@ typedef physvec3 Point;
 /**
 * @struct Line
 *
-* @author Morgan Smolder
+* @author Game Phyics Cookbook
 */
 typedef struct Line {
 	Point start;
@@ -27,7 +29,7 @@ typedef struct Line {
 /**
 * @struct physRay
 *
-* @author Morgan Smolder
+* @author Game Phyics Cookbook
 */
 typedef struct physRay {
 	Point origin;
@@ -46,7 +48,7 @@ typedef struct physRay {
 /**
 * @struct Sphere
 *
-* @author Morgan Smolder
+* @author Game Phyics Cookbook
 */
 typedef struct Sphere {
 	Point position;
@@ -60,7 +62,7 @@ typedef struct Sphere {
 /**
 * @struct physAABB
 *
-* @author Morgan Smolder
+* @author Game Phyics Cookbook
 */
 typedef struct physAABB {
 	Point position;
@@ -74,7 +76,7 @@ typedef struct physAABB {
 /**
 * @struct OBB
 *
-* @author Morgan Smolder
+* @author Game Phyics Cookbook
 */
 typedef struct OBB {
 	Point position;
@@ -91,7 +93,7 @@ typedef struct OBB {
 /**
 * @struct Plane
 *
-* @author Morgan Smolder
+* @author Game Phyics Cookbook
 */
 typedef struct Plane {
 	physvec3 normal;
@@ -105,7 +107,7 @@ typedef struct Plane {
 /**
 * @struct Triangle
 *
-* @author Morgan Smolder
+* @author Game Phyics Cookbook
 */
 typedef struct Triangle {
 	union {
@@ -132,7 +134,7 @@ typedef struct Triangle {
 /**
 * @struct BVHNode
 *
-* @author Morgan Smolder
+* @author Game Phyics Cookbook
 */
 typedef struct BVHNode {
 	physAABB bounds;
@@ -146,7 +148,7 @@ typedef struct BVHNode {
 /**
 * @struct physMesh
 *
-* @author Morgan Smolder
+* @author Game Phyics Cookbook
 */
 typedef struct physMesh {
 	int numTriangles;
@@ -163,7 +165,7 @@ typedef struct physMesh {
 /**
 * @class physModel
 *
-* @author Morgan Smolder
+* @author Game Phyics Cookbook
 */
 class physModel {
 protected:
@@ -189,7 +191,7 @@ public:
 /**
 * @struct Interval
 *
-* @author Morgan Smolder
+* @author Game Phyics Cookbook
 */
 typedef struct Interval {
 	float min;
@@ -199,7 +201,7 @@ typedef struct Interval {
 /**
 * @struct Frustum
 *
-* @author Morgan Smolder
+* @author Game Phyics Cookbook
 */
 typedef struct Frustum {
 	union {
@@ -220,7 +222,7 @@ typedef struct Frustum {
 /**
 * @struct RaycastResult
 *
-* @author Morgan Smolder
+* @author Game Phyics Cookbook
 */
 typedef struct RaycastResult {
 	physvec3 point;

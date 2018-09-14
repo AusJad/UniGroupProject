@@ -5,6 +5,8 @@
 #include <cfloat>
 #include <stdint.h>
 
+// From Game Physics Cookbook by Gabor Szauer
+
 // http://realtimecollisiondetection.net/pubs/Tolerances/
 //#define CMP(x, y) \
 //	(fabsf(x - y) <= FLT_EPSILON * fmaxf(1.0f, fmaxf(fabsf(x), fabsf(y))))

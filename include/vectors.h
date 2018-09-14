@@ -2,6 +2,8 @@
 #define _H_MATH_VECTORS_
 #include <ostream>
 
+// From Game Physics Cookbook by Gabor Szauer
+
 //#define RAD2DEG(x) ((x) * 57.295754f)
 //#define DEG2RAD(x) ((x) * 0.0174533f)
 
@@ -13,6 +15,11 @@ float DEG2RAD(float degrees);
 #endif
 float CorrectDegrees(float degrees);
 
+/**
+* @struct physvec2
+*
+* @author Game Physics Cookbook
+*/
 typedef struct physvec2 {
 	union {
 		struct {
@@ -30,6 +37,11 @@ typedef struct physvec2 {
 	inline physvec2(float _x, float _y) : x(_x), y(_y) { }
 } physvec2;
 
+/**
+* @struct physvec3
+*
+* @author Game Physics Cookbook
+*/
 typedef struct physvec3 {
 	union {
 		struct {

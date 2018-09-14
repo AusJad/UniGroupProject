@@ -2,6 +2,7 @@
 #define _H_MATH_MATRICES_
 #include <ostream>
 
+// From Game Physics Cookbook by Gabor Szauer
 
 /*
 Row Major!
@@ -58,6 +59,11 @@ handed matrices. That is, +Z goes INTO the screen.
 
 #include "vectors.h"
 
+/**
+* @struct mat2
+*
+* @author Game Physics Cookbook
+*/
 typedef struct mat2 {
 	union {
 		struct {
@@ -83,6 +89,11 @@ typedef struct mat2 {
 	}
 } mat2;
 
+/**
+* @struct mat3
+*
+* @author Game Physics Cookbook
+*/
 typedef struct mat3 {
 	union {
 		struct {
@@ -113,6 +124,11 @@ typedef struct mat3 {
 
 } mat3;
 
+/**
+* @struct physmact4
+*
+* @author Game Physics Cookbook
+*/
 typedef struct physmat4 {
 	union {
 		struct {
