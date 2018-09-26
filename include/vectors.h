@@ -2,6 +2,10 @@
 #define _H_MATH_VECTORS_
 #include <ostream>
 
+// Our Maths class vector objects for copy constructors
+#include "vec2.h"
+#include "vec3.h"
+
 // From Game Physics Cookbook by Gabor Szauer
 
 //#define RAD2DEG(x) ((x) * 57.295754f)
@@ -35,6 +39,7 @@ typedef struct physvec2 {
 
 	inline physvec2() : x(0.0f), y(0.0f) { }
 	inline physvec2(float _x, float _y) : x(_x), y(_y) { }
+	inline physvec2(vec2 v) : x(v.x()), y(v.y()) { }
 } physvec2;
 
 /**
@@ -58,6 +63,7 @@ typedef struct physvec3 {
 
 	inline physvec3() : x(0.0f), y(0.0f), z(0.0f) { }
 	inline physvec3(float _x, float _y, float _z) : x(_x), y(_y), z(_z) { }
+	inline physvec3(vec3 v) : x(v.x()), y(v.y()), z(v.z()) { }
 
 } physvec3;
 

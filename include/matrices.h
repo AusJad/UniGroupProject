@@ -2,6 +2,9 @@
 #define _H_MATH_MATRICES_
 #include <ostream>
 
+// Our matrix maths lib for conversion
+#include "mat4.h"
+
 // From Game Physics Cookbook by Gabor Szauer
 
 /*
@@ -164,10 +167,19 @@ typedef struct physmat4 {
 		_41 = 0; _42 = 0; _43 = 0; _44 = 1;
 	}
 
+	inline physmat4(const mat4 & m)
+	{
+		_11 = m[0]; _12 = m[1]; _13 = m[2]; _14 = m[3];
+		_21 = m[4]; _22 = m[5]; _23 = m[6]; _24 = m[7];
+		_31 = m[8]; _32 = m[9]; _33 = m[10]; _34 = m[11];
+		_41 = m[12]; _42 = m[13]; _43 = m[14]; _44 = m[15];
+	}
+
 
 	inline float* operator[](int i) {
 		return &(asArray[i * 4]);
 	}
+
 } physmat4;
 
 bool operator==(const mat2& l, const mat2& r);
