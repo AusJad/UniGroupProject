@@ -71,17 +71,27 @@ void CollisionEngine::update(GameObject* toupdate, std::vector<GameObject*> coll
 
 	AABB compb;
 
+	//go through all game objects
 	for (unsigned i = 0; i < collGO.size(); i++) {
+
+		//checks that we're not comparing the same game object, and that they are collidable
 		if (collGO.at(i)->getID() != toupdate->getID() && collGO.at(i)->isCollidable()) {
+
+			//checking if it has an OBB
 			if (toupdate->hasOBB() && collGO.at(i)->hasOBB()) {
+				//regular OBB collision.
 				if (OBBOBB(toupdate->getOBB(), collGO.at(i)->getOBB())) {
+					//Geomtry3D struct that holds collision data. (bool collding, physvec3, float depth, vector of physxec3
 					CollisionManifold coll = FindCollisionFeatures(toupdate->getOBB(), collGO.at(i)->getOBB());
 					if (coll.colliding) {
+						//OBBs are colliding, do stuff?
+						//Physics implementation goes here, thanks.
 						toupdate->onCollide(tmpos, collGO.at(i)->getIdentifiers());
 						toupdate->onCollide2(tmpos, collGO.at(i)->getPos());
 					}
 				}
 			}
+			//if no OBB go to AABB.
 			else {
 				compb = genAABB(collGO.at(i));
 				if (updateb.xmax >= compb.xmin && updateb.xmin <= compb.xmax
