@@ -70,7 +70,7 @@ void CollisionEngine::update(GameObject* toupdate, std::vector<GameObject*> coll
 	AABB updateb = genAABB(toupdate);
 
 	AABB compb;
-
+	//M2 OBB collisions
 	//go through all game objects
 	for (unsigned i = 0; i < collGO.size(); i++) {
 

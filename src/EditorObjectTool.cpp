@@ -230,7 +230,7 @@ void EditorObjectTool::switchPlaceMode(int code) {
 	object->setPos(vec3(CAM->getActiveCam()->getPos()) + CAM->getActiveCam()->GetCamZ() * (float)camnearoffset);
 	inplacemode = true;
 }
-
+//M2 having an object infront of a camera/"location".
 void EditorObjectTool::onObjectPlace() {
 	objecttool->show();
 	CONT->switchContextGUIInteract();
