@@ -27,6 +27,22 @@ OBB GenericObject::getOBB() {
 	return obb;
 }
 
+std::vector<OBB> GenericObject::getOBBs() {
+	return obbs;
+};
+bool GenericObject::hasMultiObb() {
+	if (obbs.size() > 0) { return true; }
+	else { return false; }	
+};
+
+int GenericObject::getNumOBBs() {
+	return obbs.size();
+};
+
+OBB GenericObject::getOBB(int obbNum) {
+	return obbs.at(obbNum);
+};
+
 void GenericObject::setScaleX(float nscalex) { 
 	scalex = nscalex; 
 }
@@ -43,12 +59,35 @@ void GenericObject::updateBounds() {
 	if (model != NULL) {
 		model->setScale(vec3(scalex, scaley, scalez));
 		std::vector<vec3> minmax = model->computeMMax();
-
+		if (this->model->getName() == std::string("chair.obj")) {
+			OBB tmpobb;
+			std::cout << "minmax.at(1).x(): " << minmax.at(1).x() << " minmax.at(0).x(): " << minmax.at(0).x() << " minmax.at(1).y(): " << minmax.at(1).y() << " minmax.at(0).y(): " << minmax.at(0).y() << " minmax.at(1).z(): " << minmax.at(1).z() << " minmax.at(0).z(): " << minmax.at(0).z() << "\n" << std::endl;
+			tmpobb.position = physvec3(trans.x(), trans.y() + 10, trans.z());
+			tmpobb.size = physvec3((minmax.at(1).x() - minmax.at(0).x()) / 2,
+				(minmax.at(1).y() - minmax.at(0).y()) / 4,
+				(minmax.at(1).z() - minmax.at(0).z()) / 2);
+			tmpobb.orientation = Rotation3x3(anglex, angley, anglez);
+			obbs.push_back(tmpobb);
+			tmpobb.position = physvec3(trans.x(), trans.y() - 10, trans.z());
+			tmpobb.size = physvec3((minmax.at(1).x() - minmax.at(0).x()) / 2,
+				(minmax.at(1).y() - minmax.at(0).y()) / 4,
+				(minmax.at(1).z() - minmax.at(0).z()) / 2);
+			obbs.push_back(tmpobb);
+		}
+		else {
+			obb.position = physvec3(trans.x(), trans.y(), trans.z());
+			obb.size = physvec3((minmax.at(1).x() - minmax.at(0).x()) / 2,
+				(minmax.at(1).y() - minmax.at(0).y()) / 2,
+				(minmax.at(1).z() - minmax.at(0).z()) / 2);
+			obb.orientation = Rotation3x3(anglex, angley, anglez);
+		}
+		/*
 		obb.position = physvec3(trans.x(), trans.y(), trans.z());
-		obb.size = physvec3((minmax.at(1).x() -minmax.at(0).x()) / 2,
+		obb.size = physvec3((minmax.at(1).x() - minmax.at(0).x()) / 2,
 			(minmax.at(1).y() - minmax.at(0).y()) / 2,
 			(minmax.at(1).z() - minmax.at(0).z()) / 2);
 		obb.orientation = Rotation3x3(anglex, angley, anglez);
+		*/
 	}
 }
 
@@ -59,16 +98,37 @@ void GenericObject::render() {
 
 	GeoStream << END_STREAM;
 
-	/*
-	GeoStream << START_ATTRIB << color_3(1.0f, 0.6f, 0.0f);
-	RNDR->enableWireframe();
-	physvec3 rot = Decompose(obb.orientation);
-	GeoStream << BEGIN_STREAM << trans_3(obb.position.x, obb.position.y, obb.position.z) << rot_4(RAD2DEG(rot.x), 1, 0, 0) << rot_4(RAD2DEG(rot.y), 0, 1, 0) << rot_4(RAD2DEG(rot.z), 0, 0, 1);
-	RNDR->DrawRectangularPrism(vec3(), obb.size.x, obb.size.y, obb.size.z);
-	GeoStream << END_STREAM;
-	RNDR->disableWireFrame();
-	RNDR->DrawRectangularPrism(vec3(obb.position.x, obb.position.y, obb.position.z), 3, 3, 3);
-	GeoStream << END_ATTRIB;*/
+	
+	
+	
+	physvec3 rot;
+	if (this->hasMultiObb()) {
+		GeoStream << START_ATTRIB << color_3(0.6f, 1.0f, 0.0f);
+		OBB tmpobb;
+		for (int i = 0; i < this->getNumOBBs(); i++) {
+			RNDR->enableWireframe();
+			tmpobb = this->getOBB(i);
+			rot = Decompose(tmpobb.orientation);
+			GeoStream << BEGIN_STREAM << trans_3(tmpobb.position.x, tmpobb.position.y, tmpobb.position.z) << rot_4(RAD2DEG(rot.x), 1, 0, 0) << rot_4(RAD2DEG(rot.y), 0, 1, 0) << rot_4(RAD2DEG(rot.z), 0, 0, 1);
+			RNDR->DrawRectangularPrism(vec3(), tmpobb.size.x, tmpobb.size.y, tmpobb.size.z);
+			GeoStream << END_STREAM;
+			RNDR->disableWireFrame();
+			RNDR->DrawRectangularPrism(vec3(tmpobb.position.x, tmpobb.position.y, tmpobb.position.z), 3, 3, 3);
+			
+		}
+	}
+	else {
+		GeoStream << START_ATTRIB << color_3(1.0f, 0.6f, 0.0f);
+		rot = Decompose(obb.orientation);
+		RNDR->enableWireframe();
+		GeoStream << BEGIN_STREAM << trans_3(obb.position.x, obb.position.y, obb.position.z) << rot_4(RAD2DEG(rot.x), 1, 0, 0) << rot_4(RAD2DEG(rot.y), 0, 1, 0) << rot_4(RAD2DEG(rot.z), 0, 0, 1);
+		RNDR->DrawRectangularPrism(vec3(), obb.size.x, obb.size.y, obb.size.z);
+		GeoStream << END_STREAM;
+		RNDR->disableWireFrame();
+		RNDR->DrawRectangularPrism(vec3(obb.position.x, obb.position.y, obb.position.z), 3, 3, 3);
+		
+	}
+	GeoStream << END_ATTRIB;
 }
 
 GenericObject::GenericObject(const GenericObject & tocpy) : GameObject(*this) {

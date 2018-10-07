@@ -257,3 +257,5 @@ bool GameObject::fromstring(std::string linehead, std::string & toread)
 
 	return false;
 }
+
+int GameObject::getNumOBBs() { return 0; };

@@ -73,7 +73,46 @@ void CollisionEngine::update(GameObject* toupdate, std::vector<GameObject*> coll
 
 	for (unsigned i = 0; i < collGO.size(); i++) {
 		if (collGO.at(i)->getID() != toupdate->getID() && collGO.at(i)->isCollidable()) {
-			if (toupdate->hasOBB() && collGO.at(i)->hasOBB()) {
+			if (toupdate->hasMultiObb() && collGO.at(i)->hasOBB()) {
+				std::cout << "Multi vs Single\n" << std::endl;
+				for (int i = 0; i < toupdate->getNumOBBs(); i++) {
+					if (OBBOBB(toupdate->getOBB(i), collGO.at(i)->getOBB())) {
+						CollisionManifold coll = FindCollisionFeatures(toupdate->getOBB(i), collGO.at(i)->getOBB());
+						if (coll.colliding) {
+							toupdate->onCollide(tmpos, collGO.at(i)->getIdentifiers());
+							toupdate->onCollide2(tmpos, collGO.at(i)->getPos());
+						}
+					}
+				}
+			}
+			else if (toupdate->hasMultiObb() && collGO.at(i)->hasMultiObb()) {
+				std::cout << "Multi vs Multi\n" << std::endl;
+				for (int i = 0; i < toupdate->getNumOBBs(); i++) {
+					for (int k = 0; k < collGO.at(i)->getNumOBBs(); k++) {
+						if (OBBOBB(toupdate->getOBB(i), collGO.at(i)->getOBB(k))) {
+							CollisionManifold coll = FindCollisionFeatures(toupdate->getOBB(i), collGO.at(i)->getOBB(k));
+							if (coll.colliding) {
+								toupdate->onCollide(tmpos, collGO.at(i)->getIdentifiers());
+								toupdate->onCollide2(tmpos, collGO.at(i)->getPos());
+							}
+						}
+					}
+				}
+			}
+			else if (toupdate->hasOBB() && collGO.at(i)->hasMultiObb()) {
+				//std::cout << "Single vs Multi\n" << std::endl;
+					for (int k = 0; k < collGO.at(i)->getNumOBBs(); k++) {
+						if (OBBOBB(toupdate->getOBB(), collGO.at(i)->getOBB(k))) {
+							CollisionManifold coll = FindCollisionFeatures(toupdate->getOBB(), collGO.at(i)->getOBB(k));
+							if (coll.colliding) {
+								toupdate->onCollide(tmpos, collGO.at(i)->getIdentifiers());
+								toupdate->onCollide2(tmpos, collGO.at(i)->getPos());
+							}
+						}
+					}
+			}
+			else if (toupdate->hasOBB() && collGO.at(i)->hasOBB()) {
+				//std::cout << "Single vs Single\n" << std::endl;
 				if (OBBOBB(toupdate->getOBB(), collGO.at(i)->getOBB())) {
 					CollisionManifold coll = FindCollisionFeatures(toupdate->getOBB(), collGO.at(i)->getOBB());
 					if (coll.colliding) {
@@ -127,7 +166,6 @@ void CollisionEngine::update(GameObject* toupdate, std::vector<GameObject*> coll
 void CollisionEngine::update(GameObject* toupdate, GameObject* collGO, float time) {
 	if (toupdate->isCollidable() == false) {
 		vec3 tmpos = toupdate->getPos();
-		
 		toupdate->update(time);
 
 		float x = toupdate->getPos().x();

@@ -205,7 +205,11 @@ public:
 
 	virtual bool hasOBB() { return false; }
 	virtual OBB getOBB() { return OBB(); }
+	virtual OBB getOBB(int obbNum) { return OBB(); };
+	virtual int getNumOBBs();
 	virtual bool isStatic() { return false; }
+	virtual std::vector<OBB> getOBBs() { return std::vector<OBB>(); };
+	virtual bool hasMultiObb() { return false; };
 
 protected:
 	/// The state of the object.

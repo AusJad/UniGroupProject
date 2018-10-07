@@ -661,5 +661,6 @@
     <None Include="Resources\Scripts\startup.lua">
       <Filter>Resource Files\Scripts</Filter>
     </None>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>
