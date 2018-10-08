@@ -23,20 +23,38 @@ std::string GenericObject::toString() {
 	return out;
 }
 
+bool GenericObject::addMultiObb(std::vector<OBB> & in) {
+	this->obbsConfig = in;
+	this->obbs = this->obbsConfig;
+	return true;
+};
+
 OBB GenericObject::getOBB() {
 	return obb;
+}
+
+OBB GenericObject::getOBB(unsigned int index ) {
+	if (index < obbs.size())
+		return obbs[index];
 }
 
 std::vector<OBB> GenericObject::getOBBs() {
 	return obbs;
 };
+
+OBB GenericObject::getOBBConfig(unsigned int index) {
+	if (index < obbsConfig.size()) {
+		return obbsConfig[index];
+	}
+}
+
 bool GenericObject::hasMultiObb() {
-	if (obbs.size() > 0) { return true; }
+	if (obbsConfig.size() > 0) { return true; }
 	else { return false; }	
 };
 
 int GenericObject::getNumOBBs() {
-	return obbs.size();
+	return obbsConfig.size();
 };
 
 OBB GenericObject::getOBB(int obbNum) {
@@ -59,20 +77,14 @@ void GenericObject::updateBounds() {
 	if (model != NULL) {
 		model->setScale(vec3(scalex, scaley, scalez));
 		std::vector<vec3> minmax = model->computeMMax();
-		if (this->model->getName() == std::string("chair.obj")) {
-			OBB tmpobb;
-			std::cout << "minmax.at(1).x(): " << minmax.at(1).x() << " minmax.at(0).x(): " << minmax.at(0).x() << " minmax.at(1).y(): " << minmax.at(1).y() << " minmax.at(0).y(): " << minmax.at(0).y() << " minmax.at(1).z(): " << minmax.at(1).z() << " minmax.at(0).z(): " << minmax.at(0).z() << "\n" << std::endl;
-			tmpobb.position = physvec3(trans.x(), trans.y() + 10, trans.z());
-			tmpobb.size = physvec3((minmax.at(1).x() - minmax.at(0).x()) / 2,
-				(minmax.at(1).y() - minmax.at(0).y()) / 4,
-				(minmax.at(1).z() - minmax.at(0).z()) / 2);
-			tmpobb.orientation = Rotation3x3(anglex, angley, anglez);
-			obbs.push_back(tmpobb);
-			tmpobb.position = physvec3(trans.x(), trans.y() - 10, trans.z());
-			tmpobb.size = physvec3((minmax.at(1).x() - minmax.at(0).x()) / 2,
-				(minmax.at(1).y() - minmax.at(0).y()) / 4,
-				(minmax.at(1).z() - minmax.at(0).z()) / 2);
-			obbs.push_back(tmpobb);
+		if (this->hasMultiObb()) {
+			for (int i = 0; i < obbs.size(); i++){
+				obbs[i].position = physvec3((trans.x() + obbsConfig[i].position.x * (scalex)), trans.y() + obbsConfig[i].position.y * (scaley), trans.z() + obbsConfig[i].position.z * (scalez));
+				obbs[i].size.x = obbsConfig[i].size.x * scalex;
+				obbs[i].size.y = obbsConfig[i].size.y * scaley;
+				obbs[i].size.z = obbsConfig[i].size.z * scalez;
+				obbs[i].orientation = Rotation3x3(anglex, angley, anglez);
+		}
 		}
 		else {
 			obb.position = physvec3(trans.x(), trans.y(), trans.z());
@@ -81,13 +93,6 @@ void GenericObject::updateBounds() {
 				(minmax.at(1).z() - minmax.at(0).z()) / 2);
 			obb.orientation = Rotation3x3(anglex, angley, anglez);
 		}
-		/*
-		obb.position = physvec3(trans.x(), trans.y(), trans.z());
-		obb.size = physvec3((minmax.at(1).x() - minmax.at(0).x()) / 2,
-			(minmax.at(1).y() - minmax.at(0).y()) / 2,
-			(minmax.at(1).z() - minmax.at(0).z()) / 2);
-		obb.orientation = Rotation3x3(anglex, angley, anglez);
-		*/
 	}
 }
 
@@ -131,6 +136,12 @@ void GenericObject::render() {
 	GeoStream << END_ATTRIB;
 }
 
+bool GenericObject::addMultiObb(OBB in) {
+	obbs.push_back(in);
+		return true;
+}
+
+
 GenericObject::GenericObject(const GenericObject & tocpy) : GameObject(*this) {
 	scalex = tocpy.scalex;
 	scaley = tocpy.scaley;
@@ -140,3 +151,4 @@ GenericObject::GenericObject(const GenericObject & tocpy) : GameObject(*this) {
 	anglex = tocpy.anglex;
 	anglez = tocpy.anglez;
 }
+

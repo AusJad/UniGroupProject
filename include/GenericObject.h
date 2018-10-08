@@ -35,10 +35,14 @@ public:
 	bool isStatic() { return true; }
 	bool hasOBB() { return true; };
 	OBB getOBB();
+	OBB getOBB( unsigned int index );
+	OBB getOBBConfig( unsigned int index );
 	std::vector<OBB> getOBBs();
 	bool hasMultiObb();
 	int getNumOBBs();
 	OBB getOBB(int obbNum);
+	bool addMultiObb(OBB in);
+	bool addMultiObb(std::vector<OBB> & in);
 
 private:
 	float scalex;
@@ -47,6 +51,7 @@ private:
 	vec3 trans;
 	OBB obb;
 	std::vector<OBB> obbs;
+	std::vector<OBB> obbsConfig;
 	float angley;
 	float anglex;
 	float anglez;

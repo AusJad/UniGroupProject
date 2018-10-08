@@ -202,15 +202,22 @@ void EngineStateWriter::addGenericObj(std::ifstream & toparse) {
 			tmpw->setAngleZ(tmpf);
 		}
 		else
-		if (linehead == "MODEL") {
-			Model * M = NULL;
-			M = MMAN->useModel(in, in);
-			if (M == NULL) {
-				delete tmpw;
-				return;
+			if (linehead == "MODEL") {
+				Model * M = NULL;
+				M = MMAN->useModel(in, in);
+				if (M == NULL) {
+					delete tmpw;
+					return;
+				}
+				std::cout << "Name: " << M->getName() << std::endl;
+				tmpw->setModel(M);
+				if (MMAN->hasMultiObb(M->getName())) {
+					std::vector<OBB> tmpobb = MMAN->getMultiObb(M->getName());
+					std::cout << "more than one obb found" << std::endl;
+					tmpw->addMultiObb(tmpobb);
+				}
+						
 			}
-			tmpw->setModel(M);
-		}
 	}
 
 	tmpw->updateBounds();
@@ -286,7 +293,6 @@ void EngineStateWriter::addWall(std::ifstream & toparse) {
 			if (in == "0") tmpw->setHasCol(false);
 		}
 	}
-
 	tmpw->updateBounds();
 	tmpw->setID(GOF->getNextId());
 	SM->getGOH().addGameObject(tmpw);

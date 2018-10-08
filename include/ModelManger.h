@@ -5,6 +5,7 @@
 #include "fileNameReader.h"
 #include "Singleton.h"
 #include <map>
+#include "Geometry3D.h"
 
 #define MMAN Singleton<ModelManger>::getInstance()
 
@@ -72,6 +73,12 @@ public:
 
 	const std::vector<std::string> & getModelGroup(std::string group);
 
+	bool loadOBBs(std::string filename);
+
+	std::vector<OBB> getMultiObb(std::string modelName);
+
+	bool hasMultiObb(std::string modelName);
+
 private:
 	/// The model creation object.
 	ModelFactory modelfactory;
@@ -79,5 +86,7 @@ private:
 	std::map<std::string, Model*> models;
 
 	std::map<std::string, std::vector<std::string> > batchfiles;
+
+	std::map<std::string, std::vector<OBB> > obb_map;
 };
 
