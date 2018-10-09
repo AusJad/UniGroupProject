@@ -79,12 +79,28 @@ void GenericObject::updateBounds() {
 		std::vector<vec3> minmax = model->computeMMax();
 		if (this->hasMultiObb()) {
 			for (int i = 0; i < obbs.size(); i++){
-				obbs[i].position = physvec3((trans.x() + obbsConfig[i].position.x * (scalex)), trans.y() + obbsConfig[i].position.y * (scaley), trans.z() + obbsConfig[i].position.z * (scalez));
+				//obbs[i].position = physvec3((trans.x() + obbsConfig[i].position.x * (scalex)), trans.y() + obbsConfig[i].position.y * (scaley), trans.z() + obbsConfig[i].position.z * (scalez));
 				obbs[i].size.x = obbsConfig[i].size.x * scalex;
 				obbs[i].size.y = obbsConfig[i].size.y * scaley;
 				obbs[i].size.z = obbsConfig[i].size.z * scalez;
+				//rotate around origin
+				//physvec3 tmp = MultiplyPoint(((obbs[i].position - obbsConfig[i].position) * physvec3(scalex, scaley, scalez)), Rotation(anglex, angley, anglez));
+				obbs[i].position = trans;
+				physvec3 tmp2 = physvec3(obbsConfig[i].position.x, obbsConfig[i].position.y, obbsConfig[i].position.z) * physvec3(scalex, scaley, scalez);
+				physvec3 tmp = MultiplyPoint(tmp2, Rotation(anglex, angley, anglez));
+				obbs[i].position += tmp;
+				std::cout << "tmp.x: " << tmp.x << " tmp.y: " << tmp.y << " tmp.z: " << tmp.z << std::endl;
+				
+
+
+				// = trans + tmp;
+				//obbs[i].position.x = tmp.x;
+				//obbs[i].position.y = tmp.y;
+				//obbs[i].position.z = tmp.z;
+				//obbs[i].position = physvec3((trans.x() + obbsConfig[i].position.x * (scalex)), trans.y() + obbsConfig[i].position.y * (scaley), trans.z() + obbsConfig[i].position.z * (scalez));
 				obbs[i].orientation = Rotation3x3(anglex, angley, anglez);
-		}
+				//obbs[i].position -= physvec3((obbsConfig[i].position.x * (scalex)), obbsConfig[i].position.y * (scaley), obbsConfig[i].position.z * (scalez));
+		} 
 		}
 		else {
 			obb.position = physvec3(trans.x(), trans.y(), trans.z());
