@@ -141,10 +141,15 @@ bool GameObject::isCollidable() {
 	return true;
 }
 
-void GameObject::onCollide(vec3 & prevloc, const Identifiers & colgoid) {
+void GameObject::onCollidehm(vec3 & prevloc, const Identifiers & colgoid) {
 	pos = prevloc;
 
 	stop();
+}
+
+void GameObject::onCollide(GameObject * otherObject, CollisionManifold cm)
+{
+	RigidBody::resolveCollision(&rb, &otherObject->rb, cm);
 }
 
 bool GameObject::hasGravity() {

@@ -67,7 +67,10 @@ public:
 	void setHeightMap(std::vector<vec3> & toset);
 
 	/**
-	* @brief Update the collision.
+	* @brief 
+	
+	
+	the collision.
 	*
 	* @param toupdate - The game object to be updated.
 	* @param collGO - A vector of game objects for colliders

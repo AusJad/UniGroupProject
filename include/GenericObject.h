@@ -56,5 +56,7 @@ private:
 	float angley;
 	float anglex;
 	float anglez;
+
+	//RigidBody rb;
 };
 

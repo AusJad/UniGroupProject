@@ -15,6 +15,8 @@
 
 #include "Geometry3D.h"
 
+#include "RigidBody.h"
+
 /**
 * @class GameObject
 * @brief Class for handling game objects and all their data.
@@ -171,7 +173,8 @@ public:
 	* @param prevloc - The objects previous location.
 	* @param colgoid - The ID of the object collided with.
 	*/
-	virtual void onCollide(vec3 & prevloc, const Identifiers & colgoid);
+	virtual void onCollidehm(vec3 & prevloc, const Identifiers & colgoid);
+	virtual void onCollide(GameObject * otherObject, CollisionManifold cm);
 
 	void setIdentifiers(const Identifiers & toset) { this->id = toset; };
 
@@ -210,6 +213,8 @@ public:
 	virtual bool isStatic() { return false; }
 	virtual std::vector<OBB> getOBBs() { return std::vector<OBB>(); };
 	virtual bool hasMultiObb() { return false; };
+
+	RigidBody rb; //tmp
 
 protected:
 	/// The state of the object.

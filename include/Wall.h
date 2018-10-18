@@ -159,5 +159,7 @@ private:
 
 	Bounds aabb;
 	OBB obb;
+
+	//RigidBody rb;
 };
 

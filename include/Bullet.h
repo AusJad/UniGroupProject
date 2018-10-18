@@ -51,7 +51,7 @@ public:
 	* @param prevloc - The previous location of the bullet before collision.
 	* @param colgoid - The ID of the GameObject being collided with.
 	*/
-	void onCollide(vec3 & prevloc, const Identifiers & colgoid);
+	//void onCollide(vec3 & prevloc, const Identifiers & colgoid);
 
 	/**
 	* @brief Class to determine if the bullet has gravity acting on it.

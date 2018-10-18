@@ -74,26 +74,26 @@ void CollisionEngine::update(GameObject* toupdate, std::vector<GameObject*> coll
 	for (unsigned i = 0; i < collGO.size(); i++) {
 		if (collGO.at(i)->getID() != toupdate->getID() && collGO.at(i)->isCollidable()) {
 			if (toupdate->hasMultiObb() && collGO.at(i)->hasOBB()) {
-				std::cout << "Multi vs Single\n" << std::endl;
+				//std::cout << "Multi vs Single\n" << std::endl;
 				for (int i = 0; i < toupdate->getNumOBBs(); i++) {
 					if (OBBOBB(toupdate->getOBB(i), collGO.at(i)->getOBB())) {
 						CollisionManifold coll = FindCollisionFeatures(toupdate->getOBB(i), collGO.at(i)->getOBB());
 						if (coll.colliding) {
-							toupdate->onCollide(tmpos, collGO.at(i)->getIdentifiers());
-							toupdate->onCollide2(tmpos, collGO.at(i)->getPos());
+							toupdate->onCollide(collGO.at(i), coll);
+							//toupdate->onCollide2(tmpos, collGO.at(i)->getPos()); // onCollide2() is from NPC and no longer used
 						}
 					}
 				}
 			}
 			else if (toupdate->hasMultiObb() && collGO.at(i)->hasMultiObb()) {
-				std::cout << "Multi vs Multi\n" << std::endl;
+				//std::cout << "Multi vs Multi\n" << std::endl;
 				for (int i = 0; i < toupdate->getNumOBBs(); i++) {
 					for (int k = 0; k < collGO.at(i)->getNumOBBs(); k++) {
 						if (OBBOBB(toupdate->getOBB(i), collGO.at(i)->getOBB(k))) {
 							CollisionManifold coll = FindCollisionFeatures(toupdate->getOBB(i), collGO.at(i)->getOBB(k));
 							if (coll.colliding) {
-								toupdate->onCollide(tmpos, collGO.at(i)->getIdentifiers());
-								toupdate->onCollide2(tmpos, collGO.at(i)->getPos());
+								toupdate->onCollide(collGO.at(i), coll);
+								//toupdate->onCollide2(tmpos, collGO.at(i)->getPos());
 							}
 						}
 					}
@@ -105,8 +105,8 @@ void CollisionEngine::update(GameObject* toupdate, std::vector<GameObject*> coll
 						if (OBBOBB(toupdate->getOBB(), collGO.at(i)->getOBB(k))) {
 							CollisionManifold coll = FindCollisionFeatures(toupdate->getOBB(), collGO.at(i)->getOBB(k));
 							if (coll.colliding) {
-								toupdate->onCollide(tmpos, collGO.at(i)->getIdentifiers());
-								toupdate->onCollide2(tmpos, collGO.at(i)->getPos());
+								toupdate->onCollide(collGO.at(i), coll);
+								//toupdate->onCollide2(tmpos, collGO.at(i)->getPos());
 							}
 						}
 					}
@@ -116,8 +116,9 @@ void CollisionEngine::update(GameObject* toupdate, std::vector<GameObject*> coll
 				if (OBBOBB(toupdate->getOBB(), collGO.at(i)->getOBB())) {
 					CollisionManifold coll = FindCollisionFeatures(toupdate->getOBB(), collGO.at(i)->getOBB());
 					if (coll.colliding) {
-						toupdate->onCollide(tmpos, collGO.at(i)->getIdentifiers());
-						toupdate->onCollide2(tmpos, collGO.at(i)->getPos());
+						toupdate->onCollide(collGO.at(i), coll);
+						//toupdate->onCollide(tmpos, collGO.at(i)->getIdentifiers());
+						//toupdate->onCollide2(tmpos, collGO.at(i)->getPos());
 					}
 				}
 			}
@@ -126,8 +127,8 @@ void CollisionEngine::update(GameObject* toupdate, std::vector<GameObject*> coll
 				if (updateb.xmax >= compb.xmin && updateb.xmin <= compb.xmax
 					&& updateb.zmax >= compb.zmin && updateb.zmin <= compb.zmax
 					&& updateb.ymax >= compb.ymin && updateb.ymin <= compb.ymax) {
-					toupdate->onCollide(tmpos, collGO.at(i)->getIdentifiers());
-					toupdate->onCollide2(tmpos, collGO.at(i)->getPos());
+					toupdate->onCollidehm(tmpos, collGO.at(i)->getIdentifiers());
+					//toupdate->onCollide2(tmpos, collGO.at(i)->getPos());
 				}
 			}
 		}
@@ -140,7 +141,7 @@ void CollisionEngine::update(GameObject* toupdate, std::vector<GameObject*> coll
 		if ((x < maxx && x > minx && z > minz && z < maxz) == false) {
 			//toupdate->setPos(tmpos);
 			//toupdate->stop();
-			if (toupdate->getIdentifiers().getType() == "BLT") toupdate->onCollide(tmpos, Identifiers("NAN"));
+			if (toupdate->getIdentifiers().getType() == "BLT") toupdate->onCollidehm(tmpos, Identifiers("NAN"));
 		}
 
 		if (x < maxx && x > minx && z > minz && z < maxz && hasHMap && toupdate->hasGravity()) {
@@ -157,7 +158,7 @@ void CollisionEngine::update(GameObject* toupdate, std::vector<GameObject*> coll
 
 				float y = interpolateY(toupdate->getPos(), hmloc);
 
-				if(toupdate->getPos().y() < y)  toupdate->onCollide(tmpos, Identifiers("NAN"));
+				if(toupdate->getPos().y() < y)  toupdate->onCollidehm(tmpos, Identifiers("NAN"));
 			}
 		}
 	}
@@ -192,8 +193,8 @@ void CollisionEngine::update(GameObject* toupdate, GameObject* collGO, float tim
 		if (updateb.xmax >= compb.xmin && updateb.xmin <= compb.xmax
 			&& updateb.zmax >= compb.zmin && updateb.zmin <= compb.zmax
 			&& updateb.ymax >= compb.ymin && updateb.ymin <= compb.ymax) {
-			toupdate->onCollide(tmpos, collGO->getIdentifiers());
-			toupdate->onCollide2(tmpos, collGO->getPos());
+			toupdate->onCollidehm(tmpos, collGO->getIdentifiers());
+			//toupdate->onCollide2(tmpos, collGO->getPos());
 		}
 	}
 
@@ -204,7 +205,7 @@ void CollisionEngine::update(GameObject* toupdate, GameObject* collGO, float tim
 		if ((x < maxx && x > minx && z > minz && z < maxz) == false) {
 			toupdate->setPos(tmpos);
 			toupdate->stop();
-			if (toupdate->getIdentifiers().getType() == "BLT") toupdate->onCollide(tmpos, Identifiers("NAN"));
+			if (toupdate->getIdentifiers().getType() == "BLT") toupdate->onCollidehm(tmpos, Identifiers("NAN"));
 		}
 
 		if (x < maxx && x > minx && z > minz && z < maxz && hasHMap && toupdate->hasGravity()) {
@@ -221,7 +222,7 @@ void CollisionEngine::update(GameObject* toupdate, GameObject* collGO, float tim
 
 				float y = interpolateY(toupdate->getPos(), hmloc);
 
-				if (toupdate->getPos().y() < y)  toupdate->onCollide(tmpos, Identifiers("NAN"));
+				if (toupdate->getPos().y() < y)  toupdate->onCollidehm(tmpos, Identifiers("NAN"));
 			}
 		}
 	}

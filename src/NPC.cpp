@@ -126,11 +126,11 @@ void NPC::checkUpdateRndrChange() {
 		}
 	}
 }
-
+/*
 void NPC::onCollide(vec3 & prevloc, const Identifiers & colgoid) {
 	if(colgoid.getType() != "BLT" && state != 2) state = -2;
 }
-
+*/
 void NPC::update(float time) {
 	LUAScriptManager* tmp = Singleton<LUAScriptManager>::getInstance();
 

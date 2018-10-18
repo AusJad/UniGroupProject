@@ -50,6 +50,7 @@ bool Bullet::isVisible() {
 	return inUse;
 }
 
+/*
 void Bullet::onCollide(vec3 & prevloc, const Identifiers & colgoid) {
 	if (colgoid.getType() == id.getName()) return;
 	Message tmpm;
@@ -61,6 +62,7 @@ void Bullet::onCollide(vec3 & prevloc, const Identifiers & colgoid) {
 
 	this->inUse = false;
 }
+*/
 
 bool Bullet::hasGravity() {
 	return false;

@@ -168,6 +168,7 @@
     <ClInclude Include="include\RawTerrain.h" />
     <ClInclude Include="include\RenderModuleStubb.h" />
     <ClInclude Include="include\ResourceList.h" />
+    <ClInclude Include="include\RigidBody.h" />
     <ClInclude Include="include\saveFileIO.h" />
     <ClInclude Include="include\SaveTool.h" />
     <ClInclude Include="include\Scene.h" />
@@ -258,6 +259,7 @@
     <ClCompile Include="src\RawTerrain.cpp" />
     <ClCompile Include="src\RenderModuleStubb.cpp" />
     <ClCompile Include="src\ResourceList.cpp" />
+    <ClCompile Include="src\RigidBody.cpp" />
     <ClCompile Include="src\saveFileIO.cpp" />
     <ClCompile Include="src\SaveTool.cpp" />
     <ClCompile Include="src\Scene.cpp" />

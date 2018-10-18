@@ -150,7 +150,7 @@ public:
 	* @param prevloc - The objects previous location.
 	* @param colgoid - The ID of the object collided with.
 	*/
-	void onCollide(vec3 & prevloc, const Identifiers & colgoid);
+	//void onCollide(vec3 & prevloc, const Identifiers & colgoid);
 
 	void setEvadeTime(float toset);
 

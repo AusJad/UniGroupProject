@@ -396,6 +396,9 @@
     <ClInclude Include="include\CameraManager.h">
       <Filter>Header Files\Camera</Filter>
     </ClInclude>
+    <ClInclude Include="include\RigidBody.h">
+      <Filter>Header Files\Physics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Controls.cpp">
@@ -655,6 +658,9 @@
     </ClCompile>
     <ClCompile Include="src\Level.cpp">
       <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RigidBody.cpp">
+      <Filter>Source Files\Physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

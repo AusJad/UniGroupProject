@@ -9,6 +9,7 @@
 //#include <glm/glm.hpp>
 #include "Maths.h"
 
+
 //--------------------------------------------------------------------------------------
 
 /**
@@ -279,6 +280,8 @@ private:
 	* @brief A method to switch the view mode of the camera.
 	*/
 	void switchViewMode();
+
+	//RigidBody rb;
 };
 
 #endif

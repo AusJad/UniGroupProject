@@ -167,4 +167,3 @@ GenericObject::GenericObject(const GenericObject & tocpy) : GameObject(*this) {
 	anglex = tocpy.anglex;
 	anglez = tocpy.anglez;
 }
-
