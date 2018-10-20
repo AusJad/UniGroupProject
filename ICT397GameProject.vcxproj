@@ -195,7 +195,6 @@
     <ClInclude Include="include\WindowFactory.h" />
     <ClInclude Include="include\WindowMoveContext.h" />
     <ClInclude Include="include\WndComponent.h" />
-    <ClInclude Include="State.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ICT397GameProject.cpp" />

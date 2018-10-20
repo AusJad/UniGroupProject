@@ -109,12 +109,6 @@
     <Filter Include="Source Files\Engine\Message Bus">
       <UniqueIdentifier>{42077f7a-ba74-4413-af79-d827b29d3ace}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\AI">
-      <UniqueIdentifier>{19298e79-b2d8-4493-b4d9-0a4cecf9de9e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\AI">
-      <UniqueIdentifier>{271ab7c0-1b1f-4761-b64e-02c4ad03811b}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -401,9 +395,6 @@
     </ClInclude>
     <ClInclude Include="include\CameraManager.h">
       <Filter>Header Files\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="State.h">
-      <Filter>Header Files\AI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
