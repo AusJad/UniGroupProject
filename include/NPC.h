@@ -3,6 +3,8 @@
 #include <iostream>
 #include "AudioEngine.h"
 
+#include <map>
+
 /**
 * @class NPC
 * @brief Class for creating NPCs
@@ -161,6 +163,13 @@ public:
 	const vec3 & getEvadeTarget();
 	void setEvadeTarget(const vec3 & toset);
 
+	//mm
+	std::map<std::string, std::map<Identifiers, bool>> getAffordances();
+	
+	// Reason for 2 GenerateAffordances functions is because im unsure if we are passing in a single gameobject on a loop or a vector of game objects in a single call
+	void GenerateAffordances(std::vector<GameObject*> GOs);
+	//void GenerateAffordances(GameObject *GO);
+
 private:
 	vec3 evadetarget;
 	/// Velocity of the NPC.
@@ -181,5 +190,15 @@ private:
 	bool canAttack;
 
 	float evadetime;
+
+	//mm
+	std::map<std::string, std::map<Identifiers, bool>> Affordances;
+	float maxBench; // Do you even lift bro
+
+	bool canSit(GameObject *go);
+	bool canMove(GameObject *go);
+	bool canPick_up(GameObject *go);
+
+	physvec3 getDimentions();
 };
 

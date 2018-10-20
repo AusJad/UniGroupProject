@@ -343,3 +343,63 @@ const vec3 & NPC::getEvadeTarget() {
 void NPC::setEvadeTarget(const vec3 & toset) {
 	evadetarget = toset;
 }
+
+//mm
+std::map<std::string, std::map<Identifiers, bool>> NPC::getAffordances()
+{
+	return Affordances;
+}
+
+void NPC::GenerateAffordances(std::vector<GameObject*> GOs)
+{
+	// pickup, sit, move
+
+	for (int i = 0; i < GOs.size(); i++)
+	{
+		
+	}
+}
+
+/*
+void NPC::GenerateAffordances(GameObject * GO)
+{
+
+}
+*/
+
+bool NPC::canSit(GameObject *go)
+{
+	// Assumption: You can only sit on objects greater than 20% of your height but less than 40%.
+	if (go->getDimentions().y > getDimentions().y * 0.2 && go->getDimentions().y < getDimentions().y * 0.4);
+	{
+		return true;
+	}
+	return false;
+}
+
+bool NPC::canMove(GameObject *go)
+{
+	// Assumption: Anything can be moved if its total weight is less than the force behind the object acting on it.
+	if (maxBench < go->getTotalMass())
+		return true;
+	return false;
+}
+
+bool NPC::canPick_up(GameObject *go)
+{
+	// Assumption: You can only pick up objects if they weigh less than you can carry and if their y is half or less of your height and if the x and z are the same of less than yours.
+	if (maxBench > go->getTotalMass())
+	{
+		if (go->getDimentions().y < getDimentions().y * 0.5 && go->getDimentions().x <= getDimentions().x && go->getDimentions().z <= getDimentions().z);
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+physvec3 NPC::getDimentions()
+{
+	return physvec3(model->getMaxX() - model->getMinX(), model->getMaxY() - model->getMinY(), model->getMaxY() - model->getMinY());
+}

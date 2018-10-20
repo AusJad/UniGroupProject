@@ -165,3 +165,8 @@ GenericObject::GenericObject(const GenericObject & tocpy) : GameObject(*this) {
 	anglez = tocpy.anglez;
 }
 
+// mm
+physvec3 GenericObject::getDimentions() 
+{
+	return physvec3(model->getMaxX - model->getMinX, model->getMaxY - model->getMinY, model->getMaxY - model->getMinY);
+};
