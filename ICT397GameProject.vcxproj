@@ -176,6 +176,7 @@
     <ClInclude Include="include\SelectionComponent.h" />
     <ClInclude Include="include\SimpleString.h" />
     <ClInclude Include="include\Singleton.h" />
+    <ClInclude Include="include\State.h" />
     <ClInclude Include="include\StaticEntity.h" />
     <ClInclude Include="include\terrain.h" />
     <ClInclude Include="include\TerrainObject.h" />
@@ -195,7 +196,6 @@
     <ClInclude Include="include\WindowFactory.h" />
     <ClInclude Include="include\WindowMoveContext.h" />
     <ClInclude Include="include\WndComponent.h" />
-    <ClInclude Include="State.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ICT397GameProject.cpp" />

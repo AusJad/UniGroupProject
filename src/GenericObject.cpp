@@ -168,5 +168,5 @@ GenericObject::GenericObject(const GenericObject & tocpy) : GameObject(*this) {
 // mm
 physvec3 GenericObject::getDimentions() 
 {
-	return physvec3(model->getMaxX - model->getMinX, model->getMaxY - model->getMinY, model->getMaxY - model->getMinY);
+	return physvec3(model->getMaxX() - model->getMinX(), model->getMaxY() - model->getMinY(), model->getMaxY() - model->getMinY());
 };

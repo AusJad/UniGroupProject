@@ -345,18 +345,18 @@ void NPC::setEvadeTarget(const vec3 & toset) {
 }
 
 //mm
-std::map<std::string, std::map<Identifiers, bool>> NPC::getAffordances()
+std::map<std::string, std::map<int, bool>> NPC::getAffordances()
 {
 	return Affordances;
 }
 
 void NPC::GenerateAffordances(std::vector<GameObject*> GOs)
 {
-	// pickup, sit, move
-
 	for (int i = 0; i < GOs.size(); i++)
 	{
-		
+		Affordances["SIT"][GOs[i]->getID()] = canSit(GOs[i]);
+		Affordances["MOVE"][GOs[i]->getID()] = canMove(GOs[i]);
+		Affordances["PICKUP"][GOs[i]->getID()] = canPick_up(GOs[i]);
 	}
 }
 

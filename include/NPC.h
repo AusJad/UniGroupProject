@@ -164,7 +164,7 @@ public:
 	void setEvadeTarget(const vec3 & toset);
 
 	//mm
-	std::map<std::string, std::map<Identifiers, bool>> getAffordances();
+	std::map<std::string, std::map<int, bool>> getAffordances();
 	
 	// Reason for 2 GenerateAffordances functions is because im unsure if we are passing in a single gameobject on a loop or a vector of game objects in a single call
 	void GenerateAffordances(std::vector<GameObject*> GOs);
@@ -192,9 +192,10 @@ private:
 	float evadetime;
 
 	//mm
-	std::map<std::string, std::map<Identifiers, bool>> Affordances;
+	std::map<std::string, std::map<int, bool>> Affordances;
 	float maxBench; // Do you even lift bro
 
+	// These are private as they are only called for GenerateAffordances()
 	bool canSit(GameObject *go);
 	bool canMove(GameObject *go);
 	bool canPick_up(GameObject *go);
