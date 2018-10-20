@@ -70,11 +70,14 @@ void CollisionEngine::update(GameObject* toupdate, std::vector<GameObject*> coll
 	AABB updateb = genAABB(toupdate);
 
 	AABB compb;
-
+	//M2 OBB collisions
+	//go through all game objects
 	for (unsigned i = 0; i < collGO.size(); i++) {
+
+		//checks that we're not comparing the same game object, and that they are collidable
 		if (collGO.at(i)->getID() != toupdate->getID() && collGO.at(i)->isCollidable()) {
 			if (toupdate->hasMultiObb() && collGO.at(i)->hasOBB()) {
-				std::cout << "Multi vs Single\n" << std::endl;
+				//std::cout << "Multi vs Single\n" << std::endl;
 				for (int i = 0; i < toupdate->getNumOBBs(); i++) {
 					if (OBBOBB(toupdate->getOBB(i), collGO.at(i)->getOBB())) {
 						CollisionManifold coll = FindCollisionFeatures(toupdate->getOBB(i), collGO.at(i)->getOBB());
@@ -86,7 +89,7 @@ void CollisionEngine::update(GameObject* toupdate, std::vector<GameObject*> coll
 				}
 			}
 			else if (toupdate->hasMultiObb() && collGO.at(i)->hasMultiObb()) {
-				std::cout << "Multi vs Multi\n" << std::endl;
+				//std::cout << "Multi vs Multi\n" << std::endl;
 				for (int i = 0; i < toupdate->getNumOBBs(); i++) {
 					for (int k = 0; k < collGO.at(i)->getNumOBBs(); k++) {
 						if (OBBOBB(toupdate->getOBB(i), collGO.at(i)->getOBB(k))) {
@@ -113,14 +116,22 @@ void CollisionEngine::update(GameObject* toupdate, std::vector<GameObject*> coll
 			}
 			else if (toupdate->hasOBB() && collGO.at(i)->hasOBB()) {
 				//std::cout << "Single vs Single\n" << std::endl;
+
+			//checking if it has an OBB
+			if (toupdate->hasOBB() && collGO.at(i)->hasOBB()) {
+				//regular OBB collision.
 				if (OBBOBB(toupdate->getOBB(), collGO.at(i)->getOBB())) {
+					//Geomtry3D struct that holds collision data. (bool collding, physvec3, float depth, vector of physxec3
 					CollisionManifold coll = FindCollisionFeatures(toupdate->getOBB(), collGO.at(i)->getOBB());
 					if (coll.colliding) {
+						//OBBs are colliding, do stuff?
+						//Physics implementation goes here, thanks.
 						toupdate->onCollide(tmpos, collGO.at(i)->getIdentifiers());
 						toupdate->onCollide2(tmpos, collGO.at(i)->getPos());
 					}
 				}
 			}
+			//if no OBB go to AABB.
 			else {
 				compb = genAABB(collGO.at(i));
 				if (updateb.xmax >= compb.xmin && updateb.xmin <= compb.xmax
