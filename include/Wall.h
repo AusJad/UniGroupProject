@@ -137,6 +137,7 @@ public:
 
 	bool hasOBB() { return true; };
 	OBB getOBB();
+
 private:
 	float width;
 	float height;

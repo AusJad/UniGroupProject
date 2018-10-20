@@ -182,4 +182,3 @@ private:
 
 	float evadetime;
 };
-

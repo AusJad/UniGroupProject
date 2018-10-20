@@ -5,6 +5,7 @@ GameObject::GameObject()
 {
 	state = -1;
 	model = NULL;
+	rb = RigidBody();
 }
 
 GameObject::GameObject(Identifiers & id, vec3 pos, ResourceList & list) {

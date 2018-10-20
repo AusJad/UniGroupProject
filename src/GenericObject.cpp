@@ -26,6 +26,15 @@ std::string GenericObject::toString() {
 bool GenericObject::addMultiObb(std::vector<OBB> & in) {
 	this->obbsConfig = in;
 	this->obbs = this->obbsConfig;
+	
+	//mm
+	int tmp = 0;
+	for (int i = 0; i < this->obbs.size(); i++)
+	{
+		tmp += obbs[i].mass;
+	}
+	this->rb.setTM(tmp);
+
 	return true;
 };
 
@@ -119,9 +128,6 @@ void GenericObject::render() {
 
 	GeoStream << END_STREAM;
 
-	
-	
-	
 	physvec3 rot;
 	if (this->hasMultiObb()) {
 		GeoStream << START_ATTRIB << color_3(0.6f, 1.0f, 0.0f);
@@ -134,8 +140,7 @@ void GenericObject::render() {
 			RNDR->DrawRectangularPrism(vec3(), tmpobb.size.x, tmpobb.size.y, tmpobb.size.z);
 			GeoStream << END_STREAM;
 			RNDR->disableWireFrame();
-			RNDR->DrawRectangularPrism(vec3(tmpobb.position.x, tmpobb.position.y, tmpobb.position.z), 3, 3, 3);
-			
+			RNDR->DrawRectangularPrism(vec3(tmpobb.position.x, tmpobb.position.y, tmpobb.position.z), 3, 3, 3);		
 		}
 	}
 	else {
@@ -147,14 +152,24 @@ void GenericObject::render() {
 		GeoStream << END_STREAM;
 		RNDR->disableWireFrame();
 		RNDR->DrawRectangularPrism(vec3(obb.position.x, obb.position.y, obb.position.z), 3, 3, 3);
-		
 	}
 	GeoStream << END_ATTRIB;
 }
 
 bool GenericObject::addMultiObb(OBB in) {
 	obbs.push_back(in);
-		return true;
+
+	//mm
+	float tmp = 0;
+	for (int i = 0; i < obbs.size(); i++)
+	{
+		tmp += obbs[i].mass;
+	}
+	rb.setTM(tmp);
+
+	calcCoM();
+
+	return true;
 }
 
 
@@ -166,4 +181,18 @@ GenericObject::GenericObject(const GenericObject & tocpy) : GameObject(*this) {
 	angley = tocpy.angley;
 	anglex = tocpy.anglex;
 	anglez = tocpy.anglez;
+}
+
+void GenericObject::calcCoM()
+{
+	float tmpx, tmpy, tmpz, totalMass;
+	for (int i = 0; i < this->obbs.size(); i++)
+	{
+		tmpx += obbs[i].mass * obbs[i].position.x;
+		tmpy += obbs[i].mass * obbs[i].position.y;
+		tmpz += obbs[i].mass * obbs[i].position.z;
+		totalMass += obbs[i].mass;
+	}
+
+	rb.setCOM(physvec3(tmpx / totalMass, tmpy / totalMass, tmpz / totalMass));
 }

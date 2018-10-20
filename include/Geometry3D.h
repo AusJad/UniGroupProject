@@ -82,12 +82,15 @@ typedef struct OBB {
 	Point position;
 	physvec3 size; // HALF SIZE!
 	mat3 orientation;
+	float mass;
 
-	inline OBB() : size(1, 1, 1) { }
+	inline OBB() : size(1, 1, 1), mass(0) { }
 	inline OBB(const Point& p, const physvec3& s) :
 		position(p), size(s) { }
 	inline OBB(const Point& p, const physvec3& s, const mat3& o) :
 		position(p), size(s), orientation(o) { }
+	inline OBB(const Point& p, const physvec3& s, const mat3& o, float m) :
+		position(p), size(s), orientation(o), mass(m) { }
 } OBB;
 
 /**

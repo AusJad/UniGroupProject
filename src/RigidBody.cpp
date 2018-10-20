@@ -2,7 +2,18 @@
 
 RigidBody::RigidBody()
 {
-
+	vel = physvec3();
+	prevvel = physvec3();
+	forceaccum = physvec3();
+	COR = 1.0f;
+	center = physvec3();
+	CoM = physvec3();
+	angularvel = physvec3();
+	prevangularvel = physvec3();
+	orientation = physvec3();
+	torques = physvec3();
+	intert_tensor = physmat4();
+	totalMass = 1;
 }
 
 RigidBody::~RigidBody()
@@ -11,22 +22,22 @@ RigidBody::~RigidBody()
 }
 
 void RigidBody::applyForces() {
-	forceaccum = GRAVITY * mass;
+	forceaccum = GRAVITY * totalMass;
 }
 
 void RigidBody::addLinearImpulse(const physvec3 & impulse) {
 	vel = vel + impulse;
 }
 
-void RigidBody::addRotationalImpulse(physvec3 point, physvec3 impulse) {
+void RigidBody::addRotationalImpulse(const physvec3 & point, const physvec3 & impulse) {
 	physvec3 torque = Cross(point - center, impulse); // mm - changed obb.position to center due to vector change
 	physvec3 angularacel = MultiplyVector(torque, Inverse(intert_tensor));
 	angularvel += angularacel;
 }
 
 float RigidBody::getInvMass() {
-	if (mass == 0.0f) return 0;
-	return 1.0f / mass;
+	if (totalMass == 0.0f) return 0;
+	return 1.0f / totalMass;
 }
 
 void RigidBody::update(float time) {
@@ -36,18 +47,13 @@ void RigidBody::update(float time) {
 	vel *= dampening;
 }
 
-void RigidBody::calcCOM()
-{
-	COM = center; // STRICTLY TEMP -- MS2
-}
-
-void RigidBody::resolveCollision(RigidBody * rb1, RigidBody * rb2, CollisionManifold cm)
+void RigidBody::resolveCollision(RigidBody * rb1, RigidBody * rb2, const CollisionManifold & cm)
 {
 	linearImpulse(rb1, rb2, cm);
 	angularImpulse(rb1, rb2, cm);
 }
 
-void RigidBody::linearImpulse(RigidBody * rb1, RigidBody * rb2, CollisionManifold cm)
+void RigidBody::linearImpulse(RigidBody * rb1, RigidBody * rb2, const CollisionManifold & cm)
 {
 	float total_inv_mass = rb1->getInvMass() + rb2->getInvMass();
 
@@ -81,7 +87,7 @@ void RigidBody::linearImpulse(RigidBody * rb1, RigidBody * rb2, CollisionManifol
 	rb2->vel += impulse * rb2->getInvMass();
 }
 
-void RigidBody::angularImpulse(RigidBody * rb1, RigidBody * rb2, CollisionManifold cm)
+void RigidBody::angularImpulse(RigidBody * rb1, RigidBody * rb2, const CollisionManifold & cm)
 {
 	float total_inv_mass = rb1->getInvMass() + rb2->getInvMass();
 
@@ -90,8 +96,8 @@ void RigidBody::angularImpulse(RigidBody * rb1, RigidBody * rb2, CollisionManifo
 		return;
 	}
 
-	physvec3 PoC1 = cm.contacts[0] - rb1->COM; // Point of contact relative to the center of mass
-	physvec3 PoC2 = cm.contacts[0] - rb2->COM;
+	physvec3 PoC1 = cm.contacts[0] - rb1->getCOM(); // Point of contact relative to the center of mass
+	physvec3 PoC2 = cm.contacts[0] - rb2->getCOM();
 
 	physmat4 IIT1 = Inverse(rb1->intert_tensor); // Inverse Inertia Tensor
 	physmat4 IIT2 = Inverse(rb2->intert_tensor);
@@ -105,7 +111,7 @@ void RigidBody::angularImpulse(RigidBody * rb1, RigidBody * rb2, CollisionManifo
 		return;
 	}
 
-	float minCOR = fminf(rb1->COR, rb2->COR);
+	float minCOR = fminf(rb1->getCOR(), rb2->getCOR());
 
 	physvec3 tmp1 = Cross(PoC1, relativeNormal);
 	physvec3 tmp2 = MultiplyVector(tmp2, IIT2);
@@ -142,13 +148,11 @@ void RigidBody::setVelo(const physvec3 & velo) { vel = velo; }
 
 void RigidBody::setForceAccum(const physvec3 & fa) { forceaccum = fa; }
 
-void RigidBody::setMass(float m) { mass = m; }
-
 void RigidBody::setCOR(float cor) { COR = cor; }
 
 void RigidBody::setCenter(const physvec3 & c) { center = c; }
 
-void RigidBody::setCOM(const physvec3 & com) { COM = com; }
+void RigidBody::setCOM(const physvec3 & com) { CoM = com; }
 
 void RigidBody::setAngularVelo(physvec3 & angularvelo) { angularvelo = angularvelo; }
 
@@ -158,17 +162,17 @@ void RigidBody::setTorques(const physvec3 & torq) { torques = torq; }
 
 void RigidBody::setInertTensor(const physmat4 & it) { intert_tensor = it; }
 
+void RigidBody::setTM(float tm) { totalMass = tm; }
+
 physvec3 RigidBody::getVelo() { return vel; }
 
 physvec3 RigidBody::getForceAccum() { return forceaccum; }
-
-float RigidBody::getMass() { return mass; }
 
 float RigidBody::getCOR() { return COR; }
 
 physvec3 RigidBody::getCenter() { return center; }
 
-physvec3 RigidBody::getCOM() { return COM; }
+physvec3 RigidBody::getCOM() { return CoM; }
 
 physvec3 RigidBody::getAngularVelo() { return angularvel; }
 
@@ -177,6 +181,8 @@ physvec3 RigidBody::getOrientation() { return orientation; }
 physvec3 RigidBody::getTorques() { return torques; }
 
 physmat4 RigidBody::getIntertTensor() { return intert_tensor; }
+
+float RigidBody::getTM() { return totalMass; }
 
 void RigidBody::setprevvel(const physvec3 & pv)
 {

@@ -45,6 +45,8 @@ public:
 	bool addMultiObb(OBB in);
 	bool addMultiObb(std::vector<OBB> & in);
 
+	void calcCoM();
+
 private:
 	float scalex;
 	float scaley;

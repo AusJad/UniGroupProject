@@ -110,7 +110,6 @@ public:
 	*/
 	void setState(int state);
 
-
 	/**
 	* @brief Virtual method to set the model of the object.
 	*
@@ -215,6 +214,8 @@ public:
 	virtual bool hasMultiObb() { return false; };
 
 	RigidBody rb; //tmp
+
+	virtual void calcCoM() { rb.setCOM(rb.getCenter()); }
 
 protected:
 	/// The state of the object.
