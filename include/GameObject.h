@@ -14,8 +14,6 @@
 
 #include "Geometry3D.h"
 
-#include "RigidBody.h"
-
 /**
 * @class GameObject
 * @brief Class for handling game objects and all their data.
