@@ -4,6 +4,7 @@
 
 ModelManger::ModelManger()
 {
+	loadOBBs(std::string("./Resources/Models/specific.obbs"));
 }
 
 
@@ -13,6 +14,79 @@ ModelManger::~ModelManger()
 		delete mapit->second;
 		mapit->second = NULL;
 	}
+}
+
+std::vector<OBB> ModelManger::getMultiObb(std::string modelName) {
+		return obb_map.at(modelName);		
+}
+
+bool ModelManger::hasMultiObb(std::string modelName) {
+	if (obb_map.find(modelName) == obb_map.end())
+		return false;
+	else
+		return true;
+}
+
+
+
+bool ModelManger::loadOBBs(std::string filename) {
+	std::cout << "loading obbs from MM" << std::endl;
+	std::ifstream infile(filename.c_str());
+	if (!infile) {
+		std::cout << "couldn't open obb file" << std::endl;
+		return false;
+	}
+	std::string in;
+	physvec3 tmppos;
+	physvec3 tmpsize;
+	physvec3 tmprotate;
+	//OBB obbtmp;
+	std::string inname;
+	
+	try {
+		while (infile.peek() != EOF) {
+			getline(infile, in);
+			// name, positionx,y,z,sizex,y,z
+			inname = in.substr(0, in.find(',')).c_str();
+			in = in.substr(in.find(',') + 1);
+			tmppos.x = ((float)atof(in.substr(0, in.find(',') + 1).c_str()));
+			in = in.substr(in.find(',') + 1);
+			tmppos.y = ((float)atof(in.substr(0, in.find(',') + 1).c_str()));
+			in = in.substr(in.find(',') + 1);
+			tmppos.z = ((float)atof(in.substr(0, in.find(',') + 1).c_str()));
+			in = in.substr(in.find(',') + 1);
+			tmpsize.x = ((float)atof(in.substr(0, in.find(',') + 1).c_str()));
+			in = in.substr(in.find(',') + 1);
+			tmpsize.y = ((float)atof(in.substr(0, in.find(',') + 1).c_str()));
+			in = in.substr(in.find(',') + 1);
+			tmpsize.z = ((float)atof(in.substr(0, in.find(',') + 1).c_str()));
+			in = in.substr(in.find(',') + 1);
+			tmprotate.x = ((float)atof(in.substr(0, in.find(',') + 1).c_str()));
+			in = in.substr(in.find(',') + 1);
+			tmprotate.y = ((float)atof(in.substr(0, in.find(',') + 1).c_str()));
+			in = in.substr(in.find(',') + 1);
+			tmprotate.z = ((float)atof(in.substr(0, in.find(',') + 1).c_str()));
+			in = in.substr(in.find(',') + 1);
+			mat3 tmprotation = Rotation3x3((float)tmprotate.x, (float)tmprotate.z, (float)tmprotate.y);
+
+			OBB obbtmp(tmppos, tmpsize, tmprotation);
+			
+			if (obb_map.find(inname) == obb_map.end()) {
+				std::cout << "Key not found" << std::endl;
+				std::vector<OBB> tmpvec;
+				obb_map[inname] = tmpvec;
+			}
+			obb_map.at(inname).push_back(obbtmp);
+		}
+	}
+	catch (...) {
+		std::cout << "failed try" << std::endl;
+		infile.close();
+		return false;
+	}
+	infile.close();
+	return true;
+
 }
 
 bool ModelManger::loadModel(std::string path, std::string type, std::string name) {

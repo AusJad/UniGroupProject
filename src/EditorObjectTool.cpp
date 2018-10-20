@@ -202,7 +202,13 @@ void EditorObjectTool::addToGameCallback(int code) {
 		ALERT->doNotify("Select a Model First!", NULL);
 		return;
 	}
-
+	
+	if (MMAN->hasMultiObb(object->getModel()->getName())) {
+		std::vector<OBB> tmpobb = MMAN->getMultiObb(object->getModel()->getName());
+		std::cout << "more than one obb found" << std::endl;
+		object->addMultiObb(tmpobb);
+	}
+	
 	object->updateBounds();
 
 	SM->addObjectToCurScene(object);

@@ -10,7 +10,7 @@ CollisionEngine::~CollisionEngine()
 }
 
 void CollisionEngine::setHeightMap(std::vector<vec3> & toset) {
-	
+
 	heightmap.clear();
 	if (toset.empty()) { hasHMap = false; return; }
 
@@ -22,9 +22,9 @@ void CollisionEngine::setHeightMap(std::vector<vec3> & toset) {
 	minz = toset.at(0).z();
 
 	for (unsigned i = 0; i < toset.size(); i++) {
-		if (heightmap.count(toset.at(i).x()) == 0) heightmap[ toset.at(i).x()] = tmp;
+		if (heightmap.count(toset.at(i).x()) == 0) heightmap[toset.at(i).x()] = tmp;
 		heightmap[toset.at(i).x()][toset.at(i).z()] = toset.at(i).y();
-		if(toset.at(i).x() > maxx){
+		if (toset.at(i).x() > maxx) {
 			maxx = toset.at(i).x();
 		}
 		if (toset.at(i).z() > maxz) {
@@ -49,7 +49,7 @@ void CollisionEngine::setHeightMap(std::vector<vec3> & toset) {
 void CollisionEngine::update(GameObject* toupdate, std::vector<GameObject*> collGO, float time) {
 	if (toupdate->isCollidable() == false) {
 		vec3 tmpos = toupdate->getPos();
-		
+
 		toupdate->update(time);
 
 		float x = toupdate->getPos().x();
@@ -70,28 +70,57 @@ void CollisionEngine::update(GameObject* toupdate, std::vector<GameObject*> coll
 	AABB updateb = genAABB(toupdate);
 
 	AABB compb;
-	//M2 OBB collisions
-	//go through all game objects
+
 	for (unsigned i = 0; i < collGO.size(); i++) {
-
-		//checks that we're not comparing the same game object, and that they are collidable
 		if (collGO.at(i)->getID() != toupdate->getID() && collGO.at(i)->isCollidable()) {
-
-			//checking if it has an OBB
-			if (toupdate->hasOBB() && collGO.at(i)->hasOBB()) {
-				//regular OBB collision.
+			if (toupdate->hasMultiObb() && collGO.at(i)->hasOBB()) {
+				std::cout << "Multi vs Single\n" << std::endl;
+				for (int i = 0; i < toupdate->getNumOBBs(); i++) {
+					if (OBBOBB(toupdate->getOBB(i), collGO.at(i)->getOBB())) {
+						CollisionManifold coll = FindCollisionFeatures(toupdate->getOBB(i), collGO.at(i)->getOBB());
+						if (coll.colliding) {
+							toupdate->onCollide(tmpos, collGO.at(i)->getIdentifiers());
+							toupdate->onCollide2(tmpos, collGO.at(i)->getPos());
+						}
+					}
+				}
+			}
+			else if (toupdate->hasMultiObb() && collGO.at(i)->hasMultiObb()) {
+				std::cout << "Multi vs Multi\n" << std::endl;
+				for (int i = 0; i < toupdate->getNumOBBs(); i++) {
+					for (int k = 0; k < collGO.at(i)->getNumOBBs(); k++) {
+						if (OBBOBB(toupdate->getOBB(i), collGO.at(i)->getOBB(k))) {
+							CollisionManifold coll = FindCollisionFeatures(toupdate->getOBB(i), collGO.at(i)->getOBB(k));
+							if (coll.colliding) {
+								toupdate->onCollide(tmpos, collGO.at(i)->getIdentifiers());
+								toupdate->onCollide2(tmpos, collGO.at(i)->getPos());
+							}
+						}
+					}
+				}
+			}
+			else if (toupdate->hasOBB() && collGO.at(i)->hasMultiObb()) {
+				//std::cout << "Single vs Multi\n" << std::endl;
+				for (int k = 0; k < collGO.at(i)->getNumOBBs(); k++) {
+					if (OBBOBB(toupdate->getOBB(), collGO.at(i)->getOBB(k))) {
+						CollisionManifold coll = FindCollisionFeatures(toupdate->getOBB(), collGO.at(i)->getOBB(k));
+						if (coll.colliding) {
+							toupdate->onCollide(tmpos, collGO.at(i)->getIdentifiers());
+							toupdate->onCollide2(tmpos, collGO.at(i)->getPos());
+						}
+					}
+				}
+			}
+			else if (toupdate->hasOBB() && collGO.at(i)->hasOBB()) {
+				//std::cout << "Single vs Single\n" << std::endl;
 				if (OBBOBB(toupdate->getOBB(), collGO.at(i)->getOBB())) {
-					//Geomtry3D struct that holds collision data. (bool collding, physvec3, float depth, vector of physxec3
 					CollisionManifold coll = FindCollisionFeatures(toupdate->getOBB(), collGO.at(i)->getOBB());
 					if (coll.colliding) {
-						//OBBs are colliding, do stuff?
-						//Physics implementation goes here, thanks.
 						toupdate->onCollide(tmpos, collGO.at(i)->getIdentifiers());
 						toupdate->onCollide2(tmpos, collGO.at(i)->getPos());
 					}
 				}
 			}
-			//if no OBB go to AABB.
 			else {
 				compb = genAABB(collGO.at(i));
 				if (updateb.xmax >= compb.xmin && updateb.xmin <= compb.xmax
@@ -128,7 +157,7 @@ void CollisionEngine::update(GameObject* toupdate, std::vector<GameObject*> coll
 
 				float y = interpolateY(toupdate->getPos(), hmloc);
 
-				if(toupdate->getPos().y() < y)  toupdate->onCollide(tmpos, Identifiers("NAN"));
+				if (toupdate->getPos().y() < y)  toupdate->onCollide(tmpos, Identifiers("NAN"));
 			}
 		}
 	}
@@ -137,7 +166,6 @@ void CollisionEngine::update(GameObject* toupdate, std::vector<GameObject*> coll
 void CollisionEngine::update(GameObject* toupdate, GameObject* collGO, float time) {
 	if (toupdate->isCollidable() == false) {
 		vec3 tmpos = toupdate->getPos();
-		
 		toupdate->update(time);
 
 		float x = toupdate->getPos().x();
@@ -200,14 +228,14 @@ void CollisionEngine::update(GameObject* toupdate, GameObject* collGO, float tim
 }
 
 AABB CollisionEngine::genAABB(GameObject* toupdate) {
-	if (toupdate->getModel() == NULL) 
+	if (toupdate->getModel() == NULL)
 		return AABB(toupdate->getPos().x() + 7.0f, toupdate->getPos().x() - 7.0f,
 			toupdate->getPos().y() + 7.0f, toupdate->getPos().y() - 30.0f,
 			toupdate->getPos().z() + 7.0f, toupdate->getPos().z() - 7.0f);
-	else 
+	else
 		return AABB(toupdate->getModel()->getMaxTX(), toupdate->getModel()->getMinTX(),
-		toupdate->getModel()->getMaxTY(), toupdate->getModel()->getMinTY(),
-		toupdate->getModel()->getMaxTZ(), toupdate->getModel()->getMinTZ());
+			toupdate->getModel()->getMaxTY(), toupdate->getModel()->getMinTY(),
+			toupdate->getModel()->getMaxTZ(), toupdate->getModel()->getMinTZ());
 }
 
 HMPos CollisionEngine::findHMLocation(const vec3 & pos) {
@@ -234,7 +262,7 @@ float CollisionEngine::interpolateY(const vec3 & ppos, HMPos & pos) {
 	float y10 = heightmap.at(pos.br.x()).at(pos.br.y());;
 	float y11 = heightmap.at(pos.tl.x()).at(pos.br.y());;
 
-	float y1 = ((pos.tl.x() - ppos.x())/(pos.tl.x() - pos.br.x()))*y00 + ((ppos.x() - pos.br.x())/(pos.tl.x() - pos.br.x()))*y01;
+	float y1 = ((pos.tl.x() - ppos.x()) / (pos.tl.x() - pos.br.x()))*y00 + ((ppos.x() - pos.br.x()) / (pos.tl.x() - pos.br.x()))*y01;
 	float y2 = ((pos.tl.x() - ppos.x()) / (pos.tl.x() - pos.br.x()))*y10 + ((ppos.x() - pos.br.x()) / (pos.tl.x() - pos.br.x()))*y11;
 
 	float fy = ((pos.br.y() - ppos.z()) / (pos.br.y() - pos.tl.y()))* y1 + ((ppos.z() - pos.tl.y()) / (pos.br.y() - pos.tl.y()))* y2;
@@ -243,8 +271,8 @@ float CollisionEngine::interpolateY(const vec3 & ppos, HMPos & pos) {
 }
 
 /*
-	Adapted from algorithm found at this url:
-	https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-box-intersection
+Adapted from algorithm found at this url:
+https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-box-intersection
 */
 bool CollisionEngine::rayAABBTest(Ray & r, GameObject* collGO, vec3 & collpoint) {
 	float tmp;
@@ -295,9 +323,9 @@ bool CollisionEngine::rayAABBTest(Ray & r, GameObject* collGO, vec3 & collpoint)
 
 	if (tzmax < tmax)
 		tmax = tzmax;
-	
+
 	collpoint = r.direction * tmin;
-	
+
 	return true;
 
 }

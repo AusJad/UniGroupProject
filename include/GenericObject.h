@@ -1,6 +1,9 @@
 #pragma once
 
 #include "GameObject.h"
+#include <vector>
+#include "matrices.h"
+
 
 class GenericObject : public GameObject
 {
@@ -23,6 +26,7 @@ public:
 	float getScaleZ() { return scalez; }
 	void updateBounds();
 	const vec3 & getPos() const { return trans; }
+	
 
 	//tmp while still GO
 	std::string toString();
@@ -32,15 +36,23 @@ public:
 	bool isStatic() { return true; }
 	bool hasOBB() { return true; };
 	OBB getOBB();
+	OBB getOBB( unsigned int index );
+	OBB getOBBConfig( unsigned int index );
+	std::vector<OBB> getOBBs();
+	bool hasMultiObb();
+	int getNumOBBs();
+	OBB getOBB(int obbNum);
+	bool addMultiObb(OBB in);
+	bool addMultiObb(std::vector<OBB> & in);
 
 private:
 	float scalex;
 	float scaley;
 	float scalez;
-
 	vec3 trans;
 	OBB obb;
-
+	std::vector<OBB> obbs;
+	std::vector<OBB> obbsConfig;
 	float angley;
 	float anglex;
 	float anglez;

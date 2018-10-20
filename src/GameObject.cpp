@@ -141,6 +141,7 @@ bool GameObject::isCollidable() {
 	return true;
 }
 
+// mm - update movement here?
 void GameObject::onCollide(vec3 & prevloc, const Identifiers & colgoid) {
 	pos = prevloc;
 
@@ -257,3 +258,16 @@ bool GameObject::fromstring(std::string linehead, std::string & toread)
 
 	return false;
 }
+
+int GameObject::getNumOBBs() { return 0; };
+
+// mm
+physvec3 GameObject::getAngularVel() { return angularvel; }
+physvec3 GameObject::getVel() { return vel; }
+physmat4 GameObject::getIntert_tensor() { return intert_tensor; }
+float GameObject::getTotalMass() { return totalmass; }
+
+void GameObject::setAngularVel(physvec3 angvel) { angularvel = angvel; }
+void GameObject::setVel(physvec3 v) { vel = v; }
+void GameObject::setIntert_tensor(physmat4 it) { intert_tensor = it; }
+void GameObject::setTotalMass(float tm) { totalmass = tm; }
