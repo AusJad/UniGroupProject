@@ -78,29 +78,31 @@ void GenericObject::updateBounds() {
 		model->setScale(vec3(scalex, scaley, scalez));
 		std::vector<vec3> minmax = model->computeMMax();
 		if (this->hasMultiObb()) {
-			for (int i = 0; i < obbs.size(); i++){
-				//obbs[i].position = physvec3((trans.x() + obbsConfig[i].position.x * (scalex)), trans.y() + obbsConfig[i].position.y * (scaley), trans.z() + obbsConfig[i].position.z * (scalez));
+
+			for (int i = 0; i < obbs.size(); i++) {
+				physvec3 destrot;
+				float tmpx, tmpy, tmpz, destx, desty, destz;
+				obbs[i].position = (obbsConfig[i].position * vec3(scalex, scaley, scalez)) + trans + GetTranslation((Translate(obbsConfig[i].position * vec3(scalex, scaley, scalez))) * Rotation(anglex, angley, anglez) * Inverse((Translate(obbsConfig[i].position * vec3(scalex, scaley, scalez)))));
 				obbs[i].size.x = obbsConfig[i].size.x * scalex;
 				obbs[i].size.y = obbsConfig[i].size.y * scaley;
 				obbs[i].size.z = obbsConfig[i].size.z * scalez;
-				//rotate around origin
-				//physvec3 tmp = MultiplyPoint(((obbs[i].position - obbsConfig[i].position) * physvec3(scalex, scaley, scalez)), Rotation(anglex, angley, anglez));
-				obbs[i].position = trans;
-				physvec3 tmp2 = physvec3(obbsConfig[i].position.x, obbsConfig[i].position.y, obbsConfig[i].position.z) * physvec3(scalex, scaley, scalez);
-				physvec3 tmp = MultiplyPoint(tmp2, Rotation(anglex, angley, anglez));
-				obbs[i].position += tmp;
-				std::cout << "tmp.x: " << tmp.x << " tmp.y: " << tmp.y << " tmp.z: " << tmp.z << std::endl;
+		
+				//tmprot = Decompose(obbsConfig[i].orientation);
+				//tmpx = RAD2DEG(tmprot.x) + anglex;
+				//tmpy = RAD2DEG(tmprot.y) + angley;
+				//tmpz = RAD2DEG(tmprot.z) + anglez;
 				
-
-
-				// = trans + tmp;
-				//obbs[i].position.x = tmp.x;
-				//obbs[i].position.y = tmp.y;
-				//obbs[i].position.z = tmp.z;
-				//obbs[i].position = physvec3((trans.x() + obbsConfig[i].position.x * (scalex)), trans.y() + obbsConfig[i].position.y * (scaley), trans.z() + obbsConfig[i].position.z * (scalez));
-				obbs[i].orientation = Rotation3x3(anglex, angley, anglez);
-				//obbs[i].position -= physvec3((obbsConfig[i].position.x * (scalex)), obbsConfig[i].position.y * (scaley), obbsConfig[i].position.z * (scalez));
-		} 
+				//mat3 obbs[i].orientation = Rotation3x3(0,0,tmpz) * Rotation3x3(0,tmpy,0) * Rotation3x3(tmpx, 0, 0);
+				//obbs[i].orientation = obbsConfig[i].orientation * Rotation3x3(tmpx, tmpy, tmpz);
+				obbs[i].orientation = obbsConfig[i].orientation * Rotation3x3(anglex, angley, anglez);
+				
+				//following only for debug in watch window
+				destrot = Decompose(obbs[i].orientation);
+				destx = RAD2DEG(destrot.x);
+				desty = RAD2DEG(destrot.y);
+				destz = RAD2DEG(destrot.z);
+				std::cout << std::endl;
+			}
 		}
 		else {
 			obb.position = physvec3(trans.x(), trans.y(), trans.z());
@@ -122,15 +124,15 @@ void GenericObject::render() {
 	
 	
 	
-	physvec3 rot;
+	physvec3 obbrot;
 	if (this->hasMultiObb()) {
 		GeoStream << START_ATTRIB << color_3(0.6f, 1.0f, 0.0f);
 		OBB tmpobb;
 		for (int i = 0; i < this->getNumOBBs(); i++) {
 			RNDR->enableWireframe();
 			tmpobb = this->getOBB(i);
-			rot = Decompose(tmpobb.orientation);
-			GeoStream << BEGIN_STREAM << trans_3(tmpobb.position.x, tmpobb.position.y, tmpobb.position.z) << rot_4(RAD2DEG(rot.x), 1, 0, 0) << rot_4(RAD2DEG(rot.y), 0, 1, 0) << rot_4(RAD2DEG(rot.z), 0, 0, 1);
+			obbrot = Decompose(tmpobb.orientation);
+			GeoStream << BEGIN_STREAM << trans_3(tmpobb.position.x, tmpobb.position.y, tmpobb.position.z) << rot_4(RAD2DEG(obbrot.x), 1, 0, 0) << rot_4(RAD2DEG(obbrot.y), 0, 1, 0) << rot_4(RAD2DEG(obbrot.z), 0, 0, 1);
 			RNDR->DrawRectangularPrism(vec3(), tmpobb.size.x, tmpobb.size.y, tmpobb.size.z);
 			GeoStream << END_STREAM;
 			RNDR->disableWireFrame();
@@ -140,9 +142,9 @@ void GenericObject::render() {
 	}
 	else {
 		GeoStream << START_ATTRIB << color_3(1.0f, 0.6f, 0.0f);
-		rot = Decompose(obb.orientation);
+		obbrot = Decompose(obb.orientation);
 		RNDR->enableWireframe();
-		GeoStream << BEGIN_STREAM << trans_3(obb.position.x, obb.position.y, obb.position.z) << rot_4(RAD2DEG(rot.x), 1, 0, 0) << rot_4(RAD2DEG(rot.y), 0, 1, 0) << rot_4(RAD2DEG(rot.z), 0, 0, 1);
+		GeoStream << BEGIN_STREAM << trans_3(obb.position.x, obb.position.y, obb.position.z) << rot_4(RAD2DEG(obbrot.x), 1, 0, 0) << rot_4(RAD2DEG(obbrot.y), 0, 1, 0) << rot_4(RAD2DEG(obbrot.z), 0, 0, 1);
 		RNDR->DrawRectangularPrism(vec3(), obb.size.x, obb.size.y, obb.size.z);
 		GeoStream << END_STREAM;
 		RNDR->disableWireFrame();

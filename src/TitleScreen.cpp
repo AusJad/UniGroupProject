@@ -6,7 +6,7 @@ TitleScreen::TitleScreen()
 {
 	fadeprcnt = 1.0f;
 	fadeinc = -0.5f;
-	progress = fadein;
+	progress = showmainmenu;
 }
 
 

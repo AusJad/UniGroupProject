@@ -10,7 +10,6 @@
 #include "Model.h"
 #include "Maths.h"
 #include "ModelManger.h"
-// mm
 #include "saveFileIO.h"
 
 #include "Geometry3D.h"
@@ -211,6 +210,18 @@ public:
 	virtual std::vector<OBB> getOBBs() { return std::vector<OBB>(); };
 	virtual bool hasMultiObb() { return false; };
 
+	// mm
+	physvec3 getAngularVel();
+	physvec3 getVel();
+	physmat4 getIntert_tensor();
+	float getTotalMass();
+
+	void setAngularVel(physvec3 angvel);
+	void setVel(physvec3 v);
+	void setIntert_tensor(physmat4 it);
+	void setTotalMass(float tm);
+
+
 protected:
 	/// The state of the object.
 	int state;
@@ -226,6 +237,11 @@ protected:
 	ResourceList resources;
 	/// The model data for the object.
 	Model* model;
+
+	// mm
+	physvec3 angularvel, vel;
+	physmat4 intert_tensor;
+	float totalmass;
 
 	/**
 	* @brief The message receiver.

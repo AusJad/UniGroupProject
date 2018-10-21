@@ -209,11 +209,11 @@ void EngineStateWriter::addGenericObj(std::ifstream & toparse) {
 					delete tmpw;
 					return;
 				}
-				std::cout << "Name: " << M->getName() << std::endl;
+				//std::cout << "Name: " << M->getName() << std::endl;
 				tmpw->setModel(M);
 				if (MMAN->hasMultiObb(M->getName())) {
 					std::vector<OBB> tmpobb = MMAN->getMultiObb(M->getName());
-					std::cout << "more than one obb found" << std::endl;
+					mat3 tmprotation = Rotation3x3(tmpw->getAngleX(), tmpw->getAngleY(), tmpw->getAngleZ());
 					tmpw->addMultiObb(tmpobb);
 				}
 						

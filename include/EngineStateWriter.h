@@ -5,6 +5,7 @@
 #include "Wall.h"
 #include "GenericObject.h"
 #include "Level.h"
+#include "Geometry3D.h"
 
 /**
 * @class EngineStateWriter

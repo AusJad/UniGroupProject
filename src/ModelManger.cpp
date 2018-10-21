@@ -67,8 +67,7 @@ bool ModelManger::loadOBBs(std::string filename) {
 			in = in.substr(in.find(',') + 1);
 			tmprotate.z = ((float)atof(in.substr(0, in.find(',') + 1).c_str()));
 			in = in.substr(in.find(',') + 1);
-			mat3 tmprotation = Rotation3x3((float)tmprotate.x, (float)tmprotate.z, (float)tmprotate.y);
-
+			mat3 tmprotation = Rotation3x3((float)tmprotate.x, (float)tmprotate.y, (float)tmprotate.z); 
 			OBB obbtmp(tmppos, tmpsize, tmprotation);
 			
 			if (obb_map.find(inname) == obb_map.end()) {
