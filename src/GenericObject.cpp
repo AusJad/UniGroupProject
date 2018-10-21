@@ -121,10 +121,14 @@ void GenericObject::render() {
 
 	GeoStream << END_STREAM;
 
+<<<<<<< HEAD
 	
 	
 	
 	physvec3 obbrot;
+=======
+	physvec3 rot;
+>>>>>>> 5ddda6e97bf1b58703aa9b03a26d8c5ce6574bfd
 	if (this->hasMultiObb()) {
 		GeoStream << START_ATTRIB << color_3(0.6f, 1.0f, 0.0f);
 		OBB tmpobb;
