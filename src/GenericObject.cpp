@@ -154,7 +154,6 @@ bool GenericObject::addMultiObb(OBB in) {
 		return true;
 }
 
-
 GenericObject::GenericObject(const GenericObject & tocpy) : GameObject(*this) {
 	scalex = tocpy.scalex;
 	scaley = tocpy.scaley;
