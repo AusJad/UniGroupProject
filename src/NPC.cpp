@@ -363,7 +363,9 @@ void NPC::GenerateAffordances(std::vector<GameObject*> GOs)
 /*
 void NPC::GenerateAffordances(GameObject * GO)
 {
-
+	Affordances["SIT"][GO->getID()] = canSit(GO);
+	Affordances["MOVE"][GO->getID()] = canMove(GO);
+	Affordances["PICKUP"][GO->getID()] = canPick_up(GO);
 }
 */
 
@@ -401,5 +403,5 @@ bool NPC::canPick_up(GameObject *go)
 
 physvec3 NPC::getDimentions()
 {
-	return physvec3(model->getMaxX() - model->getMinX(), model->getMaxY() - model->getMinY(), model->getMaxY() - model->getMinY());
+	return physvec3(model->getMaxTX() - model->getMinTX(), model->getMaxTY() - model->getMinTY(), model->getMaxTY() - model->getMinTY());
 }
