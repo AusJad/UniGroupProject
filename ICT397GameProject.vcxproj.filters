@@ -115,6 +115,12 @@
     <Filter Include="Source Files\AI">
       <UniqueIdentifier>{271ab7c0-1b1f-4761-b64e-02c4ad03811b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\AI\FSM">
+      <UniqueIdentifier>{e1386bcc-83e4-4e31-bc58-ac31fef7a157}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\AI\FSM">
+      <UniqueIdentifier>{cff41948-2acb-44c8-9489-170905289420}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -402,8 +408,14 @@
     <ClInclude Include="include\CameraManager.h">
       <Filter>Header Files\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="State.h">
-      <Filter>Header Files\AI</Filter>
+    <ClInclude Include="include\NPCstates.h">
+      <Filter>Header Files\AI\FSM</Filter>
+    </ClInclude>
+    <ClInclude Include="include\State.h">
+      <Filter>Header Files\AI\FSM</Filter>
+    </ClInclude>
+    <ClInclude Include="include\StateMachine.h">
+      <Filter>Header Files\AI\FSM</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -664,6 +676,9 @@
     </ClCompile>
     <ClCompile Include="src\Level.cpp">
       <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\NPCstates.cpp">
+      <Filter>Source Files\AI\FSM</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

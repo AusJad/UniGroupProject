@@ -2,6 +2,8 @@
 #include "GameObject.h"
 #include <iostream>
 #include "AudioEngine.h"
+#include "StateMachine.h"
+#include "State.h"
 
 /**
 * @class NPC
@@ -42,7 +44,7 @@ public:
 
 	/**
 	* @brief Get the NPCs velocity.
-	* 
+	*
 	* @return vec3 - The velocity.
 	*/
 	const vec3 & getVelocity();
@@ -95,7 +97,7 @@ public:
 	* @return bool - If the message was processed.
 	*/
 	bool NPCDefaultMessageHandler(Message & message);
-	
+
 	/**
 	* @brief Get the heading position.
 	*
@@ -181,5 +183,7 @@ private:
 	bool canAttack;
 
 	float evadetime;
-};
 
+	stateMachine<NPC> *npcFSM;
+
+};

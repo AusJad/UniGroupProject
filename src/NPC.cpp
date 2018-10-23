@@ -1,4 +1,6 @@
 #include "NPC.h"
+#include "NPCstates.h"
+
 
 
 NPC::NPC(Identifiers & id, vec3 pos, ResourceList & list) : GameObject( id, pos, list )
@@ -10,6 +12,10 @@ NPC::NPC(Identifiers & id, vec3 pos, ResourceList & list) : GameObject( id, pos,
 	canUpdate = false;
 	canRender = false;
 	canAttack = false;
+	npcFSM=new stateMachine<NPC>(this);
+	npcFSM->setCurrentState(wander_state::getInstance());
+	npcFSM->setGlobalState(global_state::getInstance());
+
 }
 
 NPC::NPC() : GameObject(){
@@ -24,7 +30,7 @@ NPC::NPC() : GameObject(){
 
 NPC::~NPC()
 {
-
+	delete npcFSM;
 }
 
 bool NPC::isCollidable() {
