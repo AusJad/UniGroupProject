@@ -405,6 +405,9 @@
     <ClInclude Include="include\State.h">
       <Filter>Header Files\AI</Filter>
     </ClInclude>
+    <ClInclude Include="include\Traits.h">
+      <Filter>Header Files\AI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Controls.cpp">
@@ -664,6 +667,9 @@
     </ClCompile>
     <ClCompile Include="src\Level.cpp">
       <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Traits.cpp">
+      <Filter>Source Files\AI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

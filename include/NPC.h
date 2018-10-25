@@ -4,6 +4,10 @@
 #include "AudioEngine.h"
 
 #include <map>
+#include "State.h"
+#include "Traits.h"
+
+#include <math.h>
 
 /**
 * @class NPC
@@ -201,5 +205,35 @@ private:
 	bool canPick_up(GameObject *go);
 
 	physvec3 getDimentions();
+
+	State* currState;
+	std::vector<State*> allStates; // All possible states - This may need to be done a better way if time permits.
+	mat4 EmotionNormalisation;
+
+	std::vector<Mods*> all_Emo_Mods;
+	std::vector<Defs*> all_Emo_Defs;
+	vec4 DefaultEmotion = vec4( 0, 0, 0, 0 ); // Default emotional state for individual NPC
+	vec4 Emotion; // Because human emotion is just vec4 obviously.
+	/*
+		+x = Exstasy
+		-x = Grief
+		
+		+y = Admiration
+		-y = Loathing
+
+		+z = Vigilance
+		-z = Amazement
+
+		+w = Rage
+		-w = Terror
+	*/
+	void addMod(Mods* m);
+	void addDef(Defs* d);
+
+	void ApplyTraits();
+	void findNextState();
+	void normaliseEmotion();
+	void stateUpdate();
+	void addEmotions(vec4 emo);
 };
 
