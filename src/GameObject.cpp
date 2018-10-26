@@ -5,6 +5,7 @@ GameObject::GameObject()
 {
 	state = -1;
 	model = NULL;
+	totalmass = 1;
 }
 
 GameObject::GameObject(Identifiers & id, vec3 pos, ResourceList & list) {
@@ -271,3 +272,8 @@ void GameObject::setAngularVel(physvec3 angvel) { angularvel = angvel; }
 void GameObject::setVel(physvec3 v) { vel = v; }
 void GameObject::setIntert_tensor(physmat4 it) { intert_tensor = it; }
 void GameObject::setTotalMass(float tm) { totalmass = tm; }
+
+void GameObject::calcMass()
+{	
+	totalmass = 1;
+}

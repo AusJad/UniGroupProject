@@ -2,8 +2,6 @@
 
 #include <math.h>
 
-
-
 Camera::Camera(Identifiers & id, vec3 pos, ResourceList & list) : GameObject(id, pos, list)
 {
 	rotateSpeed = 3.0f;
@@ -26,11 +24,10 @@ Camera::Camera(Identifiers & id, vec3 pos, ResourceList & list) : GameObject(id,
 	maxNangle = -80.0f;
 	birdseye = false;
 	yoff = 65.0f;
+	totalmass = 5000;
 }
 
 OBB Camera::getOBB() {
-	OBB ret;
-
 	ret.position = physvec3(pos.x(), pos.y(), pos.z());
 	ret.size = physvec3(5, 20, 5);
 	ret.orientation = mat3();
@@ -60,6 +57,7 @@ void Camera::reset() {
 	birdseye = false;
 	yoff = 65.0f;
 	pos = vec3();
+	totalmass = 5000;
 }
 
 void Camera::toggleFreeCam() {
@@ -355,4 +353,9 @@ bool Camera::fromstring(std::string toread)
 		}
 	}
 	return true;
+}
+
+void Camera::calcMass()
+{
+	totalmass = 5000;
 }

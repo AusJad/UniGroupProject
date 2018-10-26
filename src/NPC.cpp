@@ -15,6 +15,7 @@ NPC::NPC(Identifiers & id, vec3 pos, ResourceList & list) : GameObject( id, pos,
 	npcFSM=new stateMachine<NPC>(this);
 	npcFSM->setCurrentState(wander_state::getInstance());
 	npcFSM->setGlobalState(global_state::getInstance());
+	totalmass = 1;
 
 }
 
@@ -616,5 +617,118 @@ void NPC::ApplyTraits()
 	for (int i = 0; i < all_Emo_Defs.size(); i++)
 	{
 		DefaultEmotion += all_Emo_Defs[i]->getDef();
+	}
+}
+
+void NPC::calcMass()
+{
+	if (this->hasMultiObb())
+	{
+		for (int i = 0; i < obbs.size(); i++)
+		{
+			totalmass += obbs[i].mass;
+		}
+	}
+	else
+	{
+		totalmass = obb.mass;
+	}
+}
+
+//obb stuff
+bool NPC::addMultiObb(std::vector<OBB> & in) {
+	this->obbsConfig = in;
+	this->obbs = this->obbsConfig;
+	return true;
+};
+
+OBB NPC::getOBB() {
+	return obb;
+}
+
+OBB NPC::getOBB(unsigned int index) {
+	if (index < obbs.size())
+		return obbs[index];
+}
+
+std::vector<OBB> NPC::getOBBs() {
+	return obbs;
+};
+
+OBB NPC::getOBBConfig(unsigned int index) {
+	if (index < obbsConfig.size()) {
+		return obbsConfig[index];
+	}
+}
+
+bool NPC::hasMultiObb() {
+	if (obbsConfig.size() > 0) { return true; }
+	else { return false; }
+};
+
+int NPC::getNumOBBs() {
+	return obbsConfig.size();
+};
+
+OBB NPC::getOBB(int obbNum) {
+	return obbs.at(obbNum);
+};
+
+void NPC::setScaleX(float nscalex) {
+	scalex = nscalex;
+}
+
+void NPC::setScaleY(float nscaley) {
+	scaley = nscaley;
+}
+
+void NPC::setScaleZ(float nscalez) {
+	scalez = nscalez;
+}
+bool NPC::addMultiObb(OBB in) {
+	obbs.push_back(in);
+		return true;
+}
+
+void NPC::updateBounds() {
+	if (model != NULL) {
+		model->setScale(vec3(scalex, scaley, scalez));
+		std::vector<vec3> minmax = model->computeMMax();
+		if (this->hasMultiObb()) {
+			for (int i = 0; i < obbs.size(); i++) {
+				//obbs[i].position = physvec3((trans.x() + obbsConfig[i].position.x * (scalex)), trans.y() + obbsConfig[i].position.y * (scaley), trans.z() + obbsConfig[i].position.z * (scalez));
+				obbs[i].size.x = obbsConfig[i].size.x * scalex;
+				obbs[i].size.y = obbsConfig[i].size.y * scaley;
+				obbs[i].size.z = obbsConfig[i].size.z * scalez;
+				//rotate around origin
+				//physvec3 tmp = MultiplyPoint(((obbs[i].position - obbsConfig[i].position) * physvec3(scalex, scaley, scalez)), Rotation(anglex, angley, anglez));
+				obbs[i].position = trans;
+				physvec3 tmp2 = physvec3(obbsConfig[i].position.x, obbsConfig[i].position.y, obbsConfig[i].position.z) * physvec3(scalex, scaley, scalez);
+				physvec3 tmp = MultiplyPoint(tmp2, Rotation(anglex, angley, anglez));
+				obbs[i].position += tmp;
+				std::cout << "tmp.x: " << tmp.x << " tmp.y: " << tmp.y << " tmp.z: " << tmp.z << std::endl;
+
+
+
+				// = trans + tmp;
+				//obbs[i].position.x = tmp.x;
+				//obbs[i].position.y = tmp.y;
+				//obbs[i].position.z = tmp.z;
+				//obbs[i].position = physvec3((trans.x() + obbsConfig[i].position.x * (scalex)), trans.y() + obbsConfig[i].position.y * (scaley), trans.z() + obbsConfig[i].position.z * (scalez));
+				obbs[i].orientation = Rotation3x3(anglex, angley, anglez);
+				//obbs[i].position -= physvec3((obbsConfig[i].position.x * (scalex)), obbsConfig[i].position.y * (scaley), obbsConfig[i].position.z * (scalez));
+
+				this->calcMass(); //mm
+			}
+		}
+		else {
+			obb.position = physvec3(trans.x(), trans.y(), trans.z());
+			obb.size = physvec3((minmax.at(1).x() - minmax.at(0).x()) / 2,
+				(minmax.at(1).y() - minmax.at(0).y()) / 2,
+				(minmax.at(1).z() - minmax.at(0).z()) / 2);
+			obb.orientation = Rotation3x3(anglex, angley, anglez);
+
+			this->calcMass(); //mm
+		}
 	}
 }
