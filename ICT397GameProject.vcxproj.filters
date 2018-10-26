@@ -709,6 +709,7 @@
     <Filter Include="Header Files\Controls">
       <UniqueIdentifier>{bffbfb9b-b5e9-4d2f-a265-805e3c32fc5e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Controls">
       <UniqueIdentifier>{bce67689-2c2e-46a0-ba88-a184395cd29b}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Models">
