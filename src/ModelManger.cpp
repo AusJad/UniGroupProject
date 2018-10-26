@@ -40,6 +40,7 @@ bool ModelManger::loadOBBs(std::string filename) {
 	physvec3 tmppos;
 	physvec3 tmpsize;
 	physvec3 tmprotate;
+	float tmpmass;
 	//OBB obbtmp;
 	std::string inname;
 	
@@ -67,9 +68,11 @@ bool ModelManger::loadOBBs(std::string filename) {
 			in = in.substr(in.find(',') + 1);
 			tmprotate.z = ((float)atof(in.substr(0, in.find(',') + 1).c_str()));
 			in = in.substr(in.find(',') + 1);
+			tmpmass = ((float)atof(in.substr(0, in.find(',') + 1).c_str()));
+			in = in.substr(in.find(',') + 1);
 			mat3 tmprotation = Rotation3x3((float)tmprotate.x, (float)tmprotate.z, (float)tmprotate.y);
 
-			OBB obbtmp(tmppos, tmpsize, tmprotation);
+			OBB obbtmp(tmppos, tmpsize, tmprotation, tmpmass);
 			
 			if (obb_map.find(inname) == obb_map.end()) {
 				std::cout << "Key not found" << std::endl;
