@@ -671,6 +671,14 @@ physvec3 MultiplyVector(const physvec3& vec, const physmat4& mat) {
 	return result;
 }
 
+physvec3 MultiplyVector(const mat3& mat, const physvec3& vec) {
+	physvec3 result;
+	result.x = vec.x * mat._11 + vec.y * mat._21 + vec.z * mat._31;
+	result.y = vec.x * mat._12 + vec.y * mat._22 + vec.z * mat._32;
+	result.z = vec.x * mat._13 + vec.y * mat._23 + vec.z * mat._33;
+	return result;
+}
+
 physvec3 MultiplyVector(const physvec3& vec, const mat3& mat) {
 	physvec3 result;
 	result.x = Dot(vec, physvec3{ mat._11, mat._21, mat._31 });

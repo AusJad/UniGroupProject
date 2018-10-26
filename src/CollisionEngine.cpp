@@ -46,6 +46,115 @@ void CollisionEngine::setHeightMap(std::vector<vec3> & toset) {
 	hasHMap = true;
 }
 
+physvec3 CollisionEngine::collisionResolver(physvec3 obj1LinearVelocity, physvec3 obj2LinearVelocity, physvec3 obj1AngularVelocity, physvec3 obj2AngularVelocity, float obj1Mass, float obj2Mass, physvec3 obj1R, physvec3 obj2R, physmat4 obj1InertiaTensor, physmat4 obj2InertiaTensor, physvec3 collisionVector)
+{
+	if ((1 / obj1Mass) + (1 / obj2Mass) == 0.0f) {
+		return physvec3(0, 0, 0);
+	}
+		float bottomBit;
+
+
+		physvec3 relativeLinearVelocity;
+		relativeLinearVelocity.x = obj1LinearVelocity.x - obj2LinearVelocity.x;
+		relativeLinearVelocity.y = obj1LinearVelocity.y - obj2LinearVelocity.y;
+		relativeLinearVelocity.z = obj1LinearVelocity.z - obj2LinearVelocity.z;
+		mat3 i1;
+		mat3 i2;
+		i1._11 = obj1InertiaTensor._11;
+		i1._12 = obj1InertiaTensor._12;
+		i1._13 = obj1InertiaTensor._13;
+
+		i1._21 = obj1InertiaTensor._21;
+		i1._22 = obj1InertiaTensor._22;
+		i1._23 = obj1InertiaTensor._23;
+
+		i1._31 = obj1InertiaTensor._31;
+		i1._32 = obj1InertiaTensor._32;
+		i1._33 = obj1InertiaTensor._33;
+
+
+		i2._11 = obj2InertiaTensor._11;
+		i2._12 = obj2InertiaTensor._12;
+		i2._13 = obj2InertiaTensor._13;
+
+		i2._21 = obj2InertiaTensor._21;
+		i2._22 = obj2InertiaTensor._22;
+		i2._23 = obj2InertiaTensor._23;
+
+		i2._31 = obj2InertiaTensor._31;
+		i2._32 = obj2InertiaTensor._32;
+		i2._33 = obj2InertiaTensor._33;
+
+		i1 = Inverse(i1);
+		i2 = Inverse(i2);
+
+		//inverse mass
+		float inverseMasses = (1 / obj1Mass) + (1 / obj2Mass);
+		bottomBit = Dot(Cross(obj1R, collisionVector), MultiplyVector(i1, Cross(obj1R, collisionVector))) + Dot(Cross(obj2R, collisionVector), MultiplyVector(i2, Cross(obj2R, collisionVector)));
+		bottomBit += inverseMasses;
+		float topBit = (-(1 + 0.5) * Dot(collisionVector, relativeLinearVelocity) + Dot(obj1AngularVelocity, Cross(obj1R, collisionVector)) - (Dot(obj2AngularVelocity, Cross(obj2R, collisionVector))));
+
+		float magic = topBit /= bottomBit;
+
+		collisionVector *= magic;
+
+		return (collisionVector);
+}
+
+void CollisionEngine::updateLinearVelocity(GameObject* r1, GameObject* r2, physvec3 help)
+{
+	physvec3 tempVel = r1->getVel() += (help / r1->getTotalMass());
+	r1->setVel(tempVel);
+
+	tempVel = r2->getVel() -= (help / r2->getTotalMass());
+	r1->setVel(tempVel);
+}
+
+void CollisionEngine::updateAngularVelocity(GameObject* r1, GameObject* r2, physvec3 help, physvec3 collPt)
+{
+	physvec3 normalVector = collPt - r1->getOBB().position;
+	mat3 i1;
+	mat3 i2;
+	i1._11 = r1->getIntert_tensor()._11;
+	i1._12 = r1->getIntert_tensor()._12;
+	i1._13 = r1->getIntert_tensor()._13;
+
+	i1._21 = r1->getIntert_tensor()._21;
+	i1._22 = r1->getIntert_tensor()._22;
+	i1._23 = r1->getIntert_tensor()._23;
+
+	i1._31 = r1->getIntert_tensor()._31;
+	i1._32 = r1->getIntert_tensor()._32;
+	i1._33 = r1->getIntert_tensor()._33;
+
+
+	i2._11 = r2->getIntert_tensor()._11;
+	i2._12 = r2->getIntert_tensor()._12;
+	i2._13 = r2->getIntert_tensor()._13;
+
+	i2._21 = r2->getIntert_tensor()._21;
+	i2._22 = r2->getIntert_tensor()._22;
+	i2._23 = r2->getIntert_tensor()._23;
+
+	i2._31 = r2->getIntert_tensor()._31;
+	i2._32 = r2->getIntert_tensor()._32;
+	i2._33 = r2->getIntert_tensor()._33;
+
+	i1 = Inverse(i1);
+	i2 = Inverse(i2);
+
+
+
+	physvec3 r1stuff = MultiplyVector(i1, Cross(normalVector, collPt));
+	physvec3 tempVel = r1->getAngularVel() += r1stuff;
+	r1->setAngularVel(tempVel);
+
+	physvec3 r2stuff = MultiplyVector(i2, Cross(normalVector, collPt));
+	tempVel = r2->getAngularVel() -= r2stuff;
+	r2->setAngularVel(tempVel);
+
+}
+
 void CollisionEngine::update(GameObject* toupdate, std::vector<GameObject*> collGO, float time) {
 	if (toupdate->isCollidable() == false) {
 		vec3 tmpos = toupdate->getPos();
@@ -71,29 +180,51 @@ void CollisionEngine::update(GameObject* toupdate, std::vector<GameObject*> coll
 
 	AABB compb;
 
+	physvec3 obj1R;
+	physvec3 obj2R;
+	physvec3 collisionResolved;
+
 	for (unsigned i = 0; i < collGO.size(); i++) {
 		if (collGO.at(i)->getID() != toupdate->getID() && collGO.at(i)->isCollidable()) {
 			if (toupdate->hasMultiObb() && collGO.at(i)->hasOBB()) {
-				std::cout << "Multi vs Single\n" << std::endl;
+				//std::cout << "Multi vs Single\n" << std::endl;
 				for (int i = 0; i < toupdate->getNumOBBs(); i++) {
 					if (OBBOBB(toupdate->getOBB(i), collGO.at(i)->getOBB())) {
 						CollisionManifold coll = FindCollisionFeatures(toupdate->getOBB(i), collGO.at(i)->getOBB());
 						if (coll.colliding) {
-							toupdate->onCollide(tmpos, collGO.at(i)->getIdentifiers());
-							toupdate->onCollide2(tmpos, collGO.at(i)->getPos());
+							if (coll.contacts.size() > 0)
+							{
+								obj1R = toupdate->getOBB(i).position + coll.contacts[0];
+								obj2R = collGO.at(i)->getOBB(i).position - coll.contacts[0];
+								collisionResolved = collisionResolver(toupdate->getVel(), collGO.at(i)->getVel(), toupdate->getAngularVel(), collGO.at(i)->getAngularVel(), toupdate->getTotalMass(), collGO.at(i)->getTotalMass(), obj1R, obj2R, toupdate->getIntert_tensor(), collGO.at(i)->getIntert_tensor(), coll.normal);
+
+								toupdate->onCollide(tmpos, collGO.at(i)->getIdentifiers());
+								toupdate->onCollide2(tmpos, collGO.at(i)->getPos());
+								updateLinearVelocity(toupdate, collGO.at(i), collisionResolved);
+								updateAngularVelocity(toupdate, collGO.at(i), collisionResolved, coll.contacts[0]);
+							}
 						}
 					}
 				}
 			}
 			else if (toupdate->hasMultiObb() && collGO.at(i)->hasMultiObb()) {
-				std::cout << "Multi vs Multi\n" << std::endl;
+				//std::cout << "Multi vs Multi\n" << std::endl;
 				for (int i = 0; i < toupdate->getNumOBBs(); i++) {
 					for (int k = 0; k < collGO.at(i)->getNumOBBs(); k++) {
 						if (OBBOBB(toupdate->getOBB(i), collGO.at(i)->getOBB(k))) {
 							CollisionManifold coll = FindCollisionFeatures(toupdate->getOBB(i), collGO.at(i)->getOBB(k));
 							if (coll.colliding) {
-								toupdate->onCollide(tmpos, collGO.at(i)->getIdentifiers());
-								toupdate->onCollide2(tmpos, collGO.at(i)->getPos());
+								if (coll.contacts.size() > 0)
+								{
+									obj1R = toupdate->getOBB(i).position + coll.contacts[0];
+									obj2R = collGO.at(i)->getOBB(k).position - coll.contacts[0];
+									collisionResolved = collisionResolver(toupdate->getVel(), collGO.at(i)->getVel(), toupdate->getAngularVel(), collGO.at(i)->getAngularVel(), toupdate->getTotalMass(), collGO.at(i)->getTotalMass(), obj1R, obj2R, toupdate->getIntert_tensor(), collGO.at(i)->getIntert_tensor(), coll.normal);
+
+									toupdate->onCollide(tmpos, collGO.at(i)->getIdentifiers());
+									toupdate->onCollide2(tmpos, collGO.at(i)->getPos());
+									updateLinearVelocity(toupdate, collGO.at(i), collisionResolved);
+									updateAngularVelocity(toupdate, collGO.at(i), collisionResolved, coll.contacts[0]);
+								}
 							}
 						}
 					}
@@ -105,8 +236,17 @@ void CollisionEngine::update(GameObject* toupdate, std::vector<GameObject*> coll
 					if (OBBOBB(toupdate->getOBB(), collGO.at(i)->getOBB(k))) {
 						CollisionManifold coll = FindCollisionFeatures(toupdate->getOBB(), collGO.at(i)->getOBB(k));
 						if (coll.colliding) {
-							toupdate->onCollide(tmpos, collGO.at(i)->getIdentifiers());
-							toupdate->onCollide2(tmpos, collGO.at(i)->getPos());
+							if (coll.contacts.size() > 0)
+							{
+								obj1R = toupdate->getOBB(i).position + coll.contacts[0];
+								obj2R = collGO.at(i)->getOBB(k).position - coll.contacts[0];
+
+								collisionResolved = collisionResolver(toupdate->getVel(), collGO.at(i)->getVel(), toupdate->getAngularVel(), collGO.at(i)->getAngularVel(), toupdate->getTotalMass(), collGO.at(i)->getTotalMass(), obj1R, obj2R, toupdate->getIntert_tensor(), collGO.at(i)->getIntert_tensor(), coll.normal);
+								toupdate->onCollide(tmpos, collGO.at(i)->getIdentifiers());
+								toupdate->onCollide2(tmpos, collGO.at(i)->getPos());
+								updateLinearVelocity(toupdate, collGO.at(i), collisionResolved);
+								updateAngularVelocity(toupdate, collGO.at(i), collisionResolved, coll.contacts[0]);
+							}
 						}
 					}
 				}
@@ -116,8 +256,17 @@ void CollisionEngine::update(GameObject* toupdate, std::vector<GameObject*> coll
 				if (OBBOBB(toupdate->getOBB(), collGO.at(i)->getOBB())) {
 					CollisionManifold coll = FindCollisionFeatures(toupdate->getOBB(), collGO.at(i)->getOBB());
 					if (coll.colliding) {
-						toupdate->onCollide(tmpos, collGO.at(i)->getIdentifiers());
-						toupdate->onCollide2(tmpos, collGO.at(i)->getPos());
+						if (coll.contacts.size() > 0)
+						{
+							obj1R = toupdate->getOBB().position + coll.contacts[0];
+							obj2R = collGO.at(i)->getOBB().position - coll.contacts[0];
+							collisionResolved = collisionResolver(toupdate->getVel(), collGO.at(i)->getVel(), toupdate->getAngularVel(), collGO.at(i)->getAngularVel(), toupdate->getTotalMass(), collGO.at(i)->getTotalMass(), obj1R, obj2R, toupdate->getIntert_tensor(), collGO.at(i)->getIntert_tensor(), coll.normal);
+
+							toupdate->onCollide(tmpos, collGO.at(i)->getIdentifiers());
+							toupdate->onCollide2(tmpos, collGO.at(i)->getPos());
+							updateLinearVelocity(toupdate, collGO.at(i), collisionResolved);
+							updateAngularVelocity(toupdate, collGO.at(i), collisionResolved, coll.contacts[0]);
+						}
 					}
 				}
 			}
