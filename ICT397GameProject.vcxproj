@@ -163,6 +163,7 @@
     <ClInclude Include="include\ModelMesh.h" />
     <ClInclude Include="include\movementInfo.h" />
     <ClInclude Include="include\NPC.h" />
+    <ClInclude Include="include\NPCstates.h" />
     <ClInclude Include="include\Player.h" />
     <ClInclude Include="include\QuadTree.h" />
     <ClInclude Include="include\RawTerrain.h" />
@@ -177,6 +178,7 @@
     <ClInclude Include="include\SimpleString.h" />
     <ClInclude Include="include\Singleton.h" />
     <ClInclude Include="include\State.h" />
+    <ClInclude Include="include\StateMachine.h" />
     <ClInclude Include="include\StaticEntity.h" />
     <ClInclude Include="include\terrain.h" />
     <ClInclude Include="include\TerrainObject.h" />
@@ -256,6 +258,7 @@
     <ClCompile Include="src\ModelManger.cpp" />
     <ClCompile Include="src\ModelMesh.cpp" />
     <ClCompile Include="src\NPC.cpp" />
+    <ClCompile Include="src\NPCstates.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\RawTerrain.cpp" />
     <ClCompile Include="src\RenderModuleStubb.cpp" />
