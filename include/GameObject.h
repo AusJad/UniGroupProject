@@ -221,6 +221,8 @@ public:
 	void setIntert_tensor(physmat4 it);
 	void setTotalMass(float tm);
 
+	virtual physvec3 getDimentions() { return physvec3(-1, -1, -1); };
+
 
 protected:
 	/// The state of the object.
