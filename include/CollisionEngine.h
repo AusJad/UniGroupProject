@@ -79,6 +79,11 @@ public:
 
 	static bool rayAABBTest(Ray & r, GameObject* collGO, vec3 & collpoint);
 
+	physvec3 collisionResolver(physvec3 obj1LinearVelocity, physvec3 obj2LinearVelocity, physvec3 obj1AngularVelocity, physvec3 obj2AngularVelocity, float obj1Mass, float obj2Mass, physvec3 obj1R, physvec3 obj2R, physmat4 obj1InertiaTensor, physmat4 obj2InertiaTensor, physvec3 collisionVector);
+	void updateAngularVelocity(GameObject* r1, GameObject* r2, physvec3 help, physvec3 collPt);
+	void updateLinearVelocity(GameObject* r1, GameObject* r2, physvec3 help);
+
+
 private:
 	/// The height map data.
 	std::map<float, std::map<float, float>> heightmap;

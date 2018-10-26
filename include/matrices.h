@@ -271,6 +271,7 @@ mat3 AxisAngle3x3(const physvec3& axis, float angle);
 physvec3 MultiplyPoint(const physvec3& vec, const physmat4& mat);
 physvec3 MultiplyVector(const physvec3& vec, const physmat4& mat);
 physvec3 MultiplyVector(const physvec3& vec, const mat3& mat);
+physvec3 MultiplyVector(const mat3& mat, const physvec3& vec);
 
 physmat4 Transform(const physvec3& scale, const physvec3& eulerRotation, const physvec3& translate);
 physmat4 Transform(const physvec3& scale, const physvec3& rotationAxis, float rotationAngle, const physvec3& translate);
