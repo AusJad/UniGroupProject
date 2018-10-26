@@ -349,3 +349,272 @@ const vec3 & NPC::getEvadeTarget() {
 void NPC::setEvadeTarget(const vec3 & toset) {
 	evadetarget = toset;
 }
+
+//mm
+std::map<std::string, std::map<int, bool>> NPC::getAffordances()
+{
+	return Affordances;
+}
+
+void NPC::GenerateAffordances(std::vector<GameObject*> GOs)
+{
+	for (int i = 0; i < GOs.size(); i++)
+	{
+		Affordances["SIT"][GOs[i]->getID()] = canSit(GOs[i]);
+		Affordances["MOVE"][GOs[i]->getID()] = canMove(GOs[i]);
+		Affordances["PICKUP"][GOs[i]->getID()] = canPick_up(GOs[i]);
+	}
+}
+
+/*
+void NPC::GenerateAffordances(GameObject * GO)
+{
+	Affordances["SIT"][GO->getID()] = canSit(GO);
+	Affordances["MOVE"][GO->getID()] = canMove(GO);
+	Affordances["PICKUP"][GO->getID()] = canPick_up(GO);
+}
+*/
+
+bool NPC::canSit(GameObject *go)
+{
+	// Assumption: You can only sit on objects greater than 20% of your height but less than 40%.
+	if (go->getDimentions().y > getDimentions().y * 0.2 && go->getDimentions().y < getDimentions().y * 0.4);
+	{
+		return true;
+	}
+	return false;
+}
+
+bool NPC::canMove(GameObject *go)
+{
+	// Assumption: Anything can be moved if its total weight is less than the force behind the object acting on it.
+	if (maxBench < go->getTotalMass())
+		return true;
+	return false;
+}
+
+bool NPC::canPick_up(GameObject *go)
+{
+	// Assumption: You can only pick up objects if they weigh less than you can carry and if their y is half or less of your height and if the x and z are the same of less than yours.
+	if (maxBench > go->getTotalMass())
+	{
+		if (go->getDimentions().y < getDimentions().y * 0.5 && go->getDimentions().x <= getDimentions().x && go->getDimentions().z <= getDimentions().z);
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+physvec3 NPC::getDimentions()
+{
+	return physvec3(model->getMaxTX() - model->getMinTX(), model->getMaxTY() - model->getMinTY(), model->getMaxTY() - model->getMinTY());
+}
+
+/*
++x = Exstasy
+-x = Grief
+
++y = Admiration
+-y = Loathing
+
++z = Vigilance
+-z = Amazement
+
++w = Rage
+-w = Terror
+*/
+void NPC::findNextState()
+{
+	char spoke = 'x';
+	float max = abs(Emotion.x());
+
+	if (max < abs(Emotion.y()))
+	{
+		spoke = 'y';
+		max = abs(Emotion.y());
+	}
+
+	if (max < abs(Emotion.z()))
+	{
+		spoke = 'z';
+		max = abs(Emotion.z());
+	}
+
+	if (max < abs(Emotion.w()))
+	{
+		spoke = 'w';
+		max = abs(Emotion.w());
+	}
+
+	switch (spoke)
+	{
+	case 'x':
+		if (Emotion.x() > 0)
+		{
+			//exstasy
+		}
+		else
+		{
+			//grief
+		}
+		break;
+
+	case 'y':
+		if (Emotion.y() > 0)
+		{
+			//Admiration
+		}
+		else
+		{
+			//Loathing
+		}
+		break;
+
+	case 'z':
+		if (Emotion.z() > 0)
+		{
+			//Vigilance
+		}
+		else
+		{
+			//Amazement
+		}
+		break;
+
+	case 'w':
+		if (Emotion.w() > 0)
+		{
+			//Rage
+		}
+		else
+		{
+			//terror
+		}
+		break;
+	}
+}
+
+void NPC::addMod(Mods* m)
+{
+	all_Emo_Mods.push_back(m);
+}
+
+void NPC::addDef(Defs* d)
+{
+	all_Emo_Defs.push_back(d);
+}
+
+void NPC::normaliseEmotion()
+{
+	if (Emotion.x() != DefaultEmotion.x())
+	{
+		if (Emotion.x() < DefaultEmotion.x())
+		{
+			Emotion.sx(Emotion.x() + 0.1);
+		}
+		else
+		{
+			Emotion.sx(Emotion.x() - 0.1);
+		}
+	}
+
+	if (Emotion.y() != DefaultEmotion.y())
+	{
+		if (Emotion.y() < DefaultEmotion.y())
+		{
+			Emotion.sy(Emotion.y() + 0.1);
+		}
+		else
+		{
+			Emotion.sy(Emotion.y() - 0.1);
+		}
+	}
+
+	if (Emotion.z() != DefaultEmotion.z())
+	{
+		if (Emotion.z() < DefaultEmotion.z())
+		{
+			Emotion.sz(Emotion.z() + 0.1);
+		}
+		else
+		{
+			Emotion.sz(Emotion.z() - 0.1);
+		}
+	}
+
+	if (Emotion.w() != DefaultEmotion.w())
+	{
+		if (Emotion.w() < DefaultEmotion.w())
+		{
+			Emotion.sw(Emotion.w() + 0.1);
+		}
+		else
+		{
+			Emotion.sw(Emotion.w() - 0.1);
+		}
+	}
+}
+
+void NPC::stateUpdate()
+{
+	// state changes need to be done here
+}
+
+void NPC::addEmotions(vec4 emo)
+{
+	// Use traits to find modifer of emotion
+	for (int i = 0; i < all_Emo_Mods.size(); i++)
+	{
+		emo *= all_Emo_Mods[i]->getMod();
+	}
+
+	// Use normalisation matrix to calc effect single emotion has on others
+	char max = 'x';
+	float maxval = emo.x();
+
+	if (max < emo.y())
+	{
+		max = 'y';
+		maxval = emo.y();
+	}
+
+	if (max < emo.z())
+	{
+		max = 'z';
+		maxval = emo.z();
+	}
+
+	if (max < emo.w())
+	{
+		max = 'w';
+		maxval = emo.w();
+	}
+
+	switch (max)
+	{
+	case 'x':
+		emo *= vec4(EmotionNormalisation[0], EmotionNormalisation[1], EmotionNormalisation[2], EmotionNormalisation[3]); // 1st row
+		break;
+	case 'y':
+		emo *= vec4(EmotionNormalisation[4], EmotionNormalisation[5], EmotionNormalisation[6], EmotionNormalisation[7]); // 2nd row
+		break; 
+	case 'z':
+		emo *= vec4(EmotionNormalisation[8], EmotionNormalisation[9], EmotionNormalisation[10], EmotionNormalisation[11]); // 3rd row
+		break;
+	case 'w':
+		emo *= vec4(EmotionNormalisation[12], EmotionNormalisation[13], EmotionNormalisation[14], EmotionNormalisation[15]); // 4th row
+		break;
+	}
+
+	Emotion += emo;
+}
+
+void NPC::ApplyTraits()
+{
+	for (int i = 0; i < all_Emo_Defs.size(); i++)
+	{
+		DefaultEmotion += all_Emo_Defs[i]->getDef();
+	}
+}

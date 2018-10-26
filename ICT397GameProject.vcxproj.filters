@@ -416,6 +416,11 @@
     </ClInclude>
     <ClInclude Include="include\StateMachine.h">
       <Filter>Header Files\AI\FSM</Filter>
+    <ClInclude Include="include\State.h">
+      <Filter>Header Files\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Traits.h">
+      <Filter>Header Files\AI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -679,6 +684,8 @@
     </ClCompile>
     <ClCompile Include="src\NPCstates.cpp">
       <Filter>Source Files\AI\FSM</Filter>
+    <ClCompile Include="src\Traits.cpp">
+      <Filter>Source Files\AI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

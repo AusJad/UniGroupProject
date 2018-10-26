@@ -45,6 +45,9 @@ public:
 	bool addMultiObb(OBB in);
 	bool addMultiObb(std::vector<OBB> & in);
 
+	//mm
+	physvec3 getDimentions();
+
 private:
 	float scalex;
 	float scaley;

@@ -188,6 +188,7 @@
     <ClInclude Include="include\TextureManager.h" />
     <ClInclude Include="include\TGALoader.h" />
     <ClInclude Include="include\TitleScreen.h" />
+    <ClInclude Include="include\Traits.h" />
     <ClInclude Include="include\UITextures.h" />
     <ClInclude Include="include\vec2.h" />
     <ClInclude Include="include\vec3.h" />
@@ -278,6 +279,7 @@
     <ClCompile Include="src\TextureManager.cpp" />
     <ClCompile Include="src\TGALoader.cpp" />
     <ClCompile Include="src\TitleScreen.cpp" />
+    <ClCompile Include="src\Traits.cpp" />
     <ClCompile Include="src\vec2.cpp" />
     <ClCompile Include="src\vec3.cpp" />
     <ClCompile Include="src\vec4.cpp" />
