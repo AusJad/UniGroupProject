@@ -154,7 +154,6 @@ bool GenericObject::addMultiObb(OBB in) {
 		return true;
 }
 
-
 GenericObject::GenericObject(const GenericObject & tocpy) : GameObject(*this) {
 	scalex = tocpy.scalex;
 	scaley = tocpy.scaley;
@@ -165,3 +164,8 @@ GenericObject::GenericObject(const GenericObject & tocpy) : GameObject(*this) {
 	anglez = tocpy.anglez;
 }
 
+// mm
+physvec3 GenericObject::getDimentions() 
+{
+	return physvec3(model->getMaxX() - model->getMinX(), model->getMaxY() - model->getMinY(), model->getMaxY() - model->getMinY());
+};

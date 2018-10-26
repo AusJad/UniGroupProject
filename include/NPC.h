@@ -5,6 +5,12 @@
 #include "StateMachine.h"
 #include "State.h"
 
+#include <map>
+#include "State.h"
+#include "Traits.h"
+
+#include <math.h>
+
 /**
 * @class NPC
 * @brief Class for creating NPCs
@@ -163,6 +169,13 @@ public:
 	const vec3 & getEvadeTarget();
 	void setEvadeTarget(const vec3 & toset);
 
+	//mm
+	std::map<std::string, std::map<int, bool>> getAffordances();
+	
+	// Reason for 2 GenerateAffordances functions is because im unsure if we are passing in a single gameobject on a loop or a vector of game objects in a single call
+	void GenerateAffordances(std::vector<GameObject*> GOs);
+	//void GenerateAffordances(GameObject *GO);
+
 private:
 	vec3 evadetarget;
 	/// Velocity of the NPC.
@@ -183,6 +196,48 @@ private:
 	bool canAttack;
 
 	float evadetime;
+
+
+	//mm
+	std::map<std::string, std::map<int, bool>> Affordances;
+	float maxBench; // Do you even lift bro
+
+	// These are private as they are only called for GenerateAffordances()
+	bool canSit(GameObject *go);
+	bool canMove(GameObject *go);
+	bool canPick_up(GameObject *go);
+
+	physvec3 getDimentions();
+
+	State* currState;
+	std::vector<State*> allStates; // All possible states - This may need to be done a better way if time permits.
+	mat4 EmotionNormalisation;
+
+	std::vector<Mods*> all_Emo_Mods;
+	std::vector<Defs*> all_Emo_Defs;
+	vec4 DefaultEmotion = vec4( 0, 0, 0, 0 ); // Default emotional state for individual NPC
+	vec4 Emotion; // Because human emotion is just vec4 obviously.
+	/*
+		+x = Exstasy
+		-x = Grief
+		
+		+y = Admiration
+		-y = Loathing
+
+		+z = Vigilance
+		-z = Amazement
+
+		+w = Rage
+		-w = Terror
+	*/
+	void addMod(Mods* m);
+	void addDef(Defs* d);
+
+	void ApplyTraits();
+	void findNextState();
+	void normaliseEmotion();
+	void stateUpdate();
+	void addEmotions(vec4 emo);
 
 	stateMachine<NPC> *npcFSM;
 
