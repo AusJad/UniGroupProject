@@ -417,6 +417,9 @@
     <ClInclude Include="include\StateMachine.h">
       <Filter>Header Files\AI\FSM</Filter>
     </ClInclude>
+    <ClInclude Include="include\EditorAgentTool.h">
+      <Filter>Header Files\Rendering\UI\High Level</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Controls.cpp">
@@ -679,6 +682,9 @@
     </ClCompile>
     <ClCompile Include="src\NPCstates.cpp">
       <Filter>Source Files\AI\FSM</Filter>
+    </ClCompile>
+    <ClCompile Include="src\EditorAgentTool.cpp">
+      <Filter>Source Files\Rendering\UI\High Level</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

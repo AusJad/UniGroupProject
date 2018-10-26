@@ -91,6 +91,15 @@ bool EditorContext::initToolBar() {
 	b->setTex(CAM_TOOL_ICON);
 	b->setCallback(cameratoolclock);
 	toolbar->addComponent(b);
+	
+	b = NULL;
+	b = new ButtonComponent();
+	if (b == NULL) return false;
+	b->setWidth(96);
+	b->setHeight(96);
+	b->setTex(AGENT_ICON);
+	b->setCallback(cameratoolclock);
+	toolbar->addComponent(b);
 
 	b = NULL;
 	b = new ButtonComponent();
@@ -104,7 +113,7 @@ bool EditorContext::initToolBar() {
 	b = NULL;
 	b = new ButtonComponent();
 	if (b == NULL) return false;
-	b->setWidth(128);
+	b->setWidth(32);
 	b->setHeight(96);
 	b->setTex(TOOLBAR_END_ICON);
 	toolbar->addComponent(b);

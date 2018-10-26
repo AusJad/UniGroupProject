@@ -116,6 +116,7 @@
     <ClInclude Include="include\ControlContext.h" />
     <ClInclude Include="include\CtoLUABinder.h" />
     <ClInclude Include="include\CutScene.h" />
+    <ClInclude Include="include\EditorAgentTool.h" />
     <ClInclude Include="include\EditorCameraTool.h" />
     <ClInclude Include="include\EditorContext.h" />
     <ClInclude Include="include\EditorObjectTool.h" />
@@ -214,6 +215,7 @@
     <ClCompile Include="src\Console.cpp" />
     <ClCompile Include="src\CtoLUABinder.cpp" />
     <ClCompile Include="src\CutScene.cpp" />
+    <ClCompile Include="src\EditorAgentTool.cpp" />
     <ClCompile Include="src\EditorCameraTool.cpp" />
     <ClCompile Include="src\EditorContext.cpp" />
     <ClCompile Include="src\EditorObjectTool.cpp" />

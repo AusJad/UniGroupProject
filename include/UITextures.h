@@ -12,6 +12,7 @@
 #define CAM_TOOL_ICON		"camtoolicon.tga"
 #define SAVE_TOOL_ICON		"savetoolicon.tga"
 #define TOOLBAR_END_ICON	"toolbarend.tga"
+#define AGENT_ICON			"agenticon.tga"
 
 #define G1_LOGO				"G1Logo.tga"
 #define EXIT_SCRN			"exitscreen.tga"
