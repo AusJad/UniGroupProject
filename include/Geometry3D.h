@@ -82,6 +82,7 @@ typedef struct OBB {
 	Point position;
 	physvec3 size; // HALF SIZE!
 	mat3 orientation;
+	float mass;
 
 	inline OBB() : size(1, 1, 1) { }
 	inline OBB(const Point& p, const physvec3& s) :

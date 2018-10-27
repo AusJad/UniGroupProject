@@ -225,6 +225,8 @@ public:
 
 	virtual physvec3 getDimentions() { return physvec3(-1, -1, -1); };
 
+	virtual void calcMass();
+
 
 protected:
 	/// The state of the object.

@@ -227,6 +227,8 @@ public:
 	bool hasOBB() { return true; };
 	OBB getOBB();
 
+	void calcMass();
+
 private:
 	/// Move speed of camera.
 	float moveSpeed;
@@ -279,6 +281,8 @@ private:
 	* @brief A method to switch the view mode of the camera.
 	*/
 	void switchViewMode();
+
+	OBB ret;
 };
 
 #endif

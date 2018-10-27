@@ -49,6 +49,8 @@ public:
 	//mm
 	physvec3 getDimentions();
 
+	void calcMass();
+
 private:
 	float scalex;
 	float scaley;
