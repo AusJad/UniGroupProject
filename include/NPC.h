@@ -176,6 +176,36 @@ public:
 	void GenerateAffordances(std::vector<GameObject*> GOs);
 	//void GenerateAffordances(GameObject *GO);
 
+	void calcMass();
+
+	// obb stuff
+	bool isStatic() { return true; }
+	bool hasOBB() { return true; };
+	OBB getOBB();
+	OBB getOBB(unsigned int index);
+	OBB getOBBConfig(unsigned int index);
+	std::vector<OBB> getOBBs();
+	bool hasMultiObb();
+	int getNumOBBs();
+	OBB getOBB(int obbNum);
+	bool addMultiObb(OBB in);
+	bool addMultiObb(std::vector<OBB> & in);
+
+	void setScaleX(float nscalex);
+	void setScaleY(float nscaley);
+	void setScaleZ(float nscalez);
+	void setPos(vec3 & npos) { trans = npos; }
+	void setAngleX(float nx) { anglex = nx; }
+	void setAngleY(float ny) { angley = ny; }
+	void setAngleZ(float nz) { anglez = nz; }
+	float getAngleX() { return anglex; }
+	float getAngleY() { return angley; }
+	float getAngleZ() { return anglez; }
+	float getScaleX() { return scalex; }
+	float getScaleY() { return scaley; }
+	float getScaleZ() { return scalez; }
+	void updateBounds();
+
 private:
 	vec3 evadetarget;
 	/// Velocity of the NPC.
@@ -209,14 +239,19 @@ private:
 
 	physvec3 getDimentions();
 
-	//State* currState;
-	//std::vector<State*> allStates; // All possible states - This may need to be done a better way if time permits.
-	mat4 EmotionNormalisation;
+	// This can be changed.
+	// Note 1.0f means no change in emotion. (either emotion effecting itself or emotion doesn't affect another emotion according to Plutchik's wheel of emotions).
+	// Note this should remain constant as traits and personalities are dealt with differently this is a universal emotion modifier.
+	mat4 EmotionNormalisation = {
+		1.0f, 1.1f, 1.1f, 1.0f, 
+		1.1f, 1.0f, 1.0f, 1.1f, 
+		1.1f, 1.0f, 1.0f, 1.1f,
+		1.0f, 1.1f, 1.1f, 1.0f };
 
 	std::vector<Mods*> all_Emo_Mods;
 	std::vector<Defs*> all_Emo_Defs;
 	vec4 DefaultEmotion = vec4( 0, 0, 0, 0 ); // Default emotional state for individual NPC
-	vec4 Emotion; // Because human emotion is just vec4 obviously.
+	vec4 Emotion = vec4(0, 0, 0, 0); // Because human emotion is just vec4 obviously.
 	/*
 		+x = Exstasy
 		-x = Grief
@@ -241,4 +276,15 @@ private:
 
 	stateMachine<NPC> *npcFSM;
 
+	// obb stuff
+	float scalex;
+	float scaley;
+	float scalez;
+	vec3 trans;
+	OBB obb;
+	std::vector<OBB> obbs;
+	std::vector<OBB> obbsConfig;
+	float angley;
+	float anglex;
+	float anglez;
 };

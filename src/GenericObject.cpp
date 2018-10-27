@@ -8,6 +8,7 @@ GenericObject::GenericObject() {
 	anglex = 0;
 	anglez = 0;
 	id.setType("GENERIC_OBJ");
+	totalmass = 1;
 }
 
 std::string GenericObject::toString() {
@@ -100,6 +101,8 @@ void GenericObject::updateBounds() {
 				//obbs[i].position = physvec3((trans.x() + obbsConfig[i].position.x * (scalex)), trans.y() + obbsConfig[i].position.y * (scaley), trans.z() + obbsConfig[i].position.z * (scalez));
 				obbs[i].orientation = Rotation3x3(anglex, angley, anglez);
 				//obbs[i].position -= physvec3((obbsConfig[i].position.x * (scalex)), obbsConfig[i].position.y * (scaley), obbsConfig[i].position.z * (scalez));
+
+				this->calcMass();//mm
 		} 
 		}
 		else {
@@ -108,6 +111,8 @@ void GenericObject::updateBounds() {
 				(minmax.at(1).y() - minmax.at(0).y()) / 2,
 				(minmax.at(1).z() - minmax.at(0).z()) / 2);
 			obb.orientation = Rotation3x3(anglex, angley, anglez);
+
+			this->calcMass();//mm
 		}
 	}
 }
@@ -169,3 +174,18 @@ physvec3 GenericObject::getDimentions()
 {
 	return physvec3(model->getMaxX() - model->getMinX(), model->getMaxY() - model->getMinY(), model->getMaxY() - model->getMinY());
 };
+
+void GenericObject::calcMass()
+{
+	if (this->hasMultiObb())
+	{
+		for (int i = 0; i < obbs.size(); i++)
+		{
+			totalmass += obbs[i].mass;
+		}
+	}
+	else
+	{
+		totalmass = obb.mass;
+	}
+}
