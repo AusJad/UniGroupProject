@@ -172,6 +172,8 @@ public:
 	*/
 	virtual void onCollide(vec3 & prevloc, const Identifiers & colgoid);
 
+	void updateVelocities(GameObject * collidingObj, physvec3 collisionResolved, physvec3 collisionPoint);
+
 	void setIdentifiers(const Identifiers & toset) { this->id = toset; };
 
 	virtual void onCollide2(vec3 & prevloc, const vec3 & colpos) {};
@@ -197,7 +199,7 @@ public:
 	* @brief A virtual method for putting all data from file back into the object.
 	*
 	* @param toread - The data from file.
-	* 
+	*
 	* @return bool - If the data was input.
 	*/
 	virtual bool fromstring(std::string linehead, std::string & toread);
@@ -243,7 +245,8 @@ protected:
 	// mm
 	physvec3 angularvel, vel;
 	physmat4 intert_tensor;
-	float totalmass;
+	float totalmass = 10;
+
 
 	/**
 	* @brief The message receiver.

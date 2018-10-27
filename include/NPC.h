@@ -209,8 +209,8 @@ private:
 
 	physvec3 getDimentions();
 
-	State* currState;
-	std::vector<State*> allStates; // All possible states - This may need to be done a better way if time permits.
+	//State* currState;
+	//std::vector<State*> allStates; // All possible states - This may need to be done a better way if time permits.
 	mat4 EmotionNormalisation;
 
 	std::vector<Mods*> all_Emo_Mods;

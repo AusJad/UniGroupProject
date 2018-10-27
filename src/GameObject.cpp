@@ -144,9 +144,59 @@ bool GameObject::isCollidable() {
 // mm - update movement here?
 void GameObject::onCollide(vec3 & prevloc, const Identifiers & colgoid) {
 	pos = prevloc;
-
+	
 	stop();
 }
+void GameObject::updateVelocities(GameObject* collidingObj, physvec3 collisionResolved, physvec3 collisionPoint) {
+	physvec3 tempVel = vel += (collisionResolved / getTotalMass());
+	setVel(tempVel);
+
+	tempVel = collidingObj->getVel() -= (collisionResolved / collidingObj->getTotalMass());
+	collidingObj->setVel(tempVel);
+
+	physvec3 normalVector = collisionPoint - getOBB().position;
+	mat3 i1;
+	mat3 i2;
+	i1._11 = getIntert_tensor()._11;
+	i1._12 = getIntert_tensor()._12;
+	i1._13 = getIntert_tensor()._13;
+
+	i1._21 = getIntert_tensor()._21;
+	i1._22 = getIntert_tensor()._22;
+	i1._23 = getIntert_tensor()._23;
+
+	i1._31 = getIntert_tensor()._31;
+	i1._32 = getIntert_tensor()._32;
+	i1._33 = getIntert_tensor()._33;
+
+
+	i2._11 = collidingObj->getIntert_tensor()._11;
+	i2._12 = collidingObj->getIntert_tensor()._12;
+	i2._13 = collidingObj->getIntert_tensor()._13;
+
+	i2._21 = collidingObj->getIntert_tensor()._21;
+	i2._22 = collidingObj->getIntert_tensor()._22;
+	i2._23 = collidingObj->getIntert_tensor()._23;
+
+	i2._31 = collidingObj->getIntert_tensor()._31;
+	i2._32 = collidingObj->getIntert_tensor()._32;
+	i2._33 = collidingObj->getIntert_tensor()._33;
+
+	i1 = Inverse(i1);
+	i2 = Inverse(i2);
+
+
+
+	physvec3 r1stuff = MultiplyVector(i1, Cross(normalVector, collisionPoint));
+	tempVel = getAngularVel() += r1stuff;
+	setAngularVel(tempVel);
+
+	physvec3 r2stuff = MultiplyVector(i2, Cross(normalVector, collisionPoint));
+	tempVel = collidingObj->getAngularVel() -= r2stuff;
+	collidingObj->setAngularVel(tempVel);
+	//stop();
+}
+
 
 bool GameObject::hasGravity() {
 	return true;

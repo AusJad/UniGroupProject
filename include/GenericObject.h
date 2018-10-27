@@ -4,13 +4,14 @@
 #include <vector>
 #include "matrices.h"
 
+#define GRAVITY physvec3(0.0f, -9.8f, 0.0f)
 
 class GenericObject : public GameObject
 {
 public:
 	GenericObject();
 	void render();
-	void update(float time) {};
+	void update(float time);
 	void setScaleX(float nscalex);
 	void setScaleY(float nscaley);
 	void setScaleZ(float nscalez);

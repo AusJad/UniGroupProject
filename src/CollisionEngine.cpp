@@ -197,11 +197,10 @@ void CollisionEngine::update(GameObject* toupdate, std::vector<GameObject*> coll
 								obj1R = toupdate->getOBB(i).position + coll.contacts[0];
 								obj2R = collGO.at(i)->getOBB(i).position - coll.contacts[0];
 								collisionResolved = collisionResolver(toupdate->getVel(), collGO.at(i)->getVel(), toupdate->getAngularVel(), collGO.at(i)->getAngularVel(), toupdate->getTotalMass(), collGO.at(i)->getTotalMass(), obj1R, obj2R, toupdate->getIntert_tensor(), collGO.at(i)->getIntert_tensor(), coll.normal);
-
-								toupdate->onCollide(tmpos, collGO.at(i)->getIdentifiers());
-								toupdate->onCollide2(tmpos, collGO.at(i)->getPos());
-								updateLinearVelocity(toupdate, collGO.at(i), collisionResolved);
-								updateAngularVelocity(toupdate, collGO.at(i), collisionResolved, coll.contacts[0]);
+								toupdate->updateVelocities(collGO.at(i), collisionResolved, coll.contacts[0]);
+								//updateLinearVelocity(toupdate, collGO.at(i), collisionResolved);
+								//updateAngularVelocity(toupdate, collGO.at(i), collisionResolved, coll.contacts[0]);
+					
 							}
 						}
 					}
@@ -220,10 +219,10 @@ void CollisionEngine::update(GameObject* toupdate, std::vector<GameObject*> coll
 									obj2R = collGO.at(i)->getOBB(k).position - coll.contacts[0];
 									collisionResolved = collisionResolver(toupdate->getVel(), collGO.at(i)->getVel(), toupdate->getAngularVel(), collGO.at(i)->getAngularVel(), toupdate->getTotalMass(), collGO.at(i)->getTotalMass(), obj1R, obj2R, toupdate->getIntert_tensor(), collGO.at(i)->getIntert_tensor(), coll.normal);
 
-									toupdate->onCollide(tmpos, collGO.at(i)->getIdentifiers());
-									toupdate->onCollide2(tmpos, collGO.at(i)->getPos());
-									updateLinearVelocity(toupdate, collGO.at(i), collisionResolved);
-									updateAngularVelocity(toupdate, collGO.at(i), collisionResolved, coll.contacts[0]);
+									toupdate->updateVelocities(collGO.at(i), collisionResolved, coll.contacts[0]);
+									//updateLinearVelocity(toupdate, collGO.at(i), collisionResolved);
+									//updateAngularVelocity(toupdate, collGO.at(i), collisionResolved, coll.contacts[0]);
+				
 								}
 							}
 						}
@@ -242,10 +241,12 @@ void CollisionEngine::update(GameObject* toupdate, std::vector<GameObject*> coll
 								obj2R = collGO.at(i)->getOBB(k).position - coll.contacts[0];
 
 								collisionResolved = collisionResolver(toupdate->getVel(), collGO.at(i)->getVel(), toupdate->getAngularVel(), collGO.at(i)->getAngularVel(), toupdate->getTotalMass(), collGO.at(i)->getTotalMass(), obj1R, obj2R, toupdate->getIntert_tensor(), collGO.at(i)->getIntert_tensor(), coll.normal);
+								toupdate->updateVelocities(collGO.at(i), collisionResolved, coll.contacts[0]);
+								//updateLinearVelocity(toupdate, collGO.at(i), collisionResolved);
+								//updateAngularVelocity(toupdate, collGO.at(i), collisionResolved, coll.contacts[0]);
 								toupdate->onCollide(tmpos, collGO.at(i)->getIdentifiers());
 								toupdate->onCollide2(tmpos, collGO.at(i)->getPos());
-								updateLinearVelocity(toupdate, collGO.at(i), collisionResolved);
-								updateAngularVelocity(toupdate, collGO.at(i), collisionResolved, coll.contacts[0]);
+								
 							}
 						}
 					}
@@ -261,11 +262,12 @@ void CollisionEngine::update(GameObject* toupdate, std::vector<GameObject*> coll
 							obj1R = toupdate->getOBB().position + coll.contacts[0];
 							obj2R = collGO.at(i)->getOBB().position - coll.contacts[0];
 							collisionResolved = collisionResolver(toupdate->getVel(), collGO.at(i)->getVel(), toupdate->getAngularVel(), collGO.at(i)->getAngularVel(), toupdate->getTotalMass(), collGO.at(i)->getTotalMass(), obj1R, obj2R, toupdate->getIntert_tensor(), collGO.at(i)->getIntert_tensor(), coll.normal);
-
-							toupdate->onCollide(tmpos, collGO.at(i)->getIdentifiers());
+							toupdate->updateVelocities(collGO.at(i), collisionResolved, coll.contacts[0]);
+							//updateLinearVelocity(toupdate, collGO.at(i), collisionResolved);
+							//updateAngularVelocity(toupdate, collGO.at(i), collisionResolved, coll.contacts[0]);
+							//toupdate->onCollide(tmpos, collGO.at(i)->getIdentifiers());
 							toupdate->onCollide2(tmpos, collGO.at(i)->getPos());
-							updateLinearVelocity(toupdate, collGO.at(i), collisionResolved);
-							updateAngularVelocity(toupdate, collGO.at(i), collisionResolved, coll.contacts[0]);
+							
 						}
 					}
 				}
