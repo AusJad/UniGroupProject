@@ -107,7 +107,7 @@ void GenericObject::updateBounds() {
 				physvec3 tmp2 = physvec3(obbsConfig[i].position.x, obbsConfig[i].position.y, obbsConfig[i].position.z) * physvec3(scalex, scaley, scalez);
 				physvec3 tmp = MultiplyPoint(tmp2, Rotation(anglex, angley, anglez));
 				obbs[i].position += tmp;
-				std::cout << "tmp.x: " << tmp.x << " tmp.y: " << tmp.y << " tmp.z: " << tmp.z << std::endl;
+				//std::cout << "tmp.x: " << tmp.x << " tmp.y: " << tmp.y << " tmp.z: " << tmp.z << std::endl;
 				
 
 
