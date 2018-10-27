@@ -16,6 +16,9 @@ NPC::NPC(Identifiers & id, vec3 pos, ResourceList & list) : GameObject( id, pos,
 	npcFSM->setCurrentState(wander_state::getInstance());
 	npcFSM->setGlobalState(global_state::getInstance());
 	totalmass = 1;
+	scalex = 1;
+	scaley = 1;
+	scalez = 1;
 
 }
 
@@ -27,6 +30,14 @@ NPC::NPC() : GameObject(){
 	canUpdate = false;
 	canRender = false;
 	canAttack = false;
+	scalex = 1;
+	scaley = 1;
+	scalez = 1;
+	npcFSM = new stateMachine<NPC>(this);
+	npcFSM->setCurrentState(wander_state::getInstance());
+	npcFSM->setGlobalState(global_state::getInstance());
+	totalmass = 1;
+
 }
 
 NPC::~NPC()
@@ -39,21 +50,45 @@ bool NPC::isCollidable() {
 }
 
 void NPC::render() {
+	
 
-	if (!canRender) return;
+	//if (!canRender) return;
+	
+	//std::cout << "NPC render function" << std::endl;
 
 	RenderModuleStubb* tmp = Singleton<RenderModuleStubb>::getInstance();
+	//resources.hasResource("model") &&
 
-	if (resources.hasResource("model") && model != NULL) {
-
-		GeoStream << BEGIN_STREAM << trans_3(this->pos.x(), this->pos.y(), this->pos.z()) << rot_4(lookangle, 0, 1, 0);
-		GameObject::model->render(this->pos);
+	if ( model != NULL) {
+		//std::cout << "Attempting to render NPC" << std::endl;
+		GeoStream << BEGIN_STREAM << trans_3(this->trans.x(), this->trans.y(), this->trans.z()) << rot_4(lookangle, 0, 1, 0);
+		GameObject::model->render(this->trans);
 		GeoStream << END_STREAM;
 	}
 	else {
-
-		tmp->DrawQuad(point(pos.x(), pos.y() + 1), point(pos.x() + 1, pos.y()), pos.z());
+		//std::cout << "Drawing a box" << std::endl;
+		tmp->DrawQuad(point(trans.x(), trans.y() + 1), point(trans.x() + 1, trans.y()), trans.z());
 	}
+
+	physvec3 rot;
+	if (this->hasMultiObb()) {
+		GeoStream << START_ATTRIB << color_3(0.6f, 1.0f, 0.0f);
+		OBB tmpobb;
+		for (int i = 0; i < this->getNumOBBs(); i++) {
+			RNDR->enableWireframe();
+			tmpobb = this->getOBB(i);
+			rot = Decompose(tmpobb.orientation);
+			GeoStream << BEGIN_STREAM << trans_3(tmpobb.position.x, tmpobb.position.y, tmpobb.position.z) << rot_4(RAD2DEG(rot.x), 1, 0, 0) << rot_4(RAD2DEG(rot.y), 0, 1, 0) << rot_4(RAD2DEG(rot.z), 0, 0, 1);
+			RNDR->DrawRectangularPrism(vec3(), tmpobb.size.x, tmpobb.size.y, tmpobb.size.z);
+			GeoStream << END_STREAM;
+			RNDR->disableWireFrame();
+			RNDR->DrawRectangularPrism(vec3(tmpobb.position.x, tmpobb.position.y, tmpobb.position.z), 3, 3, 3);
+
+		}
+		GeoStream << END_ATTRIB;
+	}
+
+
 }
 
 bool NPC::NPCDefaultMessageHandler(Message & message) {
@@ -695,6 +730,7 @@ void NPC::updateBounds() {
 		model->setScale(vec3(scalex, scaley, scalez));
 		std::vector<vec3> minmax = model->computeMMax();
 		if (this->hasMultiObb()) {
+			std::cout << model->getName() << " has multi-obb" << std::endl;
 			for (int i = 0; i < obbs.size(); i++) {
 				//obbs[i].position = physvec3((trans.x() + obbsConfig[i].position.x * (scalex)), trans.y() + obbsConfig[i].position.y * (scaley), trans.z() + obbsConfig[i].position.z * (scalez));
 				obbs[i].size.x = obbsConfig[i].size.x * scalex;
@@ -706,7 +742,7 @@ void NPC::updateBounds() {
 				physvec3 tmp2 = physvec3(obbsConfig[i].position.x, obbsConfig[i].position.y, obbsConfig[i].position.z) * physvec3(scalex, scaley, scalez);
 				physvec3 tmp = MultiplyPoint(tmp2, Rotation(anglex, angley, anglez));
 				obbs[i].position += tmp;
-				std::cout << "tmp.x: " << tmp.x << " tmp.y: " << tmp.y << " tmp.z: " << tmp.z << std::endl;
+				//std::cout << "tmp.x: " << tmp.x << " tmp.y: " << tmp.y << " tmp.z: " << tmp.z << std::endl;
 
 
 
@@ -722,13 +758,15 @@ void NPC::updateBounds() {
 			}
 		}
 		else {
-			obb.position = physvec3(trans.x(), trans.y(), trans.z());
-			obb.size = physvec3((minmax.at(1).x() - minmax.at(0).x()) / 2,
-				(minmax.at(1).y() - minmax.at(0).y()) / 2,
-				(minmax.at(1).z() - minmax.at(0).z()) / 2);
-			obb.orientation = Rotation3x3(anglex, angley, anglez);
+			std::cout << model->getName() << " does not have multi-obb, no OBB on NPC object" << std::endl;
+			//obb.position = physvec3(trans.x(), trans.y(), trans.z());
+			//obb.size = physvec3((minmax.at(1).x() - minmax.at(0).x()) / 2,
+			//	(minmax.at(1).y() - minmax.at(0).y()) / 2,
+			//	(minmax.at(1).z() - minmax.at(0).z()) / 2);
+			//obb.orientation = Rotation3x3(anglex, angley, anglez);
 
 			this->calcMass(); //mm
 		}
+		
 	}
 }

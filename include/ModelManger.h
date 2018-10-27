@@ -10,6 +10,7 @@
 #define MMAN Singleton<ModelManger>::getInstance()
 
 #define MODEL_MAIN_GROUP "ModelsMain"
+#define MODEL_AGENT_GROUP "ModelsAgent"
 #define TERRAIN_GROUP "ModelsTerain"
 
 /**

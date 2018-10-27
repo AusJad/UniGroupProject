@@ -6,6 +6,7 @@
 #include "EngineStateWriter.h"
 #include "SaveTool.h"
 #include "EditorObjectTool.h"
+#include "EditorAgentTool.h"
 
 /**
 * @class EditorContext
@@ -33,6 +34,7 @@ private:
 	static Window * toolbar;
 	static EditorCameraTool cameratool;
 	static EditorWallTool walltool;
+	static EditorAgentTool agenttool;
 	static SaveTool savetool;
 	static EditorObjectTool objecttool;
 
@@ -43,6 +45,7 @@ private:
 	static void toolbarClose(int code);
 	static void walltoolclick(int code);
 	static void objecttoolclick(int code);
+	static void agenttoolclick(int code);
 	static void cameratoolclock(int code);
 	static void savetoolclick(int code);
 

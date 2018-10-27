@@ -9,9 +9,11 @@
 
 #define WALL_TOOL_ICON		"walltoolicon.tga"
 #define OBJECT_TOOL_ICON	"objecttoolicon.tga"
+#define AGENT_TOOL_ICON		"agenttoolicon.tga"
 #define CAM_TOOL_ICON		"camtoolicon.tga"
 #define SAVE_TOOL_ICON		"savetoolicon.tga"
 #define TOOLBAR_END_ICON	"toolbarend.tga"
+
 
 #define G1_LOGO				"G1Logo.tga"
 #define EXIT_SCRN			"exitscreen.tga"

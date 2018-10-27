@@ -195,6 +195,7 @@ public:
 	void setScaleY(float nscaley);
 	void setScaleZ(float nscalez);
 	void setPos(vec3 & npos) { trans = npos; }
+	vec3 getPos() { return trans; }
 	void setAngleX(float nx) { anglex = nx; }
 	void setAngleY(float ny) { angley = ny; }
 	void setAngleZ(float nz) { anglez = nz; }
@@ -219,9 +220,9 @@ private:
 	/// The speed of the NPC.
 	float speed;
 	///Flag to determine wether npc should be updated(is active)
-	bool canUpdate = false;
+	bool canUpdate = true;
 	///Flag to determine whether npc should be rendered
-	bool canRender = false;
+	bool canRender = true;
 	///can attack
 	bool canAttack;
 
