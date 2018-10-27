@@ -121,10 +121,10 @@ bool GameObject::isVisible() {
 
 void GameObject::setModel(Model* M) {
 	if (model != NULL) {
-		std::cout << "Here" << std::endl;
+		std::cout << "Here - Model not set" << std::endl;
 		delete model;
 	}
-
+	std::cout << "Model is: " << M->getName() << std::endl;
 	model = M;
 
 	model->centerOnPoint(vec3(0, 0, 0));
