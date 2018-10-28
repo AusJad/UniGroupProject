@@ -227,7 +227,7 @@ public:
 
 	virtual void calcMass();
 
-	virtual void GenerateAffordances(std::vector<GameObject*> GOs) {}
+	virtual void GenerateAffordances(std::vector<GameObject*> GOs) {};
 
 protected:
 	/// The state of the object.

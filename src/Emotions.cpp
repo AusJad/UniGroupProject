@@ -12,6 +12,8 @@ Emotions::Emotions(vec4 emo, vec4 mod, vec4 def)
 	emotions = emo;
 	modifiers = mod;
 	defaults = def;
+
+	check_below_max();
 }
 
 Emotions::~Emotions()
@@ -41,6 +43,8 @@ void Emotions::add_emotion(vec4 e)
 	{
 		emotions *= vec4(normalization[12], normalization[13], normalization[14], normalization[15]); // 4th row
 	}
+
+	check_below_max();
 
 	this->normalize_emotions();
 }
@@ -73,6 +77,7 @@ vec4 Emotions::getDefaults()
 void Emotions::setEmotions(const vec4 & e)
 {
 	emotions = e;
+	check_below_max();
 }
 
 void Emotions::setModifiers(const vec4 & m)
@@ -87,6 +92,8 @@ void Emotions::setDefaults(const vec4 & d)
 
 void Emotions::normalize_emotions()
 {
+	check_below_max();
+
 	if (emotions.x() != defaults.x())
 	{
 		if (emotions.x() < defaults.x())
@@ -154,4 +161,31 @@ float Emotions::z()
 float Emotions::w()
 {
 	return emotions.w();
+}
+
+void Emotions::check_below_max()
+{
+	if (emotions.x() > 1.0f)
+		emotions.sx(1.0f);
+
+	if (emotions.x() < -1.0f)
+		emotions.sx(-1.0f);
+
+	if (emotions.y() > 1.0f)
+		emotions.sy(1.0f);
+
+	if (emotions.y() < -1.0f)
+		emotions.sy(-1.0f);
+
+	if (emotions.z() > 1.0f)
+		emotions.sz(1.0f);
+
+	if (emotions.z() < -1.0f)
+		emotions.sz(-1.0f);
+
+	if (emotions.w() > 1.0f)
+		emotions.sw(1.0f);
+
+	if (emotions.w() < -1.0f)
+		emotions.sw(-1.0f);
 }

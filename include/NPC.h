@@ -209,6 +209,10 @@ public:
 	void updateBounds();
 
 	void generate_rnd_emotions(); // function for randomly generating emotions
+	void addemotion(vec4);
+
+	vec4 getemotion();
+	vec4 getdefault();
 
 private:
 	vec3 evadetarget;
@@ -230,7 +234,6 @@ private:
 	bool canAttack;
 
 	float evadetime;
-
 
 	//mm
 	std::map<std::string, std::map<int, bool>> Affordances;

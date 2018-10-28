@@ -22,6 +22,7 @@ NPC::NPC(Identifiers & id, vec3 pos, ResourceList & list) : GameObject( id, pos,
 
 	emotion = Emotions();
 	this->generate_rnd_emotions();
+	maxBench = 200;
 }
 
 NPC::NPC() : GameObject(){
@@ -42,6 +43,7 @@ NPC::NPC() : GameObject(){
 
 	emotion = Emotions();
 	this->generate_rnd_emotions();
+	maxBench = 200;
 }
 
 NPC::~NPC()
@@ -425,10 +427,10 @@ bool NPC::canSit(GameObject *go)
 	// Assumption: You can only sit on objects greater than 20% of your height but less than 40%.
 	if (go->getDimentions().y > getDimentions().y * 0.2 && go->getDimentions().y < getDimentions().y * 0.4);
 	{
-		std::cout << "SIT: " << go->getID() << ": True" << std::endl;
+		//std::cout << "SIT: " << go->getID() << ": True" << std::endl;
 		return true;
 	}
-	std::cout << "SIT: " << go->getID() << ": False" << std::endl;
+	//std::cout << "SIT: " << go->getID() << ": False" << std::endl;
 	return false;
 }
 
@@ -437,10 +439,10 @@ bool NPC::canMove(GameObject *go)
 	// Assumption: Anything can be moved if its total weight is less than the force behind the object acting on it.
 	if (maxBench < go->getTotalMass())
 	{
-		std::cout << "MOVE: " << go->getID() << ": True" << std::endl;
+		//std::cout << "MOVE: " << go->getID() << ": True" << std::endl;
 		return true;
 	}
-	std::cout << "MOVE: " << go->getID() << ": False" << std::endl;
+	//std::cout << "MOVE: " << go->getID() << ": False" << std::endl;
 	return false;
 }
 
@@ -451,11 +453,11 @@ bool NPC::canPick_up(GameObject *go)
 	{
 		if (go->getDimentions().y < getDimentions().y * 0.5 && go->getDimentions().x <= getDimentions().x && go->getDimentions().z <= getDimentions().z);
 		{
-			std::cout << "PICKUP: " << go->getID() << ": True" << std::endl;
+			//std::cout << "PICKUP: " << go->getID() << ": True" << std::endl;
 			return true;
 		}
 	}
-	std::cout << "PICKUP: " << go->getID() << ": False" << std::endl;
+	//std::cout << "PICKUP: " << go->getID() << ": False" << std::endl;
 	return false;
 }
 
@@ -731,7 +733,22 @@ void NPC::generate_rnd_emotions()
 	emotion.setModifiers(mod);
 	emotion.setDefaults(def);
 
-	std::cout << "Emotion: " << emotion.x() << " " << emotion.y() << " " << emotion.z() << " " << emotion.w() << std::endl;
-	std::cout << "Modifiers: " << emotion.getModifiers().x() << " " << emotion.getModifiers().y() << " " << emotion.getModifiers().z() << " " << emotion.getModifiers().w() << std::endl;
-	std::cout << "Defaults: " << emotion.getDefaults().x() << " " << emotion.getDefaults().y() << " " << emotion.getDefaults().z() << " " << emotion.getDefaults().w() << std::endl;
+	//std::cout << "Emotion: " << emotion.x() << " " << emotion.y() << " " << emotion.z() << " " << emotion.w() << std::endl;
+	//std::cout << "Modifiers: " << emotion.getModifiers().x() << " " << emotion.getModifiers().y() << " " << emotion.getModifiers().z() << " " << emotion.getModifiers().w() << std::endl;
+	//std::cout << "Defaults: " << emotion.getDefaults().x() << " " << emotion.getDefaults().y() << " " << emotion.getDefaults().z() << " " << emotion.getDefaults().w() << std::endl;
+}
+
+void NPC::addemotion(vec4 emo)
+{
+	emotion.add_emotion(emo);
+}
+
+vec4 NPC::getemotion()
+{
+	return emotion.getEmotions();
+}
+
+vec4 NPC::getdefault()
+{
+	return emotion.getDefaults();
 }

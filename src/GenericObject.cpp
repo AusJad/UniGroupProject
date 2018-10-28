@@ -111,8 +111,6 @@ void GenericObject::updateBounds() {
 				obbs[i].position += tmp;
 				//std::cout << "tmp.x: " << tmp.x << " tmp.y: " << tmp.y << " tmp.z: " << tmp.z << std::endl;
 				
-
-
 				// = trans + tmp;
 				//obbs[i].position.x = tmp.x;
 				//obbs[i].position.y = tmp.y;

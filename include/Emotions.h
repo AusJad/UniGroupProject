@@ -35,6 +35,8 @@ private:
 		1.1f, 1.0f, 1.0f, 1.1f,
 		1.1f, 1.0f, 1.0f, 1.1f,
 		1.0f, 1.1f, 1.1f, 1.0f };
+
+	void check_below_max();
 };
 
 /*

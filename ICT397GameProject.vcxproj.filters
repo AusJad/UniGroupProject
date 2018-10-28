@@ -426,6 +426,9 @@
     <ClInclude Include="include\AIMovementBehaviours.h">
       <Filter>Header Files\AI</Filter>
     </ClInclude>
+    <ClInclude Include="include\Emotions.h">
+      <Filter>Header Files\AI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Controls.cpp">
@@ -699,6 +702,9 @@
       <Filter>Source Files\AI</Filter>
     </ClCompile>
     <ClCompile Include="src\AIMovementBehaviours.cpp">
+      <Filter>Source Files\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Emotions.cpp">
       <Filter>Source Files\AI</Filter>
     </ClCompile>
   </ItemGroup>
