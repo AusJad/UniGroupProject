@@ -185,10 +185,10 @@ void NPC::update(float time) {
 
 	msgrcvr();
 
-	if(resources.hasResource("msgrcvr")) 
+	if (resources.hasResource("msgrcvr"))
 		tmp->callFunction<NPC, MessagingBus>(resources.getResource("msgrcvr"), *this, *(Singleton<MessagingBus>::getInstance()));
 
-	if (resources.hasResource("updatefunc")) 
+	if (resources.hasResource("updatefunc"))
 		tmp->callFunction<NPC, MessagingBus>(resources.getResource("updatefunc"), *this, *(Singleton<MessagingBus>::getInstance()));
 
 	pos += velocity * time;
@@ -416,8 +416,10 @@ bool NPC::canSit(GameObject *go)
 	// Assumption: You can only sit on objects greater than 20% of your height but less than 40%.
 	if (go->getDimentions().y > getDimentions().y * 0.2 && go->getDimentions().y < getDimentions().y * 0.4);
 	{
+		std::cout << "SIT: " << go->getID() << ": True" << std::endl;
 		return true;
 	}
+	std::cout << "SIT: " << go->getID() << ": False" << std::endl;
 	return false;
 }
 
@@ -425,7 +427,11 @@ bool NPC::canMove(GameObject *go)
 {
 	// Assumption: Anything can be moved if its total weight is less than the force behind the object acting on it.
 	if (maxBench < go->getTotalMass())
+	{
+		std::cout << "MOVE: " << go->getID() << ": True" << std::endl;
 		return true;
+	}
+	std::cout << "MOVE: " << go->getID() << ": False" << std::endl;
 	return false;
 }
 
@@ -436,10 +442,11 @@ bool NPC::canPick_up(GameObject *go)
 	{
 		if (go->getDimentions().y < getDimentions().y * 0.5 && go->getDimentions().x <= getDimentions().x && go->getDimentions().z <= getDimentions().z);
 		{
+			std::cout << "PICKUP: " << go->getID() << ": True" << std::endl;
 			return true;
 		}
 	}
-
+	std::cout << "PICKUP: " << go->getID() << ": False" << std::endl;
 	return false;
 }
 

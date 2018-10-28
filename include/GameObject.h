@@ -227,6 +227,7 @@ public:
 
 	virtual void calcMass();
 
+	virtual void GenerateAffordances(std::vector<GameObject*> GOs) {}
 
 protected:
 	/// The state of the object.
@@ -248,7 +249,6 @@ protected:
 	physvec3 angularvel, vel;
 	physmat4 intert_tensor;
 	float totalmass = 10;
-
 
 	/**
 	* @brief The message receiver.

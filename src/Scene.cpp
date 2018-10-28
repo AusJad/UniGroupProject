@@ -47,6 +47,13 @@ bool Scene::addObject(Identifiers & id, vec3 pos, ResourceList & list){
 
 void Scene::addObject(GameObject * toadd) {
 	objects.addGameObject(toadd);
+
+	// MM -- AFFORDANCES
+	for (int i = 0; i < objects.getNumObjects(); i++)
+	{
+		//objects.findSpatiallyGroupedGameObjects(toadd)[i]->updateAllGOs(objects.findSpatiallyGroupedGameObjects(toadd));
+		objects.findSpatiallyGroupedGameObjects(toadd)[i]->GenerateAffordances(objects.findSpatiallyGroupedGameObjects(toadd));
+	}
 }
 
 void Scene::update(float time) {

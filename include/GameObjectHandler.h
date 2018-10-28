@@ -17,7 +17,8 @@ struct GameObjectWrapper {
 };
 
 /**
-* @class GameObjectHandler
+* @class 
+
 * @brief Class for handling game objects and setting them up in the world
 *
 * @author Morgan Smolder
