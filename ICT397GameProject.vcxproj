@@ -177,6 +177,7 @@
     <ClInclude Include="include\SceneManager.h" />
     <ClInclude Include="include\Scenery.h" />
     <ClInclude Include="include\SelectionComponent.h" />
+    <ClInclude Include="include\SimpleStack.h" />
     <ClInclude Include="include\SimpleString.h" />
     <ClInclude Include="include\Singleton.h" />
     <ClInclude Include="include\State.h" />
