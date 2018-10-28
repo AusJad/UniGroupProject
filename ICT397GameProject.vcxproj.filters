@@ -90,6 +90,7 @@
     <ClCompile Include="src\WndComponent.cpp" />
     <ClCompile Include="src\AIMovementBehaviours.cpp" />
     <ClCompile Include="src\EditorAgentTool.cpp" />
+    <ClCompile Include="src\Emotions.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\AIMovementBehaviours.h" />
@@ -191,6 +192,7 @@
     <ClInclude Include="include\WindowMoveContext.h" />
     <ClInclude Include="include\WndComponent.h" />
     <ClInclude Include="include\EditorAgentTool.h" />
+    <ClInclude Include="include\Emotions.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />

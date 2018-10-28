@@ -20,6 +20,8 @@ NPC::NPC(Identifiers & id, vec3 pos, ResourceList & list) : GameObject( id, pos,
 	scaley = 1;
 	scalez = 1;
 
+	emotion = Emotions();
+	this->generate_rnd_emotions();
 }
 
 NPC::NPC() : GameObject(){
@@ -38,6 +40,8 @@ NPC::NPC() : GameObject(){
 	npcFSM->setGlobalState(global_state::getInstance());
 	totalmass = 1;
 
+	emotion = Emotions();
+	this->generate_rnd_emotions();
 }
 
 NPC::~NPC()
@@ -471,30 +475,30 @@ physvec3 NPC::getDimentions()
 void NPC::findNextState()
 {
 	char spoke = 'x';
-	float max = abs(Emotion.x());
+	float max = abs(emotion.x());
 
-	if (max < abs(Emotion.y()))
+	if (max < abs(emotion.y()))
 	{
 		spoke = 'y';
-		max = abs(Emotion.y());
+		max = abs(emotion.y());
 	}
 
-	if (max < abs(Emotion.z()))
+	if (max < abs(emotion.z()))
 	{
 		spoke = 'z';
-		max = abs(Emotion.z());
+		max = abs(emotion.z());
 	}
 
-	if (max < abs(Emotion.w()))
+	if (max < abs(emotion.w()))
 	{
 		spoke = 'w';
-		max = abs(Emotion.w());
+		max = abs(emotion.w());
 	}
 
 	switch (spoke)
 	{
 	case 'x':
-		if (Emotion.x() > 0)
+		if (emotion.x() > 0)
 		{
 			//exstasy
 		}
@@ -505,7 +509,7 @@ void NPC::findNextState()
 		break;
 
 	case 'y':
-		if (Emotion.y() > 0)
+		if (emotion.y() > 0)
 		{
 			//Admiration
 		}
@@ -516,7 +520,7 @@ void NPC::findNextState()
 		break;
 
 	case 'z':
-		if (Emotion.z() > 0)
+		if (emotion.z() > 0)
 		{
 			//Vigilance
 		}
@@ -527,7 +531,7 @@ void NPC::findNextState()
 		break;
 
 	case 'w':
-		if (Emotion.w() > 0)
+		if (emotion.w() > 0)
 		{
 			//Rage
 		}
@@ -539,152 +543,9 @@ void NPC::findNextState()
 	}
 }
 
-void NPC::addMod(Mods* m)
-{
-	all_Emo_Mods.push_back(m);
-}
-
-void NPC::addDef(Defs* d)
-{
-	all_Emo_Defs.push_back(d);
-}
-
-void NPC::normaliseEmotion()
-{
-	if (Emotion.x() != DefaultEmotion.x())
-	{
-		if (Emotion.x() < DefaultEmotion.x())
-		{
-			Emotion.sx(Emotion.x() + 0.1);
-		}
-		else
-		{
-			Emotion.sx(Emotion.x() - 0.1);
-		}
-	}
-
-	if (Emotion.y() != DefaultEmotion.y())
-	{
-		if (Emotion.y() < DefaultEmotion.y())
-		{
-			Emotion.sy(Emotion.y() + 0.1);
-		}
-		else
-		{
-			Emotion.sy(Emotion.y() - 0.1);
-		}
-	}
-
-	if (Emotion.z() != DefaultEmotion.z())
-	{
-		if (Emotion.z() < DefaultEmotion.z())
-		{
-			Emotion.sz(Emotion.z() + 0.1);
-		}
-		else
-		{
-			Emotion.sz(Emotion.z() - 0.1);
-		}
-	}
-
-	if (Emotion.w() != DefaultEmotion.w())
-	{
-		if (Emotion.w() < DefaultEmotion.w())
-		{
-			Emotion.sw(Emotion.w() + 0.1);
-		}
-		else
-		{
-			Emotion.sw(Emotion.w() - 0.1);
-		}
-	}
-}
-
 void NPC::stateUpdate()
 {
 	// state changes need to be done here
-}
-
-void NPC::addEmotions(vec4 emo)
-{
-	// Use traits to find modifer of emotion
-	for (int i = 0; i < all_Emo_Mods.size(); i++)
-	{
-		emo *= all_Emo_Mods[i]->getMod();
-	}
-
-	/* // Old Method
-	// Use normalisation matrix to calc effect single emotion has on others
-	char max = 'x';
-	float maxval = emo.x();
-
-	if (max < emo.y())
-	{
-	max = 'y';
-	maxval = emo.y();
-	}
-
-	if (max < emo.z())
-	{
-	max = 'z';
-	maxval = emo.z();
-	}
-
-	if (max < emo.w())
-	{
-	max = 'w';
-	maxval = emo.w();
-	}
-
-	switch (max)
-	{
-	case 'x':
-	emo *= vec4(EmotionNormalisation[0], EmotionNormalisation[1], EmotionNormalisation[2], EmotionNormalisation[3]); // 1st row
-	break;
-	case 'y':
-	emo *= vec4(EmotionNormalisation[4], EmotionNormalisation[5], EmotionNormalisation[6], EmotionNormalisation[7]); // 2nd row
-	break;
-	case 'z':
-	emo *= vec4(EmotionNormalisation[8], EmotionNormalisation[9], EmotionNormalisation[10], EmotionNormalisation[11]); // 3rd row
-	break;
-	case 'w':
-	emo *= vec4(EmotionNormalisation[12], EmotionNormalisation[13], EmotionNormalisation[14], EmotionNormalisation[15]); // 4th row
-	break;
-	}
-
-	Emotion += emo;
-	*/
-
-	// This method means any emotion being added affects the other emotions as well rather than just the largest emotion being added.
-	Emotion += emo;
-
-	if (emo.x())
-	{
-		Emotion *= vec4(EmotionNormalisation[0], EmotionNormalisation[1], EmotionNormalisation[2], EmotionNormalisation[3]); // 1st row
-	}
-
-	if (emo.y())
-	{
-		Emotion *= vec4(EmotionNormalisation[4], EmotionNormalisation[5], EmotionNormalisation[6], EmotionNormalisation[7]); // 2nd row
-	}
-
-	if (emo.z())
-	{
-		Emotion *= vec4(EmotionNormalisation[8], EmotionNormalisation[9], EmotionNormalisation[10], EmotionNormalisation[11]); // 3rd row
-	}
-
-	if (emo.w())
-	{
-		Emotion *= vec4(EmotionNormalisation[12], EmotionNormalisation[13], EmotionNormalisation[14], EmotionNormalisation[15]); // 4th row
-	}
-}
-
-void NPC::ApplyTraits()
-{
-	for (int i = 0; i < all_Emo_Defs.size(); i++)
-	{
-		DefaultEmotion += all_Emo_Defs[i]->getDef();
-	}
 }
 
 void NPC::calcMass()
@@ -801,4 +662,71 @@ void NPC::updateBounds() {
 		}
 		
 	}
+}
+
+void NPC::generate_rnd_emotions()
+{
+	vec4 emo, mod, def;
+	int rng;
+	float value;
+
+	/* Emotion */
+	rng = rand() %99 - 0;
+	value = (float)rng / 10.f;
+	emo.sx(value);
+
+	rng = rand() % 99 - 0;
+	value = (float)rng / 10.f;
+	emo.sy(value);
+
+	rng = rand() % 99 - 0;
+	value = (float)rng / 10.f;
+	emo.sz(value);
+
+	rng = rand() % 99 - 0;
+	value = (float)rng / 10.f;
+	emo.sw(value);
+
+	/* Modifiers */
+	rng = rand() % 99 - 0;
+	value = (float)rng / 10.f;
+	mod.sx(value);
+
+	rng = rand() % 99 - 0;
+	value = (float)rng / 10.f;
+	mod.sy(value);
+
+	rng = rand() % 99 - 0;
+	value = (float)rng / 10.f;
+	mod.sz(value);
+
+	rng = rand() % 99 - 0;
+	value = (float)rng / 10.f;
+	mod.sw(value);
+
+	/* Defaults */
+	rng = rand() % 99 - 0;
+	value = (float)rng / 10.f;
+	def.sx(value);
+
+	rng = rand() % 99 - 0;
+	value = (float)rng / 10.f;
+	def.sy(value);
+
+	rng = rand() % 99 - 0;
+	value = (float)rng / 10.f;
+	def.sz(value);
+
+	rng = rand() % 99 - 0;
+	value = (float)rng / 10.f;
+	def.sw(value);
+
+	/* Sets */
+	emotion.setEmotions(emo);
+	emotion.setModifiers(mod);
+	emotion.setDefaults(def);
+
+	std::cout << "Emotion: " << emotion.x() << " " << emotion.y() << " " << emotion.z() << " " << emotion.w() << std::endl;
+	std::cout << "Modifiers: " << emotion.getModifiers().x() << " " << emotion.getModifiers().y() << " " << emotion.getModifiers().z() << " " << emotion.getModifiers().w() << std::endl;
+	std::cout << "Defaults: " << emotion.getDefaults().x() << " " << emotion.getDefaults().y() << " " << emotion.getDefaults().z() << " " << emotion.getDefaults().w() << std::endl;
 }

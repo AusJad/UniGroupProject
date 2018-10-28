@@ -7,9 +7,10 @@
 
 #include <map>
 #include "State.h"
-#include "Traits.h"
+//#include "Traits.h"
 
 #include <math.h>
+#include "Emotions.h"
 
 /**
 * @class NPC
@@ -207,6 +208,8 @@ public:
 	float getScaleZ() { return scalez; }
 	void updateBounds();
 
+	void generate_rnd_emotions(); // function for randomly generating emotions
+
 private:
 	vec3 evadetarget;
 	/// Velocity of the NPC.
@@ -240,40 +243,10 @@ private:
 
 	physvec3 getDimentions();
 
-	// This can be changed.
-	// Note 1.0f means no change in emotion. (either emotion effecting itself or emotion doesn't affect another emotion according to Plutchik's wheel of emotions).
-	// Note this should remain constant as traits and personalities are dealt with differently this is a universal emotion modifier.
-	mat4 EmotionNormalisation = {
-		1.0f, 1.1f, 1.1f, 1.0f, 
-		1.1f, 1.0f, 1.0f, 1.1f, 
-		1.1f, 1.0f, 1.0f, 1.1f,
-		1.0f, 1.1f, 1.1f, 1.0f };
+	Emotions emotion;
 
-	std::vector<Mods*> all_Emo_Mods;
-	std::vector<Defs*> all_Emo_Defs;
-	vec4 DefaultEmotion = vec4( 0, 0, 0, 0 ); // Default emotional state for individual NPC
-	vec4 Emotion = vec4(0, 0, 0, 0); // Because human emotion is just vec4 obviously.
-	/*
-		+x = Exstasy
-		-x = Grief
-		
-		+y = Admiration
-		-y = Loathing
-
-		+z = Vigilance
-		-z = Amazement
-
-		+w = Rage
-		-w = Terror
-	*/
-	void addMod(Mods* m);
-	void addDef(Defs* d);
-
-	void ApplyTraits();
 	void findNextState();
-	void normaliseEmotion();
 	void stateUpdate();
-	void addEmotions(vec4 emo);
 
 	stateMachine<NPC> *npcFSM;
 
