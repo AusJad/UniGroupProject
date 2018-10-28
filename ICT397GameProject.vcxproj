@@ -121,6 +121,7 @@
     <ClInclude Include="include\EditorContext.h" />
     <ClInclude Include="include\EditorObjectTool.h" />
     <ClInclude Include="include\EditorWallTool.h" />
+    <ClInclude Include="include\Emotions.h" />
     <ClInclude Include="include\Engine.h" />
     <ClInclude Include="include\EngineStateWriter.h" />
     <ClInclude Include="include\fileNameReader.h" />
@@ -224,6 +225,7 @@
     <ClCompile Include="src\EditorContext.cpp" />
     <ClCompile Include="src\EditorObjectTool.cpp" />
     <ClCompile Include="src\EditorWallTool.cpp" />
+    <ClCompile Include="src\Emotions.cpp" />
     <ClCompile Include="src\Engine.cpp" />
     <ClCompile Include="src\EngineStateWriter.cpp" />
     <ClCompile Include="src\fileNameReader.cpp" />

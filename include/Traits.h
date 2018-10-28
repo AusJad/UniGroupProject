@@ -1,5 +1,9 @@
 #pragma once
 
+/*
+NOT IN USE -- MM
+REPLACED WITH EMOTIONS.H and EMOTIONS.CPP
+*/
 #include "vectors.h"
 
 class Mods

@@ -1,5 +1,9 @@
 #include "Traits.h"
 
+/*
+NOT IN USE -- MM
+*/
+
 Mods::Mods()
 {
 	emo_mod = vec4(1, 1, 1, 1);
