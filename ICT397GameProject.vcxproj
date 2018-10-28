@@ -116,10 +116,12 @@
     <ClInclude Include="include\ControlContext.h" />
     <ClInclude Include="include\CtoLUABinder.h" />
     <ClInclude Include="include\CutScene.h" />
+    <ClInclude Include="include\EditorAgentTool.h" />
     <ClInclude Include="include\EditorCameraTool.h" />
     <ClInclude Include="include\EditorContext.h" />
     <ClInclude Include="include\EditorObjectTool.h" />
     <ClInclude Include="include\EditorWallTool.h" />
+    <ClInclude Include="include\Emotions.h" />
     <ClInclude Include="include\Engine.h" />
     <ClInclude Include="include\EngineStateWriter.h" />
     <ClInclude Include="include\fileNameReader.h" />
@@ -164,6 +166,8 @@
     <ClInclude Include="include\movementInfo.h" />
     <ClInclude Include="include\NPC.h" />
     <ClInclude Include="include\NPCstates.h" />
+    <ClInclude Include="include\pathFinder.h" />
+    <ClInclude Include="include\pathFinderGrid.h" />
     <ClInclude Include="include\Player.h" />
     <ClInclude Include="include\QuadTree.h" />
     <ClInclude Include="include\RawTerrain.h" />
@@ -175,6 +179,7 @@
     <ClInclude Include="include\SceneManager.h" />
     <ClInclude Include="include\Scenery.h" />
     <ClInclude Include="include\SelectionComponent.h" />
+    <ClInclude Include="include\SimpleStack.h" />
     <ClInclude Include="include\SimpleString.h" />
     <ClInclude Include="include\Singleton.h" />
     <ClInclude Include="include\State.h" />
@@ -215,10 +220,12 @@
     <ClCompile Include="src\Console.cpp" />
     <ClCompile Include="src\CtoLUABinder.cpp" />
     <ClCompile Include="src\CutScene.cpp" />
+    <ClCompile Include="src\EditorAgentTool.cpp" />
     <ClCompile Include="src\EditorCameraTool.cpp" />
     <ClCompile Include="src\EditorContext.cpp" />
     <ClCompile Include="src\EditorObjectTool.cpp" />
     <ClCompile Include="src\EditorWallTool.cpp" />
+    <ClCompile Include="src\Emotions.cpp" />
     <ClCompile Include="src\Engine.cpp" />
     <ClCompile Include="src\EngineStateWriter.cpp" />
     <ClCompile Include="src\fileNameReader.cpp" />
@@ -259,6 +266,8 @@
     <ClCompile Include="src\ModelMesh.cpp" />
     <ClCompile Include="src\NPC.cpp" />
     <ClCompile Include="src\NPCstates.cpp" />
+    <ClCompile Include="src\pathFinder.cpp" />
+    <ClCompile Include="src\pathFinderGrid.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\RawTerrain.cpp" />
     <ClCompile Include="src\RenderModuleStubb.cpp" />

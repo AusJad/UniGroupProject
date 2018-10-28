@@ -21,6 +21,7 @@ bool Engine::Initalise(std::string initscript){
 	TXMAN->loadBatch(UI_TEX_GROUP, "./Resources/Textures/UI/", "TGA");
 	TXMAN->loadBatch(WALL_TEX_GROUP, "./Resources/Textures/WallTex/", "TGA");
 	MMAN->loadBatch(MODEL_MAIN_GROUP, "./Resources/Models/", "IM", "obj");
+	MMAN->loadBatch(MODEL_AGENT_GROUP, "./Resources/Models/", "MD2", "md2");
 	MMAN->loadBatch(TERRAIN_GROUP, "./Resources/Models/", "RAWTRN", "tdef");
 	AE->loadBatch(MAIN_SOUND_BANK, "./Resources/Audio/", "WAV", "wav");
 
@@ -47,7 +48,9 @@ void Engine::Run() {
 
 		time = RNDR->getTimeSinceUpdate();
 
-		if (GI->getState() != mainmenu)	SM->update(time);
+		if (GI->getState() != mainmenu) {
+			SM->update(time);
+		}
 		GI->update(time);
 		AE->update(vec3(), vec3(), vec3());
 		FNT_ENG->update();

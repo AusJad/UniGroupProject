@@ -9,14 +9,20 @@ NPC::NPC(Identifiers & id, vec3 pos, ResourceList & list) : GameObject( id, pos,
 	speed = 0;
 	lookangle = 0;
 	evadetime = 0;
-	canUpdate = false;
-	canRender = false;
+	canUpdate = true;
+	canRender = true;
 	canAttack = false;
 	npcFSM=new stateMachine<NPC>(this);
 	npcFSM->setCurrentState(wander_state::getInstance());
 	npcFSM->setGlobalState(global_state::getInstance());
 	totalmass = 1;
+	scalex = 1;
+	scaley = 1;
+	scalez = 1;
 
+	emotion = Emotions();
+	this->generate_rnd_emotions();
+	maxBench = 200;
 }
 
 NPC::NPC() : GameObject(){
@@ -24,9 +30,20 @@ NPC::NPC() : GameObject(){
 	speed = 0;
 	lookangle = 0;
 	evadetime = 0;
-	canUpdate = false;
-	canRender = false;
+	canUpdate = true;
+	canRender = true;
 	canAttack = false;
+	scalex = 1;
+	scaley = 1;
+	scalez = 1;
+	npcFSM = new stateMachine<NPC>(this);
+	npcFSM->setCurrentState(wander_state::getInstance());
+	npcFSM->setGlobalState(global_state::getInstance());
+	totalmass = 1;
+
+	emotion = Emotions();
+	this->generate_rnd_emotions();
+	maxBench = 200;
 }
 
 NPC::~NPC()
@@ -39,21 +56,45 @@ bool NPC::isCollidable() {
 }
 
 void NPC::render() {
+	
 
 	if (!canRender) return;
+	
+	//std::cout << "NPC render function" << std::endl;
 
 	RenderModuleStubb* tmp = Singleton<RenderModuleStubb>::getInstance();
+	//resources.hasResource("model") &&
 
-	if (resources.hasResource("model") && model != NULL) {
-
-		GeoStream << BEGIN_STREAM << trans_3(this->pos.x(), this->pos.y(), this->pos.z()) << rot_4(lookangle, 0, 1, 0);
-		GameObject::model->render(this->pos);
+	if ( model != NULL) {
+		//std::cout << "Attempting to render NPC" << std::endl;
+		GeoStream << BEGIN_STREAM << trans_3(this->trans.x(), this->trans.y(), this->trans.z()) << rot_4(lookangle, 0, 1, 0);
+		GameObject::model->render(this->trans);
 		GeoStream << END_STREAM;
 	}
 	else {
-
-		tmp->DrawQuad(point(pos.x(), pos.y() + 1), point(pos.x() + 1, pos.y()), pos.z());
+		//std::cout << "Drawing a box" << std::endl;
+		tmp->DrawQuad(point(trans.x(), trans.y() + 1), point(trans.x() + 1, trans.y()), trans.z());
 	}
+
+	physvec3 rot;
+	if (this->hasMultiObb()) {
+		GeoStream << START_ATTRIB << color_3(0.6f, 1.0f, 0.0f);
+		OBB tmpobb;
+		for (int i = 0; i < this->getNumOBBs(); i++) {
+			RNDR->enableWireframe();
+			tmpobb = this->getOBB(i);
+			rot = Decompose(tmpobb.orientation);
+			GeoStream << BEGIN_STREAM << trans_3(tmpobb.position.x, tmpobb.position.y, tmpobb.position.z) << rot_4(RAD2DEG(rot.x), 1, 0, 0) << rot_4(RAD2DEG(rot.y), 0, 1, 0) << rot_4(RAD2DEG(rot.z), 0, 0, 1);
+			RNDR->DrawRectangularPrism(vec3(), tmpobb.size.x, tmpobb.size.y, tmpobb.size.z);
+			GeoStream << END_STREAM;
+			RNDR->disableWireFrame();
+			RNDR->DrawRectangularPrism(vec3(tmpobb.position.x, tmpobb.position.y, tmpobb.position.z), 3, 3, 3);
+
+		}
+		GeoStream << END_ATTRIB;
+	}
+
+
 }
 
 bool NPC::NPCDefaultMessageHandler(Message & message) {
@@ -139,6 +180,11 @@ void NPC::onCollide(vec3 & prevloc, const Identifiers & colgoid) {
 }
 
 void NPC::update(float time) {
+	
+	//std::cout << "Entering update loop" << std::endl;
+	npcFSM->update();
+
+	
 	LUAScriptManager* tmp = Singleton<LUAScriptManager>::getInstance();
 
 	if (resources.hasResource("model") && model != NULL) model->update(time);
@@ -150,10 +196,10 @@ void NPC::update(float time) {
 
 	msgrcvr();
 
-	if(resources.hasResource("msgrcvr")) 
+	if (resources.hasResource("msgrcvr"))
 		tmp->callFunction<NPC, MessagingBus>(resources.getResource("msgrcvr"), *this, *(Singleton<MessagingBus>::getInstance()));
 
-	if (resources.hasResource("updatefunc")) 
+	if (resources.hasResource("updatefunc"))
 		tmp->callFunction<NPC, MessagingBus>(resources.getResource("updatefunc"), *this, *(Singleton<MessagingBus>::getInstance()));
 
 	pos += velocity * time;
@@ -381,8 +427,10 @@ bool NPC::canSit(GameObject *go)
 	// Assumption: You can only sit on objects greater than 20% of your height but less than 40%.
 	if (go->getDimentions().y > getDimentions().y * 0.2 && go->getDimentions().y < getDimentions().y * 0.4);
 	{
+		//std::cout << "SIT: " << go->getID() << ": True" << std::endl;
 		return true;
 	}
+	//std::cout << "SIT: " << go->getID() << ": False" << std::endl;
 	return false;
 }
 
@@ -390,7 +438,11 @@ bool NPC::canMove(GameObject *go)
 {
 	// Assumption: Anything can be moved if its total weight is less than the force behind the object acting on it.
 	if (maxBench < go->getTotalMass())
+	{
+		//std::cout << "MOVE: " << go->getID() << ": True" << std::endl;
 		return true;
+	}
+	//std::cout << "MOVE: " << go->getID() << ": False" << std::endl;
 	return false;
 }
 
@@ -401,10 +453,11 @@ bool NPC::canPick_up(GameObject *go)
 	{
 		if (go->getDimentions().y < getDimentions().y * 0.5 && go->getDimentions().x <= getDimentions().x && go->getDimentions().z <= getDimentions().z);
 		{
+			//std::cout << "PICKUP: " << go->getID() << ": True" << std::endl;
 			return true;
 		}
 	}
-
+	//std::cout << "PICKUP: " << go->getID() << ": False" << std::endl;
 	return false;
 }
 
@@ -429,30 +482,30 @@ physvec3 NPC::getDimentions()
 void NPC::findNextState()
 {
 	char spoke = 'x';
-	float max = abs(Emotion.x());
+	float max = abs(emotion.x());
 
-	if (max < abs(Emotion.y()))
+	if (max < abs(emotion.y()))
 	{
 		spoke = 'y';
-		max = abs(Emotion.y());
+		max = abs(emotion.y());
 	}
 
-	if (max < abs(Emotion.z()))
+	if (max < abs(emotion.z()))
 	{
 		spoke = 'z';
-		max = abs(Emotion.z());
+		max = abs(emotion.z());
 	}
 
-	if (max < abs(Emotion.w()))
+	if (max < abs(emotion.w()))
 	{
 		spoke = 'w';
-		max = abs(Emotion.w());
+		max = abs(emotion.w());
 	}
 
 	switch (spoke)
 	{
 	case 'x':
-		if (Emotion.x() > 0)
+		if (emotion.x() > 0)
 		{
 			//exstasy
 		}
@@ -463,7 +516,7 @@ void NPC::findNextState()
 		break;
 
 	case 'y':
-		if (Emotion.y() > 0)
+		if (emotion.y() > 0)
 		{
 			//Admiration
 		}
@@ -474,7 +527,7 @@ void NPC::findNextState()
 		break;
 
 	case 'z':
-		if (Emotion.z() > 0)
+		if (emotion.z() > 0)
 		{
 			//Vigilance
 		}
@@ -485,7 +538,7 @@ void NPC::findNextState()
 		break;
 
 	case 'w':
-		if (Emotion.w() > 0)
+		if (emotion.w() > 0)
 		{
 			//Rage
 		}
@@ -497,127 +550,9 @@ void NPC::findNextState()
 	}
 }
 
-void NPC::addMod(Mods* m)
-{
-	all_Emo_Mods.push_back(m);
-}
-
-void NPC::addDef(Defs* d)
-{
-	all_Emo_Defs.push_back(d);
-}
-
-void NPC::normaliseEmotion()
-{
-	if (Emotion.x() != DefaultEmotion.x())
-	{
-		if (Emotion.x() < DefaultEmotion.x())
-		{
-			Emotion.sx(Emotion.x() + 0.1);
-		}
-		else
-		{
-			Emotion.sx(Emotion.x() - 0.1);
-		}
-	}
-
-	if (Emotion.y() != DefaultEmotion.y())
-	{
-		if (Emotion.y() < DefaultEmotion.y())
-		{
-			Emotion.sy(Emotion.y() + 0.1);
-		}
-		else
-		{
-			Emotion.sy(Emotion.y() - 0.1);
-		}
-	}
-
-	if (Emotion.z() != DefaultEmotion.z())
-	{
-		if (Emotion.z() < DefaultEmotion.z())
-		{
-			Emotion.sz(Emotion.z() + 0.1);
-		}
-		else
-		{
-			Emotion.sz(Emotion.z() - 0.1);
-		}
-	}
-
-	if (Emotion.w() != DefaultEmotion.w())
-	{
-		if (Emotion.w() < DefaultEmotion.w())
-		{
-			Emotion.sw(Emotion.w() + 0.1);
-		}
-		else
-		{
-			Emotion.sw(Emotion.w() - 0.1);
-		}
-	}
-}
-
 void NPC::stateUpdate()
 {
 	// state changes need to be done here
-}
-
-void NPC::addEmotions(vec4 emo)
-{
-	// Use traits to find modifer of emotion
-	for (int i = 0; i < all_Emo_Mods.size(); i++)
-	{
-		emo *= all_Emo_Mods[i]->getMod();
-	}
-
-	// Use normalisation matrix to calc effect single emotion has on others
-	char max = 'x';
-	float maxval = emo.x();
-
-	if (max < emo.y())
-	{
-		max = 'y';
-		maxval = emo.y();
-	}
-
-	if (max < emo.z())
-	{
-		max = 'z';
-		maxval = emo.z();
-	}
-
-	if (max < emo.w())
-	{
-		max = 'w';
-		maxval = emo.w();
-	}
-
-	switch (max)
-	{
-	case 'x':
-		emo *= vec4(EmotionNormalisation[0], EmotionNormalisation[1], EmotionNormalisation[2], EmotionNormalisation[3]); // 1st row
-		break;
-	case 'y':
-		emo *= vec4(EmotionNormalisation[4], EmotionNormalisation[5], EmotionNormalisation[6], EmotionNormalisation[7]); // 2nd row
-		break; 
-	case 'z':
-		emo *= vec4(EmotionNormalisation[8], EmotionNormalisation[9], EmotionNormalisation[10], EmotionNormalisation[11]); // 3rd row
-		break;
-	case 'w':
-		emo *= vec4(EmotionNormalisation[12], EmotionNormalisation[13], EmotionNormalisation[14], EmotionNormalisation[15]); // 4th row
-		break;
-	}
-
-	Emotion += emo;
-}
-
-void NPC::ApplyTraits()
-{
-	for (int i = 0; i < all_Emo_Defs.size(); i++)
-	{
-		DefaultEmotion += all_Emo_Defs[i]->getDef();
-	}
 }
 
 void NPC::calcMass()
@@ -695,6 +630,7 @@ void NPC::updateBounds() {
 		model->setScale(vec3(scalex, scaley, scalez));
 		std::vector<vec3> minmax = model->computeMMax();
 		if (this->hasMultiObb()) {
+			std::cout << model->getName() << " has multi-obb" << std::endl;
 			for (int i = 0; i < obbs.size(); i++) {
 				//obbs[i].position = physvec3((trans.x() + obbsConfig[i].position.x * (scalex)), trans.y() + obbsConfig[i].position.y * (scaley), trans.z() + obbsConfig[i].position.z * (scalez));
 				obbs[i].size.x = obbsConfig[i].size.x * scalex;
@@ -706,7 +642,7 @@ void NPC::updateBounds() {
 				physvec3 tmp2 = physvec3(obbsConfig[i].position.x, obbsConfig[i].position.y, obbsConfig[i].position.z) * physvec3(scalex, scaley, scalez);
 				physvec3 tmp = MultiplyPoint(tmp2, Rotation(anglex, angley, anglez));
 				obbs[i].position += tmp;
-				std::cout << "tmp.x: " << tmp.x << " tmp.y: " << tmp.y << " tmp.z: " << tmp.z << std::endl;
+				//std::cout << "tmp.x: " << tmp.x << " tmp.y: " << tmp.y << " tmp.z: " << tmp.z << std::endl;
 
 
 
@@ -722,13 +658,97 @@ void NPC::updateBounds() {
 			}
 		}
 		else {
-			obb.position = physvec3(trans.x(), trans.y(), trans.z());
-			obb.size = physvec3((minmax.at(1).x() - minmax.at(0).x()) / 2,
-				(minmax.at(1).y() - minmax.at(0).y()) / 2,
-				(minmax.at(1).z() - minmax.at(0).z()) / 2);
-			obb.orientation = Rotation3x3(anglex, angley, anglez);
+			std::cout << model->getName() << " does not have multi-obb, no OBB on NPC object" << std::endl;
+			//obb.position = physvec3(trans.x(), trans.y(), trans.z());
+			//obb.size = physvec3((minmax.at(1).x() - minmax.at(0).x()) / 2,
+			//	(minmax.at(1).y() - minmax.at(0).y()) / 2,
+			//	(minmax.at(1).z() - minmax.at(0).z()) / 2);
+			//obb.orientation = Rotation3x3(anglex, angley, anglez);
 
 			this->calcMass(); //mm
 		}
+		
 	}
+}
+
+void NPC::generate_rnd_emotions()
+{
+	vec4 emo, mod, def;
+	int rng;
+	float value;
+
+	/* Emotion */
+	rng = rand() %99 - 0;
+	value = (float)rng / 10.f;
+	emo.sx(value);
+
+	rng = rand() % 99 - 0;
+	value = (float)rng / 10.f;
+	emo.sy(value);
+
+	rng = rand() % 99 - 0;
+	value = (float)rng / 10.f;
+	emo.sz(value);
+
+	rng = rand() % 99 - 0;
+	value = (float)rng / 10.f;
+	emo.sw(value);
+
+	/* Modifiers */
+	rng = rand() % 99 - 0;
+	value = (float)rng / 10.f;
+	mod.sx(value);
+
+	rng = rand() % 99 - 0;
+	value = (float)rng / 10.f;
+	mod.sy(value);
+
+	rng = rand() % 99 - 0;
+	value = (float)rng / 10.f;
+	mod.sz(value);
+
+	rng = rand() % 99 - 0;
+	value = (float)rng / 10.f;
+	mod.sw(value);
+
+	/* Defaults */
+	rng = rand() % 99 - 0;
+	value = (float)rng / 10.f;
+	def.sx(value);
+
+	rng = rand() % 99 - 0;
+	value = (float)rng / 10.f;
+	def.sy(value);
+
+	rng = rand() % 99 - 0;
+	value = (float)rng / 10.f;
+	def.sz(value);
+
+	rng = rand() % 99 - 0;
+	value = (float)rng / 10.f;
+	def.sw(value);
+
+	/* Sets */
+	emotion.setEmotions(emo);
+	emotion.setModifiers(mod);
+	emotion.setDefaults(def);
+
+	//std::cout << "Emotion: " << emotion.x() << " " << emotion.y() << " " << emotion.z() << " " << emotion.w() << std::endl;
+	//std::cout << "Modifiers: " << emotion.getModifiers().x() << " " << emotion.getModifiers().y() << " " << emotion.getModifiers().z() << " " << emotion.getModifiers().w() << std::endl;
+	//std::cout << "Defaults: " << emotion.getDefaults().x() << " " << emotion.getDefaults().y() << " " << emotion.getDefaults().z() << " " << emotion.getDefaults().w() << std::endl;
+}
+
+void NPC::addemotion(vec4 emo)
+{
+	emotion.add_emotion(emo);
+}
+
+vec4 NPC::getemotion()
+{
+	return emotion.getEmotions();
+}
+
+vec4 NPC::getdefault()
+{
+	return emotion.getDefaults();
 }

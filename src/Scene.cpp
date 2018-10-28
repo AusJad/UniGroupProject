@@ -47,6 +47,13 @@ bool Scene::addObject(Identifiers & id, vec3 pos, ResourceList & list){
 
 void Scene::addObject(GameObject * toadd) {
 	objects.addGameObject(toadd);
+
+	// MM -- AFFORDANCES
+	for (int i = 0; i < objects.getNumObjects(); i++)
+	{
+		//objects.findSpatiallyGroupedGameObjects(toadd)[i]->updateAllGOs(objects.findSpatiallyGroupedGameObjects(toadd));
+		objects.findSpatiallyGroupedGameObjects(toadd)[i]->GenerateAffordances(objects.findSpatiallyGroupedGameObjects(toadd));
+	}
 }
 
 void Scene::update(float time) {
@@ -57,6 +64,10 @@ void Scene::update(float time) {
 	for (unsigned i = 0; i < objects.getNumObjects(); i++) {
 		if(objects.getObject(i) != NULL)
 			if(!objects.getObject(i)->isStatic()) collision.update(objects.getObject(i), objects.findSpatiallyGroupedGameObjects(objects.getObject(i)), time);
+	}
+
+	for (unsigned i = 0; i < objects.getNumObjects(); i++) {
+		objects.getObject(i)->update(time);
 	}
 
 	//Cam collision
@@ -147,3 +158,28 @@ bool Scene::getLoaded() {
 
 	return loaded;
 }
+
+SimpleStack Scene::getPath(vec3 pos, vec3 target) {
+	return objects.getPath(pos, target);
+}
+
+bool Scene::setGridScale(int xmin, int xmax, int zmin, int zmax) {
+	pGrid.setGridScale(xmin, xmax, zmin, zmax);
+	return true;
+}
+
+void Scene::gridGreyOut(vec2 pos) {
+	pGrid.greyOut(pos);
+}
+
+bool Scene::gridIsGrey(vec2 pos) {
+	return pGrid.isGrey(pos);
+};
+
+float Scene::getGridMultiX() {
+	return pGrid.getGridMultiX();
+};
+
+float Scene::getGridMultiZ() {
+	return pGrid.getGridMultiZ();
+};

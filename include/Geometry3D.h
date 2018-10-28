@@ -15,7 +15,7 @@ typedef physvec3 Point;
 /**
 * @struct Line
 *
-* @author Game Phyics Cookbook
+* @author Game Physics Cookbook
 */
 typedef struct Line {
 	Point start;
@@ -29,7 +29,7 @@ typedef struct Line {
 /**
 * @struct physRay
 *
-* @author Game Phyics Cookbook
+* @author Game Physics Cookbook
 */
 typedef struct physRay {
 	Point origin;
@@ -48,7 +48,7 @@ typedef struct physRay {
 /**
 * @struct Sphere
 *
-* @author Game Phyics Cookbook
+* @author Game Physics Cookbook
 */
 typedef struct Sphere {
 	Point position;
@@ -62,7 +62,7 @@ typedef struct Sphere {
 /**
 * @struct physAABB
 *
-* @author Game Phyics Cookbook
+* @author Game Physics Cookbook
 */
 typedef struct physAABB {
 	Point position;
@@ -76,7 +76,7 @@ typedef struct physAABB {
 /**
 * @struct OBB
 *
-* @author Game Phyics Cookbook
+* @author Game Physics Cookbook
 */
 typedef struct OBB {
 	Point position;
@@ -94,7 +94,7 @@ typedef struct OBB {
 /**
 * @struct Plane
 *
-* @author Game Phyics Cookbook
+* @author Game Physics Cookbook
 */
 typedef struct Plane {
 	physvec3 normal;
@@ -108,7 +108,7 @@ typedef struct Plane {
 /**
 * @struct Triangle
 *
-* @author Game Phyics Cookbook
+* @author Game Physics Cookbook
 */
 typedef struct Triangle {
 	union {
@@ -135,7 +135,7 @@ typedef struct Triangle {
 /**
 * @struct BVHNode
 *
-* @author Game Phyics Cookbook
+* @author Game Physics Cookbook
 */
 typedef struct BVHNode {
 	physAABB bounds;
@@ -149,7 +149,7 @@ typedef struct BVHNode {
 /**
 * @struct physMesh
 *
-* @author Game Phyics Cookbook
+* @author Game Physics Cookbook
 */
 typedef struct physMesh {
 	int numTriangles;
@@ -166,7 +166,7 @@ typedef struct physMesh {
 /**
 * @class physModel
 *
-* @author Game Phyics Cookbook
+* @author Game Physics Cookbook
 */
 class physModel {
 protected:
@@ -192,7 +192,7 @@ public:
 /**
 * @struct Interval
 *
-* @author Game Phyics Cookbook
+* @author Game Physics Cookbook
 */
 typedef struct Interval {
 	float min;
@@ -202,7 +202,7 @@ typedef struct Interval {
 /**
 * @struct Frustum
 *
-* @author Game Phyics Cookbook
+* @author Game Physics Cookbook
 */
 typedef struct Frustum {
 	union {
@@ -223,7 +223,7 @@ typedef struct Frustum {
 /**
 * @struct RaycastResult
 *
-* @author Game Phyics Cookbook
+* @author Game Physics Cookbook
 */
 typedef struct RaycastResult {
 	physvec3 point;

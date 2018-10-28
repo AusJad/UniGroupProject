@@ -4,6 +4,7 @@ bool EditorContext::active = false;
 
 EditorCameraTool EditorContext::cameratool;
 EditorWallTool EditorContext::walltool;
+EditorAgentTool EditorContext::agenttool;
 SaveTool EditorContext::savetool;
 EditorObjectTool EditorContext::objecttool;
 Window * EditorContext::toolbar = NULL;
@@ -28,6 +29,9 @@ bool EditorContext::initalise() {
 	if (!cameratool.initalise()) return false;
 	cameratool.hide();
 
+	if (!agenttool.init()) return false;
+	agenttool.hide();
+
 	if (!savetool.initalise()) return false;
 	savetool.hide();
 
@@ -50,6 +54,7 @@ void EditorContext::render() {
 	walltool.render();
 	savetool.render();
 	objecttool.render();
+	agenttool.render();
 	cameratool.render();
 	toolbar->render();
 }
@@ -57,6 +62,7 @@ void EditorContext::render() {
 void EditorContext::update(float time) {
 	walltool.update(time);
 	objecttool.update(time);
+	agenttool.update(time);
 	toolbar->update(time);
 	cameratool.update(time);
 	savetool.update(time);
@@ -88,6 +94,15 @@ bool EditorContext::initToolBar() {
 	if (b == NULL) return false;
 	b->setWidth(96);
 	b->setHeight(96);
+	b->setTex(AGENT_TOOL_ICON);
+	b->setCallback(agenttoolclick);
+	toolbar->addComponent(b);
+
+	b = NULL;
+	b = new ButtonComponent();
+	if (b == NULL) return false;
+	b->setWidth(96);
+	b->setHeight(96);
 	b->setTex(CAM_TOOL_ICON);
 	b->setCallback(cameratoolclock);
 	toolbar->addComponent(b);
@@ -104,7 +119,7 @@ bool EditorContext::initToolBar() {
 	b = NULL;
 	b = new ButtonComponent();
 	if (b == NULL) return false;
-	b->setWidth(128);
+	b->setWidth(32);
 	b->setHeight(96);
 	b->setTex(TOOLBAR_END_ICON);
 	toolbar->addComponent(b);
@@ -118,6 +133,7 @@ bool EditorContext::testClick(int x, int y) {
 	if (toolbar->isVis()) if (toolbar->testClick(x, y)) return true;
 	if (cameratool.testClick(x, y)) return true;
 	if (objecttool.isVis()) if(objecttool.testClick(x, y)) return true;
+	if (agenttool.isVis()) if (agenttool.testClick(x, y)) return true;
 	if (savetool.testClick(x, y)) return true;
 	if (walltool.testClick(x, y)) return true;
 
@@ -126,13 +142,27 @@ bool EditorContext::testClick(int x, int y) {
 
 void EditorContext::walltoolclick(int code) {
 	walltool.toggle();
-	if (walltool.isVis()) objecttool.hide();
+	if (walltool.isVis()) {
+		objecttool.hide();
+		agenttool.hide();
+	}
 }
 
 void EditorContext::objecttoolclick(int code) {
 	objecttool.toggle();
-	if (objecttool.isVis()) walltool.hide();
+	if (objecttool.isVis()) {
+		walltool.hide();
+		agenttool.hide();
+	}
 }
+
+void EditorContext::agenttoolclick(int code) {
+		agenttool.toggle();
+		if (agenttool.isVis()) {
+			walltool.hide();
+			objecttool.hide();
+		}
+	}
 
 void EditorContext::cameratoolclock(int code) {
 	cameratool.toggle();

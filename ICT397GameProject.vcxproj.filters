@@ -1,200 +1,717 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="ICT397GameProject.cpp" />
-    <ClCompile Include="src\Alert.cpp" />
-    <ClCompile Include="src\AssetManager.cpp" />
-    <ClCompile Include="src\AudioEngine.cpp" />
-    <ClCompile Include="src\BMPLoader.cpp" />
-    <ClCompile Include="src\Bullet.cpp" />
-    <ClCompile Include="src\ButtonComponent.cpp" />
-    <ClCompile Include="src\camera.cpp" />
-    <ClCompile Include="src\CameraManager.cpp" />
-    <ClCompile Include="src\CollisionEngine.cpp" />
-    <ClCompile Include="src\Console.cpp" />
-    <ClCompile Include="src\CtoLUABinder.cpp" />
-    <ClCompile Include="src\CutScene.cpp" />
-    <ClCompile Include="src\EditorCameraTool.cpp" />
-    <ClCompile Include="src\EditorContext.cpp" />
-    <ClCompile Include="src\EditorObjectTool.cpp" />
-    <ClCompile Include="src\EditorWallTool.cpp" />
-    <ClCompile Include="src\Engine.cpp" />
-    <ClCompile Include="src\EngineStateWriter.cpp" />
-    <ClCompile Include="src\fileNameReader.cpp" />
-    <ClCompile Include="src\Font.cpp" />
-    <ClCompile Include="src\FontEngine.cpp" />
-    <ClCompile Include="src\FontLoader.cpp" />
-    <ClCompile Include="src\FPSControlsContext.cpp" />
-    <ClCompile Include="src\GameObject.cpp" />
-    <ClCompile Include="src\GameObjectFactory.cpp" />
-    <ClCompile Include="src\GameObjectHandler.cpp" />
-    <ClCompile Include="src\GenericObject.cpp" />
-    <ClCompile Include="src\GeometeryStream.cpp" />
-    <ClCompile Include="src\Geometry3D.cpp" />
-    <ClCompile Include="src\GUI.cpp" />
-    <ClCompile Include="src\GUIInteractContext.cpp" />
-    <ClCompile Include="src\Identifiers.cpp" />
-    <ClCompile Include="src\ImageCreationHandler.cpp" />
-    <ClCompile Include="src\ImageLoaderFactory.cpp" />
-    <ClCompile Include="src\ImportModel.cpp" />
-    <ClCompile Include="src\Controls.cpp" />
-    <ClCompile Include="src\ItemPlaceContext.cpp" />
-    <ClCompile Include="src\ItemScrollComponent.cpp" />
-    <ClCompile Include="src\LabelComponent.cpp" />
-    <ClCompile Include="src\Level.cpp" />
-    <ClCompile Include="src\LuaControlContext.cpp" />
-    <ClCompile Include="src\LUAScriptManager.cpp" />
-    <ClCompile Include="src\MainMenu.cpp" />
-    <ClCompile Include="src\mat4.cpp" />
-    <ClCompile Include="src\Maths.cpp" />
-    <ClCompile Include="src\matrices.cpp" />
-    <ClCompile Include="src\MD2Model.cpp" />
-    <ClCompile Include="src\MenuObject.cpp" />
-    <ClCompile Include="src\MenuTools.cpp" />
-    <ClCompile Include="src\Message.cpp" />
-    <ClCompile Include="src\MessagingBus.cpp" />
-    <ClCompile Include="src\ModelFactory.cpp" />
-    <ClCompile Include="src\ModelManger.cpp" />
-    <ClCompile Include="src\ModelMesh.cpp" />
-    <ClCompile Include="src\NPC.cpp" />
-    <ClCompile Include="src\NPCstates.cpp" />
-    <ClCompile Include="src\Player.cpp" />
-    <ClCompile Include="src\RawTerrain.cpp" />
-    <ClCompile Include="src\RenderModuleStubb.cpp" />
-    <ClCompile Include="src\ResourceList.cpp" />
-    <ClCompile Include="src\saveFileIO.cpp" />
-    <ClCompile Include="src\SaveTool.cpp" />
-    <ClCompile Include="src\Scene.cpp" />
-    <ClCompile Include="src\SceneManager.cpp" />
-    <ClCompile Include="src\Scenery.cpp" />
-    <ClCompile Include="src\SelectionComponent.cpp" />
-    <ClCompile Include="src\SimpleString.cpp" />
-    <ClCompile Include="src\StaticEntity.cpp" />
-    <ClCompile Include="src\Terrain.cpp" />
-    <ClCompile Include="src\TerrainObject.cpp" />
-    <ClCompile Include="src\TextInputComponent.cpp" />
-    <ClCompile Include="src\TextInputContext.cpp" />
-    <ClCompile Include="src\TexturedSquare.cpp" />
-    <ClCompile Include="src\TextureManager.cpp" />
-    <ClCompile Include="src\TGALoader.cpp" />
-    <ClCompile Include="src\TitleScreen.cpp" />
-    <ClCompile Include="src\Traits.cpp" />
-    <ClCompile Include="src\vec2.cpp" />
-    <ClCompile Include="src\vec3.cpp" />
-    <ClCompile Include="src\vec4.cpp" />
-    <ClCompile Include="src\vectors.cpp" />
-    <ClCompile Include="src\Wall.cpp" />
-    <ClCompile Include="src\Window.cpp" />
-    <ClCompile Include="src\WindowFactory.cpp" />
-    <ClCompile Include="src\WindowMoveContext.cpp" />
-    <ClCompile Include="src\WndComponent.cpp" />
-    <ClCompile Include="src\AIMovementBehaviours.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="include\AIMovementBehaviours.h" />
-    <ClInclude Include="include\Alert.h" />
-    <ClInclude Include="include\AssetManager.h" />
-    <ClInclude Include="include\AudioEngine.h" />
-    <ClInclude Include="include\AxisDefs.h" />
-    <ClInclude Include="include\BMPLoader.h" />
-    <ClInclude Include="include\Bullet.h" />
-    <ClInclude Include="include\ButtonComponent.h" />
-    <ClInclude Include="include\camera.h" />
-    <ClInclude Include="include\CameraManager.h" />
-    <ClInclude Include="include\CollisionEngine.h" />
-    <ClInclude Include="include\Compare.h" />
-    <ClInclude Include="include\ControlContext.h" />
-    <ClInclude Include="include\CtoLUABinder.h" />
-    <ClInclude Include="include\CutScene.h" />
-    <ClInclude Include="include\EditorCameraTool.h" />
-    <ClInclude Include="include\EditorContext.h" />
-    <ClInclude Include="include\EditorObjectTool.h" />
-    <ClInclude Include="include\EditorWallTool.h" />
-    <ClInclude Include="include\Engine.h" />
-    <ClInclude Include="include\EngineStateWriter.h" />
-    <ClInclude Include="include\fileNameReader.h" />
-    <ClInclude Include="include\Font.h" />
-    <ClInclude Include="include\FontEngine.h" />
-    <ClInclude Include="include\FontLoader.h" />
-    <ClInclude Include="include\FPSControlsContext.h" />
-    <ClInclude Include="include\GameObject.h" />
-    <ClInclude Include="include\GameObjectFactory.h" />
-    <ClInclude Include="include\GameObjectHandler.h" />
-    <ClInclude Include="include\GenericObject.h" />
-    <ClInclude Include="include\GeometeryStream.h" />
-    <ClInclude Include="include\Geometry3D.h" />
-    <ClInclude Include="include\GUI.h" />
-    <ClInclude Include="include\GUIInteractContext.h" />
-    <ClInclude Include="include\Identifiers.h" />
-    <ClInclude Include="include\ImageCreationHandler.h" />
-    <ClInclude Include="include\ImageLoader.h" />
-    <ClInclude Include="include\ImageLoaderFactory.h" />
-    <ClInclude Include="include\ImportModel.h" />
-    <ClInclude Include="include\Controls.h" />
-    <ClInclude Include="include\ItemPlaceContext.h" />
-    <ClInclude Include="include\ItemScrollComponent.h" />
-    <ClInclude Include="include\LabelComponent.h" />
-    <ClInclude Include="include\Level.h" />
-    <ClInclude Include="include\LuaControlContext.h" />
-    <ClInclude Include="include\LUAScriptManager.h" />
-    <ClInclude Include="include\MainMenu.h" />
-    <ClInclude Include="include\mat4.h" />
-    <ClInclude Include="include\Maths.h" />
-    <ClInclude Include="include\matrices.h" />
-    <ClInclude Include="include\MD2Model.h" />
-    <ClInclude Include="include\MenuObject.h" />
-    <ClInclude Include="include\MenuTools.h" />
-    <ClInclude Include="include\Message.h" />
-    <ClInclude Include="include\MessageTypes.h" />
-    <ClInclude Include="include\MessagingBus.h" />
-    <ClInclude Include="include\Model.h" />
-    <ClInclude Include="include\ModelFactory.h" />
-    <ClInclude Include="include\ModelManger.h" />
-    <ClInclude Include="include\ModelMesh.h" />
-    <ClInclude Include="include\movementInfo.h" />
-    <ClInclude Include="include\NPC.h" />
-    <ClInclude Include="include\NPCstates.h" />
-    <ClInclude Include="include\Player.h" />
-    <ClInclude Include="include\QuadTree.h" />
-    <ClInclude Include="include\RawTerrain.h" />
-    <ClInclude Include="include\RenderModuleStubb.h" />
-    <ClInclude Include="include\ResourceList.h" />
-    <ClInclude Include="include\saveFileIO.h" />
-    <ClInclude Include="include\SaveTool.h" />
-    <ClInclude Include="include\Scene.h" />
-    <ClInclude Include="include\SceneManager.h" />
-    <ClInclude Include="include\Scenery.h" />
-    <ClInclude Include="include\SelectionComponent.h" />
-    <ClInclude Include="include\SimpleString.h" />
-    <ClInclude Include="include\Singleton.h" />
-    <ClInclude Include="include\State.h" />
-    <ClInclude Include="include\StateMachine.h" />
-    <ClInclude Include="include\StaticEntity.h" />
-    <ClInclude Include="include\terrain.h" />
-    <ClInclude Include="include\TerrainObject.h" />
-    <ClInclude Include="include\TextInputComponent.h" />
-    <ClInclude Include="include\TextInputContext.h" />
-    <ClInclude Include="include\TexturedSquare.h" />
-    <ClInclude Include="include\TextureManager.h" />
-    <ClInclude Include="include\TGALoader.h" />
-    <ClInclude Include="include\TitleScreen.h" />
-    <ClInclude Include="include\Traits.h" />
-    <ClInclude Include="include\UITextures.h" />
-    <ClInclude Include="include\vec2.h" />
-    <ClInclude Include="include\vec3.h" />
-    <ClInclude Include="include\vec4.h" />
-    <ClInclude Include="include\vectors.h" />
-    <ClInclude Include="include\Wall.h" />
-    <ClInclude Include="include\Window.h" />
-    <ClInclude Include="include\WindowFactory.h" />
-    <ClInclude Include="include\WindowMoveContext.h" />
-    <ClInclude Include="include\WndComponent.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram.cd" />
-    <None Include="Resources\Scripts\startup.lua" />
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Controls">
+      <UniqueIdentifier>{bffbfb9b-b5e9-4d2f-a265-805e3c32fc5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Controls">
+      <UniqueIdentifier>{bce67689-2c2e-46a0-ba88-a184395cd29b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Models">
+      <UniqueIdentifier>{26474c0b-1261-4196-91b1-14e3417e85b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Camera">
+      <UniqueIdentifier>{6507ebad-ff19-4131-a0fe-20824e557fcc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Camera">
+      <UniqueIdentifier>{7473cab8-a650-4999-b31c-c3035404ae51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GameObjects">
+      <UniqueIdentifier>{a077a68e-95e9-47f5-9979-3297631c9cf8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\LUA Stuff">
+      <UniqueIdentifier>{c7a81be0-720d-4997-8377-121fa723561a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Math">
+      <UniqueIdentifier>{9ce7261f-f742-40c9-9b07-2a88bfb7abc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine">
+      <UniqueIdentifier>{acee0d95-5beb-4056-a1d3-ece8222cca1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Resource Files\Scripts">
+      <UniqueIdentifier>{cf939df7-a290-42df-8ceb-605f925f124d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\File Handling">
+      <UniqueIdentifier>{b155c363-fea2-4bc2-86cb-fdb69d7673dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Data Structures &amp; Design Patterns">
+      <UniqueIdentifier>{61871813-48ef-4d8e-811b-12494429967a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Physics">
+      <UniqueIdentifier>{cffdc426-ef74-4fcf-8abe-fc32684d304c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Rendering">
+      <UniqueIdentifier>{209f4180-6315-40bd-b81b-aaa36d899b20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Rendering\UI">
+      <UniqueIdentifier>{de2aa4e9-6470-4868-9712-78aa6217f013}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Rendering\UI\Low Level">
+      <UniqueIdentifier>{b42d65ab-ea53-40ea-8c8a-6ecc1aae84b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Rendering\UI\High Level">
+      <UniqueIdentifier>{2125d2b3-231c-41d4-92bc-643c667336cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Rendering\Texture Management">
+      <UniqueIdentifier>{f843bd16-7490-4aa2-8652-daa2e1e4c99e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine">
+      <UniqueIdentifier>{69f1abc8-53dd-4a6b-bc3e-4d364603b4a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GameObjects">
+      <UniqueIdentifier>{cdb45d53-c209-40f9-9507-ea27d4bb6190}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\LUA Stuff">
+      <UniqueIdentifier>{a3e9a7bf-fac7-4f68-adb7-ebe42e38aa2d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Math">
+      <UniqueIdentifier>{1dec501c-0ec3-4347-a7ef-3bef02df13a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\File Handling">
+      <UniqueIdentifier>{76d58d2d-19c0-41c0-b4a2-5bf328128902}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Rendering">
+      <UniqueIdentifier>{696fbea9-c430-4344-bb93-a22b48dad00e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Physics">
+      <UniqueIdentifier>{053e08b7-2608-4aaf-8ef5-ec919807c548}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Rendering\Texture Managment">
+      <UniqueIdentifier>{ee63dddf-b724-409c-82b7-dfc26eb62dcb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Rendering\UI">
+      <UniqueIdentifier>{e24b6554-dfce-48ad-be29-6893497ba07c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Models">
+      <UniqueIdentifier>{c655fda5-ce16-4b88-8f9c-d615f9ef280f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Rendering\UI\Low Level">
+      <UniqueIdentifier>{396da27d-0e11-4d64-993d-5e802eb7a403}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Rendering\UI\High Level">
+      <UniqueIdentifier>{df315b32-8838-4127-9765-cf2e04095d1f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Message Bus">
+      <UniqueIdentifier>{bbdd006a-1b94-49fe-89cc-903b04370fa6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Message Bus">
+      <UniqueIdentifier>{42077f7a-ba74-4413-af79-d827b29d3ace}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\AI">
+      <UniqueIdentifier>{19298e79-b2d8-4493-b4d9-0a4cecf9de9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\AI">
+      <UniqueIdentifier>{271ab7c0-1b1f-4761-b64e-02c4ad03811b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\Controls.h">
+      <Filter>Header Files\Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="include\camera.h">
+      <Filter>Header Files\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="include\BMPLoader.h">
+      <Filter>Header Files\Rendering\Texture Management</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Font.h">
+      <Filter>Header Files\Rendering\Texture Management</Filter>
+    </ClInclude>
+    <ClInclude Include="include\FontEngine.h">
+      <Filter>Header Files\Rendering\Texture Management</Filter>
+    </ClInclude>
+    <ClInclude Include="include\FontLoader.h">
+      <Filter>Header Files\Rendering\Texture Management</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ImageCreationHandler.h">
+      <Filter>Header Files\Rendering\Texture Management</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ImageLoader.h">
+      <Filter>Header Files\Rendering\Texture Management</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ImageLoaderFactory.h">
+      <Filter>Header Files\Rendering\Texture Management</Filter>
+    </ClInclude>
+    <ClInclude Include="include\TextureManager.h">
+      <Filter>Header Files\Rendering\Texture Management</Filter>
+    </ClInclude>
+    <ClInclude Include="include\TGALoader.h">
+      <Filter>Header Files\Rendering\Texture Management</Filter>
+    </ClInclude>
+    <ClInclude Include="include\CtoLUABinder.h">
+      <Filter>Header Files\LUA Stuff</Filter>
+    </ClInclude>
+    <ClInclude Include="include\LUAScriptManager.h">
+      <Filter>Header Files\LUA Stuff</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SimpleString.h">
+      <Filter>Header Files\LUA Stuff</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Bullet.h">
+      <Filter>Header Files\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GameObject.h">
+      <Filter>Header Files\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GameObjectFactory.h">
+      <Filter>Header Files\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GameObjectHandler.h">
+      <Filter>Header Files\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MenuObject.h">
+      <Filter>Header Files\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\NPC.h">
+      <Filter>Header Files\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Player.h">
+      <Filter>Header Files\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Scenery.h">
+      <Filter>Header Files\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\StaticEntity.h">
+      <Filter>Header Files\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\TerrainObject.h">
+      <Filter>Header Files\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\vec4.h">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="include\vec3.h">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="include\vec2.h">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Maths.h">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mat4.h">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Engine.h">
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Model.h">
+      <Filter>Header Files\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ModelFactory.h">
+      <Filter>Header Files\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ModelManger.h">
+      <Filter>Header Files\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ModelMesh.h">
+      <Filter>Header Files\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="include\RawTerrain.h">
+      <Filter>Header Files\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MD2Model.h">
+      <Filter>Header Files\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ImportModel.h">
+      <Filter>Header Files\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MenuTools.h">
+      <Filter>Header Files\LUA Stuff</Filter>
+    </ClInclude>
+    <ClInclude Include="include\fileNameReader.h">
+      <Filter>Header Files\File Handling</Filter>
+    </ClInclude>
+    <ClInclude Include="include\saveFileIO.h">
+      <Filter>Header Files\File Handling</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Singleton.h">
+      <Filter>Header Files\Data Structures &amp; Design Patterns</Filter>
+    </ClInclude>
+    <ClInclude Include="include\QuadTree.h">
+      <Filter>Header Files\Data Structures &amp; Design Patterns</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Identifiers.h">
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ResourceList.h">
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SceneManager.h">
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Scene.h">
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\CollisionEngine.h">
+      <Filter>Header Files\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\CutScene.h">
+      <Filter>Header Files\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="include\terrain.h">
+      <Filter>Header Files\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="include\TexturedSquare.h">
+      <Filter>Header Files\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GeometeryStream.h">
+      <Filter>Header Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="include\RenderModuleStubb.h">
+      <Filter>Header Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AssetManager.h">
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AudioEngine.h">
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MessageTypes.h">
+      <Filter>Header Files\Engine\Message Bus</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MessagingBus.h">
+      <Filter>Header Files\Engine\Message Bus</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Message.h">
+      <Filter>Header Files\Engine\Message Bus</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ControlContext.h">
+      <Filter>Header Files\Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="include\FPSControlsContext.h">
+      <Filter>Header Files\Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GUIInteractContext.h">
+      <Filter>Header Files\Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ItemPlaceContext.h">
+      <Filter>Header Files\Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="include\LuaControlContext.h">
+      <Filter>Header Files\Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="include\WindowMoveContext.h">
+      <Filter>Header Files\Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="include\EngineStateWriter.h">
+      <Filter>Header Files\File Handling</Filter>
+    </ClInclude>
+    <ClInclude Include="include\WndComponent.h">
+      <Filter>Header Files\Rendering\UI\Low Level</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SelectionComponent.h">
+      <Filter>Header Files\Rendering\UI\Low Level</Filter>
+    </ClInclude>
+    <ClInclude Include="include\TextInputComponent.h">
+      <Filter>Header Files\Rendering\UI\Low Level</Filter>
+    </ClInclude>
+    <ClInclude Include="include\TextInputContext.h">
+      <Filter>Header Files\Rendering\UI\Low Level</Filter>
+    </ClInclude>
+    <ClInclude Include="include\UITextures.h">
+      <Filter>Header Files\Rendering\UI\Low Level</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Window.h">
+      <Filter>Header Files\Rendering\UI\Low Level</Filter>
+    </ClInclude>
+    <ClInclude Include="include\WindowFactory.h">
+      <Filter>Header Files\Rendering\UI\Low Level</Filter>
+    </ClInclude>
+    <ClInclude Include="include\movementInfo.h">
+      <Filter>Header Files\Rendering\UI\Low Level</Filter>
+    </ClInclude>
+    <ClInclude Include="include\LabelComponent.h">
+      <Filter>Header Files\Rendering\UI\Low Level</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ButtonComponent.h">
+      <Filter>Header Files\Rendering\UI\Low Level</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Alert.h">
+      <Filter>Header Files\Rendering\UI\High Level</Filter>
+    </ClInclude>
+    <ClInclude Include="include\EditorCameraTool.h">
+      <Filter>Header Files\Rendering\UI\High Level</Filter>
+    </ClInclude>
+    <ClInclude Include="include\EditorContext.h">
+      <Filter>Header Files\Rendering\UI\High Level</Filter>
+    </ClInclude>
+    <ClInclude Include="include\EditorWallTool.h">
+      <Filter>Header Files\Rendering\UI\High Level</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GUI.h">
+      <Filter>Header Files\Rendering\UI\High Level</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MainMenu.h">
+      <Filter>Header Files\Rendering\UI\High Level</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SaveTool.h">
+      <Filter>Header Files\Rendering\UI\High Level</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ItemScrollComponent.h">
+      <Filter>Header Files\Rendering\UI\Low Level</Filter>
+    </ClInclude>
+    <ClInclude Include="include\EditorObjectTool.h">
+      <Filter>Header Files\Rendering\UI\High Level</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GenericObject.h">
+      <Filter>Header Files\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Wall.h">
+      <Filter>Header Files\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AxisDefs.h">
+      <Filter>Header Files\Rendering\UI\High Level</Filter>
+    </ClInclude>
+    <ClInclude Include="include\matrices.h">
+      <Filter>Header Files\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\vectors.h">
+      <Filter>Header Files\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Geometry3D.h">
+      <Filter>Header Files\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Compare.h">
+      <Filter>Header Files\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\TitleScreen.h">
+      <Filter>Header Files\Rendering\UI\High Level</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Level.h">
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\CameraManager.h">
+      <Filter>Header Files\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="include\State.h">
+      <Filter>Header Files\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Traits.h">
+      <Filter>Header Files\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SimpleStack.h">
+      <Filter>Header Files\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="include\pathFinder.h">
+      <Filter>Header Files\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="include\pathFinderGrid.h">
+      <Filter>Header Files\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="include\StateMachine.h">
+      <Filter>Header Files\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="include\NPCstates.h">
+      <Filter>Header Files\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="include\EditorAgentTool.h">
+      <Filter>Header Files\Rendering\UI\High Level</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AIMovementBehaviours.h">
+      <Filter>Header Files\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Emotions.h">
+      <Filter>Header Files\AI</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Controls.cpp">
+      <Filter>Source Files\Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="src\camera.cpp">
+      <Filter>Source Files\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BMPLoader.cpp">
+      <Filter>Source Files\Rendering\Texture Managment</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Font.cpp">
+      <Filter>Source Files\Rendering\Texture Managment</Filter>
+    </ClCompile>
+    <ClCompile Include="src\FontEngine.cpp">
+      <Filter>Source Files\Rendering\Texture Managment</Filter>
+    </ClCompile>
+    <ClCompile Include="src\FontLoader.cpp">
+      <Filter>Source Files\Rendering\Texture Managment</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ImageCreationHandler.cpp">
+      <Filter>Source Files\Rendering\Texture Managment</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ImageLoaderFactory.cpp">
+      <Filter>Source Files\Rendering\Texture Managment</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TextureManager.cpp">
+      <Filter>Source Files\Rendering\Texture Managment</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TGALoader.cpp">
+      <Filter>Source Files\Rendering\Texture Managment</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AssetManager.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AudioEngine.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Bullet.cpp">
+      <Filter>Source Files\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CollisionEngine.cpp">
+      <Filter>Source Files\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CtoLUABinder.cpp">
+      <Filter>Source Files\LUA Stuff</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CutScene.cpp">
+      <Filter>Source Files\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="src\fileNameReader.cpp">
+      <Filter>Source Files\File Handling</Filter>
+    </ClCompile>
+    <ClCompile Include="src\saveFileIO.cpp">
+      <Filter>Source Files\File Handling</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObject.cpp">
+      <Filter>Source Files\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObjectFactory.cpp">
+      <Filter>Source Files\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObjectHandler.cpp">
+      <Filter>Source Files\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MenuObject.cpp">
+      <Filter>Source Files\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\NPC.cpp">
+      <Filter>Source Files\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Player.cpp">
+      <Filter>Source Files\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TerrainObject.cpp">
+      <Filter>Source Files\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\StaticEntity.cpp">
+      <Filter>Source Files\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Scenery.cpp">
+      <Filter>Source Files\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GeometeryStream.cpp">
+      <Filter>Source Files\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Identifiers.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ImportModel.cpp">
+      <Filter>Source Files\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MD2Model.cpp">
+      <Filter>Source Files\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ModelFactory.cpp">
+      <Filter>Source Files\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ModelManger.cpp">
+      <Filter>Source Files\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ModelMesh.cpp">
+      <Filter>Source Files\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TexturedSquare.cpp">
+      <Filter>Source Files\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LUAScriptManager.cpp">
+      <Filter>Source Files\LUA Stuff</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mat4.cpp">
+      <Filter>Source Files\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Maths.cpp">
+      <Filter>Source Files\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MenuTools.cpp">
+      <Filter>Source Files\LUA Stuff</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RawTerrain.cpp">
+      <Filter>Source Files\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Terrain.cpp">
+      <Filter>Source Files\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RenderModuleStubb.cpp">
+      <Filter>Source Files\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Scene.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SceneManager.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ResourceList.cpp">
+      <Filter>Source Files\LUA Stuff</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SimpleString.cpp">
+      <Filter>Source Files\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vec2.cpp">
+      <Filter>Source Files\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vec4.cpp">
+      <Filter>Source Files\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vec3.cpp">
+      <Filter>Source Files\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MessagingBus.cpp">
+      <Filter>Source Files\Engine\Message Bus</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Message.cpp">
+      <Filter>Source Files\Engine\Message Bus</Filter>
+    </ClCompile>
+    <ClCompile Include="src\WindowMoveContext.cpp">
+      <Filter>Source Files\Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LuaControlContext.cpp">
+      <Filter>Source Files\Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ItemPlaceContext.cpp">
+      <Filter>Source Files\Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GUIInteractContext.cpp">
+      <Filter>Source Files\Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="src\FPSControlsContext.cpp">
+      <Filter>Source Files\Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CameraManager.cpp">
+      <Filter>Source Files\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="src\EngineStateWriter.cpp">
+      <Filter>Source Files\File Handling</Filter>
+    </ClCompile>
+    <ClCompile Include="src\WndComponent.cpp">
+      <Filter>Source Files\Rendering\UI\Low Level</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SelectionComponent.cpp">
+      <Filter>Source Files\Rendering\UI\Low Level</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TextInputComponent.cpp">
+      <Filter>Source Files\Rendering\UI\Low Level</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TextInputContext.cpp">
+      <Filter>Source Files\Rendering\UI\Low Level</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Window.cpp">
+      <Filter>Source Files\Rendering\UI\Low Level</Filter>
+    </ClCompile>
+    <ClCompile Include="src\WindowFactory.cpp">
+      <Filter>Source Files\Rendering\UI\Low Level</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LabelComponent.cpp">
+      <Filter>Source Files\Rendering\UI\Low Level</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ButtonComponent.cpp">
+      <Filter>Source Files\Rendering\UI\Low Level</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Alert.cpp">
+      <Filter>Source Files\Rendering\UI\High Level</Filter>
+    </ClCompile>
+    <ClCompile Include="src\EditorCameraTool.cpp">
+      <Filter>Source Files\Rendering\UI\High Level</Filter>
+    </ClCompile>
+    <ClCompile Include="src\EditorContext.cpp">
+      <Filter>Source Files\Rendering\UI\High Level</Filter>
+    </ClCompile>
+    <ClCompile Include="src\EditorWallTool.cpp">
+      <Filter>Source Files\Rendering\UI\High Level</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GUI.cpp">
+      <Filter>Source Files\Rendering\UI\High Level</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MainMenu.cpp">
+      <Filter>Source Files\Rendering\UI\High Level</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SaveTool.cpp">
+      <Filter>Source Files\Rendering\UI\High Level</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Console.cpp">
+      <Filter>Source Files\Rendering\UI\High Level</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ItemScrollComponent.cpp">
+      <Filter>Source Files\Rendering\UI\Low Level</Filter>
+    </ClCompile>
+    <ClCompile Include="ICT397GameProject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\EditorObjectTool.cpp">
+      <Filter>Source Files\Rendering\UI\High Level</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GenericObject.cpp">
+      <Filter>Source Files\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Wall.cpp">
+      <Filter>Source Files\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\matrices.cpp">
+      <Filter>Source Files\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vectors.cpp">
+      <Filter>Source Files\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Geometry3D.cpp">
+      <Filter>Source Files\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TitleScreen.cpp">
+      <Filter>Source Files\Rendering\UI\High Level</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Level.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Traits.cpp">
+      <Filter>Source Files\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\pathFinder.cpp">
+      <Filter>Source Files\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\pathFinderGrid.cpp">
+      <Filter>Source Files\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\EditorAgentTool.cpp">
+      <Filter>Source Files\Rendering\UI\High Level</Filter>
+    </ClCompile>
+    <ClCompile Include="src\NPCstates.cpp">
+      <Filter>Source Files\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AIMovementBehaviours.cpp">
+      <Filter>Source Files\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Emotions.cpp">
+      <Filter>Source Files\AI</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Scripts\startup.lua">
+      <Filter>Resource Files\Scripts</Filter>
+    </None>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>
