@@ -208,6 +208,7 @@ bool SceneManager::setSceneResources(ResourceList & toset, unsigned sceneno) {
 }
 
 //return stack, not void
+/*
 void SceneManager::findPath(const vec3 & pos, const vec3 & target) {
 	std::cout << "in path finder" << std::endl;
 
@@ -215,3 +216,27 @@ void SceneManager::findPath(const vec3 & pos, const vec3 & target) {
 	//Have to use SM singleton here, as function is static
 	//return SM->findPath();
 }
+*/
+SimpleStack SceneManager::findPathL(const vec3 & pos, const vec3 & target) {
+	return scenes.at(currscene).getPath(pos, target);
+}
+
+SimpleStack SceneManager::findPath(const vec3 & pos, const vec3 & target) {
+	return SM->findPathL(pos, target);
+}
+
+void SceneManager::gridGreyOut(vec2 pos) {
+	scenes.at(currscene).gridGreyOut(pos);
+}
+
+bool SceneManager::gridIsGrey(vec2 pos) {
+	return scenes.at(currscene).gridIsGrey(pos);
+};
+
+float SceneManager::getGridMultiX() {
+	return scenes.at(currscene).getGridMultiX();
+};
+
+float SceneManager::getGridMultiZ() {
+	return scenes.at(currscene).getGridMultiZ();
+};

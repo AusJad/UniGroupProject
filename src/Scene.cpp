@@ -147,3 +147,28 @@ bool Scene::getLoaded() {
 
 	return loaded;
 }
+
+SimpleStack Scene::getPath(vec3 pos, vec3 target) {
+	return objects.getPath(pos, target);
+}
+
+bool Scene::setGridScale(int xmin, int xmax, int zmin, int zmax) {
+	pGrid.setGridScale(xmin, xmax, zmin, zmax);
+	return true;
+}
+
+void Scene::gridGreyOut(vec2 pos) {
+	pGrid.greyOut(pos);
+}
+
+bool Scene::gridIsGrey(vec2 pos) {
+	return pGrid.isGrey(pos);
+};
+
+float Scene::getGridMultiX() {
+	return pGrid.getGridMultiX();
+};
+
+float Scene::getGridMultiZ() {
+	return pGrid.getGridMultiZ();
+};

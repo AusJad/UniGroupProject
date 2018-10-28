@@ -312,3 +312,7 @@ void GameObjectHandler::clear() {
 	if (terrain != NULL) delete terrain;
 	terrain = NULL;
 }
+
+SimpleStack GameObjectHandler::getPath(vec3 pos, vec3 target) {
+	return pfinder.findpath(gameobjects, pos, target);
+};
