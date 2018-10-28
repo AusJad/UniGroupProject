@@ -606,45 +606,70 @@ void NPC::addEmotions(vec4 emo)
 		emo *= all_Emo_Mods[i]->getMod();
 	}
 
+	/* // Old Method
 	// Use normalisation matrix to calc effect single emotion has on others
 	char max = 'x';
 	float maxval = emo.x();
 
 	if (max < emo.y())
 	{
-		max = 'y';
-		maxval = emo.y();
+	max = 'y';
+	maxval = emo.y();
 	}
 
 	if (max < emo.z())
 	{
-		max = 'z';
-		maxval = emo.z();
+	max = 'z';
+	maxval = emo.z();
 	}
 
 	if (max < emo.w())
 	{
-		max = 'w';
-		maxval = emo.w();
+	max = 'w';
+	maxval = emo.w();
 	}
 
 	switch (max)
 	{
 	case 'x':
-		emo *= vec4(EmotionNormalisation[0], EmotionNormalisation[1], EmotionNormalisation[2], EmotionNormalisation[3]); // 1st row
-		break;
+	emo *= vec4(EmotionNormalisation[0], EmotionNormalisation[1], EmotionNormalisation[2], EmotionNormalisation[3]); // 1st row
+	break;
 	case 'y':
-		emo *= vec4(EmotionNormalisation[4], EmotionNormalisation[5], EmotionNormalisation[6], EmotionNormalisation[7]); // 2nd row
-		break; 
+	emo *= vec4(EmotionNormalisation[4], EmotionNormalisation[5], EmotionNormalisation[6], EmotionNormalisation[7]); // 2nd row
+	break;
 	case 'z':
-		emo *= vec4(EmotionNormalisation[8], EmotionNormalisation[9], EmotionNormalisation[10], EmotionNormalisation[11]); // 3rd row
-		break;
+	emo *= vec4(EmotionNormalisation[8], EmotionNormalisation[9], EmotionNormalisation[10], EmotionNormalisation[11]); // 3rd row
+	break;
 	case 'w':
-		emo *= vec4(EmotionNormalisation[12], EmotionNormalisation[13], EmotionNormalisation[14], EmotionNormalisation[15]); // 4th row
-		break;
+	emo *= vec4(EmotionNormalisation[12], EmotionNormalisation[13], EmotionNormalisation[14], EmotionNormalisation[15]); // 4th row
+	break;
 	}
 
 	Emotion += emo;
+	*/
+
+	// This method means any emotion being added affects the other emotions as well rather than just the largest emotion being added.
+	Emotion += emo;
+
+	if (emo.x())
+	{
+		Emotion *= vec4(EmotionNormalisation[0], EmotionNormalisation[1], EmotionNormalisation[2], EmotionNormalisation[3]); // 1st row
+	}
+
+	if (emo.y())
+	{
+		Emotion *= vec4(EmotionNormalisation[4], EmotionNormalisation[5], EmotionNormalisation[6], EmotionNormalisation[7]); // 2nd row
+	}
+
+	if (emo.z())
+	{
+		Emotion *= vec4(EmotionNormalisation[8], EmotionNormalisation[9], EmotionNormalisation[10], EmotionNormalisation[11]); // 3rd row
+	}
+
+	if (emo.w())
+	{
+		Emotion *= vec4(EmotionNormalisation[12], EmotionNormalisation[13], EmotionNormalisation[14], EmotionNormalisation[15]); // 4th row
+	}
 }
 
 void NPC::ApplyTraits()
