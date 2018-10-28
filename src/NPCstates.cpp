@@ -68,7 +68,9 @@ void wander::Enter(NPC* agent)
 
 void wander::Execute(NPC* agent)
 {
-	// code for "wander" rage
+	vec3 tmp = agent->getPos();
+	//std::cout << "In 'wander' X: " << tmp.x() << "Y:" << tmp.y() << std::endl;
+
 }
 
 void wander::Exit(NPC* agent)

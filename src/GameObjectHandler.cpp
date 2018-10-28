@@ -133,7 +133,14 @@ void GameObjectHandler::update(float time) {
 	msgrcvr();
 	for (unsigned i = 0; i < tmpobjects.size(); i++) {
 		tmpobjects.at(i)->update(time);
+		//std::cout << "updating tmpobjects" << std::endl;
 	}
+	for (unsigned i = 0; i < gameobjects.size(); i++) {
+		gameobjects.at(i)->update(time);
+		//std::cout << "updating gameobjects" << std::endl;
+	}
+
+
 }
 
 unsigned GameObjectHandler::getNumObjects() {

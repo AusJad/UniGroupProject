@@ -59,6 +59,10 @@ void Scene::update(float time) {
 			if(!objects.getObject(i)->isStatic()) collision.update(objects.getObject(i), objects.findSpatiallyGroupedGameObjects(objects.getObject(i)), time);
 	}
 
+	for (unsigned i = 0; i < objects.getNumObjects(); i++) {
+		objects.getObject(i)->update(time);
+	}
+
 	//Cam collision
 	//todo - fix this retarded system
 	if (objects.getNumObjects() > 0)

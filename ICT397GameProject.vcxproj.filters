@@ -153,9 +153,6 @@
     <ClInclude Include="include\TGALoader.h">
       <Filter>Header Files\Rendering\Texture Management</Filter>
     </ClInclude>
-    <ClInclude Include="include\AIMovementBehaviours.h">
-      <Filter>Header Files\LUA Stuff</Filter>
-    </ClInclude>
     <ClInclude Include="include\CtoLUABinder.h">
       <Filter>Header Files\LUA Stuff</Filter>
     </ClInclude>
@@ -426,6 +423,9 @@
     <ClInclude Include="include\EditorAgentTool.h">
       <Filter>Header Files\Rendering\UI\High Level</Filter>
     </ClInclude>
+    <ClInclude Include="include\AIMovementBehaviours.h">
+      <Filter>Header Files\AI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Controls.cpp">
@@ -460,9 +460,6 @@
     </ClCompile>
     <ClCompile Include="src\TGALoader.cpp">
       <Filter>Source Files\Rendering\Texture Managment</Filter>
-    </ClCompile>
-    <ClCompile Include="src\AIMovementBehaviours.cpp">
-      <Filter>Source Files\LUA Stuff</Filter>
     </ClCompile>
     <ClCompile Include="src\AssetManager.cpp">
       <Filter>Source Files\Engine</Filter>
@@ -699,6 +696,9 @@
       <Filter>Source Files\Rendering\UI\High Level</Filter>
     </ClCompile>
     <ClCompile Include="src\NPCstates.cpp">
+      <Filter>Source Files\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AIMovementBehaviours.cpp">
       <Filter>Source Files\AI</Filter>
     </ClCompile>
   </ItemGroup>
