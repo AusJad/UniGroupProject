@@ -9,8 +9,8 @@ NPC::NPC(Identifiers & id, vec3 pos, ResourceList & list) : GameObject( id, pos,
 	speed = 0;
 	lookangle = 0;
 	evadetime = 0;
-	canUpdate = false;
-	canRender = false;
+	canUpdate = true;
+	canRender = true;
 	canAttack = false;
 	npcFSM=new stateMachine<NPC>(this);
 	npcFSM->setCurrentState(wander_state::getInstance());
@@ -27,8 +27,8 @@ NPC::NPC() : GameObject(){
 	speed = 0;
 	lookangle = 0;
 	evadetime = 0;
-	canUpdate = false;
-	canRender = false;
+	canUpdate = true;
+	canRender = true;
 	canAttack = false;
 	scalex = 1;
 	scaley = 1;
@@ -52,7 +52,7 @@ bool NPC::isCollidable() {
 void NPC::render() {
 	
 
-	//if (!canRender) return;
+	if (!canRender) return;
 	
 	//std::cout << "NPC render function" << std::endl;
 
@@ -174,6 +174,11 @@ void NPC::onCollide(vec3 & prevloc, const Identifiers & colgoid) {
 }
 
 void NPC::update(float time) {
+	
+	//std::cout << "Entering update loop" << std::endl;
+	npcFSM->update();
+
+	
 	LUAScriptManager* tmp = Singleton<LUAScriptManager>::getInstance();
 
 	if (resources.hasResource("model") && model != NULL) model->update(time);

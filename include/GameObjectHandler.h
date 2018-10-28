@@ -1,6 +1,8 @@
 #pragma once
 #include "GameObjectFactory.h"
 #include "QuadTree.h"
+#include "pathFinder.h"
+#include "SimpleStack.h"
 
 /**
 * @struct GameObjectWrapper
@@ -135,6 +137,9 @@ public:
 
 	void clear();
 
+	SimpleStack getPath(vec3 pos, vec3 target);
+
+
 private:
 	/// Terrain.
 	GameObject* terrain;
@@ -144,6 +149,8 @@ private:
 	Identifiers id;
 	/// Vector of game objects for temporary useage.
 	std::vector<GameObject*> tmpobjects;
+
+	pathFinder pfinder;
 
 	/**
 	* @brief Message receiver method.

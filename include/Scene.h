@@ -1,6 +1,8 @@
 #pragma once
 #include "GameObjectHandler.h"
 #include "CollisionEngine.h"
+#include "pathFinderGrid.h"
+#include "SimpleStack.h"
 //mm
 #include "saveFileIO.h"
 #include "CameraManager.h"
@@ -114,6 +116,18 @@ public:
 
 	void clearHMap();
 
+	SimpleStack getPath(vec3 pos, vec3 target);
+
+	bool setGridScale(int xmin, int xmax, int zmin, int zmax);
+
+	void gridGreyOut(vec2 pos);
+
+	bool gridIsGrey(vec2 pos);
+
+	float getGridMultiX();
+
+	float getGridMultiZ();
+
 private:
 	/// The game object handler.
 	GameObjectHandler objects;
@@ -121,6 +135,8 @@ private:
 	CollisionEngine collision;
 	/// The resource list.
 	ResourceList resources;
+
+	pathFinderGrid pGrid;
 
 	int state;
 

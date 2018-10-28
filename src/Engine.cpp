@@ -48,7 +48,9 @@ void Engine::Run() {
 
 		time = RNDR->getTimeSinceUpdate();
 
-		if (GI->getState() != mainmenu)	SM->update(time);
+		if (GI->getState() != mainmenu) {
+			SM->update(time);
+		}
 		GI->update(time);
 		AE->update(vec3(), vec3(), vec3());
 		FNT_ENG->update();
