@@ -28,9 +28,10 @@ Camera::Camera(Identifiers & id, vec3 pos, ResourceList & list) : GameObject(id,
 }
 
 OBB Camera::getOBB() {
-	ret.position = physvec3(pos.x(), pos.y(), pos.z());
-	ret.size = physvec3(5, 20, 5);
+	ret.position = physvec3(pos.x(), pos.y() - 25, pos.z());
+	ret.size = physvec3(5, 50, 5);
 	ret.orientation = mat3();
+	ret.mass = 5000;
 
 	return ret;
 }
