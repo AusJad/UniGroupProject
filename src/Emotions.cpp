@@ -24,29 +24,28 @@ Emotions::~Emotions()
 void Emotions::add_emotion(vec4 e) 
 {
 	emotions += e;
-	if (e.x())
+
+	if (e.x()) // Ecstacy and Grief
 	{
 		emotions *= vec4(normalization[0], normalization[1], normalization[2], normalization[3]); // 1st row
 	}
 
-	if (e.y())
+	if (e.y()) // Admiration and Loathing
 	{
 		emotions *= vec4(normalization[4], normalization[5], normalization[6], normalization[7]); // 2nd row
 	}
 
-	if (e.z())
+	if (e.z()) // Vigilance and Amazement
 	{
 		emotions *= vec4(normalization[8], normalization[9], normalization[10], normalization[11]); // 3rd row
 	}
 
-	if (e.w())
+	if (e.w()) // Rage and Terror
 	{
 		emotions *= vec4(normalization[12], normalization[13], normalization[14], normalization[15]); // 4th row
 	}
 
-	check_below_max();
-
-	this->normalize_emotions();
+	check_below_max(); // Check nothing is below -1 or above +1
 }
 
 void Emotions::add_modifier(vec4 m)

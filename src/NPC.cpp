@@ -413,24 +413,15 @@ void NPC::GenerateAffordances(std::vector<GameObject*> GOs)
 	}
 }
 
-/*
-void NPC::GenerateAffordances(GameObject * GO)
-{
-	Affordances["SIT"][GO->getID()] = canSit(GO);
-	Affordances["MOVE"][GO->getID()] = canMove(GO);
-	Affordances["PICKUP"][GO->getID()] = canPick_up(GO);
-}
-*/
-
 bool NPC::canSit(GameObject *go)
 {
 	// Assumption: You can only sit on objects greater than 20% of your height but less than 40%.
 	if (go->getDimentions().y > getDimentions().y * 0.2 && go->getDimentions().y < getDimentions().y * 0.4);
 	{
-		//std::cout << "SIT: " << go->getID() << ": True" << std::endl;
+		std::cout << "SIT: " << go->getID() << ": True" << std::endl;
 		return true;
 	}
-	//std::cout << "SIT: " << go->getID() << ": False" << std::endl;
+	std::cout << "SIT: " << go->getID() << ": False" << std::endl;
 	return false;
 }
 
@@ -439,10 +430,10 @@ bool NPC::canMove(GameObject *go)
 	// Assumption: Anything can be moved if its total weight is less than the force behind the object acting on it.
 	if (maxBench < go->getTotalMass())
 	{
-		//std::cout << "MOVE: " << go->getID() << ": True" << std::endl;
+		std::cout << "MOVE: " << go->getID() << ": True" << std::endl;
 		return true;
 	}
-	//std::cout << "MOVE: " << go->getID() << ": False" << std::endl;
+	std::cout << "MOVE: " << go->getID() << ": False" << std::endl;
 	return false;
 }
 
@@ -453,11 +444,11 @@ bool NPC::canPick_up(GameObject *go)
 	{
 		if (go->getDimentions().y < getDimentions().y * 0.5 && go->getDimentions().x <= getDimentions().x && go->getDimentions().z <= getDimentions().z);
 		{
-			//std::cout << "PICKUP: " << go->getID() << ": True" << std::endl;
+			std::cout << "PICKUP: " << go->getID() << ": True" << std::endl;
 			return true;
 		}
 	}
-	//std::cout << "PICKUP: " << go->getID() << ": False" << std::endl;
+	std::cout << "PICKUP: " << go->getID() << ": False" << std::endl;
 	return false;
 }
 
@@ -679,53 +670,53 @@ void NPC::generate_rnd_emotions()
 
 	/* Emotion */
 	rng = rand() %99 - 0;
-	value = (float)rng / 10.f;
+	value = (float)rng / 100.f;
 	emo.sx(value);
 
 	rng = rand() % 99 - 0;
-	value = (float)rng / 10.f;
+	value = (float)rng / 100.f;
 	emo.sy(value);
 
 	rng = rand() % 99 - 0;
-	value = (float)rng / 10.f;
+	value = (float)rng / 100.f;
 	emo.sz(value);
 
 	rng = rand() % 99 - 0;
-	value = (float)rng / 10.f;
+	value = (float)rng / 100.f;
 	emo.sw(value);
 
 	/* Modifiers */
 	rng = rand() % 99 - 0;
-	value = (float)rng / 10.f;
+	value = (float)rng / 100.f;
 	mod.sx(value);
 
 	rng = rand() % 99 - 0;
-	value = (float)rng / 10.f;
+	value = (float)rng / 100.f;
 	mod.sy(value);
 
 	rng = rand() % 99 - 0;
-	value = (float)rng / 10.f;
+	value = (float)rng / 100.f;
 	mod.sz(value);
 
 	rng = rand() % 99 - 0;
-	value = (float)rng / 10.f;
+	value = (float)rng / 100.f;
 	mod.sw(value);
 
 	/* Defaults */
 	rng = rand() % 99 - 0;
-	value = (float)rng / 10.f;
+	value = (float)rng / 100.f;
 	def.sx(value);
 
 	rng = rand() % 99 - 0;
-	value = (float)rng / 10.f;
+	value = (float)rng / 100.f;
 	def.sy(value);
 
 	rng = rand() % 99 - 0;
-	value = (float)rng / 10.f;
+	value = (float)rng / 100.f;
 	def.sz(value);
 
 	rng = rand() % 99 - 0;
-	value = (float)rng / 10.f;
+	value = (float)rng / 100.f;
 	def.sw(value);
 
 	/* Sets */
@@ -733,9 +724,9 @@ void NPC::generate_rnd_emotions()
 	emotion.setModifiers(mod);
 	emotion.setDefaults(def);
 
-	//std::cout << "Emotion: " << emotion.x() << " " << emotion.y() << " " << emotion.z() << " " << emotion.w() << std::endl;
-	//std::cout << "Modifiers: " << emotion.getModifiers().x() << " " << emotion.getModifiers().y() << " " << emotion.getModifiers().z() << " " << emotion.getModifiers().w() << std::endl;
-	//std::cout << "Defaults: " << emotion.getDefaults().x() << " " << emotion.getDefaults().y() << " " << emotion.getDefaults().z() << " " << emotion.getDefaults().w() << std::endl;
+	std::cout << "Emotion: " << emotion.x() << " " << emotion.y() << " " << emotion.z() << " " << emotion.w() << std::endl;
+	std::cout << "Modifiers: " << emotion.getModifiers().x() << " " << emotion.getModifiers().y() << " " << emotion.getModifiers().z() << " " << emotion.getModifiers().w() << std::endl;
+	std::cout << "Defaults: " << emotion.getDefaults().x() << " " << emotion.getDefaults().y() << " " << emotion.getDefaults().z() << " " << emotion.getDefaults().w() << std::endl;
 }
 
 void NPC::addemotion(vec4 emo)

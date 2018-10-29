@@ -28,6 +28,20 @@ public:
 	float z();
 	float w();
 private:
+
+	/*
+	+x = Ecstacy
+	-x = Grief
+
+	+y = Admiration
+	-y = Loathing
+
+	+z = Vigilance
+	-z = Amazement
+
+	+w = Rage
+	-w = Terror
+	*/
 	vec4 emotions, modifiers, defaults;
 
 	mat4 normalization = {
@@ -38,17 +52,3 @@ private:
 
 	void check_below_max();
 };
-
-/*
-+x = Exstasy
--x = Grief
-
-+y = Admiration
--y = Loathing
-
-+z = Vigilance
--z = Amazement
-
-+w = Rage
--w = Terror
-*/
