@@ -88,9 +88,11 @@ void GenericObject::update(float time) {
 	//physvec3 angularAcceleration = MultiplyVector(torques, Inverse(intert_tensor));
 	//angularvel += angularAcceleration * time;
 	angularvel *= dampening;
-	//setTarget(vec3(vel.x*time, vel.y*time, vel.z*time));
-	//orientation += angularvel * time;
-	//obb.orientation = Rotation3x3(RAD2DEG(orientation.x), RAD2DEG(orientation.y), RAD2DEG(orientation.z));
+	physvec3 orientation = Decompose(obb.orientation);
+	orientation += angularvel * time;
+	anglex = anglex + DEG2RAD(orientation.x);
+	angley = angley + DEG2RAD(orientation.y);
+	anglez = anglez + DEG2RAD(orientation.z);
 
 	updateBounds();
 	render();
@@ -138,14 +140,11 @@ void GenericObject::updateBounds() {
 }
 
 void GenericObject::render() {
+	
 	GeoStream << BEGIN_STREAM << trans_3(trans) << scale_3(scalex, scaley, scalez) << rot_4(anglex, 1, 0, 0) << rot_4(angley, 0, 1, 0) << rot_4(anglez, 0, 0, 1);
 	if (model != NULL) model->render(trans);
-	
+//
 	GeoStream << END_STREAM;
-
-	
-	
-	//if (model != NULL) model->render(vec3(vel.x, vel.y, vel.z));
 
 	physvec3 rot;
 	if (this->hasMultiObb()) {
