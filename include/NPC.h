@@ -208,9 +208,13 @@ public:
 
 	void generate_rnd_emotions(); // function for randomly generating emotions
 	void addemotion(vec4);
-
+	void setemotion(vec4);
+	void setdefaults(vec4);
+	void addmodifier(vec4);
+	
 	vec4 getemotion();
 	vec4 getdefault();
+
 
 private:
 	vec3 evadetarget;

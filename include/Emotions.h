@@ -1,5 +1,7 @@
 #pragma once
 #include "Maths.h"
+#include <iostream>
+
 
 class Emotions
 {

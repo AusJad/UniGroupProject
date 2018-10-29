@@ -215,15 +215,27 @@ void EditorAgentTool::addToGameCallback(int code) {
 	
 
 	agent->updateBounds();
+	
 	//hack emotion placement
+	vec4 feisty = vec4(0, 0, 1, 0.2);
+	vec4 scaredy = vec4(1, 0, -.5, -0.5);
 
+	//hack modifier placement
+	vec4 mod1 = vec4(0.2, 0.4, 0.6, 0.8);
+	vec4 mod2 = vec4(-0.2, 0.4, -0.6, 0.8);
+	
+	
 	if (agent->getModel()->getName() == "guard.md2") {
 		std::cout << "guard detected" << std::endl;
-		agent->addemotion(vec4(0.5, 0.5, 0.5, 0.5));
+		agent->setemotion(feisty);
+		agent->setdefaults(feisty);
+		agent->addmodifier(mod1);
 	}
 	else if (agent->getModel()->getName() == "tris.md2") {
 		std::cout << "tris detected" << std::endl;
-		agent->addemotion(vec4(0.2, 0.4, 0.6, 0.8));
+		agent->setemotion(scaredy);
+		agent->setdefaults(feisty);
+		agent->addmodifier(mod2);
 	}
 	else {
 		std::cout << "no specific model detected" << std::endl;
