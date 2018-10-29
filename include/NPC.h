@@ -12,6 +12,8 @@
 #include <math.h>
 #include "Emotions.h"
 
+#include "pathFinder.h"
+
 /**
 * @class NPC
 * @brief Class for creating NPCs
@@ -263,4 +265,9 @@ private:
 	float angley;
 	float anglex;
 	float anglez;
+
+	//mmpf
+	SimpleStack waypoints;
+
+	void generateWaypoints(vec3 tar);
 };

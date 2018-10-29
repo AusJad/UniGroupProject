@@ -52,6 +52,8 @@ void Scene::addObject(GameObject * toadd) {
 	for (int i = 0; i < objects.getNumObjects(); i++)
 	{
 		objects.findSpatiallyGroupedGameObjects(toadd)[i]->GenerateAffordances(objects.findSpatiallyGroupedGameObjects(toadd));
+		//mmpf
+		objects.findSpatiallyGroupedGameObjects(toadd)[i]->updateAllGOs(objects.findSpatiallyGroupedGameObjects(toadd));
 	}
 }
 

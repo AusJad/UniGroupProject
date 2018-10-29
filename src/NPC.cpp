@@ -743,3 +743,9 @@ vec4 NPC::getdefault()
 {
 	return emotion.getDefaults();
 }
+
+//mmpf
+void NPC::generateWaypoints(vec3 tar)
+{
+	waypoints = pathFinder::findpath(all_gos, pos, tar);
+}

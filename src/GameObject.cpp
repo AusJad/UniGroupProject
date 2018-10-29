@@ -327,3 +327,9 @@ void GameObject::calcMass()
 {	
 	totalmass = 1;
 }
+
+//mmpf
+void GameObject::updateAllGOs(std::vector<GameObject*> gos)
+{
+	all_gos = gos;
+}

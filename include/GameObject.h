@@ -229,6 +229,9 @@ public:
 
 	virtual void GenerateAffordances(std::vector<GameObject*> GOs) {};
 
+	//mmpf
+	void updateAllGOs(std::vector<GameObject*> gos);
+
 protected:
 	/// The state of the object.
 	int state;
@@ -254,5 +257,8 @@ protected:
 	* @brief The message receiver.
 	*/
 	void msgrcvr();
+
+	//mmpf
+	std::vector<GameObject*> all_gos;
 };
 
