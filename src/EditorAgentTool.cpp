@@ -4,7 +4,6 @@ Window * EditorAgentTool::agenttool = NULL;
 
 SelectionComponent * EditorAgentTool::modelin = NULL;
 
-
 //TextInputComponent * EditorAgentTool::scalexin = NULL;
 //TextInputComponent * EditorAgentTool::scaleyin = NULL;
 //TextInputComponent * EditorAgentTool::scalezin = NULL;
@@ -216,7 +215,31 @@ void EditorAgentTool::addToGameCallback(int code) {
 	
 
 	agent->updateBounds();
+	
+	//hack emotion placement
+	vec4 feisty = vec4(0, 0, 1, 0.2);
+	vec4 scaredy = vec4(1, 0, -.5, -0.5);
 
+	//hack modifier placement
+	vec4 mod1 = vec4(0.2, 0.4, 0.6, 0.8);
+	vec4 mod2 = vec4(-0.2, 0.4, -0.6, 0.8);
+	
+	
+	if (agent->getModel()->getName() == "guard.md2") {
+		std::cout << "guard detected" << std::endl;
+		agent->setemotion(feisty);
+		agent->setdefaults(feisty);
+		agent->addmodifier(mod1);
+	}
+	else if (agent->getModel()->getName() == "tris.md2") {
+		std::cout << "tris detected" << std::endl;
+		agent->setemotion(scaredy);
+		agent->setdefaults(feisty);
+		agent->addmodifier(mod2);
+	}
+	else {
+		std::cout << "no specific model detected" << std::endl;
+	}
 	SM->addObjectToCurScene(agent);
 
 	agent = new NPC();
@@ -394,6 +417,7 @@ void EditorAgentTool::setRotXCallBack(int code) {
 
 void EditorAgentTool::updateModel(int code) {
 	if (agent != NULL) {
+		
 		agent->setModel(MMAN->useModel(modelin->getActiveSelection(), modelin->getActiveSelection()));
 	}
 }

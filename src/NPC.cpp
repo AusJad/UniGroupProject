@@ -209,6 +209,10 @@ void NPC::update(float time) {
 		heading.normailse();
 	}
 
+	//std::cout << "Emotion: " << emotion.x() << " " << emotion.y() << " " << emotion.z() << " " << emotion.w() << std::endl;
+	//std::cout << "Modifiers: " << emotion.getModifiers().x() << " " << emotion.getModifiers().y() << " " << emotion.getModifiers().z() << " " << emotion.getModifiers().w() << std::endl;
+	//std::cout << "Defaults: " << emotion.getDefaults().x() << " " << emotion.getDefaults().y() << " " << emotion.getDefaults().z() << " " << emotion.getDefaults().w() << std::endl;
+
 }
 
 vec3 NPC::getCenterOffset() {
@@ -669,7 +673,7 @@ void NPC::generate_rnd_emotions()
 	float value;
 
 	/* Emotion */
-	rng = rand() %99 - 0;
+	/*rng = rand() %99 - 0;
 	value = (float)rng / 100.f;
 	emo.sx(value);
 
@@ -684,7 +688,7 @@ void NPC::generate_rnd_emotions()
 	rng = rand() % 99 - 0;
 	value = (float)rng / 100.f;
 	emo.sw(value);
-
+	
 	/* Modifiers */
 	rng = rand() % 99 - 0;
 	value = (float)rng / 100.f;
@@ -720,7 +724,7 @@ void NPC::generate_rnd_emotions()
 	def.sw(value);
 
 	/* Sets */
-	emotion.setEmotions(emo);
+	//emotion.setEmotions(emo);
 	emotion.setModifiers(mod);
 	emotion.setDefaults(def);
 
@@ -732,6 +736,18 @@ void NPC::generate_rnd_emotions()
 void NPC::addemotion(vec4 emo)
 {
 	emotion.add_emotion(emo);
+}
+
+void NPC::setemotion(vec4 emo) {
+	emotion.setEmotions(emo);
+}
+
+void NPC::setdefaults(vec4 emo) {
+	emotion.setDefaults(emo);
+}
+
+void NPC::addmodifier(vec4 mod) {
+	emotion.add_modifier(mod);
 }
 
 vec4 NPC::getemotion()
