@@ -664,12 +664,12 @@ void NPC::updateBounds() {
 
 void NPC::generate_rnd_emotions()
 {
-	vec4 emo, mod, def;
+	vec4 mod, def;
 	int rng;
 	float value;
 
 	/* Emotion */
-	rng = rand() %99 - 0;
+	/*rng = rand() %99 - 0;
 	value = (float)rng / 100.f;
 	emo.sx(value);
 
@@ -684,7 +684,7 @@ void NPC::generate_rnd_emotions()
 	rng = rand() % 99 - 0;
 	value = (float)rng / 100.f;
 	emo.sw(value);
-
+	*/
 	/* Modifiers */
 	rng = rand() % 99 - 0;
 	value = (float)rng / 100.f;
@@ -720,7 +720,7 @@ void NPC::generate_rnd_emotions()
 	def.sw(value);
 
 	/* Sets */
-	emotion.setEmotions(emo);
+	//emotion.setEmotions(emo);
 	emotion.setModifiers(mod);
 	emotion.setDefaults(def);
 
