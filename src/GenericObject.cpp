@@ -75,7 +75,7 @@ void GenericObject::setScaleZ(float nscalez) {
 }
 
 void GenericObject::update(float time) {
-	const float dampening = 0.99f;
+	const float dampening = 0.999f;
 	//std::cout << "Generic objects update function" << std::endl;
 
 	physvec3 acceleration = (GRAVITY * getTotalMass() * (1 / getTotalMass()));
@@ -86,7 +86,7 @@ void GenericObject::update(float time) {
 	//physvec3 angularAcceleration = MultiplyVector(torques, Inverse(intert_tensor));
 	//angularvel += angularAcceleration * time;
 	angularvel *= dampening;
-	setTarget(vec3(vel.x*time, vel.y*time, vel.z*time));
+	//setTarget(vec3(vel.x*time, vel.y*time, vel.z*time));
 	//orientation += angularvel * time;
 	//obb.orientation = Rotation3x3(RAD2DEG(orientation.x), RAD2DEG(orientation.y), RAD2DEG(orientation.z));
 	updateBounds();
@@ -139,6 +139,11 @@ void GenericObject::render() {
 	if (model != NULL) model->render(trans);
 	
 	GeoStream << END_STREAM;
+
+	
+	
+	//if (model != NULL) model->render(vec3(vel.x, vel.y, vel.z));
+
 	physvec3 rot;
 	if (this->hasMultiObb()) {
 		GeoStream << START_ATTRIB << color_3(0.6f, 1.0f, 0.0f);

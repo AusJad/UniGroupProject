@@ -25,6 +25,7 @@ Camera::Camera(Identifiers & id, vec3 pos, ResourceList & list) : GameObject(id,
 	birdseye = false;
 	yoff = 65.0f;
 	totalmass = 5000;
+	id.setType("CAM");
 }
 
 OBB Camera::getOBB() {
