@@ -11,6 +11,7 @@
 
 #include <math.h>
 #include "Emotions.h"
+#include "pathFinder.h"
 
 /**
 * @class NPC
@@ -212,6 +213,11 @@ public:
 	vec4 getemotion();
 	vec4 getdefault();
 
+	void generateWaypoints(vec3 targetpos);
+	SimpleStack getWaypoint();
+	void popWaypoint();
+	void setWaypoint(SimpleStack wp);
+
 private:
 	vec3 evadetarget;
 	/// Velocity of the NPC.
@@ -263,4 +269,7 @@ private:
 	float angley;
 	float anglex;
 	float anglez;
+
+	SimpleStack waypoints;
+
 };

@@ -229,6 +229,9 @@ public:
 
 	virtual void GenerateAffordances(std::vector<GameObject*> GOs) {};
 
+	void updateAllGOs(std::vector<GameObject*> gos);
+	std::vector<GameObject*> getGOs();
+
 protected:
 	/// The state of the object.
 	int state;
@@ -244,6 +247,8 @@ protected:
 	ResourceList resources;
 	/// The model data for the object.
 	Model* model;
+
+	std::vector<GameObject*> all_GOs;
 
 	// mm
 	physvec3 angularvel, vel;

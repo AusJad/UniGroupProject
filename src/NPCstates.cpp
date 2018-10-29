@@ -3,12 +3,65 @@
 
 void sit::Enter(NPC* agent)
 {
-	// code for entering "sit"
+	// Setting up map searching
+	std::map<int, bool>::iterator it;
+	std::map<int, bool> storage;
+	std::vector<int> viableGOs;
+
+	// Temp storage for target GameObject
+	GameObject* targetGO;
+
+	// RNG for target object selection
+	int rng = 0;
+
+	// Finding vector of viable "sitting" objects
+	storage = agent->getAffordances()["SIT"];
+
+	for (it = storage.begin(); it != storage.end(); it++)
+	{
+		if (it->second)
+		{
+			viableGOs.push_back(it->first);
+		}
+	}
+
+	// Randomly select a viable "sitting" object
+	srand(time(NULL));
+	rng = rand() % viableGOs.size() - 1;
+
+	// Generate waypoints to selected object
+	for (int i = 0; i < viableGOs.size(); i++)
+	{
+		for (int j = 0; j < agent->getGOs().size(); j++)
+		{
+			if (agent->getGOs()[j]->getID() == viableGOs[i])
+			{
+				agent->generateWaypoints(agent->getGOs()[j]->getPos());
+				targetGO = agent->getGOs()[j];
+			}
+		}
+	}
+
+	agent->setTarget(agent->getWaypoint().top());
 }
 
 void sit::Execute(NPC* agent)
 {
-	// code for "sit" state
+	// If agent is within range of the waypoint pop waypoint and move to next
+	if (abs(agent->getPos().x() - agent->getWaypoint().top().x()) < 100 && abs(agent->getPos().z() - agent->getWaypoint().top().z()) < 100)
+	{
+		agent->popWaypoint();
+		agent->setTarget(agent->getWaypoint().top());
+		std::cout << "Poped path" << std::endl;
+	}
+
+	if (agent->getWaypoint().empty())
+	{
+		// sit function here
+		std::cout << "Agent " << agent->getID() << " is sitting." << std::endl;
+	}
+
+	agent->addemotion(vec4(-0.002, -0.001, 0, 0)); // Add some emotion to exit state
 }
 
 void sit::Exit(NPC* agent)
@@ -18,12 +71,68 @@ void sit::Exit(NPC* agent)
 
 void toss::Enter(NPC* agent)
 {
-	// code for entering "toss"
+	// Setting up map searching
+	std::map<int, bool>::iterator it;
+	std::map<int, bool> storage;
+	std::vector<int> viableGOs;
+
+	// Temp storage for target GameObject
+	GameObject* targetGO;
+
+	// RNG for target object selection
+	int rng = 0;
+
+	// Finding vector of viable "sitting" objects
+	storage = agent->getAffordances()["MOVE"];
+
+	for (it = storage.begin(); it != storage.end(); it++)
+	{
+		if (it->second)
+		{
+			viableGOs.push_back(it->first);
+		}
+	}
+
+	// Randomly select a viable "sitting" object
+	srand(time(NULL));
+	rng = rand() % viableGOs.size() - 1;
+
+	// Generate waypoints to selected object
+	for (int i = 0; i < viableGOs.size(); i++)
+	{
+		for (int j = 0; j < agent->getGOs().size(); j++)
+		{
+			if (agent->getGOs()[j]->getID() == viableGOs[i])
+			{
+				agent->generateWaypoints(agent->getGOs()[j]->getPos());
+				targetGO = agent->getGOs()[j];
+			}
+		}
+	}
+
+	agent->setTarget(agent->getWaypoint().top());
 }
 
 void toss::Execute(NPC* agent)
 {
-	// code for "toss" state
+	vec3 lastPos;
+	// If agent is within range of the waypoint pop waypoint and move to next
+	if (abs(agent->getPos().x() - agent->getWaypoint().top().x()) < 100 && abs(agent->getPos().z() - agent->getWaypoint().top().z()) < 100)
+	{
+		lastPos = agent->getWaypoint().top();
+		agent->popWaypoint();
+		agent->setTarget(agent->getWaypoint().top());
+		std::cout << "Poped path" << std::endl;
+	}
+
+	if (agent->getWaypoint().empty())
+	{
+		agent->setTarget(lastPos);
+		// throw/move function here
+		std::cout << "Agent " << agent->getID() << " is Moving an object." << std::endl;
+	}
+
+	agent->addemotion(vec4(0.001, 0, 0, -0.002)); // Add some emotion to exit state
 }
 
 void toss::Exit(NPC* agent)
@@ -33,76 +142,145 @@ void toss::Exit(NPC* agent)
 
 void rage::Enter(NPC* agent)
 {
-	// code for entering "rage"
-	agent->addemotion(vec4(0, 0, 0, 1)); // Max out rage
-	
-	// double check this is how it works.
-	this->Execute(agent);
+	// Setting up map searching
+	std::map<int, bool>::iterator it;
+	std::map<int, bool> storage;
+	std::vector<int> viableGOs;
+
+	// Temp storage for target GameObject
+	GameObject* targetGO;
+
+	// RNG for target object selection
+	int rng = 0;
+
+	// Finding vector of viable "sitting" objects
+	storage = agent->getAffordances()["MOVE"];
+
+	for (it = storage.begin(); it != storage.end(); it++)
+	{
+		for (int i = 0; i < agent->getGOs().size(); i++)
+		{
+			if (agent->getGOs()[i]->getIdentifiers().getType() == "CAM")
+			{
+				agent->generateWaypoints(agent->getGOs()[i]->getPos());
+			}
+		}
+	}
+
+	agent->setTarget(agent->getWaypoint().top());
 }
 
 void rage::Execute(NPC* agent)
 {
-	// code for "toss" rage
+	vec3 lastPos;
+	// If agent is within range of the waypoint pop waypoint and move to next
+	if (abs(agent->getPos().x() - agent->getWaypoint().top().x()) < 100 && abs(agent->getPos().z() - agent->getWaypoint().top().z()) < 100)
+	{
+		lastPos = agent->getWaypoint().top();
+		agent->popWaypoint();
+		agent->setTarget(agent->getWaypoint().top());
+		std::cout << "Poped path" << std::endl;
+	}
 
-	// select a random object and pathfind to it
-	// once at object keep going "walking into it"
+	if (agent->getWaypoint().empty())
+	{
+		agent->setTarget(lastPos);
+		// throw/move function here
+		std::cout << "Agent " << agent->getID() << " is Raging at you." << std::endl;
+	}
+
+	agent->addemotion(vec4(0.001, 0, 0, -0.002)); // Add some emotion to exit state
 }
 
 void rage::Exit(NPC* agent)
 {
 	// code for exiting "rage"
-
-	if (agent->getemotion().w() <= agent->getdefault().w())
-	{
-		// exit state
-	}
 }
 
 void avoid::Enter(NPC* agent)
 {
-	// code for entering "avoid"
-	agent->addemotion(vec4(0, 0, 0, -1.0f)); // Max out terror
+	// Setting up map searching
+	std::map<int, bool>::iterator it;
+	std::map<int, bool> storage;
+	std::vector<int> viableGOs;
 
-	this->Execute(agent);
+	vec3 delta;
+
+	// Temp storage for target GameObject
+	GameObject* targetGO;
+
+	// RNG for target object selection
+	int rng = 0;
+
+	// Finding vector of viable "sitting" objects
+	storage = agent->getAffordances()["MOVE"];
+
+	for (it = storage.begin(); it != storage.end(); it++)
+	{
+		for (int i = 0; i < agent->getGOs().size(); i++)
+		{
+			if (agent->getGOs()[i]->getIdentifiers().getType() == "CAM")
+			{
+				//delta = agent->getGOs()[i]->getPos() - agent->getPos(); // Weird physvec3 errors
+				// just doing subtraction by hand
+
+				delta.sx(agent->getGOs()[i]->getPos().x() - agent->getPos().x());
+				delta.sy(agent->getGOs()[i]->getPos().y() - agent->getPos().y());
+				delta.sz(agent->getGOs()[i]->getPos().z() - agent->getPos().z());
+
+				delta.normailse();
+
+				delta.sx(delta.x() + 100);
+				delta.sz(delta.z() + 100);
+
+				agent->generateWaypoints(delta);
+			}
+		}
+	}
+
+	agent->setTarget(agent->getWaypoint().top());
 }
 
 void avoid::Execute(NPC* agent)
 {
-	// code for "avoid" rage
+	vec3 lastPos;
+	// If agent is within range of the waypoint pop waypoint and move to next
+	if (abs(agent->getPos().x() - agent->getWaypoint().top().x()) < 100 && abs(agent->getPos().z() - agent->getWaypoint().top().z()) < 100)
+	{
+		lastPos = agent->getWaypoint().top();
+		agent->popWaypoint();
+		agent->setTarget(agent->getWaypoint().top());
+		std::cout << "Poped path" << std::endl;
+	}
 
-	// flee method from camera
+	if (agent->getWaypoint().empty())
+	{
+		agent->setTarget(lastPos);
+		// throw/move function here
+		std::cout << "Agent " << agent->getID() << " is running from you." << std::endl;
+	}
+
+	agent->addemotion(vec4(-0.001, 0, 0, 0.002)); // Add some emotion to exit state
 }
 
 void avoid::Exit(NPC* agent)
 {
 	// code for exiting "avoid"
-
-	if (agent->getemotion().w() >= agent->getdefault().w())
-	{
-		// exit state
-	}
 }
 
 void wander::Enter(NPC* agent)
 {
 	// code for entering "wander"
-
-	
 }
 
 void wander::Execute(NPC* agent)
 {
-	vec3 tmp = agent->getPos();
-	//std::cout << "In 'wander' X: " << tmp.x() << "Y:" << tmp.y() << std::endl;
-
-	
-
+	// code for "wander"
 }
 
 void wander::Exit(NPC* agent)
 {
 	// code for exiting "wander"
-
 }
 
 void global::Enter(NPC* agent)
@@ -119,4 +297,3 @@ void global::Exit(NPC* agent)
 {
 	// code for exiting "global"
 }
-

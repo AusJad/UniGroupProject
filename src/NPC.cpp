@@ -668,6 +668,8 @@ void NPC::generate_rnd_emotions()
 	int rng;
 	float value;
 
+	srand(time(NULL));
+
 	/* Emotion */
 	rng = rand() %99 - 0;
 	value = (float)rng / 100.f;
@@ -742,4 +744,24 @@ vec4 NPC::getemotion()
 vec4 NPC::getdefault()
 {
 	return emotion.getDefaults();
+}
+
+void NPC::generateWaypoints(vec3 targetpos)
+{
+	waypoints = pathFinder::findpath(all_GOs, pos, targetpos);
+}
+
+SimpleStack NPC::getWaypoint()
+{
+	return waypoints;
+}
+
+void NPC::popWaypoint()
+{
+	waypoints.pop();
+}
+
+void NPC::setWaypoint(SimpleStack wp)
+{
+	waypoints = wp;
 }

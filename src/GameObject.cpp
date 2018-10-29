@@ -327,3 +327,13 @@ void GameObject::calcMass()
 {	
 	totalmass = 1;
 }
+
+void GameObject::updateAllGOs(std::vector<GameObject*> gos)
+{
+	all_GOs = gos;
+}
+
+std::vector<GameObject*> GameObject::getGOs()
+{
+	return all_GOs;
+}

@@ -67,7 +67,7 @@ public:
 	* @param pos, requesting entities position
 	* @param target, the position of the target
 	*/
-	SimpleStack findpath(std::vector<GameObject*> & objects, vec3 pos, vec3 target);
+	static SimpleStack findpath(std::vector<GameObject*> & objects, vec3 pos, vec3 target);
 
 private:
 	/**

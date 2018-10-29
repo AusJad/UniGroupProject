@@ -5,6 +5,9 @@
 #include "singleton.h"
 #include "state.h"
 
+#include <cstdlib>
+#include <ctime>
+
 class NPC;
 
 class sit : public State<NPC>
