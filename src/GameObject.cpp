@@ -152,6 +152,7 @@ void GameObject::updateVelocities(GameObject* collidingObj, physvec3 collisionRe
 	physvec3 tempVel = vel += (collisionResolved / getTotalMass());
 	setVel(tempVel);
 
+
 	tempVel = collidingObj->getVel() -= (collisionResolved / collidingObj->getTotalMass());
 	collidingObj->setVel(tempVel);
 

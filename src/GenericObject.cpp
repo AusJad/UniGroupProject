@@ -75,12 +75,14 @@ void GenericObject::setScaleZ(float nscalez) {
 }
 
 void GenericObject::update(float time) {
-	const float dampening = 0.999f;
+	const float dampening = 0.99f;
+
 	//std::cout << "Generic objects update function" << std::endl;
 
-	physvec3 acceleration = (GRAVITY * getTotalMass() * (1 / getTotalMass()));
-	vel += acceleration * time;
 	vel *= dampening;
+	trans.sx(trans.x() + vel.x);
+	trans.sy(trans.y() + vel.y);
+	trans.sz(trans.z() + vel.z);
 	//velocity * time * dampenning = trans
 	////MD - trans = vec3(vel.x, vel.y, vel.z);
 	//physvec3 angularAcceleration = MultiplyVector(torques, Inverse(intert_tensor));
@@ -89,6 +91,7 @@ void GenericObject::update(float time) {
 	//setTarget(vec3(vel.x*time, vel.y*time, vel.z*time));
 	//orientation += angularvel * time;
 	//obb.orientation = Rotation3x3(RAD2DEG(orientation.x), RAD2DEG(orientation.y), RAD2DEG(orientation.z));
+
 	updateBounds();
 	render();
 }
