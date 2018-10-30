@@ -174,106 +174,115 @@ void CollisionEngine::update(GameObject* toupdate, std::vector<GameObject*> coll
 
 	vec3 tmpos = toupdate->getPos();
 
-	toupdate->update(time);
+toupdate->update(time);
 
-	AABB updateb = genAABB(toupdate);
+AABB updateb = genAABB(toupdate);
 
-	AABB compb;
+AABB compb;
 
-	physvec3 obj1R;
-	physvec3 obj2R;
-	physvec3 collisionResolved;
+physvec3 obj1R;
+physvec3 obj2R;
+physvec3 collisionResolved;
 
-	for (unsigned i = 0; i < collGO.size(); i++) {
-		if (collGO.at(i)->getID() != toupdate->getID() && collGO.at(i)->isCollidable()) {
-			if (toupdate->hasMultiObb() && collGO.at(i)->hasOBB()) {
-				//std::cout << "Multi vs Single\n" << std::endl;
-				for (int i = 0; i < toupdate->getNumOBBs(); i++) {
-					if (OBBOBB(toupdate->getOBB(i), collGO.at(i)->getOBB())) {
-						CollisionManifold coll = FindCollisionFeatures(toupdate->getOBB(i), collGO.at(i)->getOBB());
-						if (coll.colliding) {
-							if (coll.contacts.size() > 0)
-							{
-								obj1R = toupdate->getOBB(i).position + coll.contacts[0];
-								obj2R = collGO.at(i)->getOBB(i).position - coll.contacts[0];
-								collisionResolved = collisionResolver(toupdate->getVel(), collGO.at(i)->getVel(), toupdate->getAngularVel(), collGO.at(i)->getAngularVel(), toupdate->getTotalMass(), collGO.at(i)->getTotalMass(), obj1R, obj2R, toupdate->getIntert_tensor(), collGO.at(i)->getIntert_tensor(), coll.normal);
-								toupdate->updateVelocities(collGO.at(i), collisionResolved, coll.contacts[0]);
-								
-								if (collGO.at(i)->getIdentifiers().getType() == "CAM" || toupdate->getIdentifiers().getType() == "CAM") {
-									toupdate->onCollide(tmpos, collGO.at(i)->getIdentifiers());
-								}
-								//updateLinearVelocity(toupdate, collGO.at(i), collisionResolved);
-								//updateAngularVelocity(toupdate, collGO.at(i), collisionResolved, coll.contacts[0]);
-					
+for (unsigned i = 0; i < collGO.size(); i++) {
+	if (collGO.at(i)->getID() != toupdate->getID() && collGO.at(i)->isCollidable()) {
+		if (toupdate->hasMultiObb() && collGO.at(i)->hasOBB()) {
+			//std::cout << "Multi vs Single\n" << std::endl;
+			for (int i = 0; i < toupdate->getNumOBBs(); i++) {
+				if (OBBOBB(toupdate->getOBB(i), collGO.at(i)->getOBB())) {
+					CollisionManifold coll = FindCollisionFeatures(toupdate->getOBB(i), collGO.at(i)->getOBB());
+					if (coll.colliding) {
+						if (coll.contacts.size() > 0)
+						{
+							obj1R = toupdate->getOBB(i).position + coll.contacts[0];
+							obj2R = collGO.at(i)->getOBB(i).position - coll.contacts[0];
+							collisionResolved = collisionResolver(toupdate->getVel(), collGO.at(i)->getVel(), toupdate->getAngularVel(), collGO.at(i)->getAngularVel(), toupdate->getTotalMass(), collGO.at(i)->getTotalMass(), obj1R, obj2R, toupdate->getIntert_tensor(), collGO.at(i)->getIntert_tensor(), coll.normal);
+							toupdate->updateVelocities(collGO.at(i), collisionResolved, coll.contacts[0]);
+
+							if (collGO.at(i)->getIdentifiers().getType() == "CAM") {
+								collGO.at(i)->onCollide(tmpos, collGO.at(i)->getIdentifiers());
 							}
+							if (toupdate->getIdentifiers().getType() == "CAM") {
+								toupdate->onCollide(tmpos, toupdate->getIdentifiers());
+							}
+							//updateLinearVelocity(toupdate, collGO.at(i), collisionResolved);
+							//updateAngularVelocity(toupdate, collGO.at(i), collisionResolved, coll.contacts[0]);
+
 						}
 					}
 				}
 			}
-			else if (toupdate->hasMultiObb() && collGO.at(i)->hasMultiObb()) {
-				//std::cout << "Multi vs Multi\n" << std::endl;
-				for (int i = 0; i < toupdate->getNumOBBs(); i++) {
-					for (int k = 0; k < collGO.at(i)->getNumOBBs(); k++) {
-						if (OBBOBB(toupdate->getOBB(i), collGO.at(i)->getOBB(k))) {
-							CollisionManifold coll = FindCollisionFeatures(toupdate->getOBB(i), collGO.at(i)->getOBB(k));
-							if (coll.colliding) {
-								if (coll.contacts.size() > 0)
-								{
-									obj1R = toupdate->getOBB(i).position + coll.contacts[0];
-									obj2R = collGO.at(i)->getOBB(k).position - coll.contacts[0];
-									collisionResolved = collisionResolver(toupdate->getVel(), collGO.at(i)->getVel(), toupdate->getAngularVel(), collGO.at(i)->getAngularVel(), toupdate->getTotalMass(), collGO.at(i)->getTotalMass(), obj1R, obj2R, toupdate->getIntert_tensor(), collGO.at(i)->getIntert_tensor(), coll.normal);
-
-									toupdate->updateVelocities(collGO.at(i), collisionResolved, coll.contacts[0]);
-									//updateLinearVelocity(toupdate, collGO.at(i), collisionResolved);
-									//updateAngularVelocity(toupdate, collGO.at(i), collisionResolved, coll.contacts[0]);
-				
-								}
-							}
-						}
-					}
-				}
-			}
-			else if (toupdate->hasOBB() && collGO.at(i)->hasMultiObb()) {
-				//std::cout << "Single vs Multi\n" << std::endl;
+		}
+		else if (toupdate->hasMultiObb() && collGO.at(i)->hasMultiObb()) {
+			//std::cout << "Multi vs Multi\n" << std::endl;
+			for (int i = 0; i < toupdate->getNumOBBs(); i++) {
 				for (int k = 0; k < collGO.at(i)->getNumOBBs(); k++) {
-					if (OBBOBB(toupdate->getOBB(), collGO.at(i)->getOBB(k))) {
-						CollisionManifold coll = FindCollisionFeatures(toupdate->getOBB(), collGO.at(i)->getOBB(k));
+					if (OBBOBB(toupdate->getOBB(i), collGO.at(i)->getOBB(k))) {
+						CollisionManifold coll = FindCollisionFeatures(toupdate->getOBB(i), collGO.at(i)->getOBB(k));
 						if (coll.colliding) {
 							if (coll.contacts.size() > 0)
 							{
 								obj1R = toupdate->getOBB(i).position + coll.contacts[0];
 								obj2R = collGO.at(i)->getOBB(k).position - coll.contacts[0];
-
 								collisionResolved = collisionResolver(toupdate->getVel(), collGO.at(i)->getVel(), toupdate->getAngularVel(), collGO.at(i)->getAngularVel(), toupdate->getTotalMass(), collGO.at(i)->getTotalMass(), obj1R, obj2R, toupdate->getIntert_tensor(), collGO.at(i)->getIntert_tensor(), coll.normal);
+
 								toupdate->updateVelocities(collGO.at(i), collisionResolved, coll.contacts[0]);
 								//updateLinearVelocity(toupdate, collGO.at(i), collisionResolved);
 								//updateAngularVelocity(toupdate, collGO.at(i), collisionResolved, coll.contacts[0]);
-								if (collGO.at(i)->getIdentifiers().getType() == "CAM" || toupdate->getIdentifiers().getType() == "CAM") {
-									toupdate->onCollide(tmpos, collGO.at(i)->getIdentifiers());
-								}
-								toupdate->onCollide2(tmpos, collGO.at(i)->getPos());
-								
+
 							}
 						}
 					}
 				}
 			}
-			else if (toupdate->hasOBB() && collGO.at(i)->hasOBB()) {
-				//std::cout << "Single vs Single\n" << std::endl;
-				if (OBBOBB(toupdate->getOBB(), collGO.at(i)->getOBB())) {
-					CollisionManifold coll = FindCollisionFeatures(toupdate->getOBB(), collGO.at(i)->getOBB());
+		}
+		else if (toupdate->hasOBB() && collGO.at(i)->hasMultiObb()) {
+			//std::cout << "Single vs Multi\n" << std::endl;
+			for (int k = 0; k < collGO.at(i)->getNumOBBs(); k++) {
+				if (OBBOBB(toupdate->getOBB(), collGO.at(i)->getOBB(k))) {
+					CollisionManifold coll = FindCollisionFeatures(toupdate->getOBB(), collGO.at(i)->getOBB(k));
 					if (coll.colliding) {
 						if (coll.contacts.size() > 0)
 						{
-							obj1R = toupdate->getOBB().position + coll.contacts[0];
-							obj2R = collGO.at(i)->getOBB().position - coll.contacts[0];
+							obj1R = toupdate->getOBB(i).position + coll.contacts[0];
+							obj2R = collGO.at(i)->getOBB(k).position - coll.contacts[0];
+
 							collisionResolved = collisionResolver(toupdate->getVel(), collGO.at(i)->getVel(), toupdate->getAngularVel(), collGO.at(i)->getAngularVel(), toupdate->getTotalMass(), collGO.at(i)->getTotalMass(), obj1R, obj2R, toupdate->getIntert_tensor(), collGO.at(i)->getIntert_tensor(), coll.normal);
 							toupdate->updateVelocities(collGO.at(i), collisionResolved, coll.contacts[0]);
 							//updateLinearVelocity(toupdate, collGO.at(i), collisionResolved);
 							//updateAngularVelocity(toupdate, collGO.at(i), collisionResolved, coll.contacts[0]);
-							if (collGO.at(i)->getIdentifiers().getType() == "CAM" || toupdate->getIdentifiers().getType() == "CAM") {
-								toupdate->onCollide(tmpos, collGO.at(i)->getIdentifiers());
+							if (collGO.at(i)->getIdentifiers().getType() == "CAM") {
+								collGO.at(i)->onCollide(tmpos, collGO.at(i)->getIdentifiers());
 							}
+							if (toupdate->getIdentifiers().getType() == "CAM") {
+								toupdate->onCollide(tmpos, toupdate->getIdentifiers());
+							}
+							toupdate->onCollide2(tmpos, collGO.at(i)->getPos());
+
+						}
+					}
+				}
+			}
+		}
+		else if (toupdate->hasOBB() && collGO.at(i)->hasOBB()) {
+			//std::cout << "Single vs Single\n" << std::endl;
+			if (OBBOBB(toupdate->getOBB(), collGO.at(i)->getOBB())) {
+				CollisionManifold coll = FindCollisionFeatures(toupdate->getOBB(), collGO.at(i)->getOBB());
+				if (coll.colliding) {
+					if (coll.contacts.size() > 0)
+					{
+						obj1R = toupdate->getOBB().position + coll.contacts[0];
+						obj2R = collGO.at(i)->getOBB().position - coll.contacts[0];
+						collisionResolved = collisionResolver(toupdate->getVel(), collGO.at(i)->getVel(), toupdate->getAngularVel(), collGO.at(i)->getAngularVel(), toupdate->getTotalMass(), collGO.at(i)->getTotalMass(), obj1R, obj2R, toupdate->getIntert_tensor(), collGO.at(i)->getIntert_tensor(), coll.normal);
+						toupdate->updateVelocities(collGO.at(i), collisionResolved, coll.contacts[0]);
+						//updateLinearVelocity(toupdate, collGO.at(i), collisionResolved);
+						//updateAngularVelocity(toupdate, collGO.at(i), collisionResolved, coll.contacts[0]);
+						if (collGO.at(i)->getIdentifiers().getType() == "CAM") {
+							collGO.at(i)->onCollide(tmpos, collGO.at(i)->getIdentifiers());
+						}
+						if (toupdate->getIdentifiers().getType() == "CAM") {
+							toupdate->onCollide(tmpos, toupdate->getIdentifiers());
+						}
 							toupdate->onCollide2(tmpos, collGO.at(i)->getPos());
 
 							
