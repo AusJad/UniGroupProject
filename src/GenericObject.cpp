@@ -83,10 +83,10 @@ void GenericObject::update(float time) {
 	trans.sx(trans.x() + vel.x);
 	trans.sy(trans.y() + vel.y);
 	trans.sz(trans.z() + vel.z);
-	//velocity * time * dampenning = trans
+
 	////MD - trans = vec3(vel.x, vel.y, vel.z);
 	//physvec3 angularAcceleration = MultiplyVector(torques, Inverse(intert_tensor));
-	//angularvel += angularAcceleration * time;
+
 	angularvel *= dampening;
 	physvec3 orientation = Decompose(obb.orientation);
 	orientation += angularvel * time;

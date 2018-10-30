@@ -197,6 +197,7 @@ void GameObject::updateVelocities(GameObject* collidingObj, physvec3 collisionRe
 	physvec3 r2stuff = MultiplyVector(i2, Cross(normalVector, collisionPoint));
 	tempVel = collidingObj->getAngularVel() -= r2stuff;
 	collidingObj->setAngularVel(tempVel);
+	
 	//stop();
 }
 
