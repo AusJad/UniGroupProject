@@ -62,7 +62,8 @@ void Scene::update(float time) {
 
 	for (unsigned i = 0; i < objects.getNumObjects(); i++) {
 		if(objects.getObject(i) != NULL)
-			if(!objects.getObject(i)->isStatic()) collision.update(objects.getObject(i), objects.findSpatiallyGroupedGameObjects(objects.getObject(i)), time);
+			collision.update(objects.getObject(i), objects.findSpatiallyGroupedGameObjects(objects.getObject(i)), time);
+			//if(!objects.getObject(i)->isStatic()) 
 	}
 
 	for (unsigned i = 0; i < objects.getNumObjects(); i++) {
