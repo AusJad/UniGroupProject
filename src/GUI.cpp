@@ -132,23 +132,26 @@ void GUI::renderInstructions() {
 void GUI::renderNpcEmo() {
 	if (canEdit()) {
 		RNDR->RenderModeOrtho();
-		if (npc1 != NULL && npc1->getModel() != NULL) {
-			npcemos1x.setLabel("x: " + std::to_string(npc1->getemotion().x()));
-			npcemos1y.setLabel("y: " + std::to_string(npc1->getemotion().y()));
-			npcemos1z.setLabel("z: " + std::to_string(npc1->getemotion().z()));
-			npcemos1w.setLabel("w: " + std::to_string(npc1->getemotion().w()));
-			npcemos1.setPos(vec2(0, 25));
-			npcemos1.render();
-			npcemos1x.setPos(vec2(5, 60));
-			npcemos1x.render();
-			npcemos1y.setPos(vec2(5, 90));
-			npcemos1y.render();
-			npcemos1z.setPos(vec2(0, 120));
-			npcemos1z.render();
-			npcemos1w.setPos(vec2(0, 150));
-			npcemos1w.render();
+		if (npc1 != NULL) {
+			if (npc1->getModel() != NULL) {
+				npcemos1x.setLabel("x: " + std::to_string(npc1->getemotion().x()));
+				npcemos1y.setLabel("y: " + std::to_string(npc1->getemotion().y()));
+				npcemos1z.setLabel("z: " + std::to_string(npc1->getemotion().z()));
+				npcemos1w.setLabel("w: " + std::to_string(npc1->getemotion().w()));
+				npcemos1.setPos(vec2(0, 25));
+				npcemos1.render();
+				npcemos1x.setPos(vec2(5, 60));
+				npcemos1x.render();
+				npcemos1y.setPos(vec2(5, 90));
+				npcemos1y.render();
+				npcemos1z.setPos(vec2(0, 120));
+				npcemos1z.render();
+				npcemos1w.setPos(vec2(0, 150));
+				npcemos1w.render();
+			}
 		}
-		if (npc2 != NULL && npc2->getModel() != NULL) {
+		if (npc2 != NULL) {
+			if (npc2->getModel() != NULL) {
 			npcemos2x.setLabel("x: " + std::to_string(npc2->getemotion().x()));
 			npcemos2y.setLabel("y: " + std::to_string(npc2->getemotion().y()));
 			npcemos2z.setLabel("z: " + std::to_string(npc2->getemotion().z()));
@@ -163,22 +166,25 @@ void GUI::renderNpcEmo() {
 			npcemos2z.render();
 			npcemos2w.setPos(vec2(0, 350));
 			npcemos2w.render();
+			}
 		}
-		if (npc3 != NULL && npc3->getModel() != NULL ) {
-			npcemos3x.setLabel("x: " + std::to_string(npc3->getemotion().x()));
-			npcemos3y.setLabel("y: " + std::to_string(npc3->getemotion().y()));
-			npcemos3z.setLabel("z: " + std::to_string(npc3->getemotion().z()));
-			npcemos3w.setLabel("w: " + std::to_string(npc3->getemotion().w()));
-			npcemos3.setPos(vec2(0, 425));
-			npcemos3.render();
-			npcemos3x.setPos(vec2(5, 460));
-			npcemos3x.render();
-			npcemos3y.setPos(vec2(5, 490));
-			npcemos3y.render();
-			npcemos3z.setPos(vec2(0, 520));
-			npcemos3z.render();
-			npcemos3w.setPos(vec2(0, 550));
-			npcemos3w.render();
+		if (npc3 != NULL) {
+			if (npc3->getModel() != NULL) {
+				npcemos3x.setLabel("x: " + std::to_string(npc3->getemotion().x()));
+				npcemos3y.setLabel("y: " + std::to_string(npc3->getemotion().y()));
+				npcemos3z.setLabel("z: " + std::to_string(npc3->getemotion().z()));
+				npcemos3w.setLabel("w: " + std::to_string(npc3->getemotion().w()));
+				npcemos3.setPos(vec2(0, 425));
+				npcemos3.render();
+				npcemos3x.setPos(vec2(5, 460));
+				npcemos3x.render();
+				npcemos3y.setPos(vec2(5, 490));
+				npcemos3y.render();
+				npcemos3z.setPos(vec2(0, 520));
+				npcemos3z.render();
+				npcemos3w.setPos(vec2(0, 550));
+				npcemos3w.render();
+			}
 		}
 		RNDR->RenderModePerspective();
 	}
