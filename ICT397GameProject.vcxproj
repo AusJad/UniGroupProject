@@ -122,6 +122,7 @@
     <ClInclude Include="include\EditorObjectTool.h" />
     <ClInclude Include="include\EditorWallTool.h" />
     <ClInclude Include="include\Emotions.h" />
+    <ClInclude Include="include\EmotionTypes.h" />
     <ClInclude Include="include\Engine.h" />
     <ClInclude Include="include\EngineStateWriter.h" />
     <ClInclude Include="include\fileNameReader.h" />
