@@ -134,10 +134,10 @@ void GUI::renderNpcEmo() {
 		RNDR->RenderModeOrtho();
 		if (npc1 != NULL) {
 			if (npc1->getModel() != NULL) {
-				npcemos1x.setLabel("x: " + std::to_string(npc1->getemotion().x()));
-				npcemos1y.setLabel("y: " + std::to_string(npc1->getemotion().y()));
-				npcemos1z.setLabel("z: " + std::to_string(npc1->getemotion().z()));
-				npcemos1w.setLabel("w: " + std::to_string(npc1->getemotion().w()));
+				npcemos1x.setLabel("E/G: " + std::to_string(npc1->getemotion().x()));
+				npcemos1y.setLabel("A/L: " + std::to_string(npc1->getemotion().y()));
+				npcemos1z.setLabel("V/A: " + std::to_string(npc1->getemotion().z()));
+				npcemos1w.setLabel("R/T: " + std::to_string(npc1->getemotion().w()));
 				npcemos1.setPos(vec2(0, 25));
 				npcemos1.render();
 				npcemos1x.setPos(vec2(5, 60));
@@ -152,10 +152,10 @@ void GUI::renderNpcEmo() {
 		}
 		if (npc2 != NULL) {
 			if (npc2->getModel() != NULL) {
-			npcemos2x.setLabel("x: " + std::to_string(npc2->getemotion().x()));
-			npcemos2y.setLabel("y: " + std::to_string(npc2->getemotion().y()));
-			npcemos2z.setLabel("z: " + std::to_string(npc2->getemotion().z()));
-			npcemos2w.setLabel("w: " + std::to_string(npc2->getemotion().w()));
+			npcemos2x.setLabel("E/G: " + std::to_string(npc2->getemotion().x()));
+			npcemos2y.setLabel("A/L: " + std::to_string(npc2->getemotion().y()));
+			npcemos2z.setLabel("V/A: " + std::to_string(npc2->getemotion().z()));
+			npcemos2w.setLabel("R/T: " + std::to_string(npc2->getemotion().w()));
 			npcemos2.setPos(vec2(0, 225));
 			npcemos2.render();
 			npcemos2x.setPos(vec2(5, 260));
@@ -170,10 +170,10 @@ void GUI::renderNpcEmo() {
 		}
 		if (npc3 != NULL) {
 			if (npc3->getModel() != NULL) {
-				npcemos3x.setLabel("x: " + std::to_string(npc3->getemotion().x()));
-				npcemos3y.setLabel("y: " + std::to_string(npc3->getemotion().y()));
-				npcemos3z.setLabel("z: " + std::to_string(npc3->getemotion().z()));
-				npcemos3w.setLabel("w: " + std::to_string(npc3->getemotion().w()));
+				npcemos3x.setLabel("E/G: " + std::to_string(npc3->getemotion().x()));
+				npcemos3y.setLabel("A/L: " + std::to_string(npc3->getemotion().y()));
+				npcemos3z.setLabel("V/A: " + std::to_string(npc3->getemotion().z()));
+				npcemos3w.setLabel("R/T: " + std::to_string(npc3->getemotion().w()));
 				npcemos3.setPos(vec2(0, 425));
 				npcemos3.render();
 				npcemos3x.setPos(vec2(5, 460));
