@@ -10,12 +10,16 @@ GUI::~GUI()
 {
 }
 
+
+
 bool GUI::initalise() {
 	instructions.setLabel("Editor: Press M");
 	instructions.setPadding(3);
 	instructions.setWidth(250);
 	instructions.setHeight(25);
 	instructions.setTex(WND_HEADER_BG);
+	
+	initializeNPCWindow();
 
 	if (!ALERT->init()) return false;
 
@@ -101,8 +105,10 @@ void GUI::updateSelf() {
 
 void GUI::render() {
 	switch (state) {
-		case inactive:
-			renderInstructions();
+		case inactive: {
+				renderInstructions();
+				renderNpcEmo();
+			}
 			break;
 		case mainmenu:
 			if (mmenu.isActive()) mmenu.render();
@@ -119,6 +125,61 @@ void GUI::renderInstructions() {
 	if (canEdit()) {
 		RNDR->RenderModeOrtho();
 		instructions.render();
+		RNDR->RenderModePerspective();
+	}
+}
+
+void GUI::renderNpcEmo() {
+	if (canEdit()) {
+		RNDR->RenderModeOrtho();
+		if (npc1 != NULL && npc1->getModel() != NULL) {
+			npcemos1x.setLabel("x: " + std::to_string(npc1->getemotion().x()));
+			npcemos1y.setLabel("y: " + std::to_string(npc1->getemotion().y()));
+			npcemos1z.setLabel("z: " + std::to_string(npc1->getemotion().z()));
+			npcemos1w.setLabel("w: " + std::to_string(npc1->getemotion().w()));
+			npcemos1.setPos(vec2(0, 25));
+			npcemos1.render();
+			npcemos1x.setPos(vec2(5, 60));
+			npcemos1x.render();
+			npcemos1y.setPos(vec2(5, 90));
+			npcemos1y.render();
+			npcemos1z.setPos(vec2(0, 120));
+			npcemos1z.render();
+			npcemos1w.setPos(vec2(0, 150));
+			npcemos1w.render();
+		}
+		if (npc2 != NULL && npc2->getModel() != NULL) {
+			npcemos2x.setLabel("x: " + std::to_string(npc2->getemotion().x()));
+			npcemos2y.setLabel("y: " + std::to_string(npc2->getemotion().y()));
+			npcemos2z.setLabel("z: " + std::to_string(npc2->getemotion().z()));
+			npcemos2w.setLabel("w: " + std::to_string(npc2->getemotion().w()));
+			npcemos2.setPos(vec2(0, 225));
+			npcemos2.render();
+			npcemos2x.setPos(vec2(5, 260));
+			npcemos2x.render();
+			npcemos2y.setPos(vec2(5, 290));
+			npcemos2y.render();
+			npcemos2z.setPos(vec2(0, 320));
+			npcemos2z.render();
+			npcemos2w.setPos(vec2(0, 350));
+			npcemos2w.render();
+		}
+		if (npc3 != NULL && npc3->getModel() != NULL ) {
+			npcemos3x.setLabel("x: " + std::to_string(npc3->getemotion().x()));
+			npcemos3y.setLabel("y: " + std::to_string(npc3->getemotion().y()));
+			npcemos3z.setLabel("z: " + std::to_string(npc3->getemotion().z()));
+			npcemos3w.setLabel("w: " + std::to_string(npc3->getemotion().w()));
+			npcemos3.setPos(vec2(0, 425));
+			npcemos3.render();
+			npcemos3x.setPos(vec2(5, 460));
+			npcemos3x.render();
+			npcemos3y.setPos(vec2(5, 490));
+			npcemos3y.render();
+			npcemos3z.setPos(vec2(0, 520));
+			npcemos3z.render();
+			npcemos3w.setPos(vec2(0, 550));
+			npcemos3w.render();
+		}
 		RNDR->RenderModePerspective();
 	}
 }
@@ -143,4 +204,75 @@ bool GUI::testClick(int x, int y) {
 
 void GUI::playGameCallback(int code) {
 	GI->setState(inactive);
+}
+
+void GUI::setNpc(NPC *npcin) {
+	if (npcCount < 1) {
+		npc1 = npcin;
+		std::cout << npcin->getID() << "Has entered the building" << std::endl;
+		npcCount++;
+	}
+	else if (npcCount < 2){
+		npc2 = npcin;
+		npcCount++;
+	}
+	else if (npcCount < 3) {
+		npc3 = npcin;
+		npcCount++;
+	}
+	std::cout << "NPC Count is: " << npcCount << std::endl;
+}
+
+void GUI::initializeNPCWindow() {
+	npcemos1.setLabel("NPC1 emotions:");
+	npcemos1.setPadding(3);
+	npcemos1.setWidth(200);
+	npcemos1.setHeight(200);
+	npcemos1.setTex(WND_HEADER_BG);
+	npcemos1x.setPadding(3);
+	npcemos1x.setWidth(190);
+	npcemos1x.setHeight(45);
+	npcemos1y.setPadding(3);
+	npcemos1y.setWidth(190);
+	npcemos1y.setHeight(45);
+	npcemos1z.setPadding(3);
+	npcemos1z.setWidth(190);
+	npcemos1z.setHeight(45);
+	npcemos1w.setPadding(3);
+	npcemos1w.setWidth(190);
+	npcemos1w.setHeight(45);
+	npcemos2.setLabel("NPC2 emotions:");
+	npcemos2.setPadding(3);
+	npcemos2.setWidth(200);
+	npcemos2.setHeight(200);
+	npcemos2.setTex(WND_HEADER_BG);
+	npcemos2x.setPadding(3);
+	npcemos2x.setWidth(190);
+	npcemos2x.setHeight(45);
+	npcemos2y.setPadding(3);
+	npcemos2y.setWidth(190);
+	npcemos2y.setHeight(45);
+	npcemos2z.setPadding(3);
+	npcemos2z.setWidth(190);
+	npcemos2z.setHeight(45);
+	npcemos2w.setPadding(3);
+	npcemos2w.setWidth(190);
+	npcemos2w.setHeight(45);
+	npcemos3.setLabel("NPC3 emotions:");
+	npcemos3.setPadding(3);
+	npcemos3.setWidth(200);
+	npcemos3.setHeight(200);
+	npcemos3.setTex(WND_HEADER_BG);
+	npcemos3x.setPadding(3);
+	npcemos3x.setWidth(190);
+	npcemos3x.setHeight(45);
+	npcemos3y.setPadding(3);
+	npcemos3y.setWidth(190);
+	npcemos3y.setHeight(45);
+	npcemos3z.setPadding(3);
+	npcemos3z.setWidth(190);
+	npcemos3z.setHeight(45);
+	npcemos3w.setPadding(3);
+	npcemos3w.setWidth(190);
+	npcemos3w.setHeight(45);
 }

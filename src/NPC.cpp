@@ -1,5 +1,7 @@
 #include "NPC.h"
 #include "NPCstates.h"
+#include "Singleton.h"
+#include "gui.h"
 
 
 
@@ -20,10 +22,11 @@ NPC::NPC(Identifiers & id, vec3 pos, ResourceList & list) : GameObject( id, pos,
 	scaley = 1;
 	scalez = 1;
 	id.setType("NPC");
-
 	emotion = Emotions();
 	this->generate_rnd_emotions();
 	maxBench = 200;
+	GI->setNpc(this);
+	
 }
 
 NPC::NPC() : GameObject(){
@@ -46,6 +49,7 @@ NPC::NPC() : GameObject(){
 	emotion = Emotions();
 	this->generate_rnd_emotions();
 	maxBench = 200;
+	GI->setNpc(this);
 }
 
 NPC::~NPC()
