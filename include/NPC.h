@@ -215,6 +215,9 @@ public:
 	vec4 getemotion();
 	vec4 getdefault();
 
+	void calcCOM();
+	physvec3 getCOM();
+
 
 private:
 	vec3 evadetarget;
@@ -267,4 +270,6 @@ private:
 	float angley;
 	float anglex;
 	float anglez;
+
+	physvec3 COM;
 };

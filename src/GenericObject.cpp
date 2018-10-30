@@ -135,6 +135,7 @@ void GenericObject::updateBounds() {
 			obb.orientation = Rotation3x3(anglex, angley, anglez);
 
 			this->calcMass();//mm
+			this->calcCOM();
 		}
 	}
 }
@@ -210,4 +211,36 @@ void GenericObject::calcMass()
 	{
 		totalmass = obb.mass;
 	}
+}
+
+void GenericObject::calcCOM()
+{
+	float x = 0;
+	float y = 0;
+	float z = 0;
+	if (this->hasMultiObb())
+	{
+		for (int i = 0; i < obbs.size(); i++)
+		{
+			x += obbs[i].mass * obbs[i].position.x;
+			y += obbs[i].mass * obbs[i].position.y;
+			z += obbs[i].mass * obbs[i].position.z;
+		}
+		x /= totalmass;
+		y /= totalmass;
+		z /= totalmass;
+
+		COM = physvec3(x, y, z);
+	}
+	else
+	{
+		COM = obb.position;
+	}
+
+	//std::cout << "x: " << COM.x << " y: " << COM.y << " z:" << COM.z << std::endl;
+}
+
+physvec3 GenericObject::getCOM()
+{
+	return COM;
 }

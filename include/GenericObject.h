@@ -50,6 +50,8 @@ public:
 	physvec3 getDimentions();
 
 	void calcMass();
+	void calcCOM();
+	physvec3 getCOM();
 
 private:
 	float scalex;
@@ -62,5 +64,7 @@ private:
 	float angley;
 	float anglex;
 	float anglez;
+
+	physvec3 COM;
 };
 
