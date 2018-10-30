@@ -29,6 +29,7 @@ public:
 	void setState(GUIState toset);
 	GUIState getState() { return state; }
 	bool canEdit() { return mmenu.canEdit(); }
+	void setNpc(NPC *npcin);
 
 private:
 	GUIState state;
@@ -49,6 +50,11 @@ private:
 	LabelComponent npcemos3y;
 	LabelComponent npcemos3z;
 	LabelComponent npcemos3w;
+	int npcCount = 0;
+	NPC* npc1 = NULL;
+	NPC* npc2 = NULL;
+	NPC* npc3 = NULL;
+
 	MainMenu mmenu;
 
 	void updateSelf();
@@ -56,7 +62,7 @@ private:
 	void renderNpcEmo();
 	void enableState(GUIState toenable);
 	void disableState(GUIState todisable);
-
+	void initializeNPCWindow();
 	static void playGameCallback(int code);
 };
 
