@@ -140,8 +140,6 @@ void GenericObject::render() {
 	
 	GeoStream << END_STREAM;
 
-	
-	
 	//if (model != NULL) model->render(vec3(vel.x, vel.y, vel.z));
 
 	physvec3 rot;

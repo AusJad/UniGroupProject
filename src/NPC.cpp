@@ -23,6 +23,8 @@ NPC::NPC(Identifiers & id, vec3 pos, ResourceList & list) : GameObject( id, pos,
 	emotion = Emotions();
 	this->generate_rnd_emotions();
 	maxBench = 200;
+
+	vel = physvec3(1, 0, 1);
 }
 
 NPC::NPC() : GameObject(){
@@ -202,13 +204,27 @@ void NPC::update(float time) {
 	if (resources.hasResource("updatefunc"))
 		tmp->callFunction<NPC, MessagingBus>(resources.getResource("updatefunc"), *this, *(Singleton<MessagingBus>::getInstance()));
 
+	/*
 	pos += velocity * time;
 
 	if (velocity.getLength() > 0.0000001) {
 		heading = velocity;
 		heading.normailse();
 	}
+	*/
 
+	trans.sx(trans.x() + vel.x);
+	trans.sy(trans.y() + vel.y);
+	trans.sz(trans.z() + vel.z);
+
+	physvec3 orientation = Decompose(obb.orientation);
+	orientation += angularvel * time;
+
+	anglex += DEG2RAD(orientation.x);
+	angley += DEG2RAD(orientation.y);
+	anglez += DEG2RAD(orientation.z);
+	
+	//updateBounds();
 }
 
 vec3 NPC::getCenterOffset() {

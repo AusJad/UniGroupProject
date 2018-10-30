@@ -42,6 +42,7 @@ void sit::Enter(NPC* agent)
 		}
 	}
 
+	agent->setVel(physvec3(2, 0, 2));
 	agent->setTarget(agent->getWaypoint().top());
 }
 
@@ -58,6 +59,7 @@ void sit::Execute(NPC* agent)
 	if (agent->getWaypoint().empty())
 	{
 		// sit function here
+		agent->setVel(physvec3(0, 0, 0));
 		std::cout << "Agent " << agent->getID() << " is sitting." << std::endl;
 	}
 
@@ -110,6 +112,7 @@ void toss::Enter(NPC* agent)
 		}
 	}
 
+	agent->setVel(physvec3(2, 0, 2));
 	agent->setTarget(agent->getWaypoint().top());
 }
 
@@ -138,6 +141,7 @@ void toss::Execute(NPC* agent)
 void toss::Exit(NPC* agent)
 {
 	// code for exiting "toss"
+	agent->setVel(physvec3(0, 0, 0));
 }
 
 void rage::Enter(NPC* agent)
@@ -167,6 +171,7 @@ void rage::Enter(NPC* agent)
 		}
 	}
 
+	agent->setVel(physvec3(2, 0, 2));
 	agent->setTarget(agent->getWaypoint().top());
 }
 
@@ -194,6 +199,7 @@ void rage::Execute(NPC* agent)
 
 void rage::Exit(NPC* agent)
 {
+	agent->setVel(physvec3(0, 0, 0));
 	// code for exiting "rage"
 }
 
@@ -238,6 +244,7 @@ void avoid::Enter(NPC* agent)
 		}
 	}
 
+	agent->setVel(physvec3(2, 0, 2));
 	agent->setTarget(agent->getWaypoint().top());
 }
 
@@ -256,6 +263,7 @@ void avoid::Execute(NPC* agent)
 	if (agent->getWaypoint().empty())
 	{
 		agent->setTarget(lastPos);
+		agent->setVel(physvec3(0, 0, 0));
 		// throw/move function here
 		std::cout << "Agent " << agent->getID() << " is running from you." << std::endl;
 	}
