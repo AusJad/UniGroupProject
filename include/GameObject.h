@@ -229,6 +229,9 @@ public:
 
 	virtual void GenerateAffordances(std::vector<GameObject*> GOs) {};
 
+	virtual void calcCOM() {};
+	virtual physvec3 getCOM() { return physvec3(); };
+
 protected:
 	/// The state of the object.
 	int state;
