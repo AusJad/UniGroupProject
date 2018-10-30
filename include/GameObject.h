@@ -155,6 +155,8 @@ public:
 	*/
 	virtual bool isCollidable();
 
+	void makeAngry(GameObject * theNPC);
+
 	/**
 	* @brief The default message handler for GameObjects.
 	*
@@ -223,7 +225,7 @@ public:
 	void setIntert_tensor(physmat4 it);
 	void setTotalMass(float tm);
 
-	virtual physvec3 getDimentions() { return physvec3(-1, -1, -1); };
+	virtual physvec3 getDimensions() { return physvec3(-1, -1, -1); };
 
 	virtual void calcMass();
 

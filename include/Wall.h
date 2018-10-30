@@ -56,7 +56,6 @@ class Bounds : public Model {
 				corners[i] = rot * corners[i];
 			}
 
-
 			minx = corners[0].x();
 			maxx = corners[0].x();
 

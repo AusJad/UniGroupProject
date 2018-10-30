@@ -47,7 +47,7 @@ public:
 	bool addMultiObb(std::vector<OBB> & in);
 
 	//mm
-	physvec3 getDimentions();
+	physvec3 getDimensions();
 
 	void calcMass();
 	void calcCOM();

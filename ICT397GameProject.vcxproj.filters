@@ -429,6 +429,9 @@
     <ClInclude Include="include\Emotions.h">
       <Filter>Header Files\AI</Filter>
     </ClInclude>
+    <ClInclude Include="include\EmotionTypes.h">
+      <Filter>Header Files\AI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Controls.cpp">

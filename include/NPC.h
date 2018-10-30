@@ -250,7 +250,7 @@ private:
 	bool canMove(GameObject *go);
 	bool canPick_up(GameObject *go);
 
-	physvec3 getDimentions();
+	physvec3 getDimensions();
 
 	Emotions emotion;
 

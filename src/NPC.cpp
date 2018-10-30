@@ -21,6 +21,7 @@ NPC::NPC(Identifiers & id, vec3 pos, ResourceList & list) : GameObject( id, pos,
 	scalex = 1;
 	scaley = 1;
 	scalez = 1;
+	id.setType("NPC");
 	emotion = Emotions();
 	this->generate_rnd_emotions();
 	maxBench = 200;
@@ -43,6 +44,7 @@ NPC::NPC() : GameObject(){
 	npcFSM->setCurrentState(wander_state::getInstance());
 	npcFSM->setGlobalState(global_state::getInstance());
 	totalmass = 1;
+	id.setType("NPC");
 
 	emotion = Emotions();
 	this->generate_rnd_emotions();
@@ -424,12 +426,10 @@ void NPC::GenerateAffordances(std::vector<GameObject*> GOs)
 bool NPC::canSit(GameObject *go)
 {
 	// Assumption: You can only sit on objects greater than 20% of your height but less than 40%.
-	if (go->getDimentions().y > getDimentions().y * 0.2 && go->getDimentions().y < getDimentions().y * 0.4);
+	if (go->getDimensions().y > getDimensions().y * 0.2 && go->getDimensions().y < getDimensions().y * 0.4);
 	{
-		std::cout << "SIT: " << go->getID() << ": True" << std::endl;
 		return true;
 	}
-	std::cout << "SIT: " << go->getID() << ": False" << std::endl;
 	return false;
 }
 
@@ -438,10 +438,8 @@ bool NPC::canMove(GameObject *go)
 	// Assumption: Anything can be moved if its total weight is less than the force behind the object acting on it.
 	if (maxBench < go->getTotalMass())
 	{
-		std::cout << "MOVE: " << go->getID() << ": True" << std::endl;
 		return true;
 	}
-	std::cout << "MOVE: " << go->getID() << ": False" << std::endl;
 	return false;
 }
 
@@ -450,17 +448,15 @@ bool NPC::canPick_up(GameObject *go)
 	// Assumption: You can only pick up objects if they weigh less than you can carry and if their y is half or less of your height and if the x and z are the same of less than yours.
 	if (maxBench > go->getTotalMass())
 	{
-		if (go->getDimentions().y < getDimentions().y * 0.5 && go->getDimentions().x <= getDimentions().x && go->getDimentions().z <= getDimentions().z);
+		if (go->getDimensions().y < getDimensions().y * 0.5 && go->getDimensions().x <= getDimensions().x && go->getDimensions().z <= getDimensions().z);
 		{
-			std::cout << "PICKUP: " << go->getID() << ": True" << std::endl;
 			return true;
 		}
 	}
-	std::cout << "PICKUP: " << go->getID() << ": False" << std::endl;
 	return false;
 }
 
-physvec3 NPC::getDimentions()
+physvec3 NPC::getDimensions()
 {
 	return physvec3(model->getMaxTX() - model->getMinTX(), model->getMaxTY() - model->getMinTY(), model->getMaxTY() - model->getMinTY());
 }
