@@ -19,6 +19,7 @@ NPC::NPC(Identifiers & id, vec3 pos, ResourceList & list) : GameObject( id, pos,
 	scalex = 1;
 	scaley = 1;
 	scalez = 1;
+	id.setType("NPC");
 
 	emotion = Emotions();
 	this->generate_rnd_emotions();
@@ -40,6 +41,7 @@ NPC::NPC() : GameObject(){
 	npcFSM->setCurrentState(wander_state::getInstance());
 	npcFSM->setGlobalState(global_state::getInstance());
 	totalmass = 1;
+	id.setType("NPC");
 
 	emotion = Emotions();
 	this->generate_rnd_emotions();
