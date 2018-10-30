@@ -194,8 +194,8 @@ for (unsigned i = 0; i < collGO.size(); i++) {
 					if (coll.colliding) {
 						if (coll.contacts.size() > 0)
 						{
-							obj1R = toupdate->getOBB(i).position + coll.contacts[0];
-							obj2R = collGO.at(i)->getOBB(i).position - coll.contacts[0];
+							obj1R = toupdate->getCOM() + coll.contacts[0];
+							obj2R = collGO.at(i)->getCOM() - coll.contacts[0];
 							collisionResolved = collisionResolver(toupdate->getVel(), collGO.at(i)->getVel(), toupdate->getAngularVel(), collGO.at(i)->getAngularVel(), toupdate->getTotalMass(), collGO.at(i)->getTotalMass(), obj1R, obj2R, toupdate->getIntert_tensor(), collGO.at(i)->getIntert_tensor(), coll.normal);
 							toupdate->updateVelocities(collGO.at(i), collisionResolved, coll.contacts[0]);
 
@@ -222,8 +222,8 @@ for (unsigned i = 0; i < collGO.size(); i++) {
 						if (coll.colliding) {
 							if (coll.contacts.size() > 0)
 							{
-								obj1R = toupdate->getOBB(i).position + coll.contacts[0];
-								obj2R = collGO.at(i)->getOBB(k).position - coll.contacts[0];
+								obj1R = toupdate->getCOM() + coll.contacts[0];
+								obj2R = collGO.at(i)->getCOM() - coll.contacts[0];
 								collisionResolved = collisionResolver(toupdate->getVel(), collGO.at(i)->getVel(), toupdate->getAngularVel(), collGO.at(i)->getAngularVel(), toupdate->getTotalMass(), collGO.at(i)->getTotalMass(), obj1R, obj2R, toupdate->getIntert_tensor(), collGO.at(i)->getIntert_tensor(), coll.normal);
 
 								toupdate->updateVelocities(collGO.at(i), collisionResolved, coll.contacts[0]);
@@ -244,8 +244,8 @@ for (unsigned i = 0; i < collGO.size(); i++) {
 					if (coll.colliding) {
 						if (coll.contacts.size() > 0)
 						{
-							obj1R = toupdate->getOBB(i).position + coll.contacts[0];
-							obj2R = collGO.at(i)->getOBB(k).position - coll.contacts[0];
+							obj1R = toupdate->getCOM() + coll.contacts[0];
+							obj2R = collGO.at(i)->getCOM() - coll.contacts[0];
 
 							collisionResolved = collisionResolver(toupdate->getVel(), collGO.at(i)->getVel(), toupdate->getAngularVel(), collGO.at(i)->getAngularVel(), toupdate->getTotalMass(), collGO.at(i)->getTotalMass(), obj1R, obj2R, toupdate->getIntert_tensor(), collGO.at(i)->getIntert_tensor(), coll.normal);
 							toupdate->updateVelocities(collGO.at(i), collisionResolved, coll.contacts[0]);
@@ -271,8 +271,8 @@ for (unsigned i = 0; i < collGO.size(); i++) {
 				if (coll.colliding) {
 					if (coll.contacts.size() > 0)
 					{
-						obj1R = toupdate->getOBB().position + coll.contacts[0];
-						obj2R = collGO.at(i)->getOBB().position - coll.contacts[0];
+						obj1R = toupdate->getCOM() + coll.contacts[0];
+						obj2R = collGO.at(i)->getCOM() - coll.contacts[0];
 						collisionResolved = collisionResolver(toupdate->getVel(), collGO.at(i)->getVel(), toupdate->getAngularVel(), collGO.at(i)->getAngularVel(), toupdate->getTotalMass(), collGO.at(i)->getTotalMass(), obj1R, obj2R, toupdate->getIntert_tensor(), collGO.at(i)->getIntert_tensor(), coll.normal);
 						toupdate->updateVelocities(collGO.at(i), collisionResolved, coll.contacts[0]);
 						//updateLinearVelocity(toupdate, collGO.at(i), collisionResolved);
