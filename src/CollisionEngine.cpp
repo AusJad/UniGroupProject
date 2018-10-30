@@ -194,6 +194,12 @@ for (unsigned i = 0; i < collGO.size(); i++) {
 					if (coll.colliding) {
 						if (coll.contacts.size() > 0)
 						{
+							if (collGO.at(i)->getIdentifiers().getType() == "NPC") {
+								collGO.at(i)->makeAngry(collGO.at(i));
+							}
+							if (toupdate->getIdentifiers().getType() == "NPC") {
+								toupdate->makeAngry(toupdate);
+							}
 							obj1R = toupdate->getCOM() + coll.contacts[0];
 							obj2R = collGO.at(i)->getCOM() - coll.contacts[0];
 							collisionResolved = collisionResolver(toupdate->getVel(), collGO.at(i)->getVel(), toupdate->getAngularVel(), collGO.at(i)->getAngularVel(), toupdate->getTotalMass(), collGO.at(i)->getTotalMass(), obj1R, obj2R, toupdate->getIntert_tensor(), collGO.at(i)->getIntert_tensor(), coll.normal);
@@ -222,6 +228,12 @@ for (unsigned i = 0; i < collGO.size(); i++) {
 						if (coll.colliding) {
 							if (coll.contacts.size() > 0)
 							{
+								if (collGO.at(i)->getIdentifiers().getType() == "NPC") {
+									collGO.at(i)->makeAngry(collGO.at(i));
+								}
+								if (toupdate->getIdentifiers().getType() == "NPC") {
+									toupdate->makeAngry(toupdate);
+								}
 								obj1R = toupdate->getCOM() + coll.contacts[0];
 								obj2R = collGO.at(i)->getCOM() - coll.contacts[0];
 								collisionResolved = collisionResolver(toupdate->getVel(), collGO.at(i)->getVel(), toupdate->getAngularVel(), collGO.at(i)->getAngularVel(), toupdate->getTotalMass(), collGO.at(i)->getTotalMass(), obj1R, obj2R, toupdate->getIntert_tensor(), collGO.at(i)->getIntert_tensor(), coll.normal);
@@ -290,6 +302,12 @@ for (unsigned i = 0; i < collGO.size(); i++) {
 						}
 						if (toupdate->getIdentifiers().getType() == "CAM") {
 							toupdate->onCollide(tmpos, toupdate->getIdentifiers());
+						}
+						if (collGO.at(i)->getIdentifiers().getType() == "NPC") {
+							collGO.at(i)->makeAngry(collGO.at(i));
+						}
+						if (toupdate->getIdentifiers().getType() == "NPC") {
+							toupdate->makeAngry(toupdate);
 						}
 							toupdate->onCollide2(tmpos, collGO.at(i)->getPos());
 

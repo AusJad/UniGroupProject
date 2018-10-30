@@ -213,6 +213,7 @@ public:
 	virtual bool isStatic() { return false; }
 	virtual std::vector<OBB> getOBBs() { return std::vector<OBB>(); };
 	virtual bool hasMultiObb() { return false; };
+	virtual void addemotion(vec4) {};
 
 	// mm
 	physvec3 getAngularVel();
