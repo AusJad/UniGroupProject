@@ -155,6 +155,8 @@ public:
 	*/
 	virtual bool isCollidable();
 
+	void makeAngry(GameObject * theNPC);
+
 	/**
 	* @brief The default message handler for GameObjects.
 	*

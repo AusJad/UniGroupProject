@@ -142,6 +142,10 @@ bool GameObject::isCollidable() {
 	return true;
 }
 
+void GameObject::makeAngry(GameObject* theNPC) {
+	//
+}
+
 // mm - update movement here?
 void GameObject::onCollide(vec3 & prevloc, const Identifiers & colgoid) {
 	pos = prevloc;

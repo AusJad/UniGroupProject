@@ -251,6 +251,13 @@ for (unsigned i = 0; i < collGO.size(); i++) {
 							toupdate->updateVelocities(collGO.at(i), collisionResolved, coll.contacts[0]);
 							//updateLinearVelocity(toupdate, collGO.at(i), collisionResolved);
 							//updateAngularVelocity(toupdate, collGO.at(i), collisionResolved, coll.contacts[0]);
+							if (collGO.at(i)->getIdentifiers().getType() == "NPC") {
+								collGO.at(i)->makeAngry(collGO.at(i));
+							}
+							if (toupdate->getIdentifiers().getType() == "NPC") {
+								toupdate->makeAngry(toupdate);
+							}
+							
 							if (collGO.at(i)->getIdentifiers().getType() == "CAM") {
 								collGO.at(i)->onCollide(tmpos, collGO.at(i)->getIdentifiers());
 							}
@@ -258,6 +265,7 @@ for (unsigned i = 0; i < collGO.size(); i++) {
 								toupdate->onCollide(tmpos, toupdate->getIdentifiers());
 							}
 							toupdate->onCollide2(tmpos, collGO.at(i)->getPos());
+
 
 						}
 					}
