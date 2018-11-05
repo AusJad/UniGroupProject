@@ -17,6 +17,7 @@ GameObject::GameObject(Identifiers & id, vec3 pos, ResourceList & list) {
 }
 
 GameObject::~GameObject() {
+	std::cout << "Reached GO destructor" << std::endl;
 	if (model != NULL) delete model;
 
 	model = NULL;

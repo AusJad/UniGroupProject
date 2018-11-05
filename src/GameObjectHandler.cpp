@@ -307,6 +307,7 @@ void GameObjectHandler::clear() {
 		gameobjects.at(i) = NULL;
 	}
 	
+	std::cout << "reaching clear statement" << std::endl;
 	gameobjects.clear();
 
 	for (unsigned i = 0; i < tmpobjects.size(); i++) {

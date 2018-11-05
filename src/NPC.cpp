@@ -54,6 +54,7 @@ NPC::NPC() : GameObject(){
 
 NPC::~NPC()
 {
+	GI->deRegisterNPC(this);
 	delete npcFSM;
 }
 

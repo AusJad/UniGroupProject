@@ -34,32 +34,17 @@ private:
 
 	static SelectionComponent * modelin;
 
-	//static TextInputComponent * scalexin;
-	//static TextInputComponent * scaleyin;
-	//static TextInputComponent * scalezin;
-
 	static TextInputComponent * posxin;
 	static TextInputComponent * posyin;
 	static TextInputComponent * poszin;
 
-	//static TextInputComponent * rotxin;
-	//static TextInputComponent * rotyin;
-	//static TextInputComponent * rotzin;
-
 	static bool inplacemode;
 	static float camnearoffset;
 
-	//static void setScaleXCallback(int code);
-	//static void setScaleYCallback(int code);
-	//static void setScaleZCallback(int code);
 
 	static void setPosXCallBack(int code);
 	static void setPosYCallBack(int code);
 	static void setPosZCallBack(int code);
-
-	//static void setRotXCallBack(int code);
-	//static void setRotYCallBack(int code);
-	//static void setRotZCallBack(int code);
 
 	static vec3 calcOffset(int off, int axis);
 	static void updateModel(int code);

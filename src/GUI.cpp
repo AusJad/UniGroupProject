@@ -133,6 +133,7 @@ void GUI::renderNpcEmo() {
 	if (canEdit()) {
 		RNDR->RenderModeOrtho();
 		if (npc1 != NULL) {
+			if (npc1->getModel() == NULL) { std::cout << "model is NULL" << std::endl; }
 			if (npc1->getModel() != NULL) {
 				npcemos1x.setLabel("E/G: " + std::to_string(npc1->getemotion().x()));
 				npcemos1y.setLabel("A/L: " + std::to_string(npc1->getemotion().y()));
@@ -213,17 +214,19 @@ void GUI::playGameCallback(int code) {
 }
 
 void GUI::setNpc(NPC *npcin) {
-	if (npcCount < 1) {
+	if (npc1 == NULL) {
 		npc1 = npcin;
-		std::cout << npcin->getID() << "Has entered the building" << std::endl;
+		std::cout << "NPC1 Has entered the building" << std::endl;
 		npcCount++;
 	}
-	else if (npcCount < 2){
+	else if (npc2 == NULL){
 		npc2 = npcin;
+		std::cout << "NPC2 Has entered the building" << std::endl;
 		npcCount++;
 	}
-	else if (npcCount < 3) {
+	else if (npc3 == NULL) {
 		npc3 = npcin;
+		std::cout << "NPC3 Has entered the building" << std::endl;
 		npcCount++;
 	}
 	std::cout << "NPC Count is: " << npcCount << std::endl;
@@ -281,4 +284,29 @@ void GUI::initializeNPCWindow() {
 	npcemos3w.setPadding(3);
 	npcemos3w.setWidth(190);
 	npcemos3w.setHeight(45);
+}
+
+void GUI::deRegisterNPC(NPC *npcin) {
+	std::cout << "reached de-registration" << std::endl;
+	if (npcin == npc1) { 
+		npc1 = NULL; 
+		if (npc1 == NULL) {
+			std::cout << "npc1 de-registered from GUI" << std::endl;
+			npcCount--;
+		}
+	}
+	else if (npcin == npc2) { 
+		npc2 = NULL;
+		if (npc2 == NULL) {
+			std::cout << "npc2 de-registered from GUI" << std::endl;
+			npcCount--;
+		}
+	}
+	else if (npcin == npc3) { 
+		npc3 = NULL; 
+		if (npc3 == NULL) { 
+			std::cout << "npc3 de-registered from GUI" << std::endl; 
+			npcCount--;
+		}
+	}
 }
