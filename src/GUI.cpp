@@ -133,7 +133,6 @@ void GUI::renderNpcEmo() {
 	if (canEdit()) {
 		RNDR->RenderModeOrtho();
 		if (npc1 != NULL) {
-			if (npc1->getModel() == NULL) { //std::cout << "model is NULL" << std::endl; }
 			if (npc1->getModel() != NULL) {
 				npcemos1x.setLabel("E/G: " + std::to_string(npc1->getemotion().x()));
 				npcemos1y.setLabel("A/L: " + std::to_string(npc1->getemotion().y()));
