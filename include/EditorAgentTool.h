@@ -10,10 +10,11 @@
 #include "NPC.h"
 
 /**
-* @class EditorObjectTool
+* @class EditorAgentTool
 *
-* @author Morgan Smolder
+* @author Mathew Devene
 */
+// based on code from EditorObjectTool, by Morgan Smolder
 class EditorAgentTool
 {
 public:
