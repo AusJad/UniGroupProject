@@ -27,7 +27,7 @@ class GameObject
 public:
 	GameObject();
 	GameObject(Identifiers & id, vec3 pos, ResourceList & list);
-	~GameObject();
+	virtual ~GameObject();
 	GameObject(const GameObject & tocpy);
 
 	virtual GameObject* create() = 0;

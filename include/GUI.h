@@ -30,6 +30,7 @@ public:
 	GUIState getState() { return state; }
 	bool canEdit() { return mmenu.canEdit(); }
 	void setNpc(NPC *npcin);
+	void deRegisterNPC(NPC *npcin);
 
 private:
 	GUIState state;
